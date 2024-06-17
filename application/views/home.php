@@ -383,7 +383,7 @@
 .chosen_country {color: #888888; height: 60px; border-radius: 50px; padding: 17px !important;}
 #state {display: block;color: #888888; height: 60px; border-radius: 50px; padding: 17px !important;}
 #city {display: block;color: #888888; height: 60px; border-radius: 50px; padding: 17px !important;}
-.jconfirm-content-pane{text-align: center; font-size: 20px;}
+.jconfirm-content-pane{text-align: center; font-size: 18px;}
 .jconfirm-buttons{margin-right: 140px; display: inline-block;}
 </style>
 <script>

@@ -70,7 +70,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
 </section>
 <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
 <style>
-.jconfirm-content-pane{text-align: center; font-size: 20px;}
+.jconfirm-content-pane{text-align: center; font-size: 18px;}
 /* .jconfirm-buttons{margin-right: 140px; display: inline-block;} */
 .jconfirm .jconfirm-box .jconfirm-buttons button.btn-blue {background: linear-gradient(180deg, rgba(249, 80, 30, 1) 0%, rgba(252, 119, 33, 1) 100%) !important;
     color: #fff !important; text-shadow: none; width: 200px; font-size: 14px !important; letter-spacing: 0px; padding: 10px 0 !important; width: 160px; border-radius: 20px; margin-right: 48px !important;}
