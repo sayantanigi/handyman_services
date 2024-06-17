@@ -434,7 +434,7 @@ function getCity(val) {
 function viewProfile() {
     $.alert({
 	    title: '',
-	    content: "Please login to view talent profile",
+	    content: "Please login to view professional's profile",
 	});
 }
 </script>
