@@ -76,8 +76,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="heading">
-                        <h2>AfreBay Opportunities</h2>
-                        <span>Look for the latest jobs and projects posted on the portal.</span>
+                        <h2>Handyman Services Opportunities</h2>
+                        <span>Look for the latest jobs posted on the portal.</span>
                     </div>
                     <div class="blog-sec">
                         <div class="row">
@@ -143,7 +143,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="heading">
-                        <h2>Available AfreBay Talent</h2>
+                        <h2>Available Handyman Services Professionals</h2>
                         <span>Find the most eligible talent within the portal.</span>
                     </div>
                     <div class="blog-sec">
@@ -161,7 +161,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="my-blog">
                                     <div class="blog-thumbak">
-                                        <a href="<?= base_url('talentdetail/'.base64_encode(@$user->userId))?>" title="">
+                                        <a href="<?= base_url('professionals_detail/'.base64_encode(@$user->userId))?>" title="">
                                             <?php if(!empty($user->profilePic)&& file_exists('uploads/users/'.$user->profilePic)){?>
                                             <img src="<?=base_url('uploads/users/'.$user->profilePic); ?>" alt="" style="height: 300px;" />
                                             <?php } else{?>
@@ -180,11 +180,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <?php 
+                                        <?php
                                         $user_rating = $this->db->query("SELECT AVG(rt.rating) as rate FROM employer_rating rt WHERE rt.worker_id = '".@$user->userId."'")->result();
                                         ?>
                                         <div class="staak">
-                                            <?php 
+                                            <?php
                                             if($user_rating[0]->rate > 0) {
                                                 for ($i = 0; $i < $user_rating[0]->rate; $i++) {
                                             ?>
@@ -196,7 +196,7 @@
                                         </div>
                                         <?php if(!empty($_SESSION['afrebay']['userId'])) {?>
                                         <h3 class="nkash">
-                                            <a type="button" class="btn" href="<?= base_url('talentdetail/'.base64_encode(@$user->userId))?>" title="">
+                                            <a type="button" class="btn" href="<?= base_url('professionals_detail/'.base64_encode(@$user->userId))?>" title="">
                                                 <?php if(!empty($user->firstname)){ echo $user->firstname.' '.$user->lastname; } else{ echo ucfirst($user->username);}?>
                                             </a>
                                         </h3>
@@ -217,7 +217,7 @@
                 <?php if(count($getTotalworkers) > 8) { ?>
                 <div class="col-lg-12">
                     <div class="browse-all-cat">
-                        <a href="<?= base_url('talent')?>" title="">View More</a>
+                        <a href="<?= base_url('professionals')?>" title="">View More</a>
                     </div>
                 </div>
                 <?php } ?>
@@ -232,8 +232,7 @@
                 <div class="col-lg-12">
                     <div class="heading">
                         <h2>Our Services</h2>
-                        <span>Looking for a reliable and outstanding business process outsourcing partner? 
-Look no further. With Afrebay services, you no longer have to worry about employing the best talent for your business. Our focus is to ensure you get professional expertise needed to make your business grow. We understand that recruitment and selection processes can be quite a hurdle, let us help you simplify this with our top-notch services. </span>
+                        <span>Looking for a reliable and outstanding business process outsourcing partner? Look no further. With Handyman Services, you no longer have to worry about employing the best service provider for your customer. Our focus is to ensure you get professional expertise needed to make your business grow.</span>
                     </div>
                     <div class="cat-sec">
                         <div class="row no-gape">
@@ -273,7 +272,7 @@ Look no further. With Afrebay services, you no longer have to worry about employ
 </section>
 <section>
     <div class="block double-gap-top double-gap-bottom">
-        <?php if(!empty($get_banner_middle->image) && file_exists('uploads/banner/'.$get_banner_middle->image)) { 
+        <?php if(!empty($get_banner_middle->image) && file_exists('uploads/banner/'.$get_banner_middle->image)) {
             $image = base_url('uploads/banner/'.$get_banner_middle->image);
         ?>
         <div data-velocity="-.1" style="background: url('<?php echo $image?>') repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible layer color"></div>

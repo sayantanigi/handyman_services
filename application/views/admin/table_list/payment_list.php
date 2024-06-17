@@ -26,7 +26,7 @@
                                 <select class="form-control select filter_search_data6" name="" id='userPaymentListA'>
                                     <option value="" disabled >Select Type</option>
                                     <option value="" selected>All</option>
-                                    <option value="1">Service Provider (Handyman)</option>
+                                    <option value="1">Professionals</option>
                                     <option value="2">Customer</option>
                                 </select>
                             </div>

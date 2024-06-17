@@ -55,7 +55,7 @@
                                     <option value="">Select Page Name Page</option>
                                     <option value="Home Top">Home Top Page</option>
                                     <option value="Home Middle">Home Middle Page</option>
-                                    <option value="Handyman">Service Provider (Handyman) Page</option>
+                                    <option value="Professionals">Professionals Page</option>
                                     <option value="Cutomers">Cutomers Page</option>
                                     <option value="Our Jobs">Our Jobs Page</option>
                                     <option value="Pricing">Pricing Page</option>
@@ -67,7 +67,7 @@
                                     <option value="Sign Up">Sign Up Page</option>
                                     <option value="Login">Login Page</option>
                                     <option value="Post Jobs">Post Jobs Page</option>
-                                    <option value="Service Provider Details">Service Provider (Handyman) Details Page</option>
+                                    <option value="Professionals Details">Professionals Details Page</option>
                                     <option value="Cutomer Details">Cutomer Details Page</option>
                                     <option value="Post Job Details">Post Job Details Page</option>
                                 </select>
@@ -110,7 +110,7 @@
                                     <option value="">Select Page Name Page</option>
                                     <option value="Home Top">Home Top Page</option>
                                     <option value="Home Middle">Home Middle Page</option>
-                                    <option value="Handyman">Service Provider (Handyman) Page</option>
+                                    <option value="Professionals">Professionals Page</option>
                                     <option value="Cutomers">Cutomers Page</option>
                                     <option value="Our Jobs">Our Jobs Page</option>
                                     <option value="Pricing">Pricing Page</option>
@@ -122,7 +122,7 @@
                                     <option value="Sign Up">Sign Up Page</option>
                                     <option value="Login">Login Page</option>
                                     <option value="Post Jobs">Post Jobs Page</option>
-                                    <option value="Service Provider Details">Service Provider (Handyman) Details Page</option>
+                                    <option value="Professionals Details">Professionals Details Page</option>
                                     <option value="Cutomer Details">Cutomer Details Page</option>
                                     <option value="Post Job Details">Post Job Details Page</option>
                                 </select>

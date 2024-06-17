@@ -45,7 +45,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
 </section>
 <section>
     <div class="block About_Us_Testimonial">
-        <?php if(!empty($get_banner_middle->image) && file_exists('uploads/banner/'.$get_banner_middle->image)) { 
+        <?php if(!empty($get_banner_middle->image) && file_exists('uploads/banner/'.$get_banner_middle->image)) {
         $image = base_url('uploads/banner/'.$get_banner_middle->image)
         ?>
         <div data-velocity="-.1" style="background: url('<?php echo $image?>') repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible layer color"></div>
@@ -57,13 +57,13 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                 <div class="col-lg-12">
                     <div class="heading light">
                         <h2>Reviews submitted by our businesses</h2>
-                        <span>What other people thought about the service provided by Afrebay</span>
+                        <span>What other people thought about the service provided by Handyman Services</span>
                     </div>
                     <div class="reviews-sec" id="reviews-carousel">
                     <?php if(!empty($get_employer)) {
                         foreach($get_employer as $user) { ?>
                         <div class="col-lg-6">
-                            <a href="<?= base_url('businessdetail/'.base64_encode($user->userId))?>">
+                            <a href="<?= base_url('customer_detail/'.base64_encode($user->userId))?>">
                                 <div class="reviews">
                                     <?php if(!empty($user->profilePic) && file_exists('uploads/users/'.$user->profilePic)) { ?>
                                     <img src="<?= base_url('uploads/users/'.$user->profilePic)?>" alt="" />
@@ -71,9 +71,9 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                     <img src="<?= base_url('uploads/users/user.png')?>" alt="" />
                                     <?php } ?>
                                     <h3>
-                                    <?php if(!empty($user->firstname)) { 
+                                    <?php if(!empty($user->firstname)) {
                                         echo ucfirst($user->firstname).' '.$user->lastname;
-                                    } else { 
+                                    } else {
                                         echo ucfirst($user->companyname);
                                     } ?>
                                     <span><?= ucfirst(@$user->skills);?></span>

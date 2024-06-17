@@ -122,7 +122,7 @@ class Welcome extends CI_Controller {
 			'view_count'=>$viewcount,
 		);
 		$this->Crud_model->SaveData('users',$insert_data,"userId='".$userid."'");
-		$data['title'] = 'Business Details';
+		$data['title'] = 'Customer Details';
 		$this->load->view('header',$data);
 		$this->load->view('frontend/employer_detail',$data);
 		$this->load->view('footer');
@@ -301,8 +301,8 @@ class Welcome extends CI_Controller {
 				'created_date'=>date('Y-m-d H:i:s'),
 			);
 		}
-		
-		
+
+
 		$this->Crud_model->SaveData('postjob',$data);
 		$this->session->set_flashdata('message', 'Post Job Created Successfull !');
 		$insert_id = $this->db->insert_id();
@@ -324,7 +324,7 @@ class Welcome extends CI_Controller {
 		$this->load->view('user_dashboard/jobinfo',$data);
 		$this->load->view('footer');
 	}
-	
+
 	public function subcategory_data() {
 		$id =$_POST['id'];
 		$CategoryData = $this->Crud_model->GetData('sub_category',"","category_id ='".$id."'");

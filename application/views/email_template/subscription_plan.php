@@ -25,7 +25,7 @@
         <table style="width: 100%;">
         	<tr>
         		<td style="height:30px;width:100%; background: red;padding: 10px 0px; font-size:13px; color: #fff; text-align: center;">
-        			Copyright &copy; <?=date('Y')?> Afrebay. All rights reserved.
+        			Copyright &copy; <?=date('Y')?> Handyman Services. All rights reserved.
         		</td>
         	</tr>
         </table>

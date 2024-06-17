@@ -92,13 +92,13 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="bid_contact-profile">
-                                                <?php 
+                                                <?php
                                                 if (@$key->profilePic && file_exists('uploads/users/' . @$key->profilePic)) { ?>
                                                 <img src="<?php echo base_url()?>uploads/users/<?php echo $key->profilePic?>" alt="" style="width: 60px; height: 60px; object-fit: cover;">
                                                 <?php } else { ?>
                                                 <img src="<?php echo base_url()?>uploads/users/user.png" alt="" style="width: 60px; height: 60px; object-fit: cover;">
                                                 <?php } ?>
-                                                <a href="<?php echo base_url()?>talentdetail/<?php echo base64_encode($key->userid)?>" target="_blank"><p><?=$key->fullname; ?></p></a>
+                                                <a href="<?php echo base_url()?>professionals_detail/<?php echo base64_encode($key->userid)?>" target="_blank"><p><?=$key->fullname; ?></p></a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -126,9 +126,9 @@
                             <tr>
                                 <td colspan="6">
                                     <center>No Data Found</center>
-                                    <?php 
+                                    <?php
                                     if($_SESSION['afrebay']['userType'] == '1') {
-                                        if($get_setting->required_subscription == '1') { 
+                                        if($get_setting->required_subscription == '1') {
                                             $get_sub_data = $this->db->query("SELECT * FROM employer_subscription where employer_id = ".$_SESSION['afrebay']['userId']." and payment_status = 'paid'")->result_array();
                                             if(!empty($get_sub_data)) {
                                                 $profile_check = $this->db->query("SELECT * FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
@@ -136,10 +136,10 @@
                                                     <button class="post-job-btn pull-right" type="submit" style=" background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border: 0 !important; "><a href="javascript:void(0)" onclick="completeSub()">Apply for Work</a></button>
                                             <?php } else { ?>
                                                 <button class="post-job-btn pull-right" type="submit" style=" background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border: 0 !important; "><a href="<?= base_url('findwork')?>" title="" target="_blank">Apply for Work</a></button>
-                                            <?php } 
+                                            <?php }
                                             } else { ?>
                                                 <button class="post-job-btn pull-right" type="submit" style=" background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border: 0 !important; "><a href="javascript:void(0)" onclick="completeSub()">Apply for Work</a></button>
-                                        <?php } 
+                                        <?php }
                                         } else { ?>
                                         <button class="post-job-btn pull-right" type="submit" style=" background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border: 0 !important; "><a href="<?= base_url('findwork')?>" title="" target="_blank">Apply for Work</a></button>
                                     <?php } } }?>

@@ -11,7 +11,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
             <div class="row">
                 <div class="col-lg-12">
                     <div class="inner-header">
-                        <h3>Explore Businesses</h3>
+                        <h3>Explore Customers</h3>
                     </div>
                 </div>
             </div>
@@ -175,10 +175,10 @@ $(document).ready(function () {
 });
 $(window).load(function(){
     $(window).resize(function() {
-        if (window.innerWidth <= 425) { 
+        if (window.innerWidth <= 425) {
             console.log('inside if');
             $('.emply-resume-list').addClass('col-6');
-        } else { 
+        } else {
             console.log('inside else');
             $('.emply-resume-list').removeClass('col-6');
         }

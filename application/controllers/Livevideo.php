@@ -420,7 +420,7 @@ class Livevideo extends My_Controller
 			$mydata = array(
 				'sessionId' => $sessionId,
 				'tokenId' => $token,
-				'broadcastNumber'=>"Afrebay".$this->generate_otp(),
+				'broadcastNumber'=>"".$this->generate_otp(),
 				'status' => 1,
 				'senderId' => $senderId,
 				'receiverId' => $receiverId,
@@ -482,7 +482,7 @@ class Livevideo extends My_Controller
 				$mydata = array(
 					'sessionId' => $sessionId,
 					'tokenId' => $token,
-					'broadcastNumber'=>"Afrebay".$this->generate_otp(),
+					'broadcastNumber'=>"handyman_services".$this->generate_otp(),
 					'status' => 1,
 					'senderId' => $senderId,
 					'receiverId' => $receiverId,
@@ -587,7 +587,7 @@ class Livevideo extends My_Controller
 		         );
 		         $this->Crud_model->SaveData('friends_video',$update_call,"subscription_id='".$get_friendsvideo->subscription_id."'");
 
-		         }	
+		         }
 		$data['title']="Video Call";
 
 		$data['profile']=$this->Crud_model->get_single('users', "userId='" . $userId . "'");

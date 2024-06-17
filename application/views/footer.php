@@ -30,16 +30,16 @@ if(!empty($_SESSION['afrebay']['userId'])) {
                         <div class="link_widgets">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <a href="<?= base_url('businesses')?>" title="Explore Businesses">Explore Businesses</a>
-                                    <a href="<?= base_url('talent')?>" title="Explore Talent">Explore Talent</a>
+                                    <a href="<?= base_url('customer')?>" title="Explore Customers">Explore Customers</a>
+                                    <a href="<?= base_url('professionals')?>" title="Explore Professionals">Explore Professionals</a>
                                     <a href="<?= base_url('findwork')?>" title="Explore Job Openings">Explore Job Openings</a>
                                     <?php if($get_setting->required_subscription == '1') { ?>
-                                    <a href="<?= base_url('businesses_pricing')?>" title="Businesses Pricing">Businesses Pricing</a>
-                                    <a href="<?= base_url('talents_pricing')?>" title="Talents Pricing">Talents Pricing</a>
-                                    <?php } else { 
+                                    <a href="<?= base_url('customer_pricing')?>" title="Customers Pricing">Customers Pricing</a>
+                                    <a href="<?= base_url('professionals_pricing')?>" title="Professionals Pricing">Professionals Pricing</a>
+                                    <?php } else {
                                     if(empty($_SESSION['afrebay']['userId'])) { ?>
-                                    <a href="<?= base_url('signup')?>" title="Business Sign up">Business Sign up</a>
-                                    <a href="<?= base_url('signup')?>" title="Talent Sign up">Talent Sign up</a>
+                                    <a href="<?= base_url('signup')?>" title="Customer Sign up">Customer Sign up</a>
+                                    <a href="<?= base_url('signup')?>" title="Professionals Sign up">Professionals Sign up</a>
                                     <?php } } ?>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@ if(!empty($_SESSION['afrebay']['userId'])) {
     </div>
     </div>
     <div class="bottom-line">
-        <span>Copyright © <?php echo date('Y')?> Afrebay. All rights reserved.</span>
+        <span>Copyright © <?php echo date('Y')?> Handyman Services. All rights reserved.</span>
         <a href="#scrollup" class="scrollup" title=""><i class="la la-arrow-up"></i></a>
     </div>
 </footer>

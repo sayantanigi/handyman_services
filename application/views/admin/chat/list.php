@@ -59,7 +59,7 @@
                                         <th>#</th>
                                         <th>Job Title</th>
                                         <th>Customer</th>
-                                        <th>Service Provider (Handyman)</th>
+                                        <th>Professionals</th>
                                         <th>Initiated Date</th>
                                         <th>Manage</th>
                                     </tr>

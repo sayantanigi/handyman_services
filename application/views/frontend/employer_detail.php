@@ -12,7 +12,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
             <div class="row">
                 <div class="col-lg-12">
                     <div class="inner-header">
-                        <h3>Business Details</h3>
+                        <h3>Customer Details</h3>
                     </div>
                 </div>
             </div>

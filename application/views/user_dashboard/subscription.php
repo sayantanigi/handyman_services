@@ -68,7 +68,7 @@
                                                                         <td class="active-plan"><span style="width: 70%">Active Plan</span></td>
                                                                         <?php } ?>
                                                                         <?php if($row->status == '3') { ?>
-                                                                        <td class="cnc-plan">Your Afrebay Subscription Expired on <?php echo date ('d M Y',strtotime($row->expiry_date));?></td>
+                                                                        <td class="cnc-plan">Your Handyman Services Subscription Expired on <?php echo date ('d M Y',strtotime($row->expiry_date));?></td>
                                                                         <?php } ?>
                                                                     </tr>
                                                                 </table>
@@ -151,7 +151,7 @@
                                                                         <?php } else if($row->status == '2') { ?>
                                                                         <td class="cnc-plan" style="font-size: 12px;">You have cancelled your subscription. Your afrebay subscription expires on <?php echo date ('d M Y',strtotime($row->expiry_date));?></td>
                                                                         <?php } else { ?>
-                                                                        <td class="cnc-plan">Your Afrebay Subscription Expired on <?php echo date ('d M Y',strtotime($row->expiry_date));?></td>
+                                                                        <td class="cnc-plan">Your Handyman Services Subscription Expired on <?php echo date ('d M Y',strtotime($row->expiry_date));?></td>
                                                                         <?php } ?>
                                                                     </tr>
                                                                 </table>

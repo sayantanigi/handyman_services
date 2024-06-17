@@ -53,10 +53,10 @@ class Authentication extends CI_Controller {
 				$mail = new PHPMailer(true);
 				try {
 					$mail->CharSet = 'UTF-8';
-					$mail->SetFrom('no-reply@goigi.com', 'Afrebay');
+					$mail->SetFrom('no-reply@goigi.com', 'Handyman Services');
 					$mail->AddAddress($formdata['email']);
 					$mail->IsHTML(true);
-					$mail->Subject = 'Verify Your Email Address From Afrebay';
+					$mail->Subject = 'Verify Your Email Address From Handyman Services';
 					$mail->Body = $message;
 					$mail->IsSMTP();
 					$mail->SMTPAuth   = true;
@@ -142,10 +142,10 @@ class Authentication extends CI_Controller {
 				try {
 					//Server settings
 					$mail->CharSet = 'UTF-8';
-					$mail->SetFrom('no-reply@goigi.com', 'Afrebay');
+					$mail->SetFrom('no-reply@goigi.com', 'Handyman Services');
 					$mail->AddAddress($formdata['email']);
 					$mail->IsHTML(true);
-					$mail->Subject = "Forgot Password Confirmation message from AFREBAY";
+					$mail->Subject = "Forgot Password Confirmation message from Handyman Services";
 					$mail->Body = $htmlContent;
 					//Send email via SMTP
 					$mail->IsSMTP();

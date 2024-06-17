@@ -343,17 +343,17 @@ class Home extends MY_Controller {
 				$mail = new PHPMailer(true);
 				$mail->CharSet = 'UTF-8';
 				$mail->SetFrom($formdata['email']);
-				$mail->AddAddress('admin@afrebay.com', 'Afrebay');
+				$mail->AddAddress('admin@handymanservices.com', 'Handyman Services');
 				$mail->IsHTML(true);
 				$mail->Subject = $subject;
 				$mail->Body = $message;
 				$mail->IsSMTP();
 				$mail->SMTPAuth   = true;
 				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-				$mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
-				$mail->Port       = 465; //587 465
-				$mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
-				$mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
+				// $mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
+				// $mail->Port       = 465; //587 465
+				// $mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
+				// $mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
 				$mail->send();
 				// if(!$mail->send()) {
 				$response = array('status'=> 'error', 'result'=>'Your message could not be sent. Please, try again later.');

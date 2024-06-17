@@ -12,7 +12,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
             <div class="row">
                 <div class="col-lg-12">
                     <div class="inner-header">
-                        <h3>Businesses Plan</h3>
+                        <h3>Customers Plan</h3>
                     </div>
                 </div>
             </div>
@@ -139,8 +139,8 @@ $('.subscriptionFilteredData').matchHeight();
 var maxHeight = 0;
 
 $(".pricetable ul").each(function(){
-    if ($(this).height() > maxHeight) { 
-        maxHeight = $(this).height(); 
+    if ($(this).height() > maxHeight) {
+        maxHeight = $(this).height();
         //alert(maxHeight)
     }
 });

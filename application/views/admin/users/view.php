@@ -26,7 +26,7 @@
                                                         <p>
                                                         <?php
                                                         if($get_userdata->userType == 1){
-                                                            echo "Service Provider (Handyman)";
+                                                            echo "Professionals";
                                                         } else if($get_userdata->userType == 2){
                                                             echo "Customer";
                                                         } ?>

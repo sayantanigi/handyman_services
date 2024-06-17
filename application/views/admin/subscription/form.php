@@ -25,7 +25,7 @@
 								<select class="form-control" name="subscription_user_type" id="subscription_user_type" required>
 									<option value="">Choose an option</option>
 									<option value="Customer" <?php if($subscription_user_type == 'Customer') { echo "selected"; } ?>>Customer</option>
-									<option value="Service Provider (Handyman)" <?php if($subscription_user_type == 'Service Provider (Handyman)') { echo "selected"; } ?>>Service Provider (Handyman)</option>
+									<option value="Professionals" <?php if($subscription_user_type == 'Professionals') { echo "selected"; } ?>>Professionals</option>
 								</select>
 							</div>
 							<div class="form-group subscription_type">

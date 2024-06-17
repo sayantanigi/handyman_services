@@ -32,10 +32,10 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                             <div class="row m-0">
                                 <div class="col-lg-4 col-md-12 col-sm-12 SignUp_Left">
                                     <h3>Sign Up</h3>
-                                    <span>Let's create your account! Choose to sign up as either a Talent or a Business.</span>
+                                    <span>Let's create your account! Choose to sign up as either a Professional or a Customer.</span>
                                     <div class="select-user">
-                                        <span class="user-tab active" user_type="1" onclick="get_value(1)">Talent</span>
-                                        <span class="user-tab" user_type="2" onclick="get_value(2)">Business</span>
+                                        <span class="user-tab active" user_type="1" onclick="get_value(1)">Professional</span>
+                                        <span class="user-tab" user_type="2" onclick="get_value(2)">Customer</span>
                                     </div>
                                     <div class="error" id="err_usertype"></div>
                                 </div>
@@ -72,9 +72,9 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                             </div>
                                             <div class="col-lg-12 col-md-6 col-sm-6 company_name">
                                                 <div class="cfield cfield_top">
-                                                    <label for="" class="form-label">Company Name <span style="color:red">*</span></label>
+                                                    <label for="" class="form-label">Customer Name <span style="color:red">*</span></label>
                                                     <div class="cfield_Input">
-                                                        <input type="text" placeholder="Company Name" name="company_name" id="company_name"/>
+                                                        <input type="text" placeholder="Customer Name" name="company_name" id="company_name"/>
                                                         <i class="la la-home"></i>
                                                     </div>
                                                 </div>

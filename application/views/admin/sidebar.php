@@ -35,34 +35,17 @@
 			<li <?php if ($seg2 =='chat') {?>class="active"<?php }?>>
 				<a href="<?=admin_url(); ?>chat"><i class="fab fa-rocketchat"></i> <span>Messages</span></a>
 			</li>
-			<!-- <li <?php if ($seg2 =='services') {?>class="active"<?php }?>>
-				<a href="<?=admin_url('services'); ?>"><i class="fas fa-bullhorn"></i> <span> Services</span></a>
-			</li> -->
 			<li <?php if ($seg2 =='jobsbidding') {?>class="active"<?php }?>>
 				<a href="<?= admin_url('jobsbidding')?>"><i class="far fa-calendar-check"></i> <span> Jobs Bidding</span></a>
 			</li>
 			<li <?php if ($seg2 =='payment') {?>class="active"<?php }?>>
-				<!-- <a href="<?= admin_url('payment')?>"><i class="fas fa-hashtag"></i> <span>Vendors Subscription</span></a> -->
 				<a href="<?= admin_url('payment')?>"><i class="fas fa-hashtag"></i><span>List of Subscriptions</span></a>
 			</li>
-			<!-- <li <?php if ($seg2 =='rating_type') {?>class="active"<?php }?>>
-				<a href="<?= admin_url('rating_type')?>"><i class="fas fa-star-half-alt"></i> <span>Rating Type</span></a>
-			</li>
-			<li <?php if ($seg2 =='Ratings') {?>class="active"<?php }?>>
-				<a href="#"><i class="fas fa-star"></i> <span>Ratings</span></a>
-			</li> -->
 			<li <?php if ($seg2 =='subscription') {?>class="active"<?php }?>>
 				<a href="<?= admin_url('subscription')?>"><i class="far fa-calendar-alt"></i>
 					<span>Subscription Plans</span>
-					<!-- <span>Freelancer Subscriptions</span> -->
 				</a>
 			</li>
-			<!-- <li <?php if ($seg2 =='Wallet') {?>class="active"<?php }?>>
-				<a href="#"><i class="fas fa-wallet"></i> <span> Wallet</span></a>
-			</li>
-			<li <?php if ($seg2 =='Service_provider') {?>class="active"<?php }?>>
-				<a href="#"><i class="fas fa-user-tie"></i> <span> Service Providers</span></a>
-			</li> -->
 			<li <?php if ($seg2 =='users') {?>class="active"<?php }?>>
 				<a href="<?=admin_url(); ?>users"><i class="fas fa-user"></i> <span>Users</span></a>
 			</li>
@@ -75,9 +58,6 @@
 			<li <?php if ($seg2 =='career') {?>class="active"<?php }?>>
 				<a href="<?=admin_url(); ?>career"><i class="fa fa-graduation-cap"></i> <span>Career Tips</span></a>
 			</li>
-			<!-- <li <?php if ($seg2 =='email-template') {?>class="active"<?php }?>>
-				<a href="<?=admin_url(); ?>email-template"><i class="fa fa-envelope"></i> <span>Email Templates</span></a>
-			</li> -->
 			<li <?php if ($seg2 =='setting') {?>class="active"<?php }?>>
 				<a href="<?= admin_url('setting')?>"><i class="fas fa-cog"></i> <span>Site Settings</span></a>
 			</li>

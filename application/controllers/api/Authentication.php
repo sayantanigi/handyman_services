@@ -53,18 +53,18 @@ class Authentication extends CI_Controller {
 					require 'vendor/autoload.php';
 					$mail = new PHPMailer(true);
 					$mail->CharSet = 'UTF-8';
-					$mail->SetFrom('admin@afrebay.com', 'Afrebay');
+					$mail->SetFrom('admin@handymanservices.com', 'Handyman Services');
 					$mail->AddAddress($formdata['email']);
 					$mail->IsHTML(true);
-					$mail->Subject = 'Verify Your Email Address From Afrebay';
+					$mail->Subject = 'Verify Your Email Address From Handyman Services';
 					$mail->Body = $message;
 					$mail->IsSMTP();
 					$mail->SMTPAuth   = true;
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-					$mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
-					$mail->Port       = 465; //587 465
-					$mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
-					$mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
+					// $mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
+					// $mail->Port       = 465; //587 465
+					// $mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
+					// $mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
 					$mail->send();
 					$msg = "We have sent an activation link to your account to continue with the registration process.";
 					$response = array('status'=> 'success','result'=> $msg);
@@ -223,18 +223,18 @@ class Authentication extends CI_Controller {
     				$mail = new PHPMailer(true);
     				try {
     					$mail->CharSet = 'UTF-8';
-    					$mail->SetFrom('admin@afrebay.com', 'Afrebay');
+    					$mail->SetFrom('admin@handymanservices.com', 'Handyman Services');
     					$mail->AddAddress($formdata['email']);
     					$mail->IsHTML(true);
-    					$mail->Subject = "Forgot Password Confirmation message from AFREBAY";
+    					$mail->Subject = "Forgot Password Confirmation message from Handyman Services";
     					$mail->Body = $htmlContent;
     					$mail->IsSMTP();
 						$mail->SMTPAuth   = true;
 						$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-						$mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
-						$mail->Port       = 465; //587 465
-						$mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
-						$mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
+						// $mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
+						// $mail->Port       = 465; //587 465
+						// $mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
+						// $mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
 						$mail->send();
     					$msg = 'Please check your inbox. We have sent you an email to reset your password.';
     					$response = array('status'=> 'success','result'=> $msg);

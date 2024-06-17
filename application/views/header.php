@@ -10,9 +10,9 @@ $get_category=$this->Crud_model->GetData('category','',"status='Active'");
     <title><?php echo @$post_data->post_title?> - <?php echo @$get_setting->website_name?></title>
     <?php } else if ($this->uri->segment(1) == 'career-tips') { ?>
     <title><?php if(!empty(@$get_career->title)) { echo @$get_career->title; } else { echo @$title; }?> - <?php echo @$get_setting->website_name?></title>
-    <?php } else if ($this->uri->segment(1) == 'businessdetail') { ?>
+    <?php } else if ($this->uri->segment(1) == 'customer_detail') { ?>
     <title><?php echo @$userdata->companyname?> - <?php echo @$get_setting->website_name?></title>
-    <?php } else if ($this->uri->segment(1) == 'talentdetail') { ?>
+    <?php } else if ($this->uri->segment(1) == 'professionals_detail') { ?>
     <title><?php echo @$user_detail->firstname.' '.$user_detail->lastname?> - <?php echo @$get_setting->website_name?></title>
     <?php } else if ($this->uri->segment(1) == 'productdetail') { ?>
     <title><?php echo @$prod_details[0]['prod_name']; ?> - <?php echo @$get_setting->website_name?></title>
@@ -20,19 +20,18 @@ $get_category=$this->Crud_model->GetData('category','',"status='Active'");
     <title><?php echo @$title?> - <?php echo @$get_setting->website_name?></title>
     <?php } ?>
 
-    <?php if($this->uri->segment(1) == 'businessdetail') { ?>
+    <?php if($this->uri->segment(1) == 'customer_detail') { ?>
     <meta name="description" content="<?php echo @$userdata->short_bio?>">
-    <?php } else if($this->uri->segment(1) == 'talentdetail') { ?>
+    <?php } else if($this->uri->segment(1) == 'professionals_detail') { ?>
     <meta name="description" content="<?php echo @$user_detail->short_bio?>">
     <?php } else if($this->uri->segment(1) == 'workdetail') { ?>
     <meta name="description" content="<?php echo @$post_data->description?>">
     <?php } else if($this->uri->segment(1) == 'about-us') { ?>
-    <meta name="description" content="Afrebay embarked on its transformative journey in 2013 with an unwavering commitment to bridging the gap in the African and American workforce and trade economies. Rooted in the belief that collaboration knows no boundaries, we've tirelessly worked to create a platform that fosters connections, empowers entrepreneurs and businesses, and opens doors to a world of possibilities.
-">
+    <meta name="description" content="">
     <?php } else if ($this->uri->segment(1) == 'productdetail') { ?>
     <meta name="description" content="<?php echo $prod_details[0]['prod_description']; ?>">
     <?php } else if ($this->uri->segment(1) == 'findwork') { ?>
-    <meta name="description" content="Your Bridge to career opportunities. Contact us today to start your journey toward a brighter future. Our experts are here to guide you in finding your dream job">
+    <meta name="description" content="">
     <?php } else if ($this->uri->segment(1) == 'career-tips') { $description = explode('.', $get_career->description)?>
     <meta name="description" content="<?= $description[0]?>">
     <?php } else { ?>
@@ -83,68 +82,8 @@ $(function () {
     });
 })
 </script>
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-window.OneSignalDeferred = window.OneSignalDeferred || [];
-OneSignalDeferred.push(function(OneSignal) {
-    OneSignal.init({
-        appId: "3730b45f-709e-49b5-b77a-defdd7fe63b4",
-        safari_web_id: "web.onesignal.auto.45da02f8-0e2a-491b-9d85-c6fbaf55a283",
-        notifyButton: {
-          enable: true,
-        },
-        promptOptions: {
-            slidedown: {
-                prompts: [{
-                    type: "push",
-                    autoPrompt: true,
-                    text: {
-                        acceptButton: "Ok",
-                        cancelButton: "No Thanks",
-                        actionMessage: "We would like to show you notifications for the updates and latest news",
-                        confirmMessage: "Thank You!",
-                    },
-                    delay: {
-                        pageViews: 1,
-                        timeDelay: 5
-                    },
-                }]
-            }
-        }
-    });
-    OneSignal.push(function()  {
-        OneSignal.Notifications.addEventListener('permissionChange', function (isSubscribed) {
-        if(!isSubscribed) return;
-        OneSignal.push(async function() {
-            let url = "<?php base_url('Home/addSubscription_id')?>";
-            let formData = new FormData();
-            formData.append("subscription_id", OneSignal.User.PushSubscription.id);
-            let response = await fetch(url, {
-                method: "POST",
-                body: formData
-            })
-        });
-    });
-    })
-});
-</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-63DY10P9S3"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-63DY10P9S3');
-</script>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NMS5S3RF');</script>
-<!-- End Google Tag Manager -->
 </head>
 <body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NMS5S3RF" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="page-loading">
         <img src="<?=base_url(); ?>assets/images/loader.gif" alt="" />
     </div>
@@ -164,7 +103,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <?php
                 if(!empty($_SESSION['afrebay']['userId'])) {
                     if($_SESSION['afrebay']['userType'] == '2') {
-                        if($get_setting->required_subscription == '1') { 
+                        if($get_setting->required_subscription == '1') {
                             $get_sub_data = $this->db->query("SELECT * FROM employer_subscription WHERE employer_id='".$_SESSION['afrebay']['userId']."' AND (status = '1' OR status = '2')")->result_array();
                             if(empty($get_sub_data)) { ?>
                             <a href="javascript:void(0)" title="" class="post-job-btn" id="completeSub"><i class="la la-plus"></i>Post Work<span id="completeSubtext">Please activate a subscription package and complete your profile to proceed with the post job activities.</span></a>
@@ -176,13 +115,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     <a href="<?= base_url('postwork')?>" title="" class="post-job-btn"><i class="la la-plus"></i>Post Work</a>
                                 <?php } } else { ?>
                                 <a href="<?= base_url('login')?>" title="" class="post-job-btn"><i class="la la-plus"></i>Post Work</a>
-                            <?php 
+                            <?php
                             } } else {
                             $profile_check = $this->db->query("SELECT `profilePic`, `companyname`, `email`, `mobile`,`address`, `foundedyear`, `teamsize`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
-                            if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio'])) 
+                            if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio']))
                             { ?>
                                 <a href="javascript:void(0)" title="" class="post-job-btn" id="completeSub"><i class="la la-plus"></i>Post Work<span id="completeSubtext">Please activate a subscription package and complete your profile to proceed with the post job activities.</span></a>
-                            <?php 
+                            <?php
                             } else { ?>
                                 <a href="<?= base_url('postwork')?>" title="" class="post-job-btn"><i class="la la-plus"></i>Post Work</a>
                             <?php } } }
@@ -213,10 +152,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             <a href="<?= base_url('findwork')?>" title="">Find Work</a>
                         </li>
                         <li class="account-btns">
-                            <a href="<?= base_url('businesses')?>" title="">Businesses</a>                            
+                            <a href="<?= base_url('customer')?>" title="">Customer</a>
                         </li>
                         <li class="account-btns">
-                            <a href="<?= base_url('talent')?>" title="">Talent</a>                            
+                            <a href="<?= base_url('professionals')?>" title="">Professionals</a>
                         </li>
                     </ul>
                 </div>
@@ -235,10 +174,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <nav>
                         <ul>
                             <li class="">
-                                <a href="<?= base_url('businesses')?>" title="">Businesses</a>
+                                <a href="<?= base_url('customer')?>" title="">Customer</a>
                             </li>
                             <li class="">
-                                <a href="<?= base_url('talent')?>" title="">Talent</a>
+                                <a href="<?= base_url('professionals')?>" title="">Professionals</a>
                             </li>
                             <li class="">
                                 <a href="<?= base_url('findwork')?>" title="">Find Work</a>
@@ -249,7 +188,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         <?php
                         if(!empty($_SESSION['afrebay']['userId'])) {
                             if($_SESSION['afrebay']['userType'] == '2') {
-                                if($get_setting->required_subscription == '1') { 
+                                if($get_setting->required_subscription == '1') {
                                     $get_sub_data = $this->db->query("SELECT * FROM employer_subscription WHERE employer_id='".$_SESSION['afrebay']['userId']."' AND (status = '1' OR status = '2')")->result_array();
                                     if(empty($get_sub_data)) { ?>
                                     <a href="javascript:void(0)" title="" class="post-job-btn" id="completeSub"><i class="la la-plus"></i>Post Work<span id="completeSubtext">Please activate a subscription package and complete your profile to proceed with the post job activities.</span></a>
@@ -261,13 +200,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                             <a href="<?= base_url('postwork')?>" title="" class="post-job-btn"><i class="la la-plus"></i>Post Work</a>
                                         <?php } } else { ?>
                                         <a href="<?= base_url('login')?>" title="" class="post-job-btn"><i class="la la-plus"></i>Post Work</a>
-                                    <?php 
+                                    <?php
                                     } } else {
                                     $profile_check = $this->db->query("SELECT `profilePic`, `companyname`, `email`, `mobile`,`address`, `foundedyear`, `teamsize`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
-                                    if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio'])) 
+                                    if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio']))
                                     { ?>
                                         <a href="javascript:void(0)" title="" class="post-job-btn" id="completeSub"><i class="la la-plus"></i>Post Work<span id="completeSubtext">Please activate a subscription package and complete your profile to proceed with the post job activities.</span></a>
-                                    <?php 
+                                    <?php
                                     } else { ?>
                                         <a href="<?= base_url('postwork')?>" title="" class="post-job-btn"><i class="la la-plus"></i>Post Work</a>
                                     <?php } } }
@@ -288,51 +227,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     </a>
                                     <ul>
                                         <li>
-                                            <?php 
-                                            if($get_setting->required_subscription != '1') 
+                                            <?php
+                                            if($get_setting->required_subscription != '1')
                                             {
                                                 $profile_check = $this->db->query("SELECT * FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
-                                                if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio'])) 
+                                                if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio']))
                                                 { ?>
                                                     <a href="<?=base_url(); ?>profile" title="">Profile</a>
-                                                <?php 
-                                                } 
-                                                else 
-                                                { 
+                                                <?php
+                                                }
+                                                else
+                                                {
                                                 ?>
                                                 <a href="<?=base_url(); ?>dashboard" title="">Dashboard</a>
-                                                <?php 
+                                                <?php
                                                 }
                                             } else {
                                                 $get_sub_data = $this->db->query("SELECT * FROM employer_subscription WHERE employer_id='".$_SESSION['afrebay']['userId']."' AND (status = '1' OR status = '2')")->result_array();
-                                                if(empty($get_sub_data)) 
+                                                if(empty($get_sub_data))
                                                 {
-                                                    if(@$_SESSION['afrebay']['userType']=='1') 
+                                                    if(@$_SESSION['afrebay']['userType']=='1')
                                                     { ?>
                                                         <a href="<?=base_url(); ?>subscription" title="">Subscribe</a>
-                                                    <?php 
-                                                    } 
-                                                    else 
-                                                    { ?>
-                                                        <a href="<?=base_url(); ?>subscription" title="">Subscribe</a>
-                                                    <?php 
+                                                    <?php
                                                     }
-                                                } 
-                                                else 
+                                                    else
+                                                    { ?>
+                                                        <a href="<?=base_url(); ?>subscription" title="">Subscribe</a>
+                                                    <?php
+                                                    }
+                                                }
+                                                else
                                                 {
                                                     $profile_check = $this->db->query("SELECT * FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
-                                                    if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio'])) 
+                                                    if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio']))
                                                     { ?>
                                                         <a href="<?=base_url(); ?>profile" title="">Profile</a>
-                                                    <?php 
-                                                    } 
-                                                    else 
-                                                    { 
+                                                    <?php
+                                                    }
+                                                    else
+                                                    {
                                                     ?>
                                                     <a href="<?=base_url(); ?>dashboard" title="">Dashboard</a>
-                                                    <?php 
-                                                    } 
-                                                } 
+                                                    <?php
+                                                    }
+                                                }
                                             }
                                             ?>
                                         </li>
@@ -340,9 +279,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                             <?php
                                             $uid = $_SESSION['afrebay']['userType'];
                                             if(@$_SESSION['afrebay']['userType']=='1') { ?>
-                                            <a href="<?php echo base_url("talentdetail/".base64_encode($_SESSION['afrebay']['userId']))?>" title="">View Profile</a>
+                                            <a href="<?php echo base_url("professionals_detail/".base64_encode($_SESSION['afrebay']['userId']))?>" title="">View Profile</a>
                                             <?php } else if(@$_SESSION['afrebay']['userType']=='2') { ?>
-                                            <a href="<?php echo base_url("businessdetail/".base64_encode($_SESSION['afrebay']['userId']))?>" title="">View Profile</a>
+                                            <a href="<?php echo base_url("customer_detail/".base64_encode($_SESSION['afrebay']['userId']))?>" title="">View Profile</a>
                                             <?php } ?>
                                         </li>
                                         <li>
