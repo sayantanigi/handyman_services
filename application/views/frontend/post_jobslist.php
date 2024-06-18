@@ -5,7 +5,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
     $banner_img=base_url("assets/images/resource/mslider1.jpg");
 } ?>
 <style>
-    .Employees_Search_List .Employees_Search_Result .emply-resume-list .shortlists a.Emp_Comp i {color: #f07759 !important;}
+    .Employees_Search_List .Employees_Search_Result .emply-resume-list .shortlists a.Emp_Comp i {color: #fff !important;}
     @media screen and (max-width: 425px) and (min-width: 375px) {
         .emply-resume-list {
             box-shadow: 0 0 10px #dddddd !important;
@@ -100,9 +100,9 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                             <div class="widget">
                                 <h3 class="sb-title closed">Estimated Pay</h3>
                                 <div class="specialism_widget">
-                                    <?php if($countryName == 'Nigeria') { 
+                                    <?php if($countryName == 'Nigeria') {
                                     $sym = '₦'; ?>
-                                    <?php } else { 
+                                    <?php } else {
                                     $sym = '$'; ?>
                                     <?php } ?>
                                     <select data-placeholder="Please Select Category" class="form-control" name="charges" id="charges" onchange="filter_job();">

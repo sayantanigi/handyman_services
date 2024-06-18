@@ -15,13 +15,13 @@
                         </ul>
                         <div class="job-search-sec">
                             <div class="job-search">
-                                <h3>The Easiest Way to Get Your New Job</h3>
-                                <span>Find Jobs, Employment & Career Opportunities</span>
+                                <h3>Easiest way to book the nearest handyman</h3>
+                                <span>Search for all types of handymen</span>
                                 <form method="post" action="<?= base_url('search-work')?>">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="job-field">
-                                                <input type="text" name="search_title" placeholder="Job title, keywords or company name" value="" />
+                                                <input type="text" name="search_title" placeholder="Search By Category" value="" />
                                                 <i class="la la-search"></i>
                                             </div>
                                         </div>
@@ -30,7 +30,7 @@
                                                 <select class="chosen_country" name="country" id="country" onchange="getState(this.value)">
                                                     <option value="0">Select Country</option>
                                                     <?php if(!empty($countries)){ foreach($countries as $item){?>
-                                                    <option value="<?= $item->name ?>"><?= ucfirst($item->name)?></option>
+                                                    <option value="<?= $item->name ?>" <?php if($item->name == 'United States') {echo "selected";}?>><?= ucfirst($item->name)?></option>
                                                     <?php } }?>
                                                 </select>
                                             </div>
@@ -93,6 +93,11 @@
                                 <div class="my-blog"
                                     onclick="location.href='<?= base_url('workdetail/'.base64_encode($row->id))?>';">
                                     <div class="blog-details">
+                                        <?php
+                                        $getJobImage = $this->db->query("SELECT * FROM postjob_image WHERE job_id = '".$row->id."'")->row();
+                                        $jobimage = base_url("uploads/postjob/".$getJobImage->job_image);
+                                        ?>
+                                        <img src="<?= $jobimage; ?>" />
                                         <div class="Blog-Emp-Details">
                                             <div class="Blog-Emp-Img">
                                                 <?php if (!empty($get_user[0]['profilePic'])) { ?>
@@ -116,8 +121,8 @@
                                                 <p>By <?php echo $get_user[0]['companyname']?></p>
                                             </div>
                                         </div>
-                                        <h3 class="nkash"><a href="javascript:void(0)" title="">Description</a></h3>
-                                        <p><?= ucfirst(strip_tags($desc))?></p>
+                                        <!-- <h3 class="nkash"><a href="javascript:void(0)" title="">Description</a></h3> -->
+                                        <!-- <p><?= ucfirst(strip_tags($desc))?></p> -->
                                     </div>
                                 </div>
                             </div>
@@ -283,8 +288,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="simple-text-block">
-                        <h3>Make a Difference with Your Online Resume!</h3>
-                        <span>Get access to the latest jobs and projects globally!!</span>
+                        <h3>Get access to the best handyman jobs near you.</h3>
+                        <span>Create your account here</span>
                         <?php if(empty($_SESSION['afrebay']['userId'])){?>
                         <a href="<?= base_url('signup')?>" title="">Create an Account</a>
                         <?php } ?>
@@ -300,8 +305,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="heading">
-                        <h2>Companies We've Helped</h2>
-                        <span>Some of the companies we've helped recruit excellent applicants over the years.</span>
+                        <h2>Customers we have helped</h2>
+                        <span>Some of the customers we've helped recruit excellent handymen over the years.</span>
                     </div>
                     <div class="comp-sec">
                         <?php if(!empty($get_company)) {
@@ -330,7 +335,7 @@
                 <div class="col-lg-12">
                     <div class="heading">
                         <h2>Quick Career Tips</h2>
-                        <span>Review the latest updates and informations in the industry.</span>
+                        <span>Review the latest updates in the industry.</span>
                     </div>
                     <div class="blog-sec">
                         <div class="row">
@@ -394,6 +399,24 @@ $(window).load(function () {
         $('#location').html('Geolocation is not supported by this browser.');
     }
 });
+$(document).ready(function(){
+    var base_url = $("#base_url").val();
+    var id = 'United States';
+    $.ajax({
+        type:"post",
+        cache:false,
+        url:base_url+"Welcome/states_by_country",
+        data:{
+            country_name:id
+        },
+        beforeSend:function(){},
+        success:function(returndata) {
+            $('.state_field').show();
+            $('#state').html(returndata);
+            $('#city').html('<option value="">Select State First</option>');
+        }
+    });
+})
 </script>
 <script>
 function getState(val) {

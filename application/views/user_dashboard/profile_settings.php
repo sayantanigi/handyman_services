@@ -47,27 +47,53 @@ if($data_request=='user') {
                             unset($_SESSION['message']);
                         } ?>
                         </span>
-                        <div class="bootstrap snippet">
-                            <div class="new-pro">
-                                <?php
-                                if(!empty($userinfo->profilePic)) {
-                                    if(!file_exists('uploads/users/'.$userinfo->profilePic)) {
-                                ?>
-                                <img class="img-circle img-responsive" src="<?php echo base_url('uploads/no_image.png')?>" style="width:60px; height: 60px; object-fit: cover;" />
-                                <?php } else { ?>
-                                <img class="img-circle img-responsive" src="<?php echo base_url('uploads/users/'.$userinfo->profilePic); ?>" style="width:60px; height: 60px; object-fit: cover;" />
-                                <?php } } else { ?>
-                                <img class="img-circle img-responsive" src="<?php echo base_url('uploads/no_image.png')?>" style="width:60px; height: 60px; object-fit: cover;" />
-                                <?php } ?>
-                                <input type="hidden" name="old_image" value="<?=$userinfo->profilePic ?>">
-                                <input type="hidden" name="id" value="<?=$userinfo->userId  ?>">
-                                <div class="profile-ak">
-                                    <?php if(!empty($userinfo->profilePic)) { ?>
-                                    <h6>Upload a different photo</h6>
+                        <div class="row">
+                            <div class="bootstrap snippet col-xl-6 col-lg-6 col-md-6">
+                                <div class="new-pro">
+                                    <?php
+                                    if(!empty($userinfo->profilePic)) {
+                                        if(!file_exists('uploads/users/'.$userinfo->profilePic)) {
+                                    ?>
+                                    <img class="img-circle img-responsive" src="<?php echo base_url('uploads/no_image.png')?>" style="width:60px; height: 60px; object-fit: cover;" />
                                     <?php } else { ?>
-                                        <h6>Upload a photo</h6>
+                                    <img class="img-circle img-responsive" src="<?php echo base_url('uploads/users/'.$userinfo->profilePic); ?>" style="width:60px; height: 60px; object-fit: cover;" />
+                                    <?php } } else { ?>
+                                    <img class="img-circle img-responsive" src="<?php echo base_url('uploads/no_image.png')?>" style="width:60px; height: 60px; object-fit: cover;" />
                                     <?php } ?>
-                                    <input type="file" name="profilePic" class="text-center center-block file-upload" />
+                                    <input type="hidden" name="old_image" value="<?=$userinfo->profilePic ?>">
+                                    <input type="hidden" name="id" value="<?=$userinfo->userId  ?>">
+                                    <div class="profile-ak">
+                                        <?php if(!empty($userinfo->profilePic)) { ?>
+                                        <h6>Upload a different photo</h6>
+                                        <?php } else { ?>
+                                            <h6>Upload a photo</h6>
+                                        <?php } ?>
+                                        <input type="file" name="profilePic" class="text-center center-block file-upload" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bootstrap snippet col-xl-6 col-lg-6 col-md-6">
+                                <div class="new-pro">
+                                    <?php
+                                    if(!empty($userinfo->backgroundPic)) {
+                                        if(!file_exists('uploads/users/background/'.$userinfo->backgroundPic)) {
+                                    ?>
+                                    <img class="img-circle img-responsive" src="<?php echo base_url('uploads/no_image.png')?>" style="width:60px; height: 60px; object-fit: cover;" />
+                                    <?php } else { ?>
+                                    <img class="img-circle img-responsive" src="<?php echo base_url('uploads/users/background/'.$userinfo->backgroundPic); ?>" style="width:60px; height: 60px; object-fit: cover;" />
+                                    <?php } } else { ?>
+                                    <img class="img-circle img-responsive" src="<?php echo base_url('uploads/no_image.png')?>" style="width:60px; height: 60px; object-fit: cover;" />
+                                    <?php } ?>
+                                    <input type="hidden" name="old_bimage" value="<?=$userinfo->backgroundPic ?>">
+                                    <input type="hidden" name="id" value="<?=$userinfo->userId  ?>">
+                                    <div class="profile-ak">
+                                        <?php if(!empty($userinfo->backgroundPic)) { ?>
+                                        <h6>Upload a different background photo</h6>
+                                        <?php } else { ?>
+                                            <h6>Upload a background photo</h6>
+                                        <?php } ?>
+                                        <input type="file" name="backgroundPic" class="text-center center-block file-upload" />
+                                    </div>
                                 </div>
                             </div>
                         </div>

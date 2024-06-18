@@ -1,23 +1,13 @@
 <?php
-if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->image)){
-    $banner_img=base_url("uploads/banner/".$get_banner->image);
-} else{
+if (!empty($user_detail->backgroundPic) && file_exists('uploads/users/background/' . $user_detail->backgroundPic)) {
+    $banner_img=base_url("uploads/users/background/".$user_detail->backgroundPic);
+} else {
     $banner_img=base_url("assets/images/resource/mslider1.jpg");
 } ?>
-
-<section class="overlape">
-    <div class="block no-padding">
-        <div data-velocity="-.1" style="background: url('<?= $banner_img ?>') repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible no-parallax"></div>
-        <!-- PARALLAX BACKGROUND IMAGE -->
-        <div class="container fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="inner-header">
-                        <h3>Talent Details</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section style="width: 100%; height: 400px;">
+    <div style="width: 100%; height: 100%; position: relative;">
+        <div style="background: #c34e102b; position: absolute; z-index: 1; width: 100%; height: 100%;"></div>
+        <img style="width: 100%; height: 100%; object-fit: cover;" src="<?= $banner_img ?>" />
     </div>
 </section>
 
@@ -72,7 +62,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                             <i class="la la-graduation-cap"></i>
                                             <div class="edu-hisinfo">
                                                 <h3>
-                                                    <?= ucfirst($edu->education)?> 
+                                                    <?= ucfirst($edu->education)?>
                                                     <?php if(!empty($edu->department)) { ?>
                                                     in <?= $edu->department?> depertment
                                                     <?php } ?>

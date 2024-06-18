@@ -115,7 +115,7 @@ class Welcome extends CI_Controller {
 		$userid=base64_decode($user_id);
 		$data['userdata']=$this->Crud_model->get_single('users',"userId='".$userid."'");
 		$data['get_post']=$this->Crud_model->GetData('postjob','',"user_id='".$userid."' AND is_delete = '0'");
-		$data['prod_list']=$this->db->query("SELECT user_product.id, user_product.prod_name, user_product.prod_description, user_product_image.prod_image FROM user_product_image JOIN user_product ON user_product.id = user_product_image.prod_id WHERE user_product.status = 1 AND user_product.is_delete = 1 AND user_id='".$userid."' group by user_product.id")->result_array();
+		$data['prod_list']=$this->db->query("SELECT user_product.id, user_product.prod_name, user_product.prod_description, user_product_image.prod_image FROM user_product_image JOIN user_product ON user_product.id = user_product_image.prod_id WHERE user_product.status = 1 AND user_product.is_delete = 1 AND user_id='".$userid."'")->result_array();
 		$data['get_banner']=$this->Crud_model->get_single('banner',"id='15'");
 		$viewcount=$data['userdata']->view_count+1;
 		$insert_data=array(
@@ -259,27 +259,28 @@ class Welcome extends CI_Controller {
 					$this->db->insert('specialist',$insrt);
 				}
 			}
-			$data=array(
-				'user_id'=>$_SESSION['afrebay']['userId'],
-				'required_key_skills'=>implode(", ",@$this->input->post('key_skills',TRUE)),
-				'category_id'=>$this->input->post('category_id',TRUE),
-				'subcategory_id'=>$this->input->post('subcategory_id',TRUE),
-				'post_title'=>$this->input->post('post_title',TRUE),
-				'description'=>$this->input->post('description',TRUE),
-				'duration'=>$this->input->post('duration',TRUE),
-				'pay_type'=>$this->input->post('pay_type',TRUE),
-				'charges'=>$this->input->post('charges',TRUE),
-				'currency'=>$this->input->post('currency',TRUE),
-				'location'=>@$this->input->post('location',TRUE),
-				'latitude'=>@$this->input->post('latitude',TRUE),
-				'longitude'=>@$this->input->post('longitude',TRUE),
-				'country'=>$this->input->post('country-dropdown',TRUE),
-				'state'=>$this->input->post('state-dropdown',TRUE),
-				'city'=>$this->input->post('city-dropdown',TRUE),
-				'appli_deadeline'=>$this->input->post('appli_deadeline',TRUE),
-				'created_date'=>date('Y-m-d H:i:s'),
-			);
-		} else {
+		}
+		$data=array(
+			'user_id'=>$_SESSION['afrebay']['userId'],
+			'required_key_skills'=>implode(", ",@$this->input->post('key_skills')),
+			'category_id'=>$this->input->post('category_id',TRUE),
+			'subcategory_id'=>$this->input->post('subcategory_id',TRUE),
+			'post_title'=>$this->input->post('post_title',TRUE),
+			'description'=>$this->input->post('description',TRUE),
+			'duration'=>$this->input->post('duration',TRUE),
+			'pay_type'=>$this->input->post('pay_type',TRUE),
+			'charges'=>$this->input->post('charges',TRUE),
+			'currency'=>$this->input->post('currency',TRUE),
+			'location'=>@$this->input->post('location',TRUE),
+			'latitude'=>@$this->input->post('latitude',TRUE),
+			'longitude'=>@$this->input->post('longitude',TRUE),
+			'country'=>$this->input->post('country-dropdown',TRUE),
+			'state'=>$this->input->post('state-dropdown',TRUE),
+			'city'=>$this->input->post('city-dropdown',TRUE),
+			'appli_deadeline'=>$this->input->post('appli_deadeline',TRUE),
+			'created_date'=>date('Y-m-d H:i:s'),
+		);
+		/*} else {
 			$data=array(
 				'user_id'=>$_SESSION['afrebay']['userId'],
 				'required_key_skills'=>'',
@@ -300,10 +301,37 @@ class Welcome extends CI_Controller {
 				'appli_deadeline'=>$this->input->post('appli_deadeline',TRUE),
 				'created_date'=>date('Y-m-d H:i:s'),
 			);
-		}
-
-
+		}*/
 		$this->Crud_model->SaveData('postjob',$data);
+		$insert_jid = $this->db->insert_id();
+		if(!empty($insert_jid)) {
+			if (!empty($_FILES['postjobPic']['name'])) {
+				$cpt = count($_FILES['postjobPic']['name']);
+				for($i=0; $i<$cpt; $i++) {
+					$src = $_FILES['postjobPic']['tmp_name'][$i];
+					$filEnc = time();
+					$avatar = rand(0000, 9999) . "_" . $_FILES['postjobPic']['name'][$i];
+					$avatar1 = str_replace(array('(', ')', ' '), '', $avatar);
+					$dest = getcwd() . '/uploads/postjob/' . $avatar1;
+					if (move_uploaded_file($src, $dest)) {
+						$file1  = $avatar1;
+					}
+					if(!empty($file1)) {
+						$jfile  = $file1;
+					} else if(!empty($_POST['old_jimage'])) {
+						$jfile  = $_POST['old_jimage'];
+					} else {
+						$jfile  = "";
+					}
+					$data_image = array(
+						'job_id' => $insert_jid,
+						'job_image' => $jfile,
+						'created_date' => date("Y-m-d H:i:s"),
+					);
+					$this->Crud_model->SaveData('postjob_image', $data_image);
+				}
+			}
+		}
 		$this->session->set_flashdata('message', 'Post Job Created Successfull !');
 		$insert_id = $this->db->insert_id();
 		$sitemap_date = array(
@@ -313,7 +341,7 @@ class Welcome extends CI_Controller {
 			'lastmod'=> date('c', time()),
 		);
 		$this->Crud_model->SaveData('sitemap',$sitemap_date);
-		redirect(base_url("workdetail/".base64_encode($insert_id)));
+		redirect(base_url("workdetail/".base64_encode($insert_jid)));
 	}
 
 	function post_jobinfo($id) {

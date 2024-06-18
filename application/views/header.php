@@ -19,7 +19,6 @@ $get_category=$this->Crud_model->GetData('category','',"status='Active'");
     <?php } else { ?>
     <title><?php echo @$title?> - <?php echo @$get_setting->website_name?></title>
     <?php } ?>
-
     <?php if($this->uri->segment(1) == 'customer_detail') { ?>
     <meta name="description" content="<?php echo @$userdata->short_bio?>">
     <?php } else if($this->uri->segment(1) == 'professionals_detail') { ?>
@@ -53,6 +52,7 @@ $get_category=$this->Crud_model->GetData('category','',"status='Active'");
     <script src="<?=base_url(); ?>assets/js/jquery.min.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="<?=base_url(); ?>assets/rating_css.css" />
     <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css'>
     <?php if(empty($this->uri->segment(1))) { ?>
     <meta property="og:title" content="><?php echo @$title?>" />
     <meta property="og:url" content="<?php echo base_url();?>" />
@@ -213,7 +213,6 @@ $(function () {
                         } else { ?>
                         <!-- <a href="<?= base_url('login')?>" title="" class="post-job-btn"><i class="la la-plus"></i>Post Work</a> -->
                         <?php } ?>
-
                         <ul class="account-btns">
                             <?php if(!empty($_SESSION['afrebay']['userId'])) { ?>
                                 <li class="menu-item-has-children User_Dashboard_Menu">

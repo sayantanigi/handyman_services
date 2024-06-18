@@ -253,9 +253,9 @@ class Post_job_model extends My_Model {
                 }
 
                 if($_SESSION['afrebay']['userType'] == '2') {
-                    $bidBtn = '<div class="shortlists"><a href="'.base_url('customer_detail/'.base64_encode($get_users->userId)).'" class="Emp_Comp"><i class="fa fa-briefcase" aria-hidden="true"></i>'.$name.'</a></div>';
+                    $bidBtn = '<div class="shortlists"><a href="'.base_url('businessdetail/'.base64_encode($get_users->userId)).'" class="Emp_Comp"><i class="fa fa-briefcase" aria-hidden="true"></i>'.$name.'</a></div>';
                 } else {
-                    $bidBtn = '<div class="shortlists"><a href="'.base_url('customer_detail/'.base64_encode($get_users->userId)).'" class="Emp_Comp"><i class="fa fa-briefcase" aria-hidden="true"></i>'.$name.'</a><a href="'.base_url('workdetail/'.base64_encode($row['id'])).'" title="">Bid Now <i class="la la-plus"></i></a></div>';
+                    $bidBtn = '<div class="shortlists"><a href="'.base_url('businessdetail/'.base64_encode($get_users->userId)).'" class="Emp_Comp"><i class="fa fa-briefcase" aria-hidden="true"></i>'.$name.'</a><a href="'.base_url('workdetail/'.base64_encode($row['id'])).'" title="">Bid Now <i class="la la-plus"></i></a></div>';
                 }
 
                 $output .= '<div class="emply-resume-list">

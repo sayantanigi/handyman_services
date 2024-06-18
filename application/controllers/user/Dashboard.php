@@ -58,7 +58,7 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function update_profile() {
-		if ($_FILES['profilePic']['name'] != '') {
+		/*if ($_FILES['profilePic']['name'] != '') {
 			$_POST['profilePic'] = rand(0000, 9999) . "_" . $_FILES['profilePic']['name'];
 			$config2['image_library'] = 'gd2';
 			$config2['source_image'] =  $_FILES['profilePic']['tmp_name'];
@@ -77,6 +77,62 @@ class Dashboard extends CI_Controller {
 			}
 		} else {
 			$image  = $_POST['old_image'];
+		}
+		if ($_FILES['backgroundPic']['name'] != '') {
+			$_POST['backgroundPic'] = rand(0000, 9999) . "_" . $_FILES['backgroundPic']['name'];
+			$config2['image_library'] = 'gd2';
+			$config2['source_image'] =  $_FILES['backgroundPic']['tmp_name'];
+			$config2['new_image'] =   getcwd() . '/uploads/users/background/' . $_POST['backgroundPic'];
+			$config2['upload_path'] =  getcwd() . '/uploads/users/background/';
+			$config2['allowed_types'] = 'JPG|PNG|JPEG|jpg|png|jpeg';
+			$config2['maintain_ratio'] = FALSE;
+			$this->image_lib->initialize($config2);
+			if (!$this->image_lib->resize()) {
+				echo ('<pre>');
+				echo ($this->image_lib->display_errors());
+				exit;
+			} else {
+				$bimage  = $_POST['backgroundPic'];
+				@unlink('uploads/users/background/' . $_POST['old_bimage']);
+			}
+		} else {
+			$bimage  = $_POST['old_bimage'];
+		}*/
+		if ($_FILES['profilePic']['name'] != '') {
+			$src = $_FILES['profilePic']['tmp_name'];
+			$filEnc = time();
+			$avatar = rand(0000, 9999) . "_" . $_FILES['profilePic']['name'];
+			$avatar1 = str_replace(array('(', ')', ' '), '', $avatar);
+			$dest = getcwd() . '/uploads/users/' . $avatar1;
+			if (move_uploaded_file($src, $dest)) {
+				$image  = $avatar1;
+				@unlink('uploads/users/' . $_POST['old_resume']);
+			}
+		} else {
+			if(!empty($_POST['old_image'])) {
+				$image  = $_POST['old_image'];
+			} else {
+				$image  = '';
+			}
+		}
+
+
+		if ($_FILES['backgroundPic']['name'] != '') {
+			$src = $_FILES['backgroundPic']['tmp_name'];
+			$filEnc = time();
+			$avatar = rand(0000, 9999) . "_" . $_FILES['backgroundPic']['name'];
+			$avatar1 = str_replace(array('(', ')', ' '), '', $avatar);
+			$dest = getcwd() . '/uploads/users/background/' . $avatar1;
+			if (move_uploaded_file($src, $dest)) {
+				$bimage  = $avatar1;
+				@unlink('uploads/users/background/' . $_POST['old_resume']);
+			}
+		} else {
+			if(!empty($_POST['old_resume'])) {
+				$bimage  = $_POST['old_resume'];
+			} else {
+				$bimage  = '';
+			}
 		}
 		if ($_FILES['resume']['name'] != '') {
 			$src = $_FILES['resume']['tmp_name'];
@@ -121,6 +177,7 @@ class Dashboard extends CI_Controller {
 			'gender' => $this->input->post('gender', TRUE),
 			'skills' => $skills,
 			'profilePic' => $image,
+			'backgroundPic' => $bimage,
 			'zip' => $_POST['zip'],
 			'address' => $_POST['address'],
 			'foundedyear' => $_POST['foundedyear'],
@@ -130,6 +187,7 @@ class Dashboard extends CI_Controller {
 			'short_bio' => $_POST['short_bio'],
 			'resume' => $resume,
 		);
+		//print_r($data); die();
 		$this->Crud_model->SaveData('users', $data, "userId='" . $_POST['id'] . "'");
 		if($_POST['from_data_request']=='admin'){
 		$this->session->set_flashdata('message', 'Profile Updated Successfull !');
@@ -948,7 +1006,7 @@ class Dashboard extends CI_Controller {
 		}
 		$data1['title'] = 'Add Product';
 		$this->load->view('header', $data1);
-		$this->load->view('user_dashboard/product/form', $data);
+		$this->load->view('user_dashboard/product/form', $data1);
 		$this->load->view('footer');
 	}
 

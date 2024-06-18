@@ -30,7 +30,7 @@ class Login extends CI_Controller {
 				'address' =>$_POST['location'],
 				'latitude' =>$_POST['latitude'],
 				'longitude' =>$_POST['longitude'],
-				'password' => md5($_POST['password']),
+				'password' => base64_encode($_POST['password']),
 				'created'=>date('Y-m-d H:i:s'),
 				'status'=>0
 			);
@@ -252,7 +252,7 @@ class Login extends CI_Controller {
 		if($this->input->post('email',TRUE)){
 		 	$get_email = $this->Crud_model->GetData('users','',"email='".$_POST['email']."'",'','','','1');
 			if(!empty($get_email)) {
-				$data = array('password' =>md5($_POST['password']));
+				$data = array('password' =>base64_encode($_POST['password']));
 			 	$con="userId='".$get_email->userId."'";
 			 	$this->Crud_model->SaveData('users',$data, $con);
 			 	$this->session->set_flashdata('message', 'You have reset your password successfully. Please try to login.');

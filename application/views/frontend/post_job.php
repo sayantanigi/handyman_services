@@ -49,6 +49,30 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                 <form method="post" action="<?php echo base_url('Welcome/save_postjob')?>" enctype="multipart/form-data"  style="padding: 0 !important;">
                             <?php } ?>
                                 <div class="row">
+                                    <div class="bootstrap snippet col-xl-6 col-lg-6 col-md-6">
+                                        <div class="new-pro">
+                                            <?php
+                                            if(!empty($userinfo->profilePic)) {
+                                                if(!file_exists('uploads/postjob/'.$userinfo->profilePic)) {
+                                            ?>
+                                            <img class="img-circle img-responsive" src="<?php echo base_url('uploads/no_image.png')?>" style="width:60px; height: 60px; object-fit: cover;" />
+                                            <?php } else { ?>
+                                            <img class="img-circle img-responsive" src="<?php echo base_url('uploads/users/'.$userinfo->profilePic); ?>" style="width:60px; height: 60px; object-fit: cover;" />
+                                            <?php } } else { ?>
+                                            <img class="img-circle img-responsive" src="<?php echo base_url('uploads/no_image.png')?>" style="width:60px; height: 60px; object-fit: cover;" />
+                                            <?php } ?>
+                                            <input type="hidden" name="old_image" value="<?=$userinfo->profilePic ?>">
+                                            <input type="hidden" name="id" value="<?=$userinfo->userId  ?>">
+                                            <div class="profile-ak">
+                                                <?php if(!empty($userinfo->profilePic)) { ?>
+                                                <h6>Upload different photos</h6>
+                                                <?php } else { ?>
+                                                    <h6>Upload photos</h6>
+                                                <?php } ?>
+                                                <input type="file" name="postjobPic[]" multiple class="text-center center-block file-upload" />
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12">
                                         <span class="pf-title">Job Title <span style="color:red;">*</span></span>
                                         <div class="pf-field">
@@ -140,10 +164,10 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                     <div class="col-lg-4">
                                         <span class="pf-title">Estimated Pay</span>
                                         <div style="width: 75px; float: left;">
-                                        <?php if($countryName == 'Nigeria') { 
+                                        <?php if($countryName == 'Nigeria') {
                                         $sym = '₦'; ?>
                                             <input type="text" class="form-control f1" name="currency" id="currency" value="NGN (₦)" readonly style=" padding: 15px; ">
-                                        <?php } else { 
+                                        <?php } else {
                                         $sym = '$'; ?>
                                             <input type="text" class="form-control f1" name="currency" id="currency" value="USD ($)" readonly style=" padding: 15px; ">
                                         <?php } ?>
