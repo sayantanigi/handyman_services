@@ -18325,7 +18325,15 @@ section.topak
   .DataContainer
   .emply-resume-info
   h3 {
-  color: #fff !important;
+  color: #fff !important;  
+}
+.Employees_Search_List
+  .Employees_Search_Result
+  .emply-resume-sec
+  .emply-resume-list
+  .DataContainer
+  .emply-resume-info > span {
+  color: #fff !important;  
 }
 .Employees_Search_List
   .Employees_Search_Result
@@ -18387,6 +18395,7 @@ section.topak
   border-radius: 100%;
   top: 10px;
   left: 10px;
+  object-fit: cover;
 }
 .Employees_Search_List .Employees_Search_Result .emply-resume-list .shortlists {
   position: unset !important;
@@ -18455,4 +18464,16 @@ section.topak
   .Blog-Emp-Data
   > p {
   color: #fff !important;
+}
+.JobImage {
+  height: 300px;
+  overflow: hidden;
+  width: 300px !important;
+}
+.JobImage .owl-carousel {
+  border-radius: 15px;
+  overflow: hidden;
+}
+.JobImage .position-relative {
+  height: 300px;
 }
