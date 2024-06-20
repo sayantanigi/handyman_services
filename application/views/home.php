@@ -20,10 +20,11 @@
                                 <form method="post" action="<?= base_url('search-work')?>">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="job-field">
-                                                <input type="text" name="search_title" placeholder="Search By Category" value="" />
+                                            <div class="job-field frmSearch">
+                                                <input type="text" name="category_id" id="search-box" placeholder="Search By Category" value="" />
                                                 <i class="la la-search"></i>
                                             </div>
+                                            <div id="suggesstion-box"></div>
                                         </div>
                                         <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                             <div class="job-field">
@@ -390,6 +391,33 @@
 #city {display: block;color: #888888; height: 60px; border-radius: 50px; padding: 17px !important;}
 .jconfirm-content-pane{text-align: center; font-size: 18px;}
 .jconfirm-buttons{margin-right: 140px; display: inline-block;}
+#country-list {float: left; list-style: none; margin-top: 60px; padding: 0; width: 98%; position: absolute; z-index: 1;}
+#country-list li {padding: 10px 30px; background: #ffffff; margin: 0px !important; border-radius: 10px; border-bottom: 1px solid #eee;}
+#country-list li:hover {background: #ece3d2; cursor: pointer;}
+/* #search-box {padding: 10px; border: #a8d4b1 1px solid; border-radius: 4px;} */
+/* For all browsers */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: transparent;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 </style>
 <script>
 $(window).load(function () {
@@ -399,16 +427,14 @@ $(window).load(function () {
         $('#location').html('Geolocation is not supported by this browser.');
     }
 });
-$(document).ready(function(){
+$(document).ready(function() {
     var base_url = $("#base_url").val();
     var id = 'United States';
     $.ajax({
         type:"post",
         cache:false,
         url:base_url+"Welcome/states_by_country",
-        data:{
-            country_name:id
-        },
+        data:{country_name:id},
         beforeSend:function(){},
         success:function(returndata) {
             $('.state_field').show();
@@ -416,9 +442,26 @@ $(document).ready(function(){
             $('#city').html('<option value="">Select State First</option>');
         }
     });
+
+    $("#search-box").keyup(function() {
+        var text = $("#search-box").val();
+        var base_url = $("#base_url").val();
+		$.ajax({
+			type: "POST",
+			url: base_url+"Welcome/get_category_list",
+			data: {category_name: text},
+			beforeSend: function() {
+				$("#search-box").css("background", "#FFF url(<?php base_url()?>uploads/LoaderIcon.gif) no-repeat 165px");
+			},
+			success: function(data) {
+                //console.log(data);
+				$("#suggesstion-box").show();
+				$("#suggesstion-box").html(data);
+				$("#search-box").css("background", "#FFF");
+			}
+		});
+	});
 })
-</script>
-<script>
 function getState(val) {
     var base_url = $("#base_url").val();
     var id = val;
@@ -459,5 +502,9 @@ function viewProfile() {
 	    title: '',
 	    content: "Please login to view professional's profile",
 	});
+}
+function selectcategory(val) {
+	$("#search-box").val(val);
+	$("#suggesstion-box").hide();
 }
 </script>

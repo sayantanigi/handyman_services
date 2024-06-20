@@ -54,13 +54,13 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                 </div>
                             </div>
                             <div class="widget">
-                                <h3 class="sb-title closed">Category</h3>
+                                <h3 class="sb-title open">Category</h3>
                                 <div class="specialism_widget">
                                     <select class="chosen" name="category_id" id="category_id"
                                         onchange="getsubcategory(this.value);">
                                         <option value="">Select Category</option>
                                         <?php if(!empty($getcategory)){ foreach($getcategory as $item){?>
-                                        <option value="<?= $item->id ?>"><?= ucfirst($item->category_name)?></option>
+                                        <option value="<?= $item->id ?>" <?php if(@$item->category_name == @$_POST['category_id']){ echo "selected"; } ?>><?= ucfirst($item->category_name)?></option>
                                         <?php } }?>
                                     </select>
                                 </div>
@@ -221,7 +221,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 //console.log(data);
-                $('#title_keyword').val(data.keyword);
+                $('#category_id').val(data.keyword);
                 $('#location').val(data.keyword_location);
                 $('#post_list').html(data.postlist);
                 $('#pagination_link').html(data.pagination_link);

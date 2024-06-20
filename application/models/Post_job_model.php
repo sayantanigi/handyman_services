@@ -164,29 +164,34 @@ class Post_job_model extends My_Model {
                 $query .= " AND post_title like '%".$title."%'";
 
             }
+
             if(isset($location) && !empty($location)) {
-                $query .= "
-                AND location like '%".$location."%'";
+                $query .= " AND location like '%".$location."%'";
             }
+
             if(isset($category_id) && !empty($category_id)) {
-                $query .= "
-                AND category_id='".$category_id."'";
+                if(is_numeric($category_id)) {
+                    $query .= " AND category_id = '".$category_id."'";
+                } else {
+                    $qry = $this->db->query("SELECT * FROM category WHERE category_name LIKE '%".$category_id."%'")->row();
+                    $query .= " AND category_id = '".$qry->id."'";
+                }
             }
 
             if(isset($subcategory_id) && !empty($subcategory_id)) {
-                $query .= "AND subcategory_id='".$subcategory_id."'";
+                $query .= " AND subcategory_id='".$subcategory_id."'";
             }
 
             if(isset($duration) && !empty($duration)) {
-                $query .= "AND duration='".$duration."'";
+                $query .= " AND duration='".$duration."'";
             }
 
             if(isset($pay_type) && !empty($pay_type)) {
-                $query .= "AND pay_type='".$pay_type."'";
+                $query .= " AND pay_type='".$pay_type."'";
             }
 
             if(isset($charges) && !empty($charges)) {
-                $query .= "AND charges='".$charges."'";
+                $query .= " AND charges='".$charges."'";
             }
 
             // if(isset($subcategory_id) && !empty($subcategory_id)) {
@@ -203,32 +208,32 @@ class Post_job_model extends My_Model {
 
             if(isset($days)&& !empty($days)) {
                 if($days=='one') {
-                    $query .="AND created_date>=NOW()-INTERVAL 1 HOUR";
+                    $query .=" AND created_date>=NOW()-INTERVAL 1 HOUR";
                 } else {
                     $current_date=date('Y-m-d');
                     $dates=date('Y-m-d', strtotime($current_date.'-'.$days.'days'));
-                    $query .="AND created_date>='".$dates."'";
+                    $query .=" AND created_date>='".$dates."'";
                 }
             }
 
             if(isset($search_title)&& !empty($search_title)) {
-                $query .= "AND post_title like '%".$search_title."%'";
+                $query .= " AND post_title like '%".$search_title."%'";
             }
 
             if(isset($search_location) && !empty($search_location)) {
-                $query .= "AND location like '%".$search_location."%'";
+                $query .= " AND location like '%".$search_location."%'";
             }
 
             if(isset($country) && !empty($country)) {
-                $query .= "AND country ='".$country."'";
+                $query .= " AND country ='".$country."'";
             }
 
             if(isset($state) && !empty($state)) {
-                $query .= "AND state ='".$state."'";
+                $query .= " AND state ='".$state."'";
             }
 
             if(isset($city) && !empty($city)) {
-                $query .= "AND city ='".$city."'";
+                $query .= " AND city ='".$city."'";
             }
             return $query;
         }

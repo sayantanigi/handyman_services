@@ -4,7 +4,6 @@ error_reporting(0);
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
 class Home extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
@@ -12,7 +11,6 @@ class Home extends MY_Controller {
 		$this->load->model('post_job_model');
 		$this->load->model('Users_model');
 	}
-
 	public function index() {
 	    $data['get_post'] = $this->Crud_model->GetData('postjob', 'id,post_title,description,user_id', "is_delete='0'", '', '(id)desc', '6');
 		$data['countries']=$this->Crud_model->GetData('countries',"","");
@@ -22,7 +20,6 @@ class Home extends MY_Controller {
 		$data['get_company'] = $this->Crud_model->GetData('company_logo', '', "status='Active'", '', '', '');
 		$data['get_users'] = $this->db->query("SELECT users.* FROM users WHERE users.userType = '1' AND users.status = '1' AND users.email_verified = '1' AND gender != '' ORDER BY users.userId DESC limit 8")->result();
 		$data['getTotalworkers'] = $this->db->query("SELECT users.* FROM users WHERE users.userType = '1' AND users.status = '1' AND users.email_verified = '1' ORDER BY users.userId DESC")->result_array();
-		//$data['get_ourservice'] = $this->Crud_model->GetData('our_service', '', "status='Active'", '', '', '');
 		$data['get_ourservice'] = $this->db->query("SELECT our_service.*, category_name FROM our_service LEFT JOIN category ON category.id = our_service.category_id WHERE category.category_name != '' ORDER BY our_service.id DESC")->result_array();
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Home Top'");
 		$data['get_banner_middle'] = $this->Crud_model->get_single('banner', "page_name='Home Middle'");
@@ -32,12 +29,10 @@ class Home extends MY_Controller {
 		$this->load->view('home', $data);
 		$this->load->view('footer');
 	}
-
 	public function addSubscription_id() {
 		$subscription_id = $this->input->post('subscription_id');
 		$subscription_id = $this->db->query("UPDATE users set onesignal_notification = '".@$subscription_id."' WHERE userId = '".@$_SESSION['afrebay']['userId']."'");
 	}
-
 	public function signup() {
 		$data['get_category'] = $this->Crud_model->GetData('category');
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Sign Up'");
@@ -47,7 +42,6 @@ class Home extends MY_Controller {
 		$this->load->view('register', $data);
 		$this->load->view('footer');
 	}
-
 	public function login_page() {
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Login'");
 		$data['title'] = 'Login';
@@ -55,7 +49,6 @@ class Home extends MY_Controller {
 		$this->load->view('login', $data);
 		$this->load->view('footer');
 	}
-
 	public function about() {
 		$data['get_cms'] = $this->Crud_model->get_single('manage_cms', "id='2'");
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='About Us Top'");
@@ -67,7 +60,6 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/about_us', $data);
 		$this->load->view('footer');
 	}
-
 	public function contact() {
 		$data['get_data'] = $this->Crud_model->get_single('setting');
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Contact Us'");
@@ -77,7 +69,6 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/contact_us', $data);
 		$this->load->view('footer');
 	}
-
 	function save_contact() {
 		$data = array(
 			'name' => $_POST['name'],
@@ -96,7 +87,7 @@ class Home extends MY_Controller {
 			try {
 				$mail->CharSet = 'UTF-8';
 				$mail->SetFrom($_POST['email']);
-				$mail->AddAddress('admin@handymanservices.com', 'Handyman Services');
+				$mail->AddAddress('igikolkata2024@gmail.com', 'Handyman Services');
 				$mail->IsHTML(true);
 				$mail->Subject = $subject;
 				$mail->AddEmbeddedImage('uploads/logo/'.$get_setting->flogo, 'Logo');
@@ -104,10 +95,10 @@ class Home extends MY_Controller {
 				$mail->IsSMTP();
 				$mail->SMTPAuth   = true;
 				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-				// $mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
-				// $mail->Port       = 465; //587 465
-				// $mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
-				// $mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
+				$mail->Host       = "smtp.gmail.com";
+				$mail->Port       = 465; //587 465
+				$mail->Username   = "igikolkata2024@gmail.com";
+				$mail->Password   = "Goigi123";
 				$mail->send();
 			} catch (Exception $e) {
 				$this->session->set_flashdata('message', "Your message could not be sent. Please, try again later.");
@@ -119,7 +110,6 @@ class Home extends MY_Controller {
 			redirect('contact-us');
 		}
 	}
-
 	public function privacy() {
 		$data['get_cms'] = $this->Crud_model->get_single('manage_cms', "id='3'");
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Privacy policy'");
@@ -129,7 +119,6 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/privacy_policy', $data);
 		$this->load->view('footer');
 	}
-
 	public function term_and_conditions() {
 		$data['get_cms'] = $this->Crud_model->get_single('manage_cms', "id='1'");
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Terms and Conditions'");
@@ -139,7 +128,6 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/term_and_conditions', $data);
 		$this->load->view('footer');
 	}
-
 	function getVisIpAddr() {
     	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         	return $_SERVER['HTTP_CLIENT_IP'];
@@ -149,11 +137,9 @@ class Home extends MY_Controller {
         	return $_SERVER['REMOTE_ADDR'];
     	}
 	}
-
 	function pricing() {
 		$vis_ip = $this->getVisIPAddr(); // Store the IP address
 		$ipdat = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $vis_ip));
-
 		$countryName = $ipdat->geoplugin_countryName;
 		if($countryName == 'Nigeria') {
 			$cond = " WHERE subscription_country = 'Nigeria'";
@@ -167,11 +153,9 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/pricing', $data);
 		$this->load->view('footer');
 	}
-
 	function vendor_pricing() {
 		$vis_ip = $this->getVisIPAddr(); // Store the IP address
 		$ipdat = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $vis_ip));
-
 		$countryName = $ipdat->geoplugin_countryName;
 		if($countryName == 'Nigeria') {
 			$cond = " WHERE subscription_country = 'Nigeria' AND subscription_user_type = 'Customer'";
@@ -186,7 +170,6 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/vendor_pricing', $data);
 		$this->load->view('footer');
 	}
-
 	function freelancer_pricing() {
 		$vis_ip = $this->getVisIPAddr(); // Store the IP address
 		$ipdat = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $vis_ip));
@@ -204,7 +187,6 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/freelancer_pricing', $data);
 		$this->load->view('footer');
 	}
-
 	function our_jobs() {
 		$data['getcategory']=$this->Crud_model->GetData('category');
 		$data['getcountry']=$this->Crud_model->GetData('countries');
@@ -214,7 +196,6 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/post_jobslist', $data);
 		$this->load->view('footer');
 	}
-
 	function ourjob_fetchdata() {
 		sleep(1);
 		$this->load->library('pagination');
@@ -250,7 +231,6 @@ class Home extends MY_Controller {
 		);
 		echo json_encode($output);
 	}
-
 	function post_bidding($postid) {
 		$vis_ip = $this->getVisIPAddr(); // Store the IP address
 		$ipdat = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $vis_ip));
@@ -278,7 +258,6 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/post_detail', $data);
 		$this->load->view('footer');
 	}
-
 	function workers_list() {
 		$data['get_specialist'] = $this->Crud_model->GetData('specialist');
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Service Provider'");
@@ -288,7 +267,6 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/workers_list', $data);
 		$this->load->view('footer');
 	}
-
 	function workerlist_fetchdata() {
 		sleep(1);
 		$title = $this->input->post('title_keyword');
@@ -336,7 +314,6 @@ class Home extends MY_Controller {
 		);
 		echo json_encode($output);
 	}
-
 	public function worker_detail($user_id) {
 		$cond = "users.userType='1' and users.userId='" . base64_decode($user_id) . "'";
 		$data['user_detail'] = $this->Users_model->users_detail($cond);
@@ -348,7 +325,6 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/worker_profile', $data);
 		$this->load->view('footer');
 	}
-
 	function employer_list() {
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Customer'");
 		$data['getcategory']=$this->Crud_model->GetData('category');
@@ -358,7 +334,6 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/employer_list', $data);
 		$this->load->view('footer');
 	}
-
 	function employerlist_fetchdata() {
 		sleep(1);
 		$title = $this->input->post('title_keyword');
@@ -394,20 +369,17 @@ class Home extends MY_Controller {
 		$this->pagination->initialize($config);
 		$page = $this->uri->segment(3);
 		$start = ($page - 1) * $config['per_page'];
-
 		if(isset($title) || isset($category_id) || isset($subcategory_id) || isset($search_location) || isset($days) || isset($userType)) {
 			$getdata=$this->Users_model->employer_fetchdata($config["per_page"], $start, $title, $category_id, $subcategory_id, $search_location, $days, $userType);
 		} else {
 			$getdata=$this->Users_model->employer_fetchdata($config["per_page"], $start, $title, $category_id, $subcategory_id, $search_location, $days, $userType);
 		}
-
 		$output = array(
 			'pagination_link'  => $this->pagination->create_links(),
 			'employer_list'   => $getdata
 		);
 		echo json_encode($output);
 	}
-
 	function career_tipsList() {
 		$data['getcareer'] = $this->Crud_model->GetData('career_tips', '', "status= 'Active'", '', '(id)desc');
 		$data['title'] = "Career Tips";
@@ -415,14 +387,12 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/careertipsList.php', $data);
 		$this->load->view('footer');
 	}
-
 	function career_tip($slug) {
 		$data['get_career'] = $this->Crud_model->get_single('career_tips', "slug='".$slug."'");
 		$this->load->view('header', $data);
 		$this->load->view('frontend/career_tip', $data);
 		$this->load->view('footer');
 	}
-
 	function product_contact() {
 		$data=array(
 			'product_id' => $this->input->post('p_id'),
@@ -432,7 +402,6 @@ class Home extends MY_Controller {
 			'c_description' => $this->input->post('details'),
 			'created_date'=> date('Y-m-d H:i:s')
 		);
-
 		$result = $this->Mymodel->insert('product_contact', $data);
 		$insert_id = $this->db->insert_id();
 		$get_setting=$this->Crud_model->get_single('setting');
@@ -443,7 +412,7 @@ class Home extends MY_Controller {
 			$mail = new PHPMailer(true);
 			try {
 				$mail->CharSet = 'UTF-8';
-				$mail->SetFrom('admin@handymanservices.com', 'Handyman Services');
+				$mail->SetFrom('igikolkata2024@gmail.com', 'Handyman Services');
 				$mail->AddAddress($_POST['email']);
 				$mail->IsHTML(true);
 				$mail->Subject = $subject;
@@ -452,10 +421,10 @@ class Home extends MY_Controller {
 				$mail->IsSMTP();
 				$mail->SMTPAuth   = true;
 				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-				// $mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
-				// $mail->Port       = 465; //587 465
-				// $mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
-				// $mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
+				$mail->Host       = "smtp.gmail.com";
+				$mail->Port       = 465; //587 465
+				$mail->Username   = "igikolkata2024@gmail.com";
+				$mail->Password   = "Goigi123";
 				$mail->send();
 			} catch (Exception $e) {
 				$this->session->set_flashdata('message', "Your message could not be sent. Please, try again later.");
@@ -466,11 +435,9 @@ class Home extends MY_Controller {
 		}
 		echo $res; exit;
 	}
-
 	public function filterByuserType() {
 		$vis_ip = $this->getVisIPAddr(); // Store the IP address
 		$ipdat = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $vis_ip));
-
 		$countryName = $ipdat->geoplugin_countryName;
 		$userType = $this->input->post('user_type');
 		if($countryName == 'Nigeria') {
@@ -541,7 +508,6 @@ class Home extends MY_Controller {
 		}
 		echo $html;
 	}
-
 	public function paystackCheckout($planCode,$price,$email) {
 		$plan_code = base64_decode($planCode);
 		$price = base64_decode($price);
@@ -552,7 +518,6 @@ class Home extends MY_Controller {
 			'amount' => $price,
 			'plan' => $plan_code
 		];
-
   		$fields_string = http_build_query($fields);
 		$ch = curl_init();  //open connection
 		curl_setopt($ch,CURLOPT_URL, $url);   //set the url, number of POST vars, POST data

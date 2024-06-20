@@ -4,14 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
 class Authentication extends CI_Controller {
-
 	public function __construct() {
         parent::__construct();
         $this->load->model('Mymodel');
     }
-
 	public function registration() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -33,14 +30,12 @@ class Authentication extends CI_Controller {
 					'created'=> date('Y-m-d H:i:s'),
 					'status'=> 0
 				);
-
 				$result = $this->Mymodel->insert('users',$data);
 				if($formdata['first_name']) {
 					$fullname = $formdata['first_name']." ".$formdata['last_name'];
 				} else {
 					$fullname = $formdata['company_name'];
 				}
-
 				$insert_id = $this->db->insert_id();
 				$get_setting = $this->Crud_model->get_single('setting');
 				if(!empty($insert_id)) {
@@ -61,10 +56,10 @@ class Authentication extends CI_Controller {
 					$mail->IsSMTP();
 					$mail->SMTPAuth   = true;
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-					// $mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
-					// $mail->Port       = 465; //587 465
-					// $mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
-					// $mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
+					$mail->Host = "smtp.gmail.com";
+					$mail->Port = 465; //587 465
+					$mail->Username = "igikolkata2024@gmail.com";
+					$mail->Password = "Goigi123";
 					$mail->send();
 					$msg = "We have sent an activation link to your account to continue with the registration process.";
 					$response = array('status'=> 'success','result'=> $msg);
@@ -78,60 +73,7 @@ class Authentication extends CI_Controller {
 	    }
 		echo json_encode($response);
 	}
-
-	/*public function login() {
-	    try {
-	        $formdata = json_decode(file_get_contents('php://input'), true);
-	        $email = $formdata["email"];
-			$password = $formdata["password"];
-			$check_user = $this->db->query("SELECT * FROM users WHERE email = '".$email."' AND password = '".md5($password)."' AND status = '1'")->result_array();
-			if(!empty($check_user)) {
-	            $msg = 'Logged in successfully';
-	            if($check_user['0']['userType'] == '1') {
-					$check_sub = $this->Crud_model->GetData('employer_subscription', '', "employer_id='".$check_user['0']['userId']."' AND status IN (1,2)");
-					if(empty($check_sub)) {
-						$response = array('status'=> 'success','result'=> $check_user);
-						$response = array_merge($response, array("subscription"=> "0"));
-					} else {
-						$profile_check = $this->db->query("SELECT `firstname`, `lastname`, `email`, `gender`, `address`, `zip`, `short_bio` FROM `users` WHERE userId = '".@$check_user['0']['userId']."'")->result_array();
-						if(empty($profile_check[0]['firstname']) || empty($profile_check[0]['lastname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['gender']) || empty($profile_check[0]['address']) || empty($profile_check[0]['zip']) || empty($profile_check[0]['short_bio'])) {
-	                        $response = array('status'=> 'success','result'=> $check_user);
-	                        $response = array_merge($response, array("profile"=> "0"));
-						} else {
-	                        $response = array('status'=> 'success','result'=> $check_user);
-	                        $response = array_merge($response, array("profile"=> "1"));
-	                    }
-					}
-				} else if ($check_user['0']['userType'] == '2') {
-					$check_sub = $this->Crud_model->GetData('employer_subscription', '', "employer_id='".$check_user['0']['userId']."' AND status IN (1,2)");
-					if(empty($check_sub)) {
-	                    $response = array('status'=> 'success','result'=> $check_user);
-	                    $response = array_merge($response, array("subscription"=> "0"));
-	                } else {
-	                	$profile_check = $this->db->query("SELECT `profilePic`, `companyname`, `email`, `mobile`,`address`, `foundedyear`, `teamsize`, `short_bio` FROM `users` WHERE userId = '".@$check_user['0']['userId']."'")->result_array();
-	                    if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio'])) {
-	                    	$response = array('status'=> 'success','result'=> $check_user);
-	                    	$response = array_merge($response, array("profile"=> "0"));
-	                	} else {
-	                        $response = array('status'=> 'success','result'=> $check_user);
-	                        $response = array_merge($response, array("profile"=> "1"));
-	                	}
-	                }
-				} else {
-	                $response = array('status'=> 'success','result'=> $check_user);
-	                $response = array_merge($response, array("profile"=> "1"));
-				}
-	        } else {
-	            $msg = 'Invalid Email Address or Password';
-	            $response = array('status'=> 'error','result'=> $msg);
-	        }
-	    } catch (\Exception $e) {
-	        $response = array('status'=> 'error', 'result'=> $e->getMessage());
-	    }
-	    echo json_encode($response);
-	}*/
-
-    public function login() {
+	public function login() {
         try {
             $formdata = json_decode(file_get_contents('php://input'), true);
             $email = $formdata["email"];
@@ -208,7 +150,6 @@ class Authentication extends CI_Controller {
         }
         echo json_encode($response);
     }
-
     public function send_forget_password() {
         try {
             $formdata = json_decode(file_get_contents('php://input'), true);
@@ -231,10 +172,10 @@ class Authentication extends CI_Controller {
     					$mail->IsSMTP();
 						$mail->SMTPAuth   = true;
 						$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-						// $mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
-						// $mail->Port       = 465; //587 465
-						// $mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
-						// $mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
+						$mail->Host = "smtp.gmail.com";
+						$mail->Port = 465; //587 465
+						$mail->Username = "igikolkata2024@gmail.com";
+						$mail->Password = "Goigi123";
 						$mail->send();
     					$msg = 'Please check your inbox. We have sent you an email to reset your password.';
     					$response = array('status'=> 'success','result'=> $msg);
@@ -255,7 +196,6 @@ class Authentication extends CI_Controller {
         }
         echo json_encode($response);
 	}
-
     public function logout() {
 	    unset($_SESSION['afrebay']);
         $response = array('status'=> 'success','result'=> 'You have logged out.');

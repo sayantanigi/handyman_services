@@ -71,6 +71,16 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                                 <?php } ?>
                                                 <input type="file" name="postjobPic[]" multiple class="text-center center-block file-upload" />
                                             </div>
+                                            <div>
+                                            <?php
+                                            $getJobImage = $this->db->query("SELECT * FROM postjob_image WHERE job_id='".$id."'")->result_array();
+                                            //print_r($getJobImage); die();
+                                            if(!empty($getJobImage)){
+                                            foreach ($getJobImage as $val) { ?>
+                                                <img class="img-circle_<?php echo $val['id']?> img-responsive" src="<?php echo base_url('uploads/postjob/'.$val['job_image']); ?>" style="width:60px;height: 60px;"/>
+                                                <img class="img-circle-close_<?php echo $val['id']?> img-responsive" src="<?php echo base_url('uploads/close-icon.png'); ?>" onclick="deleteJobImg(<?php echo $val['id']?>);" style="width: 15px; height: 15px; position: relative;top: -30px; right: 12px;"/>
+                                            <?php } } ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -164,18 +174,18 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                     <div class="col-lg-4">
                                         <span class="pf-title">Estimated Pay</span>
                                         <div style="width: 75px; float: left;">
-                                        <?php if($countryName == 'Nigeria') {
-                                        $sym = '₦'; ?>
+                                            <?php if($countryName == 'Nigeria') {
+                                            $sym = '₦'; ?>
                                             <input type="text" class="form-control f1" name="currency" id="currency" value="NGN (₦)" readonly style=" padding: 15px; ">
-                                        <?php } else {
-                                        $sym = '$'; ?>
+                                            <?php } else {
+                                            $sym = '$'; ?>
                                             <input type="text" class="form-control f1" name="currency" id="currency" value="USD ($)" readonly style=" padding: 15px; ">
-                                        <?php } ?>
+                                            <?php } ?>
                                         </div>
                                         <div class="pf-field" style="width: 79%;">
                                             <select data-placeholder="Please Select Category" class="form-control" name="charges" required style=" float: left; width: 100%; margin-left: 10px;">
                                                 <option value="">Select Option</option>
-                                                <option value="Less than <?= $sym?>100" <?php if($charges == 'Less than'.$sym.'100') {echo "selected";}?>>Less than <?= $sym?>100</option>
+                                                <option value="Less than <?= $sym?>100" <?php if($charges == "Less than'.$sym.'100") {echo "selected";}?>>Less than <?= $sym?>100</option>
                                                 <option value="<?= $sym?>100 - <?= $sym?>500" <?php if($charges == $sym.'100 - '.$sym.'500') {echo "selected";}?>><?= $sym?>100 - <?= $sym?>500</option>
                                                 <option value="<?= $sym?>500 - <?= $sym?>1K" <?php if($charges == $sym.'500 - '.$sym.'1K') {echo "selected";}?>><?= $sym?>500 - <?= $sym?>1K</option>
                                                 <option value="<?= $sym?>1K - <?= $sym?>5K" <?php if($charges == $sym.'1K - '.$sym.'5K') {echo "selected";}?>><?= $sym?>1K - <?= $sym?>5K</option>
@@ -392,4 +402,18 @@ $(document).ready(function() {
         });
     }
 });
+
+function deleteJobImg(pi_id) {
+    var id = pi_id;
+    var base_url = $('#base_url').val();
+    $('.img-circle_'+id).css('display','none');
+    $('.img-circle-close_'+id).css('display','none');
+    $.ajax({
+        url:base_url+"user/Dashboard/delete_job_image",
+        method:"POST",
+        data:{id: id},
+        beforeSend : function(){},
+        success:function(data) {}
+    })
+}
 </script>

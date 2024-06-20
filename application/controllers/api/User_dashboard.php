@@ -4,15 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
 class User_dashboard extends CI_Controller {
-
 	public function __construct() {
         parent::__construct();
         $this->load->model('Mymodel');
 		$this->load->model('Users_model');
     }
-
 	function getVisIpAddr() {
     	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         	return $_SERVER['HTTP_CLIENT_IP'];
@@ -22,7 +19,6 @@ class User_dashboard extends CI_Controller {
         	return $_SERVER['REMOTE_ADDR'];
     	}
 	}
-
 	public function subscription_details() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -36,13 +32,11 @@ class User_dashboard extends CI_Controller {
 			} else {
 				$cond = " WHERE subscription_country = 'Global'";
 			}
-
 			if($userType == '1') {
 				$uType = 'Freelancer';
 			} else {
 				$uType = 'Business';
 			}
-
 			$subscription_check = $this->db->query("SELECT * FROM employer_subscription WHERE employer_id='".@$user_id."' AND (status = '1' OR status = '2')")->result_array();
 			if(!empty($subscription_check)) {
 				$data['current_plan'] = $this->Crud_model->GetData('employer_subscription', '', "employer_id='".@$user_id."' AND status IN (1,2)");
@@ -56,7 +50,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function userSubscription() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -93,7 +86,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function payment_success() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -145,16 +137,12 @@ class User_dashboard extends CI_Controller {
 					$mail->IsSMTP();
 					$mail->SMTPAuth   = true;
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-					// $mail->Host       = "email-smtp.us-east-2.amazonaws.com";
-					// $mail->Port       = 587; //587 465
-					// $mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
-					// $mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
+					$mail->Host = "smtp.gmail.com";
+					$mail->Port = 465; //587 465
+					$mail->Username = "igikolkata2024@gmail.com";
+					$mail->Password = "Goigi123";
 					$mail->send();
-					// if(!$mail->send()) {
 					$response = array('status'=> 'error', 'result'=>'Your message could not be sent. Please, try again later.');
-					// } else {
-					// 	$response = array('status'=> 'success', 'result'=>'The email message was sent.');
-					// }
 				}
 			}
 		} catch (\Exception $e) {
@@ -162,7 +150,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function getUserSubscriptionDetails() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -175,7 +162,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function profile_settings() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -188,7 +174,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function update_profile() {
 		try {
 			if ($_FILES['profilePic']['name'] != '') {
@@ -208,7 +193,6 @@ class User_dashboard extends CI_Controller {
 					$image  = $_POST['profilePic'];
 					@unlink('uploads/users/' . $_POST['old_image']);
 				}
-
 				if(!empty($this->input->post('key_skills'))) {
 					$key_skills = $this->input->post('key_skills');
 					for ($i=0; $i < count($key_skills); $i++) {
@@ -228,7 +212,6 @@ class User_dashboard extends CI_Controller {
 			} else {
 				$image  = $_POST['old_image'];
 			}
-
 			$data = array(
 				'user_id' => $_POST['user_id'],
 				'companyname' => $_POST['companyname'],
@@ -259,7 +242,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function education_list() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -275,7 +257,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function save_education() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -295,7 +276,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function get_educationDetails() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -307,7 +287,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function update_education() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -326,7 +305,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function delete_education() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -338,7 +316,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function workexperience_list() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -354,7 +331,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function save_workexperience() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -374,7 +350,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function get_workexperience() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -386,7 +361,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function update_workexperience() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -405,7 +379,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function delete_workexperience() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -417,7 +390,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function save_postbid() {
 		try{
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -442,7 +414,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function jobbid() {
 		$this->load->model('Post_job_model');
 		try{
@@ -464,7 +435,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function delete_job() {
 		try{
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -480,7 +450,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function myjob() {
 		try{
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -496,7 +465,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function save_postjob() {
 		try{
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -537,7 +505,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function edit_post_job() {
 		try{
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -572,7 +539,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function update_post_job() {
 		try{
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -613,7 +579,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function changebiddingstatus() {
 		try{
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -644,7 +609,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function products() {
 		try{
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -673,7 +637,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function add_product() {
 		try{
 			if(!empty($this->input->post())){
@@ -721,7 +684,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function edit_product() {
 		try{
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -751,7 +713,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function update_product() {
 		try{
 			if(!empty($this->input->post())){
@@ -760,7 +721,7 @@ class User_dashboard extends CI_Controller {
 					'prod_description' => $this->input->post('prod_description'),
 					'id' =>  $this->input->post('id')
 				);
-				$updateQuery = $this->Crud_model->SaveData('user_product', $data, "id='".$id."'");
+				$updateQuery = $this->Crud_model->SaveData('user_product', $data, "id='".$this->input->post('id')."'");
 				if (!empty($_FILES['prod_image']['name'][0])) {
 					$cpt = count($_FILES['prod_image']['name']);
 					for($i=0; $i<$cpt; $i++) {
@@ -795,7 +756,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function delete_product() {
 		try{
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -811,7 +771,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function delete_product_image() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -827,7 +786,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function save_employer_rating() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -846,7 +804,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function chatUser_list() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -860,7 +817,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function showmessage_count() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -879,7 +835,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function showmessageCountEach() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -898,7 +853,6 @@ class User_dashboard extends CI_Controller {
 		}
 		echo json_encode($data);
 	}
-
 	public function showmessage_list() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);

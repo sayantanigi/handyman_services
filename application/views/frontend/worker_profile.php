@@ -50,7 +50,7 @@ if (!empty($user_detail->backgroundPic) && file_exists('uploads/users/background
                         <div class="row">
                             <div class="col-lg-8 column">
                                 <div class="cand-details" id="about">
-                                    <h2>About This Talent</h2>
+                                    <h2>About This Professional</h2>
                                     <p>
                                         <?= @$user_detail->short_bio;?>
                                     </p>
@@ -121,7 +121,7 @@ if (!empty($user_detail->backgroundPic) && file_exists('uploads/users/background
                                 <!-- Job Overview -->
                                 <?php if(!empty($_SESSION['afrebay']['userId'])&& $_SESSION['afrebay']['userType']==2){?>
                                 <div class="quick-form-job">
-                                    <h3>Rate This Freelancer</h3>
+                                    <h3>Rate This Professional</h3>
                                     <form method="post" action="<?= base_url('user/dashboard/save_employer_rating')?>">
                                         <div class="row m-0">
                                             <div class="col-lg-12 col-md-12 col-sm-12">

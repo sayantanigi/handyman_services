@@ -1,18 +1,13 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
 class Login extends CI_Controller {
-
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('Mymodel');
 	}
-
 	public function reg() {
 		$validate=$this->Crud_model->get_single('users',"email='".$_POST['email']."'");
 		if(!empty($validate)) {
@@ -25,8 +20,6 @@ class Login extends CI_Controller {
 				'lastname' =>$_POST['last_name'],
 				'companyname' =>$_POST['company_name'],
 				'email' =>$_POST['email'],
-				//'mobile' =>$_POST['mobile'],
-				//'serviceType' => implode(", ", $_POST['service']),
 				'address' =>$_POST['location'],
 				'latitude' =>$_POST['latitude'],
 				'longitude' =>$_POST['longitude'],
@@ -69,19 +62,19 @@ class Login extends CI_Controller {
 				$mail = new PHPMailer(true);
 				try {
 					$mail->CharSet = 'UTF-8';
-					$mail->SetFrom('admin@handymanservices.com', 'Handyman Services');
+					$mail->SetFrom('igikolkata2024@gmail.com', 'Handyman Services');
 					$mail->AddAddress($_POST['email']);
 					$mail->IsHTML(true);
 					$mail->Subject = 'Verify Your Email Address From Handyman Services';
 					$mail->AddEmbeddedImage('uploads/logo/'.$get_setting->flogo, 'Logo');
 					$mail->Body = $message;
 					$mail->IsSMTP();
-					$mail->SMTPAuth   = true;
+					$mail->SMTPAuth = true;
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-					// $mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
-					// $mail->Port       = 465; //587 465
-					// $mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
-					// $mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
+					$mail->Host = "smtp.gmail.com";
+					$mail->Port = 465; //587 465
+					$mail->Username = "igikolkata2024@gmail.com";
+					$mail->Password = "Goigi123";
 					$mail->send();
 				} catch (Exception $e) {
 					echo $e->getMessage(); //Boring error messages from anything else!
@@ -201,7 +194,6 @@ class Login extends CI_Controller {
 		$this->load->view('forgot_password');
 		$this->load->view('footer');
    	}
-
 	function send_forget_password() {
     	if(!empty($this->input->post('email',TRUE))) {
      		$get_email = $this->Crud_model->get_single('users',"email='".$_POST['email']."'");
@@ -215,39 +207,36 @@ class Login extends CI_Controller {
 				$mail = new PHPMailer(true);
 				try {
 					$mail->CharSet = 'UTF-8';
-					$mail->SetFrom('info@handymanservices.com', 'Handyman Services');
+					$mail->SetFrom('igikolkata2024@gmail.com', 'Handyman Services');
 					$mail->AddAddress($_POST['email']);
 					$mail->IsHTML(true);
 					$mail->Subject = "Forgot Password Confirmation message from Handyman Services";
 					$mail->AddEmbeddedImage('uploads/logo/'.$get_setting->flogo, 'Logo');
 					$mail->Body = $htmlContent;
 					$mail->IsSMTP();
-					$mail->SMTPAuth   = true;
+					$mail->SMTPAuth = true;
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-					// $mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
-					// $mail->Port       = 465; //587 465
-					// $mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
-					// $mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
+					$mail->Host = "smtp.gmail.com";
+					$mail->Port = 465; //587 465
+					$mail->Username = "igikolkata2024@gmail.com";
+					$mail->Password = "Goigi123";
 					$mail->send();
 					$this->session->set_flashdata('message', 'Please check your inbox. We have sent you an email to reset your password.');
 				} catch (Exception $e) {
 					$this->session->set_flashdata('message', 'Something went wrong. Please try again later!');
 				}
          	} else {
-   				//echo $msg = '3';
 				$this->session->set_flashdata('error', 'invalid Email Id!');
    			}
 			redirect(base_url('forgot-password'));
 		}
 	}
-
 	function new_password() {
 	    $data['title']='New Password';
 		$this->load->view('header',$data);
 		$this->load->view('new_password');
 		$this->load->view('footer');
 	}
-
 	public function setnew_password() {
 		if($this->input->post('email',TRUE)){
 		 	$get_email = $this->Crud_model->GetData('users','',"email='".$_POST['email']."'",'','','','1');
@@ -262,5 +251,4 @@ class Login extends CI_Controller {
             }
         }
 	}
-
-}//end controller
+}

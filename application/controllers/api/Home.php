@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
 class Home extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
@@ -11,7 +10,6 @@ class Home extends MY_Controller {
 		$this->load->model('post_job_model');
 		$this->load->model('Users_model');
 	}
-
 	public function home_list() {
 		try {
 			//$data['get_post'] = $this->Crud_model->GetData('postjob', 'id,post_title,description,user_id', "is_delete='0'", '', '(id)desc', '6');
@@ -30,7 +28,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function post_details() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -43,7 +40,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function careertips_details() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -55,7 +51,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function vendor_lists() {
 		try {
 			$title = $this->input->post('title_keyword');
@@ -91,7 +86,6 @@ class Home extends MY_Controller {
 			$this->pagination->initialize($config);
 			$page = 1;
 			$start = ($page - 1) * $config['per_page'];
-
 			if(isset($title) || isset($category_id) || isset($subcategory_id) || isset($search_location) || isset($days) || isset($userType)) {
 				$getdata = $this->Users_model->vendor_fetchdataForAPI($config["per_page"], $start, $title, $category_id, $subcategory_id, $search_location, $days, $userType);
 			} else {
@@ -124,7 +118,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function vendor_details() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -144,7 +137,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function freelancer_lists() {
 		try {
 			$title = $this->input->post('title_keyword');
@@ -181,7 +173,6 @@ class Home extends MY_Controller {
 			$this->pagination->initialize($config);
 			$page = 1;
 			$start = ($page - 1) * $config['per_page'];
-
 			if(isset($title) || isset($search_location) || isset($specialist) || isset($userType)) {
 				$getdata = $this->Users_model->freelancer_fetchdataForAPI($config["per_page"], $start, $title, $search_location, $specialist, $userType);
 			} else {
@@ -213,7 +204,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function freelancer_details() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -233,7 +223,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function product_details() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -246,7 +235,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	function getVisIpAddr() {
     	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         	return $_SERVER['HTTP_CLIENT_IP'];
@@ -256,7 +244,6 @@ class Home extends MY_Controller {
         	return $_SERVER['REMOTE_ADDR'];
     	}
 	}
-
 	public function vendor_pricing() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -277,7 +264,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function freelancer_pricing() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -298,7 +284,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function about() {
 		try {
 			$data['get_cms'] = $this->Crud_model->get_single('manage_cms', "id='2'");
@@ -311,7 +296,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function contact() {
 		try {
 			$data['get_data'] = $this->Crud_model->get_single('setting');
@@ -322,7 +306,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function save_contact() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -350,23 +333,18 @@ class Home extends MY_Controller {
 				$mail->IsSMTP();
 				$mail->SMTPAuth   = true;
 				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-				// $mail->Host       = "ssl://email-smtp.us-east-2.amazonaws.com";
-				// $mail->Port       = 465; //587 465
-				// $mail->Username   = "AKIAUHXKJQRN4ME7FYH6";
-				// $mail->Password   = "BM7Dgo35HIKrXpCw98gIAUSuonRmxjvpqvS8ZqRGYmY4";
+				$mail->Host = "smtp.gmail.com";
+				$mail->Port = 465; //587 465
+				$mail->Username = "igikolkata2024@gmail.com";
+				$mail->Password = "Goigi123";
 				$mail->send();
-				// if(!$mail->send()) {
 				$response = array('status'=> 'error', 'result'=>'Your message could not be sent. Please, try again later.');
-				// } else {
-				// 	$response = array('status'=> 'success', 'result'=>'The email message was sent.');
-				// }
 			}
 		} catch (\Exception $e) {
 			$response = array('status'=> 'error', 'result'=> $e->getMessage());
 		}
 		echo json_encode($response);
 	}
-
 	public function privacy() {
 		try {
 			$data['get_cms'] = $this->Crud_model->get_single('manage_cms', "id='3'");
@@ -377,7 +355,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function term_and_conditions() {
 		try {
 			$data['get_cms'] = $this->Crud_model->get_single('manage_cms', "id='1'");
@@ -388,7 +365,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function search_job() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -409,7 +385,6 @@ class Home extends MY_Controller {
 				$get_product=$this->Crud_model->GetData('postjob','',"subcategory_id='".$post_id."' and is_delete='0' AND status = 'Active'");
 				$total_count=count($get_product);
 			}
-
 			$this->load->library('pagination');
 			$config = array();
 			$config['base_url'] = '#';
@@ -441,7 +416,6 @@ class Home extends MY_Controller {
 			} else {
 				$start = '0';
 			}
-
 			if(isset($category_id) || isset($title)|| isset($days)||isset($subcategory_id)|| isset($location)|| isset($search_title)|| isset($search_location)|| isset($country)|| isset($state)|| isset($city)) {
 				$getdata=$this->post_job_model->subcategory_fetchdataAPI($config["per_page"], $start, $title, $location,$days,$category_id,$subcategory_id,$post_id,$search_title,$search_location,$country,$state,$city);
 			} else {
@@ -457,7 +431,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function states_by_country() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -470,7 +443,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function cities_by_state() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -483,7 +455,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function categoryList() {
 		try {
 			$get_catList = $this->db->query("SELECT id, category_name FROM category WHERE status = 'Active'")->result_array();
@@ -493,7 +464,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function subcategory_by_category() {
 		try {
 			$formdata = json_decode(file_get_contents('php://input'), true);
@@ -505,7 +475,6 @@ class Home extends MY_Controller {
 		}
 		echo json_encode($response);
 	}
-
 	public function getKeySkills() {
 		try {
 			$getKeySkills = $this->db->query("SELECT id, specialist_name FROM specialist WHERE status = 'Active'")->result_array();
