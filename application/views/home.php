@@ -18,41 +18,21 @@
                                 <h3>Easiest way to book the nearest handyman</h3>
                                 <span>Search for all types of handymen</span>
                                 <form method="post" action="<?= base_url('search-work')?>">
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row" style="align-items: center !important; flex-direction: column;">
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                             <div class="job-field frmSearch">
                                                 <input type="text" name="category_id" id="search-box" placeholder="Search By Category" value="" />
                                                 <i class="la la-search"></i>
                                             </div>
                                             <div id="suggesstion-box"></div>
                                         </div>
-                                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="job-field">
-                                                <select class="chosen_country" name="country" id="country" onchange="getState(this.value)">
-                                                    <option value="0">Select Country</option>
-                                                    <?php if(!empty($countries)){ foreach($countries as $item){?>
-                                                    <option value="<?= $item->name ?>" <?php if($item->name == 'United States') {echo "selected";}?>><?= ucfirst($item->name)?></option>
-                                                    <?php } }?>
-                                                </select>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            <div class="job-field frmSearch">
+                                            <input type="text" name="location" id="location" value="<?= @$loc ?>" placeholder="Location..." />
+                                            <input type="hidden" id="search_lat" name="s_lat" value="<?= @$lat ?>">
+                                            <input type="hidden" id="search_lon" name="s_lon" value="<?= @$lon ?>">
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="job-field">
-                                                <div class="custom-select">
-                                                    <select class="chosen_state" name="state" id="state" onchange="getCity(this.value);filter_job();">
-                                                        <option value="">Select State</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="job-field">
-                                                <div class="custom-select">
-                                                    <select class="chosen_city" name="city" id="city" onchange="filter_job();">
-                                                        <option value="">Select City</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                            <div id="suggesstion-box"></div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 search-btn">
                                             <button type="submit"><i class="la la-search"></i></button>
@@ -395,29 +375,10 @@
 #country-list li {padding: 10px 30px; background: #ffffff; margin: 0px !important; border-radius: 10px; border-bottom: 1px solid #eee;}
 #country-list li:hover {background: #ece3d2; cursor: pointer;}
 /* #search-box {padding: 10px; border: #a8d4b1 1px solid; border-radius: 4px;} */
-/* For all browsers */
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
-  background-color: transparent;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
+::-webkit-scrollbar {width: 10px;background-color: transparent;}
+::-webkit-scrollbar-track {background: transparent;}
+::-webkit-scrollbar-thumb {background: #888;border-radius: 5px;}
+::-webkit-scrollbar-thumb:hover {background: #555;}
 </style>
 <script>
 $(window).load(function () {
@@ -507,4 +468,42 @@ function selectcategory(val) {
 	$("#search-box").val(val);
 	$("#suggesstion-box").hide();
 }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtg6oeRPEkRL9_CE-us3QdvXjupbgG14A&libraries=places&callback=initMap"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    var location = {
+        latitude: '',
+        longitude: ''
+    };
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+    else {
+        //latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";
+        //
+    }
+    function showPosition(position) {
+        location.latitude = position.coords.latitude;
+        location.longitude = position.coords.longitude;
+        //latitudeAndLongitude.innerHTML="Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+        var geocoder = new google.maps.Geocoder();
+        var latLng = new google.maps.LatLng(location.latitude, location.longitude);
+        $('#search_lat').val(location.latitude);
+        $('#search_lon').val(location.longitude);
+        if (geocoder) {
+            geocoder.geocode({ 'latLng': latLng }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    console.log(results);
+                    $('#location').val(results[0].formatted_address);
+                }
+                else {
+                    $('#location').html('Geocoding failed: ' + status);
+                    console.log("Geocoding failed: " + status);
+                }
+            }); //geocoder.geocode()
+        }
+    } //showPosition
+});
 </script>

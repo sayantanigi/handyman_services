@@ -89,153 +89,162 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                             <input type="text" placeholder="Enter Job Title" name="post_title" id="post_title" class="form-control " value="<?= @$post_title; ?>" data-role="tagsinput" required/>
                                         </div>
                                     </div>
+                                    <div class="contact-edit" style="display: contents;">
+                                        <div class="col-lg-6">
+                                            <span class="pf-title">Find On Map <span style="color:red;">*</span></span>
+                                            <div class="pf-field">
+                                                <input type="text" placeholder="Collins Street West, Victoria 8007, Australia." name="location" value="<?= @$location; ?>" id="location"  required autocomplete="off"/>
+                                            </div>
+                                            <div class="pf-field">
+                                                <input type="text" id="search_lat" name="latitude"  placeholder="41.1589654" value="<?= @$latitude; ?>"/>
+                                            </div>
+                                            <div class="pf-field">
+                                                <input type="text" id="search_lon" placeholder="21.1589654" name="longitude" value="<?= @$longitude; ?>"/>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <button type="button" class="srch-lctn" onclick="return show_location();">Search Location</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <span class="pf-title">Maps</span>
+                                            <div class="pf-map" id="map"></div>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12">
                                         <span class="pf-title">Description</span>
                                         <div class="pf-field">
                                             <textarea name="description" id="description" placeholder="Enter Description"><?= @$description; ?></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <span class="pf-title">Required Skill Set <span style="color:red;">*</span></span>
-                                        <div class="pf-field custom-select">
-                                            <select class="form-control key_skills" multiple="multiple" name="key_skills[]" id="key_skills" style="width: 100%;">
-                                            <!-- <?php foreach($getkey_skills as $val) {?>
-                                                <option value="<?php echo $val->specialist_name; ?>"><?php echo $val->specialist_name;?></option>
-                                            <?php } ?> -->
-                                            <?php
-                                            $skills = $this->Crud_model->GetData('specialist',"","status = 'Active'");
-                                            foreach($skills as $val) {?>
-                                                <option value="<?php echo $val->specialist_name; ?>"
-                                                <?php if(!empty($key_skills)) {
-                                                    if(!empty($skills)){
-                                                        $vskills = explode(", ", $key_skills);
-                                                        for($i=0; $i<count($vskills); $i++) {
-                                                            if($vskills[$i] == $val->specialist_name){
-                                                                echo "selected";
+                                    <div id="advanceFieldheading" class="col-lg-12">
+                                        <div style="margin-top: 20px;">
+                                            <p style="padding: 20px;background: #fb6b20;color: #fff;font-size: 18px;font-weight: 500;border-radius: 10px;cursor: pointer;">Show Advance Options: </p>
+                                        </div>
+                                    </div>
+                                    <div id="advanceFieldcontent" class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <span class="pf-title">Required Skill Set <span style="color:red;">*</span></span>
+                                            <div class="pf-field custom-select">
+                                                <select class="form-control key_skills" multiple="multiple" name="key_skills[]" id="key_skills" style="width: 100%;">
+                                                <!-- <?php foreach($getkey_skills as $val) {?>
+                                                    <option value="<?php echo $val->specialist_name; ?>"><?php echo $val->specialist_name;?></option>
+                                                <?php } ?> -->
+                                                <?php
+                                                $skills = $this->Crud_model->GetData('specialist',"","status = 'Active'");
+                                                foreach($skills as $val) {?>
+                                                    <option value="<?php echo $val->specialist_name; ?>"
+                                                    <?php if(!empty($key_skills)) {
+                                                        if(!empty($skills)){
+                                                            $vskills = explode(", ", $key_skills);
+                                                            for($i=0; $i<count($vskills); $i++) {
+                                                                if($vskills[$i] == $val->specialist_name){
+                                                                    echo "selected";
+                                                                }
                                                             }
                                                         }
-                                                    }
-                                                } ?>><?php echo $val->specialist_name;?></option>
-                                            <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-lg-6">
-                                        <span class="pf-title">Approximate Duration</span>
-                                        <div class="pf-field">
-                                            <input type="text" placeholder="Enter Duration" name="duration" class="form-control " value="<?= @$duration; ?>"/>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-lg-4">
-                                        <span class="pf-title">Job Type</span>
-                                        <div class="pf-field">
-                                            <select data-placeholder="Please Select Option" class="form-control" name="duration" required>
-                                                <option value="">Select Option</option>
-                                                <option value="Full-Time" <?php if($duration == "Full-Time") {echo "selected";}?>>Full-Time</option>
-                                                <option value="Part-Time" <?php if($duration == "Part-Time") {echo "selected";}?>>Part-Time</option>
-                                                <option value="Internship" <?php if($duration == "Internship") {echo "selected";}?>>Internship</option>
-                                                <option value="Recurring Project" <?php if($duration == "Recurring Project") {echo "selected";}?>>Recurring Project</option>
-                                                <option value="Contract" <?php if($duration == "Contract") {echo "selected";}?>>Contract</option>
-                                                <option value="Temporary" <?php if($duration == "Temporary") {echo "selected";}?>>Temporary</option>
-                                                <option value="Freelance" <?php if($duration == "Freelance") {echo "selected";}?>>Freelance</option>
-                                                <option value="Seasonal" <?php if($duration == "Seasonal") {echo "selected";}?>>Seasonal</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <span class="pf-title">Pay Type</span>
-                                        <div class="pf-field">
-                                            <select data-placeholder="Please Select Option" class="form-control" name="pay_type" required>
-                                                <option value="">Select Option</option>
-                                                <option value="Hourly Rate" <?php if($pay_type == "Hourly Rate") {echo "selected";}?>>Hourly Rate</option>
-                                                <option value="Salary" <?php if($pay_type == "Salary") {echo "selected";}?>>Salary</option>
-                                                <option value="Project-Based Fee" <?php if($pay_type == "Project-Based Fee") {echo "selected";}?>>Project-Based Fee</option>
-                                                <option value="Stipend" <?php if($pay_type == "Stipend") {echo "selected";}?>>Stipend</option>
-                                                <option value="Commission" <?php if($pay_type == "Commission") {echo "selected";}?>>Commission</option>
-                                                <option value="Piece Rate" <?php if($pay_type == "Piece Rate") {echo "selected";}?>>Piece Rate</option>
-                                                <option value="Per Diem" <?php if($pay_type == "Per Diem") {echo "selected";}?>>Per Diem</option>
-                                                <option value="Seasonal" <?php if($pay_type == "Seasonal") {echo "selected";}?>>Seasonal</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-lg-4">
-                                        <span class="pf-title">Approximate Remuneration ($)</span>
-                                        <div style="width: 75px;">
-                                        <?php if($countryName == 'Nigeria') { ?>
-                                            <input type="text" class="form-control f1" name="currency" id="currency" value="NGN (₦)" readonly style=" padding: 15px; ">
-                                        <?php } else { ?>
-                                            <input type="text" class="form-control f1" name="currency" id="currency" value="USD ($)" readonly style=" padding: 15px; ">
-                                        <?php } ?>
-                                        </div>
-                                        <div class="pf-field" style=" float: left; width: 85%; margin-left: 10px; ">
-                                            <input type="text" placeholder="Enter Charges" name="charges" class="form-control " value="<?= @$charges; ?>"/>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-lg-4">
-                                        <span class="pf-title">Estimated Pay</span>
-                                        <div style="width: 75px; float: left;">
-                                            <?php if($countryName == 'Nigeria') {
-                                            $sym = '₦'; ?>
-                                            <input type="text" class="form-control f1" name="currency" id="currency" value="NGN (₦)" readonly style=" padding: 15px; ">
-                                            <?php } else {
-                                            $sym = '$'; ?>
-                                            <input type="text" class="form-control f1" name="currency" id="currency" value="USD ($)" readonly style=" padding: 15px; ">
-                                            <?php } ?>
-                                        </div>
-                                        <div class="pf-field" style="width: 79%;">
-                                            <select data-placeholder="Please Select Category" class="form-control" name="charges" required style=" float: left; width: 100%; margin-left: 10px;">
-                                                <option value="">Select Option</option>
-                                                <option value="Less than <?= $sym?>100" <?php if($charges == "Less than'.$sym.'100") {echo "selected";}?>>Less than <?= $sym?>100</option>
-                                                <option value="<?= $sym?>100 - <?= $sym?>500" <?php if($charges == $sym.'100 - '.$sym.'500') {echo "selected";}?>><?= $sym?>100 - <?= $sym?>500</option>
-                                                <option value="<?= $sym?>500 - <?= $sym?>1K" <?php if($charges == $sym.'500 - '.$sym.'1K') {echo "selected";}?>><?= $sym?>500 - <?= $sym?>1K</option>
-                                                <option value="<?= $sym?>1K - <?= $sym?>5K" <?php if($charges == $sym.'1K - '.$sym.'5K') {echo "selected";}?>><?= $sym?>1K - <?= $sym?>5K</option>
-                                                <option value="<?= $sym?>5K - <?= $sym?>10k" <?php if($charges == $sym.'5K - '.$sym.'10k') {echo "selected";}?>><?= $sym?>5K - <?= $sym?>10k</option>
-                                                <option value="<?= $sym?>10k - <?= $sym?>50k" <?php if($charges == $sym.'10k - '.$sym.'50k') {echo "selected";}?>><?= $sym?>10k - <?= $sym?>50k</option>
-                                                <option value="<?= $sym?>50k - <?= $sym?>85k" <?php if($charges == $sym.'50k - '.$sym.'85k') {echo "selected";}?>><?= $sym?>50k - <?= $sym?>85k</option>
-                                                <option value="<?= $sym?>100,000+" <?php if($charges == $sym.'100,000+') {echo "selected";}?>><?= $sym?>100,000+</option>
-                                                <option value="<?= $sym?>200,000+" <?php if($charges == $sym.'200,000+') {echo "selected";}?>><?= $sym?>200,000+</option>
-                                                <option value="<?= $sym?>400,000+" <?php if($charges == $sym.'400,000+') {echo "selected";}?>><?= $sym?>400,000+</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <span class="pf-title">Categories <span style="color:red;">*</span></span>
-                                        <div class="pf-field">
-                                            <select data-placeholder="Please Select Category" class="form-control" name="category_id" onchange="get_subcategory(this.value)" required>
-                                                <option value="">Select Category</option>
-                                                <?php
-                                                $getcategory = $this->Crud_model->GetData('category', 'id, category_name', "");
-                                                foreach($getcategory as $key) {?>
-                                                    <option value="<?= $key->id; ?>" <?php if($key->id == $category) {echo "selected"; }?>><?php echo $key->category_name;?></option>
+                                                    } ?>><?php echo $val->specialist_name;?></option>
                                                 <?php } ?>
-                                            </select>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <span class="pf-title">Subcategories <!--<span style="color:red;">*</span>--></span>
-                                        <div class="pf-field">
-                                            <select data-placeholder="Please Select " class="form-control" name="subcategory_id" value="" id="subcategory_id" required>
-                                                <?php if(empty($id)) { ?>
-                                                <option>Select Subcategory</option>
-                                                <?php } else { ?>
-                                                <option>Select Subcategory</option>
+                                        <div class="col-lg-4">
+                                            <span class="pf-title">Job Type</span>
+                                            <div class="pf-field">
+                                                <select data-placeholder="Please Select Option" class="form-control" name="duration" required>
+                                                    <option value="">Select Option</option>
+                                                    <option value="Full-Time" <?php if($duration == "Full-Time") {echo "selected";}?>>Full-Time</option>
+                                                    <option value="Part-Time" <?php if($duration == "Part-Time") {echo "selected";}?>>Part-Time</option>
+                                                    <option value="Internship" <?php if($duration == "Internship") {echo "selected";}?>>Internship</option>
+                                                    <option value="Recurring Project" <?php if($duration == "Recurring Project") {echo "selected";}?>>Recurring Project</option>
+                                                    <option value="Contract" <?php if($duration == "Contract") {echo "selected";}?>>Contract</option>
+                                                    <option value="Temporary" <?php if($duration == "Temporary") {echo "selected";}?>>Temporary</option>
+                                                    <option value="Freelance" <?php if($duration == "Freelance") {echo "selected";}?>>Freelance</option>
+                                                    <option value="Seasonal" <?php if($duration == "Seasonal") {echo "selected";}?>>Seasonal</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <span class="pf-title">Pay Type</span>
+                                            <div class="pf-field">
+                                                <select data-placeholder="Please Select Option" class="form-control" name="pay_type" required>
+                                                    <option value="">Select Option</option>
+                                                    <option value="Hourly Rate" <?php if($pay_type == "Hourly Rate") {echo "selected";}?>>Hourly Rate</option>
+                                                    <option value="Salary" <?php if($pay_type == "Salary") {echo "selected";}?>>Salary</option>
+                                                    <option value="Project-Based Fee" <?php if($pay_type == "Project-Based Fee") {echo "selected";}?>>Project-Based Fee</option>
+                                                    <option value="Stipend" <?php if($pay_type == "Stipend") {echo "selected";}?>>Stipend</option>
+                                                    <option value="Commission" <?php if($pay_type == "Commission") {echo "selected";}?>>Commission</option>
+                                                    <option value="Piece Rate" <?php if($pay_type == "Piece Rate") {echo "selected";}?>>Piece Rate</option>
+                                                    <option value="Per Diem" <?php if($pay_type == "Per Diem") {echo "selected";}?>>Per Diem</option>
+                                                    <option value="Seasonal" <?php if($pay_type == "Seasonal") {echo "selected";}?>>Seasonal</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <span class="pf-title">Estimated Pay</span>
+                                            <div style="width: 75px; float: left;">
+                                                <?php if($countryName == 'Nigeria') {
+                                                $sym = '₦'; ?>
+                                                <input type="text" class="form-control f1" name="currency" id="currency" value="NGN (₦)" readonly style=" padding: 15px; ">
+                                                <?php } else {
+                                                $sym = '$'; ?>
+                                                <input type="text" class="form-control f1" name="currency" id="currency" value="USD ($)" readonly style=" padding: 15px; ">
+                                                <?php } ?>
+                                            </div>
+                                            <div class="pf-field" style="width: 79%;">
+                                                <select data-placeholder="Please Select Category" class="form-control" name="charges" required style=" float: left; width: 100%; margin-left: 10px;">
+                                                    <option value="">Select Option</option>
+                                                    <option value="Less than <?= $sym?>100" <?php if($charges == "Less than'.$sym.'100") {echo "selected";}?>>Less than <?= $sym?>100</option>
+                                                    <option value="<?= $sym?>100 - <?= $sym?>500" <?php if($charges == $sym.'100 - '.$sym.'500') {echo "selected";}?>><?= $sym?>100 - <?= $sym?>500</option>
+                                                    <option value="<?= $sym?>500 - <?= $sym?>1K" <?php if($charges == $sym.'500 - '.$sym.'1K') {echo "selected";}?>><?= $sym?>500 - <?= $sym?>1K</option>
+                                                    <option value="<?= $sym?>1K - <?= $sym?>5K" <?php if($charges == $sym.'1K - '.$sym.'5K') {echo "selected";}?>><?= $sym?>1K - <?= $sym?>5K</option>
+                                                    <option value="<?= $sym?>5K - <?= $sym?>10k" <?php if($charges == $sym.'5K - '.$sym.'10k') {echo "selected";}?>><?= $sym?>5K - <?= $sym?>10k</option>
+                                                    <option value="<?= $sym?>10k - <?= $sym?>50k" <?php if($charges == $sym.'10k - '.$sym.'50k') {echo "selected";}?>><?= $sym?>10k - <?= $sym?>50k</option>
+                                                    <option value="<?= $sym?>50k - <?= $sym?>85k" <?php if($charges == $sym.'50k - '.$sym.'85k') {echo "selected";}?>><?= $sym?>50k - <?= $sym?>85k</option>
+                                                    <option value="<?= $sym?>100,000+" <?php if($charges == $sym.'100,000+') {echo "selected";}?>><?= $sym?>100,000+</option>
+                                                    <option value="<?= $sym?>200,000+" <?php if($charges == $sym.'200,000+') {echo "selected";}?>><?= $sym?>200,000+</option>
+                                                    <option value="<?= $sym?>400,000+" <?php if($charges == $sym.'400,000+') {echo "selected";}?>><?= $sym?>400,000+</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <span class="pf-title">Categories <span style="color:red;">*</span></span>
+                                            <div class="pf-field">
+                                                <select data-placeholder="Please Select Category" class="form-control" name="category_id" onchange="get_subcategory(this.value)" required>
+                                                    <option value="">Select Category</option>
                                                     <?php
-                                                    $getsubcategory = $this->Crud_model->GetData('sub_category', 'id, sub_category_name', "");
-                                                    foreach($getsubcategory as $key) {?>
-                                                        <option value="<?= $key->id; ?>" <?php if($key->id == $subcategory) {echo "selected"; }?>><?php echo $key->sub_category_name;?></option>
+                                                    $getcategory = $this->Crud_model->GetData('category', 'id, category_name', "");
+                                                    foreach($getcategory as $key) {?>
+                                                        <option value="<?= $key->id; ?>" <?php if($key->id == $category) {echo "selected"; }?>><?php echo $key->category_name;?></option>
                                                     <?php } ?>
-                                                <?php } ?>
-                                            </select>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <span class="pf-title">Application Deadline Date <span style="color:red;">*</span></span>
-                                        <div class="pf-field">
-                                            <input type="date" placeholder="Enter Complete Address" name="appli_deadeline" class="form-control datepicker" value="<?= @$appli_deadeline; ?>" required/>
+                                        <div class="col-lg-6">
+                                            <span class="pf-title">Subcategories <!--<span style="color:red;">*</span>--></span>
+                                            <div class="pf-field">
+                                                <select data-placeholder="Please Select " class="form-control" name="subcategory_id" value="" id="subcategory_id" required>
+                                                    <?php if(empty($id)) { ?>
+                                                    <option>Select Subcategory</option>
+                                                    <?php } else { ?>
+                                                    <option>Select Subcategory</option>
+                                                        <?php
+                                                        $getsubcategory = $this->Crud_model->GetData('sub_category', 'id, sub_category_name', "");
+                                                        foreach($getsubcategory as $key) {?>
+                                                            <option value="<?= $key->id; ?>" <?php if($key->id == $subcategory) {echo "selected"; }?>><?php echo $key->sub_category_name;?></option>
+                                                        <?php } ?>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <span class="pf-title">Application Deadline Date <span style="color:red;">*</span></span>
+                                            <div class="pf-field">
+                                                <input type="date" placeholder="Enter Complete Address" name="appli_deadeline" class="form-control datepicker" value="<?= @$appli_deadeline; ?>" required/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-lg-4">
                                         <span class="pf-title">Country <span style="color:red;">*</span></span>
                                         <div class="pf-field">
@@ -276,35 +285,9 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                             <input type="hidden" id="select_city_dropdown" value="<?php echo @$cities; ?>">
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="contact-edit">
                                     <div class="row">
-                                        <!-- <div class="col-lg-6">
-                                            <span class="pf-title">Find On Map <span style="color:red;">*</span></span>
-                                            <div class="pf-field">
-                                                <input type="text" placeholder="Collins Street West, Victoria 8007, Australia." name="location" value="<?= @$location; ?>" id="location"  required autocomplete="off"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <span class="pf-title">Latitude</span>
-                                            <div class="pf-field">
-                                                <input type="text" id="search_lat" name="latitude"  placeholder="41.1589654" value="<?= @$latitude; ?>"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <span class="pf-title">Longitude</span>
-                                            <div class="pf-field">
-                                                <input type="text" id="search_lon" placeholder="21.1589654" name="longitude" value="<?= @$longitude; ?>"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <button type="button" class="srch-lctn" onclick="return show_location();">Search Location</button>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <span class="pf-title">Maps</span>
-                                            <div class="pf-map" id="map">
-                                            </div>
-                                        </div> -->
                                         <div class="col-lg-12">
                                             <button type="submit">Submit</button>
                                             <input type="hidden" name="id" value="<?php echo @$id?>">
@@ -327,8 +310,11 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
 CKEDITOR.replace('description');
 </script>
 <style>
-    .key_skills {margin-bottom: 0px !important;}
+.key_skills {margin-bottom: 0px !important;}
+#advanceFieldcontent{display: none;}
+.active{display: contents !important; transition: all .7s;}
 </style>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtg6oeRPEkRL9_CE-us3QdvXjupbgG14A&libraries=places&callback=initMap"></script>
 <script>
 $('.key_skills').select2({
     //tags: true,
@@ -341,6 +327,9 @@ function show_location() {
     $('#complete_address').val(location);
 }
 $(document).ready(function() {
+    $("#advanceFieldheading").click(function(){
+        $("#advanceFieldcontent").toggleClass('active');
+    })
     $('#country-dropdown').on('change', function() {
         var country_name = this.value;
         $.ajax({
@@ -401,6 +390,44 @@ $(document).ready(function() {
             }
         });
     }
+
+
+    // var location=$('#location').val(); alert(location)
+    // $('#map').html('<iframe src="https://maps.google.it/maps?q='+location+'&output=embed"></iframe>');
+    // $('#complete_address').val(location);
+
+    var location = {
+        latitude: '',
+        longitude: ''
+    };
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        // latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";
+    }
+    function showPosition(position) {
+        location.latitude = position.coords.latitude;
+        location.longitude = position.coords.longitude;
+        "<br>Longitude: " + position.coords.longitude;
+        var geocoder = new google.maps.Geocoder();
+        var latLng = new google.maps.LatLng(location.latitude, location.longitude);
+        $('#search_lat').val(location.latitude);
+        $('#search_lon').val(location.longitude);
+        if (geocoder) {
+            geocoder.geocode({ 'latLng': latLng }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    console.log(results);
+                    $('#location').val(results[0].formatted_address);
+                    $('#map').html('<iframe src="https://maps.google.it/maps?q='+results[0].formatted_address+'&output=embed"></iframe>');
+                    $('#complete_address').val(results[0].formatted_address);
+                }
+                else {
+                    $('#location').html('Geocoding failed: ' + status);
+                    console.log("Geocoding failed: " + status);
+                }
+            });
+        }
+    }
 });
 
 function deleteJobImg(pi_id) {
@@ -416,4 +443,5 @@ function deleteJobImg(pi_id) {
         success:function(data) {}
     })
 }
+
 </script>

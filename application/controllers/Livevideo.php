@@ -423,7 +423,7 @@ class Livevideo extends My_Controller {
 		$archiveID = $_POST['archiveID'];
 		$opentok->stopArchive($archiveID);
 		$dataArray = array(
-			'archiveId'=>@$archive
+			'archiveId'=>@$archiveID
 		);
 		$streamData = json_encode($dataArray);
 		echo $streamData;

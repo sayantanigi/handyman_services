@@ -38,14 +38,6 @@
 			<li <?php if ($seg2 =='jobsbidding') {?>class="active"<?php }?>>
 				<a href="<?= admin_url('jobsbidding')?>"><i class="far fa-calendar-check"></i> <span> Jobs Bidding</span></a>
 			</li>
-			<li <?php if ($seg2 =='payment') {?>class="active"<?php }?>>
-				<a href="<?= admin_url('payment')?>"><i class="fas fa-hashtag"></i><span>List of Subscriptions</span></a>
-			</li>
-			<li <?php if ($seg2 =='subscription') {?>class="active"<?php }?>>
-				<a href="<?= admin_url('subscription')?>"><i class="far fa-calendar-alt"></i>
-					<span>Subscription Plans</span>
-				</a>
-			</li>
 			<li <?php if ($seg2 =='users') {?>class="active"<?php }?>>
 				<a href="<?=admin_url(); ?>users"><i class="fas fa-user"></i> <span>Users</span></a>
 			</li>

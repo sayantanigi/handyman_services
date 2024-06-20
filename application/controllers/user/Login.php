@@ -11,21 +11,22 @@ class Login extends CI_Controller {
 	public function reg() {
 		$validate=$this->Crud_model->get_single('users',"email='".$_POST['email']."'");
 		if(!empty($validate)) {
-			$data=array('result'=>0,'data'=>'email');
+			$data=array('result'=> 'email','data'=>'email');
 		}
 		if(empty($validate)) {
 			$data=array(
-				'userType' =>$_POST['user_type'],
-				'firstname' =>$_POST['first_name'],
-				'lastname' =>$_POST['last_name'],
-				'companyname' =>$_POST['company_name'],
-				'email' =>$_POST['email'],
-				'address' =>$_POST['location'],
-				'latitude' =>$_POST['latitude'],
-				'longitude' =>$_POST['longitude'],
+				'userType' => $_POST['user_type'],
+				'firstname' => $_POST['first_name'],
+				'lastname' => $_POST['last_name'],
+				'companyname' => $_POST['company_name'],
+				'email' => $_POST['email'],
+				'address' => $_POST['location'],
+				'latitude' => $_POST['latitude'],
+				'longitude' => $_POST['longitude'],
 				'password' => base64_encode($_POST['password']),
-				'created'=>date('Y-m-d H:i:s'),
-				'status'=>0
+				'created' => date('Y-m-d H:i:s'),
+				'status' => 1,
+				'email_verified' => 1
 			);
 			$result = $this->Mymodel->insert('users',$data);
 			if($_POST['first_name']) {
@@ -62,7 +63,7 @@ class Login extends CI_Controller {
 				$mail = new PHPMailer(true);
 				try {
 					$mail->CharSet = 'UTF-8';
-					$mail->SetFrom('igikolkata2024@gmail.com', 'Handyman Services');
+					$mail->SetFrom('sayantan@goigi.in', 'Handyman Services');
 					$mail->AddAddress($_POST['email']);
 					$mail->IsHTML(true);
 					$mail->Subject = 'Verify Your Email Address From Handyman Services';
@@ -71,17 +72,20 @@ class Login extends CI_Controller {
 					$mail->IsSMTP();
 					$mail->SMTPAuth = true;
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-					$mail->Host = "smtp.gmail.com";
-					$mail->Port = 465; //587 465
-					$mail->Username = "igikolkata2024@gmail.com";
-					$mail->Password = "Goigi123";
-					$mail->send();
+					$mail->Host = "smtp-relay.brevo.com1";
+					$mail->Port = 587; //587 465
+					$mail->Username = "sayantan@goigi.in1";
+					$mail->Password = "NWpyxa3UK2HDPSbs1";
+					if(!$mail->send()) {
+						$data = array('result' => 'success', 'data' => "You account has been created. Please can now login with your credential.");
+					} else {
+						$data = array('result' => 'success', 'data' => "We have sent an activation link to your account to continue with the registration process.");
+					}
 				} catch (Exception $e) {
-					echo $e->getMessage(); //Boring error messages from anything else!
+					$data = array('result' => 'success', 'data' => "You account has been created. Please can now login with your credential.");
 				}
-				$data=array('result'=>1,'data'=>1);
 			} else {
-				$data=array('result'=>2,'data'=>2);
+				$data = array('result' => 'error', 'data' => "Oops, something went wrong. Please try again later.");
 			}
 		}
 		echo json_encode($data); exit;

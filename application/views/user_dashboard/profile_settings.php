@@ -103,15 +103,6 @@ if($data_request=='user') {
                                     <hr />
                                     <div class="form-group">
                                         <div class="row">
-                                            <?php if(@$userinfo->userType=='2') { ?>
-                                            <div class="col-lg-6">
-                                                <label for="first_name">
-                                                    <h4>Company Name <span style="color:red;">*</span></h4>
-                                                </label>
-                                                <input type="text" class="form-control" name="companyname" id="companyname" placeholder="Company Name" value="<?php echo $userinfo->companyname;?>" />
-                                                <div id="vld_companyname" style="color:red; margin-top: 10px;">Please enter Company Name.</div>
-                                            </div>
-                                            <?php } else { ?>
                                             <div class="col-lg-6">
                                                 <label for="first_name">
                                                     <h4>First Name <span style="color:red;">*</span></h4>
@@ -126,7 +117,6 @@ if($data_request=='user') {
                                                 <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name" value="<?php echo $userinfo->lastname;?>"  onkeypress="only_alphabets(event)" />
                                                 <div id="vld_lastname" style="color:red; margin-top: 10px;">Please enter Last Name.</div>
                                             </div>
-                                            <?php } ?>
                                             <div class="col-lg-6">
                                                 <label for="first_name">
                                                     <h4>Email Address <span style="color:red;">*</span></h4>
@@ -152,15 +142,6 @@ if($data_request=='user') {
                                                 <div id="vld_gender" style="color:red; margin-top: 10px;">Please Select Gender.</div>
                                             </div>
                                             <?php } ?>
-                                            <div class="col-lg-6 location">
-                                                <label for="last_name">
-                                                    <h4>Legal Address <span style="color:red;">*</span></h4>
-                                                </label>
-                                                <input type="text" class="form-control" name="address" id="location" placeholder="Legal Address" value="<?= $userinfo->address ?>" style="height: 49px !important;" autocomplete="off" />
-                                                <div id="vld_location" style="color:red; margin-top: 10px;">Please enter Legal Address.</div>
-                                                <input type="hidden" name="latitude" id="search_lat" value="<?= $userinfo->latitude ?>">
-                                                <input type="hidden" name="longitude" id="search_lon" value="<?= $userinfo->longitude ?> ">
-                                            </div>
                                             <?php if(@$userinfo->userType=='1') { ?>
                                             <div class="col-lg-12 key-skill">
                                                 <span class="pf-title1">Specializations</span>
@@ -211,11 +192,12 @@ if($data_request=='user') {
                                             </div>
                                             <?php } ?>
                                             <?php if(@$userinfo->userType=='2') { ?>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6 <?php if(@$userinfo->userType=='1') { echo "d-none"; }?>" >
                                                 <label for="first_name">
-                                                    <h4>Founded Year</h4>
+                                                    <h4>Company Name</h4>
                                                 </label>
-                                                <input type="text" class="form-control" name="foundedyear" id="foundedyear" placeholder="Founded Year" value="<?php echo $userinfo->foundedyear;?>"/>
+                                                <input type="text" class="form-control" name="companyname" id="companyname" placeholder="Company Name" value="<?php echo $userinfo->companyname;?>" />
+                                                <div id="vld_companyname" style="color:red; margin-top: 10px;">Please enter Company Name.</div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <label for="first_name">
@@ -226,7 +208,15 @@ if($data_request=='user') {
                                                 <div id="vld_teamsize" style="color:red; margin-top: 10px;">Please enter TAX ID.</div>
                                             </div>
                                             <?php } ?>
-
+                                            <div class="col-lg-12 location">
+                                                <label for="last_name">
+                                                    <h4>Legal Address <span style="color:red;">*</span></h4>
+                                                </label>
+                                                <input type="text" class="form-control" name="address" id="location" placeholder="Legal Address" value="<?= $userinfo->address ?>" style="height: 49px !important;" autocomplete="off" />
+                                                <div id="vld_location" style="color:red; margin-top: 10px;">Please enter Legal Address.</div>
+                                                <input type="hidden" name="latitude" id="search_lat" value="<?= $userinfo->latitude ?>">
+                                                <input type="hidden" name="longitude" id="search_lon" value="<?= $userinfo->longitude ?> ">
+                                            </div>
                                             <div class="col-lg-12">
                                                 <label for="last_name">
                                                     <h4>Short Bio <span style="color:red;">*</span></h4>
@@ -363,13 +353,13 @@ $("form").submit( function(e) {
             e.preventDefault();
         }
     } else {
-        if($('#companyname').val() == ''){
+        /*if($('#companyname').val() == ''){
             $('#companyname').focus().attr('placeholder', 'This field is required');
             $('#vld_companyname').show();
             $('#companyname').focus().css('border', '1px solid red');
             setTimeout(function(){$("#vld_companyname").hide();},5000)
             e.preventDefault();
-        }
+        }*/
         if($('#location').val() == ''){
             $('#location').focus().attr('placeholder', 'This field is required');
             $('#vld_location').show();

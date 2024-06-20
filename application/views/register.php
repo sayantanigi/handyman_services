@@ -6,6 +6,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
 } ?>
 <style>
 #register-messages {text-align: center; margin-top: 25px; display: none;}
+#register-messages-notemail {text-align: center; margin-top: 25px; display: none;}
 #err-messages {text-align: center; margin-top: 10px; display: none;}
 </style>
 <section class="overlape">
@@ -42,11 +43,11 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                 <div class="col-lg-8 col-md-12 col-sm-12 SignUp_Right">
                                     <div id="register-messages" class="text-success-msg f-20">
                                         <h4>Successful Registration</h4>
-                                        <p style="color: #28a745;">We have sent an activation link to your account to continue with the registration process.</p>
+                                        <p style="color: #28a745;"></p>
                                     </div>
                                     <div id="err-messages">
                                         <h4 style="color: red;">Error</h4>
-                                        <p style="color: red;">Oops, something went wrong. Please try again later.</p>
+                                        <p style="color: red;"></p>
                                     </div>
                                     <form id="signUp_form" action="#" method="post">
                                         <div class="row m-0">
@@ -72,9 +73,9 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                             </div>
                                             <div class="col-lg-12 col-md-6 col-sm-6 company_name">
                                                 <div class="cfield cfield_top">
-                                                    <label for="" class="form-label">Customer Name <span style="color:red">*</span></label>
+                                                    <label for="" class="form-label">Company Name</label>
                                                     <div class="cfield_Input">
-                                                        <input type="text" placeholder="Customer Name" name="company_name" id="company_name"/>
+                                                        <input type="text" placeholder="Company Name" name="company_name" id="company_name"/>
                                                         <i class="la la-home"></i>
                                                     </div>
                                                 </div>
@@ -159,8 +160,8 @@ function get_value(id) {
         $('.addrss').show();
     } else {
         $('.company_name').show();
-        $('.first_name').hide();
-        $('.last_name').hide();
+        $('.first_name').show();
+        $('.last_name').show();
         $('.email').show();
         $('.pass').show();
         $('.c_pass').show();

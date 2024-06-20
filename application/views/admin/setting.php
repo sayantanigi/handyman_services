@@ -24,18 +24,6 @@
 															<input type="text" class="form-control" placeholder="Website Name" name="website_name" value="<?php if(!empty($row->website_name)){echo $row->website_name; }?>" required>
 														</div>
 													</div>
-													<!-- <div class="col-md-6">
-														<div class="form-group">
-															<label>Copyright</label>
-															<input type="text" class="form-control" placeholder="Copyright" name="copyright" value="<?php if(!empty($row->copyright)){ echo $row->copyright; }?>" required>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label>Fax</label>
-															<input type="text" class="form-control" name="fax" placeholder="Fax" value="<?php if(!empty($row->fax)){echo $row->fax; }?>">
-														</div>
-													</div> -->
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Phone Number</label>
@@ -84,18 +72,6 @@
 															<input type="text" class="form-control" name="lnkd_link" placeholder="LinkedIn Link" value="<?php if(!empty($row->lnkd_link)){echo $row->lnkd_link; }?>">
 														</div>
 													</div>
-													<!-- <div class="col-md-12">
-														<div class="form-group">
-															<label>Pinterest Link</label>
-															<input type="text" class="form-control" name="ptrs_link" placeholder="Pinterest Link" value="<?php //if(!empty($row->ptrs_link)){echo $row->ptrs_link; }?>">
-														</div>
-													</div>
-													<div class="col-md-12">
-														<div class="form-group">
-															<label>Bahance Link</label>
-															<input type="text" class="form-control" name="baha_link" placeholder="Bahance Link" value="<?php //if(!empty($row->baha_link)){echo $row->baha_link; }?>">
-														</div>
-													</div> -->
 													<div class="col-md-4">
 														<div class="form-group">
 															<label>Header Logo</label>
@@ -152,15 +128,6 @@
 															<input type="hidden" name="old_favicon" value="<?php if(!empty($row->favicon)){echo $row->favicon;}?>">
 														</div>
 														<input type="hidden" name="id" value="<?php if(!empty($row->id)){echo $row->id;}?>">
-													</div>
-													<div class="col-md-12">
-														<div class="form-group">
-															<label>Subscription Required?</label>
-															<label class="switch">
-																<input type="checkbox" id = "required_subscription" name = "required_subscription" <?php if($row->required_subscription == '1') { echo 'checked';}?>>
-																<span class="slider round"></span>
-															</label>
-														</div>
 													</div>
 													<div class="col-lg-12">
 														<div class=" pt-0">

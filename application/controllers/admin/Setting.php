@@ -61,8 +61,6 @@ class Setting extends MY_Controller {
             $config2['source_image'] =  $_FILES['favicon']['tmp_name'];
             $config2['new_image'] =   getcwd().'/uploads/logo/'.$_POST['favicon'];
             $config2['allowed_types'] = 'JPG|PNG|jpg|png|gif|GIF|JPEG|jpeg|ico';
-            //$config2['width'] = '16px';
-            //$config2['height'] = '16px';
             $config2['maintain_ratio'] = FALSE;
             $this->image_lib->initialize($config2);
             if(!$this->image_lib->resize()) {
@@ -84,17 +82,14 @@ class Setting extends MY_Controller {
           	'copyright' => $this->input->post('copyright'),
           	'address' => $this->input->post('address'),
             'fabout' => $this->input->post('fabout'),
-          	//'fax' => $this->input->post('fax'),
           	'alternate_email' => $this->input->post('alternate_email'),
 			'fb_link' => $this->input->post('fb_link'),
 			'tw_link' => $this->input->post('tw_link'),
 			'lnkd_link' => $this->input->post('lnkd_link'),
-			//'ptrs_link' => $this->input->post('ptrs_link'),
-			//'baha_link' => $this->input->post('baha_link'),
           	'logo' => $logo,
 			'flogo' => $flogo,
           	'favicon' => $favicon,
-            'required_subscription' => $this->input->post('required_subscription'),
+            //'required_subscription' => $this->input->post('required_subscription'),
       	);
         //print_r($data); die;
     	$id=$this->input->post('id');
