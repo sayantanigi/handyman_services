@@ -71,14 +71,14 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                                 <?php } ?>
                                                 <input type="file" name="postjobPic[]" multiple class="text-center center-block file-upload" />
                                             </div>
-                                            <div>
+                                            <div style=" width: 100%; display: contents;">
                                             <?php
                                             $getJobImage = $this->db->query("SELECT * FROM postjob_image WHERE job_id='".$id."'")->result_array();
                                             //print_r($getJobImage); die();
                                             if(!empty($getJobImage)){
                                             foreach ($getJobImage as $val) { ?>
                                                 <img class="img-circle_<?php echo $val['id']?> img-responsive" src="<?php echo base_url('uploads/postjob/'.$val['job_image']); ?>" style="width:60px;height: 60px;"/>
-                                                <img class="img-circle-close_<?php echo $val['id']?> img-responsive" src="<?php echo base_url('uploads/close-icon.png'); ?>" onclick="deleteJobImg(<?php echo $val['id']?>);" style="width: 15px; height: 15px; position: relative;top: -30px; right: 12px;"/>
+                                                <img class="img-circle-close_<?php echo $val['id']?> img-responsive" src="<?php echo base_url('uploads/close-icon.png'); ?>" onclick="deleteJobImg(<?php echo $val['id']?>);" style="width: 15px; height: 15px; position: relative;top: -7px; right: 8px;"/>
                                             <?php } } ?>
                                             </div>
                                         </div>

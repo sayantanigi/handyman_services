@@ -62,9 +62,15 @@
                     </div>
                     <div class="DataContainer">
                         <h3><?= $string;?></h3>
+                        <?php if(!empty($key->duration)) { ?>
                         <p>Duration: <span><?= $key->duration . " "; ?></span></p>
+                        <?php } ?>
+                        <?php if(!empty($key->duration)) { ?>
                         <p>Deadline: <span><?= $key->appli_deadeline; ?></span></p>
+                        <?php } ?>
+                        <?php if(!empty($key->duration)) { ?>
                         <p>Remuneration ($): <span><?= "USD" . " " . $key->charges; ?></span></p>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
