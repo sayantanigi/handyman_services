@@ -243,7 +243,8 @@ class Home extends MY_Controller {
 			$type='nouser';
 		}
 		$con = "postjob.id='" . base64_decode($postid) . "'";
-		$data['post_data'] = $this->post_job_model->viewdata($con);
+		//$data['post_data'] = $this->post_job_model->viewdata($con);
+		$data['post_data'] = $this->db->query("SELECT * FROM postjob WHERE $con")->row();
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Post Jobs'");
 		if($type=='admin'){
 			$this->load->view('header',$data);

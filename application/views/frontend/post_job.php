@@ -89,27 +89,6 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                             <input type="text" placeholder="Enter Job Title" name="post_title" id="post_title" class="form-control " value="<?= @$post_title; ?>" data-role="tagsinput" required/>
                                         </div>
                                     </div>
-                                    <div class="contact-edit" style="display: contents;">
-                                        <div class="col-lg-6">
-                                            <span class="pf-title">Find On Map <span style="color:red;">*</span></span>
-                                            <div class="pf-field">
-                                                <input type="text" placeholder="Collins Street West, Victoria 8007, Australia." name="location" value="<?= @$location; ?>" id="location"  required autocomplete="off"/>
-                                            </div>
-                                            <div class="pf-field">
-                                                <input type="text" id="search_lat" name="latitude"  placeholder="41.1589654" value="<?= @$latitude; ?>"/>
-                                            </div>
-                                            <div class="pf-field">
-                                                <input type="text" id="search_lon" placeholder="21.1589654" name="longitude" value="<?= @$longitude; ?>"/>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <button type="button" class="srch-lctn" onclick="return show_location();">Search Location</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <span class="pf-title">Maps</span>
-                                            <div class="pf-map" id="map"></div>
-                                        </div>
-                                    </div>
                                     <div class="col-lg-12">
                                         <span class="pf-title">Description</span>
                                         <div class="pf-field">
@@ -118,12 +97,33 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                     </div>
                                     <div id="advanceFieldheading" class="col-lg-12">
                                         <div style="margin-top: 20px;">
-                                            <p style="padding: 20px;background: #fb6b20;color: #fff;font-size: 18px;font-weight: 500;border-radius: 10px;cursor: pointer;">Show Advance Options: </p>
+                                            <p style="padding: 20px;background: #fb6b20;color: #fff;font-size: 18px;font-weight: 500;border-radius: 10px;cursor: pointer;">Show Advanced Options: </p>
                                         </div>
                                     </div>
                                     <div id="advanceFieldcontent" class="col-lg-12">
+                                        <div class="contact-edit" style="display: contents;">
+                                            <div class="col-lg-6">
+                                                <span class="pf-title">Find On Map </span>
+                                                <div class="pf-field">
+                                                    <input type="text" placeholder="Collins Street West, Victoria 8007, Australia." name="location" value="<?= @$location; ?>" id="location" autocomplete="off"/>
+                                                </div>
+                                                <div class="pf-field">
+                                                    <input type="text" id="search_lat" name="latitude"  placeholder="41.1589654" value="<?= @$latitude; ?>"/>
+                                                </div>
+                                                <div class="pf-field">
+                                                    <input type="text" id="search_lon" placeholder="21.1589654" name="longitude" value="<?= @$longitude; ?>"/>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <button type="button" class="srch-lctn" onclick="return show_location();">Search Location</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <span class="pf-title">Maps</span>
+                                                <div class="pf-map" id="map"></div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-12">
-                                            <span class="pf-title">Required Skill Set <span style="color:red;">*</span></span>
+                                            <span class="pf-title">Required Skill Set</span>
                                             <div class="pf-field custom-select">
                                                 <select class="form-control key_skills" multiple="multiple" name="key_skills[]" id="key_skills" style="width: 100%;">
                                                 <!-- <?php foreach($getkey_skills as $val) {?>
@@ -150,7 +150,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                         <div class="col-lg-4">
                                             <span class="pf-title">Job Type</span>
                                             <div class="pf-field">
-                                                <select data-placeholder="Please Select Option" class="form-control" name="duration" required>
+                                                <select data-placeholder="Please Select Option" class="form-control" name="duration">
                                                     <option value="">Select Option</option>
                                                     <option value="Full-Time" <?php if($duration == "Full-Time") {echo "selected";}?>>Full-Time</option>
                                                     <option value="Part-Time" <?php if($duration == "Part-Time") {echo "selected";}?>>Part-Time</option>
@@ -166,7 +166,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                         <div class="col-lg-4">
                                             <span class="pf-title">Pay Type</span>
                                             <div class="pf-field">
-                                                <select data-placeholder="Please Select Option" class="form-control" name="pay_type" required>
+                                                <select data-placeholder="Please Select Option" class="form-control" name="pay_type">
                                                     <option value="">Select Option</option>
                                                     <option value="Hourly Rate" <?php if($pay_type == "Hourly Rate") {echo "selected";}?>>Hourly Rate</option>
                                                     <option value="Salary" <?php if($pay_type == "Salary") {echo "selected";}?>>Salary</option>
@@ -191,7 +191,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                                 <?php } ?>
                                             </div>
                                             <div class="pf-field" style="width: 79%;">
-                                                <select data-placeholder="Please Select Category" class="form-control" name="charges" required style=" float: left; width: 100%; margin-left: 10px;">
+                                                <select data-placeholder="Please Select Category" class="form-control" name="charges" style=" float: left; width: 100%; margin-left: 10px;">
                                                     <option value="">Select Option</option>
                                                     <option value="Less than <?= $sym?>100" <?php if($charges == "Less than'.$sym.'100") {echo "selected";}?>>Less than <?= $sym?>100</option>
                                                     <option value="<?= $sym?>100 - <?= $sym?>500" <?php if($charges == $sym.'100 - '.$sym.'500') {echo "selected";}?>><?= $sym?>100 - <?= $sym?>500</option>
@@ -207,9 +207,9 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <span class="pf-title">Categories <span style="color:red;">*</span></span>
+                                            <span class="pf-title">Categories</span>
                                             <div class="pf-field">
-                                                <select data-placeholder="Please Select Category" class="form-control" name="category_id" onchange="get_subcategory(this.value)" required>
+                                                <select data-placeholder="Please Select Category" class="form-control" name="category_id" onchange="get_subcategory(this.value)">
                                                     <option value="">Select Category</option>
                                                     <?php
                                                     $getcategory = $this->Crud_model->GetData('category', 'id, category_name', "");
@@ -220,9 +220,9 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <span class="pf-title">Subcategories <!--<span style="color:red;">*</span>--></span>
+                                            <span class="pf-title">Subcategories</span>
                                             <div class="pf-field">
-                                                <select data-placeholder="Please Select " class="form-control" name="subcategory_id" value="" id="subcategory_id" required>
+                                                <select data-placeholder="Please Select " class="form-control" name="subcategory_id" value="" id="subcategory_id">
                                                     <?php if(empty($id)) { ?>
                                                     <option>Select Subcategory</option>
                                                     <?php } else { ?>
@@ -237,9 +237,9 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
-                                            <span class="pf-title">Application Deadline Date <span style="color:red;">*</span></span>
+                                            <span class="pf-title">Application Deadline Date</span>
                                             <div class="pf-field">
-                                                <input type="date" placeholder="Enter Complete Address" name="appli_deadeline" class="form-control datepicker" value="<?= @$appli_deadeline; ?>" required/>
+                                                <input type="date" placeholder="Enter Complete Address" name="appli_deadeline" class="form-control datepicker" value="<?= @$appli_deadeline; ?>"/>
                                             </div>
                                         </div>
                                     </div>

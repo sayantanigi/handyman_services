@@ -229,7 +229,7 @@ class Welcome extends CI_Controller {
 		echo $html;
 	}
 	public function save_postjob() {
-		if(!empty($this->input->post('key_skills'))) {
+		if(!empty(@$this->input->post('key_skills'))) {
 			@$key_skills = @$this->input->post('key_skills');
 			for ($i=0; $i < count(@$key_skills); $i++) {
 				$get_specialist = $this->db->query("SELECT * FROM specialist WHERE specialist_name = '".@$key_skills[$i]."'")->result();
@@ -241,10 +241,13 @@ class Welcome extends CI_Controller {
 					$this->db->insert('specialist',$insrt);
 				}
 			}
+			$keySkills = implode(", ",@$this->input->post('key_skills'));
+		} else {
+			$keySkills = "";
 		}
 		$data=array(
 			'user_id'=>$_SESSION['afrebay']['userId'],
-			'required_key_skills'=>implode(", ",@$this->input->post('key_skills')),
+			'required_key_skills'=> $keySkills,
 			'category_id'=>$this->input->post('category_id',TRUE),
 			'subcategory_id'=>$this->input->post('subcategory_id',TRUE),
 			'post_title'=>$this->input->post('post_title',TRUE),
@@ -265,6 +268,7 @@ class Welcome extends CI_Controller {
 		$this->Crud_model->SaveData('postjob',$data);
 		$insert_jid = $this->db->insert_id();
 		if(!empty($insert_jid)) {
+			//print_r($_FILES['postjobPic']['name']); die();
 			if (!empty($_FILES['postjobPic']['name'])) {
 				$cpt = count($_FILES['postjobPic']['name']);
 				for($i=0; $i<$cpt; $i++) {
@@ -292,7 +296,6 @@ class Welcome extends CI_Controller {
 				}
 			}
 		}
-		$this->session->set_flashdata('message', 'Post Job Created Successfull !');
 		$insert_id = $this->db->insert_id();
 		$sitemap_date = array(
 			'link'=>'/'.'workdetail/'.base64_encode($insert_id),

@@ -973,4 +973,90 @@ class Dashboard extends CI_Controller {
 		$p_id = $this->input->post('id');
 		$delete_prod = $this->db->query("DELETE FROM postjob_image WHERE id = '".$p_id."'");
 	}
+
+	public function postComment() {
+        if (!empty($_POST['comment_id'])) {
+            $commentData = array(
+                'user_id' => $_POST['user_id'],
+                'postjob_id' => $_POST['postjob_id'],
+                'comment_id' => $_POST['comment_id'],
+                'comment' => $_POST['comment'],
+                'created_at' => date('Y-m-d h:i:s'),
+            );
+            $this->Crud_model->SaveData('postjob_comment_rply', $commentData);
+        } else {
+            $commentData = array(
+                'user_id' => $_POST['user_id'],
+                'postjob_id' => $_POST['postjob_id'],
+                'comment' => $_POST['comment'],
+                'created_at' => date('Y-m-d h:i:s'),
+            );
+            $this->Crud_model->SaveData('postjob_comment', $commentData);
+        }
+        $insert_id = $this->db->insert_id();
+        if ($insert_id > 0) {
+            echo "Post comment successfully.";
+        } else {
+            echo "Error while posting comment.";
+        }
+    }
+	public function likepostjob() {
+        $likeData = array(
+            'user_id' => $_POST['user_id'],
+            'postjob_id' => $_POST['postjob_id'],
+            'is_liked' => 1
+        );
+        $isExistLikedSql = "SELECT * FROM postjob_like WHERE user_id = '".$_POST['user_id']."' AND postjob_id = '".$_POST['postjob_id']."'";
+        $isExist = $this->db->query($isExistLikedSql)->num_rows();
+        if ($isExist == 0) {
+            $this->Crud_model->SaveData('postjob_like', $likeData);
+            $insert_id = $this->db->insert_id();
+            if ($insert_id > 0) {
+                echo "Liked";
+            } else {
+                echo "Error";
+            }
+        } else {
+            $checkisLiked = $this->db->query("SELECT * FROM postjob_like WHERE user_id = '".$_POST['user_id']."' AND postjob_id = '".$_POST['postjob_id']. "'")->row();
+            if ($checkisLiked->isliked == '1') {
+                $this->db->query("UPDATE postjob_like SET is_liked = '0' WHERE user_id = '".$_POST['user_id']."' AND postjob_id = '".$_POST['postjob_id']. "'");
+            } else {
+                $this->db->query("UPDATE postjob_like SET is_liked = '1' WHERE user_id = '".$_POST['user_id']."' AND postjob_id = '".$_POST['postjob_id']. "'");
+            }
+            echo "liked";
+        }
+    }
+	public function likeuserrply() {
+        $likeData = array(
+            'user_id' => $_POST['user_id'],
+            'postjob_id' => $_POST['postjob_id'],
+			'comment_id' => $_POST['comment_id'],
+            'is_liked' => 1
+        );
+        $isExistLikedSql = "SELECT * FROM postjob_comment_like WHERE user_id = '".$_POST['user_id']."' AND postjob_id = '".$_POST['postjob_id']."' AND comment_id = '".$_POST['comment_id']."'";
+        $isExist = $this->db->query($isExistLikedSql)->num_rows();
+        if ($isExist == 0) {
+            $this->Crud_model->SaveData('postjob_comment_like', $likeData);
+            $insert_id = $this->db->insert_id();
+            if ($insert_id > 0) {
+                echo "Liked";
+            } else {
+                echo "Error";
+            }
+        } else {
+            $checkisLiked = $this->db->query("SELECT * FROM postjob_comment_like WHERE user_id = '".$_POST['user_id']."' AND postjob_id = '".$_POST['postjob_id']."' AND comment_id = '".$_POST['comment_id']."'")->row();
+            if ($checkisLiked->isliked == '1') {
+                $this->db->query("UPDATE postjob_comment_like SET is_liked = '0' WHERE user_id = '".$_POST['user_id']."' AND postjob_id = '".$_POST['postjob_id']."' AND comment_id = '".$_POST['comment_id']."'");
+            } else {
+                $this->db->query("UPDATE postjob_comment_like SET is_liked = '1' WHERE user_id = '".$_POST['user_id']."' AND postjob_id = '".$_POST['postjob_id']."' AND comment_id = '".$_POST['comment_id']."'");
+            }
+            echo "liked";
+        }
+    }
+	public function dislikepostjob() {
+        $this->db->query("UPDATE postjob_like SET is_liked = '0' WHERE user_id = '".$_POST['user_id']."' AND postjob_id = '".$_POST['postjob_id']. "'");
+    }
+	public function dislikeuserrply() {
+        $this->db->query("UPDATE postjob_comment_like SET is_liked = '0' WHERE user_id = '".$_POST['user_id']."' AND postjob_id = '".$_POST['postjob_id']."' AND comment_id = '".$_POST['comment_id']."'");
+    }
 }
