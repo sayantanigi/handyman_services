@@ -980,16 +980,14 @@ class Dashboard extends CI_Controller {
                 'user_id' => $_POST['user_id'],
                 'postjob_id' => $_POST['postjob_id'],
                 'comment_id' => $_POST['comment_id'],
-                'comment' => $_POST['comment'],
-                'created_at' => date('Y-m-d h:i:s'),
+                'comment' => $_POST['comment']
             );
             $this->Crud_model->SaveData('postjob_comment_rply', $commentData);
         } else {
             $commentData = array(
                 'user_id' => $_POST['user_id'],
                 'postjob_id' => $_POST['postjob_id'],
-                'comment' => $_POST['comment'],
-                'created_at' => date('Y-m-d h:i:s'),
+                'comment' => $_POST['comment']
             );
             $this->Crud_model->SaveData('postjob_comment', $commentData);
         }

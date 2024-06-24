@@ -20,32 +20,23 @@
                                 <form method="post" action="<?= base_url('search-work') ?>">
                                     <div class="row" style="align-items: center !important; flex-direction: column;">
                                         <div class="col-8">
-                                            <div class="col-9"
-                                                style="display: inline-block; float: left; padding: 0px;">
+                                            <div class="col-9" style="display: inline-block; float: left; padding: 0px;">
                                                 <div class="job-field frmSearch">
-                                                    <input type="text" name="location" id="location"
-                                                        value="<?= @$loc ?>" placeholder="Set Location" />
-                                                    <i class="la la-close" style="right: 0px; top: 19px !important;"
-                                                        onclick="removeAdd()"></i>
-                                                    <input type="hidden" id="search_lat" name="s_lat"
-                                                        value="<?= @$lat ?>">
-                                                    <input type="hidden" id="search_lon" name="s_lon"
-                                                        value="<?= @$lon ?>">
+                                                    <input type="text" name="location" id="location" value="<?= @$loc ?>" placeholder="Set Location" />
+                                                    <i class="la la-close" style="right: 0px; top: 19px !important;" onclick="removeAdd()"></i>
+                                                    <input type="hidden" id="search_lat" name="s_lat" value="<?= @$lat ?>">
+                                                    <input type="hidden" id="search_lon" name="s_lon" value="<?= @$lon ?>">
                                                 </div>
                                             </div>
                                             <div class="col-3" style="display: inline-block; float: left;">
                                                 <!-- <button onclick="event.preventDefault(); viewInMap()" style=" width: 100% !important; padding: 18px 0px; height: auto !important; margin: 0; border-radius: 35px !important; font-size: 15px;">View In Map</button> -->
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#exampleModal"
-                                                    onclick="event.preventDefault(); viewInMap()"
-                                                    style=" width: 100% !important; padding: 18px 0px !important; height: auto !important; margin: 0; border-radius: 35px !important; font-size: 15px;">View
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="event.preventDefault(); viewInMap()" style=" width: 100% !important; padding: 18px 0px !important; height: auto !important; margin: 0; border-radius: 35px !important; font-size: 15px;">View
                                                     In Map</button>
                                             </div>
                                         </div>
                                         <div class="col-8">
                                             <div class="job-field frmSearch">
-                                                <input type="text" name="category_id" id="search-box"
-                                                    placeholder="Search By Category" value="" />
+                                                <input type="text" name="category_id" id="search-box" placeholder="Search By Category" value="" />
                                                 <i class="la la-search"></i>
                                             </div>
                                             <div id="suggesstion-box"></div>
@@ -66,8 +57,7 @@
         </div>
     </div>
 </section>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 990px !important;">
         <div class="modal-content">
             <div class="modal-header">
@@ -88,60 +78,178 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="heading">
+                    <!-- <div class="heading">
                         <h2>Handyman Services Opportunities</h2>
                         <span>Look for the latest jobs posted on the portal.</span>
-                    </div>
-                    <div class="blog-sec">
-                        <div class="row">
-                            <?php if (!empty($get_post)) {
-                                foreach ($get_post as $row) {
-                                    if (strlen($row->description) > 200) {
-                                        $desc = substr($row->description, 0, 200) . '...';
-                                    } else {
-                                        $desc = $row->description;
-                                    } ?>
-                                    <?php $get_user = $this->db->query("SELECT * FROM users WHERE userId = '$row->user_id'")->result_array(); ?>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <div class="my-blog"
-                                            onclick="location.href='<?= base_url('workdetail/' . base64_encode($row->id)) ?>';">
-                                            <div class="blog-details">
-                                                <?php
-                                                $getJobImage = $this->db->query("SELECT * FROM postjob_image WHERE job_id = '" . $row->id . "'")->row();
-                                                $jobimage = base_url("uploads/postjob/" . $getJobImage->job_image);
-                                                ?>
-                                                <img src="<?= $jobimage; ?>" />
-                                                <div class="Blog-Emp-Details">
-                                                    <div class="Blog-Emp-Img">
-                                                        <?php if (!empty($get_user[0]['profilePic'])) { ?>
-                                                            <img
-                                                                src="<?php echo base_url('uploads/users/' . $get_user[0]['profilePic']); ?>">
-                                                        <?php } else { ?>
-                                                            <img src="<?php echo base_url('uploads/users/user.png'); ?>">
-                                                        <?php } ?>
-                                                    </div>
-                                                    <div class="Blog-Emp-Data">
-                                                        <?php if (!empty($row->post_title)) {
-                                                            if (strlen($row->post_title) > 30) {
-                                                                $title = substr($row->post_title, 0, 30) . '...';
-                                                            } else {
-                                                                $title = $row->post_title;
-                                                            }
-                                                        } else {
-                                                            $title = '';
-                                                        } ?>
-                                                        <p><?= ucfirst($title) ?></p>
-                                                        <?php $get_user = $this->db->query("SELECT * FROM users WHERE userId = '$row->user_id'")->result_array(); ?>
-                                                        <p>By <?php echo $get_user[0]['companyname'] ?></p>
-                                                    </div>
-                                                </div>
-                                                <!-- <h3 class="nkash"><a href="javascript:void(0)" title="">Description</a></h3> -->
-                                                <!-- <p><?= ucfirst(strip_tags($desc)) ?></p> -->
-                                            </div>
+                    </div> -->
+                    <div class="col-12">
+                        <div class="TopBar" style="display: flex; flex-direction: row; height: 70px; width: 100%; align-items: center; justify-content: space-between; padding: 0;">
+                            <ul style="margin: 0; display: flex; flex-direction: row; width: 90%; height: 60px; align-items: center;">
+                                <li style="margin: 0; height: 40px; padding: 0 15px; display: flex; align-items: center; justify-content: center; background: #ffede3; border-radius: 100px; font-size: 15px; font-weight: 500; color: #fc7021;">
+                                    For you
+                                </li>
+                                <li style="height: 40px; padding: 0 15px; display: flex; align-items: center; justify-content: center; background: #ffede3; border-radius: 100px; font-size: 15px; font-weight: 500; color: #fc7021; margin: 0 15px;">Latest</li>
+                                <li style="margin: 0; height: 40px; padding: 0 15px; display: flex; align-items: center; justify-content: center; background: #ffede3; border-radius: 100px; font-size: 15px; font-weight: 500; color: #fc7021;">Nearby</li>
+                            </ul>
+                            <a href="" class="PostBtn" style="width: 10%; display: flex; align-items: center; justify-content: center; height: 60px;">
+                                <span style="width: 100%; height: 40px; background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border-radius: 100px; display: flex; flex-direction: row; align-items: center; justify-content: center; color: #fff;">
+                                    <i class="fa fa-plus" aria-hidden="true" style="margin-right: 10px;"></i> Post
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="PostContainer" style="height: 620px; overflow: auto; padding: 25px; border-radius: 15px; border: 1px solid #ddd;">
+                            <!-- Single Post -->
+                            <div class="DataContainer" style="padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #dddddd;">
+                                <div class="InfoBlock" style="display: flex; flex-direction: row; height: 80px; align-items: center; justify-content: flex-start;">
+                                    <img style="width: 80px; height: 80px; border-radius: 100%; object-fit: cover;" src="https://techg.igiapp.com/handymanservices/uploads/users/7437_restoration-services-long-island-nyc-inset.jpg" alt="">
+                                    <div class="TextData" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding-left: 15px;">
+                                        <h3 style="font-size: 20px; font-weight: 600; margin: 0; color: #000;">Susan Mirallegro</h3>
+                                        <p style="margin: 0; font-size: 13px; color: #6a6a6a;">Sub Text . 1hr ago
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <p class="CommentData" style="margin-top: 15px; margin-bottom: 15px; font-size: 16px; color: #000; line-height: 25px;">
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                </p>
+
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start; width: 50%; ">
+                                        <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start;">
+                                            <span><i style="color: #fb6920; font-size: 18px;" class="fa fa-heart" aria-hidden="true"></i></span>
+                                            <p style="margin: 0; margin-left: 10px; font-size: 16px; font-weight: 500; color: #fb6920;">10 Like</p>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start; margin-left: 20px;">
+                                            <span><i style="color: #fb6920; font-size: 20px;" class="fa fa-comment" aria-hidden="true"></i></span>
+                                            <p style="margin: 0; margin-left: 10px; font-size: 16px; font-weight: 500; color: #fb6920;">4 Comments</p>
                                         </div>
                                     </div>
-                                <?php }
-                            } ?>
+                                    <ul style="margin: 0; display: flex; align-items: center; justify-content: flex-end; flex-direction: row; width: 50%;">
+                                        <li style="margin: 0 20px 0 0 !important; font-weight: 600; font-size: 15px; color: #000 !important;">
+                                            <a style="color: #000 !important;" href="">
+                                                <i style="color: #000;" class="fa fa-heart-o" aria-hidden="true"></i> Like
+                                            </a>
+                                        </li>
+                                        <li style="margin: 0 !important; font-weight: 600; font-size: 15px; color: #000 !important;">
+                                            <a style="color: #000 !important;" href=""> <i style="color: #000;" class="fa fa-share" aria-hidden="true"></i> Share</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Comment Btn -->
+                                <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; width: 100%;">
+                                    <textarea style="background: transparent !important; font-size: 14px; margin-bottom: 0 !important; float: unset !important; padding: 10px 10px !important; border-bottom: 2px solid #b1b1b1; border-radius: 10px !important; box-shadow: 0 0 10px #e1e1e1; min-height: 100px !important; margin-top: 10px; width: 85%;" type="text" class="form-control f1" placeholder="Enter your comments" required="" name="comment" id="comment"></textarea>
+                                    <a href="" style="margin-top: 10px; background: linear-gradient(180deg, rgba(249, 80, 30, 1) 0%, rgba(252, 119, 33, 1) 100%); border: 0; border-radius: 100px; width: 10%; height: 45px; cursor: pointer; display:flex; align-items: center; justify-content: center; ">
+                                        <span style="font-size: 15px; font-weight: 600; letter-spacing: 0; color: #fff;">Comment</span>
+                                    </a>
+                                </div>
+
+                                <!-- Comment Data -->
+                                <div class="Comment_Block" style="background: #ffede3; padding: 15px; border-radius: 15px; display: flex; flex-direction: column; margin: 20px 0;">
+                                    <div style="flex-direction: row; align-items: flex-start; justify-content: flex-start; display: flex; width: 100%;">
+                                        <div class="Comment_Img" style="width: 8%;">
+                                            <img style="width: 60px; height: 60px; border-radius: 100%; object-fit: cover;" src="https://plus.unsplash.com/premium_photo-1675626492183-865d6d8e2e8a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User Profile">
+                                        </div>
+                                        <div class="User_Comment_Data" style="width: 92%; display: flex; flex-direction: column;">
+                                            <p style="margin: 0; font-weight: 600; color: #000 !important; font-size: 16px;">
+                                                Demo Profesional .
+                                                <span style="font-size: 13px; color: #6a6a6a; font-weight: 400;">about 3 days ago</span> .
+                                                <span style="color: #fb6920; font-size: 13px;"><i class="fa fa-heart" aria-hidden="true"></i> 1 Like</span>
+                                            </p>
+                                            <p style="margin-bottom: 0;">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                                            <ul style="margin: 0; display: flex; align-items: center; justify-content: flex-start; margin-top: 10px;">
+                                                <li style="margin: 0 25px 0 0 !important; font-size: 13px; color: #000 !important; font-weight: 600;">
+                                                    <a style="color: #000 !important;" href="https://techg.igiapp.com/handymanservices/login">Like</a>
+                                                </li>
+                                                <li style="margin: 0 !important; font-size: 13px; color: #000 !important; font-weight: 600;">
+                                                    <a style="color: #000 !important;" href="javascript:void(0)">Reply</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Single Post -->
+                            <div class="DataContainer" style="margin-top: 30px; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #dddddd;">
+                                <div class="InfoBlock" style="display: flex; flex-direction: row; height: 80px; align-items: center; justify-content: flex-start;">
+                                    <img style="width: 80px; height: 80px; border-radius: 100%; object-fit: cover;" src="https://techg.igiapp.com/handymanservices/uploads/users/7437_restoration-services-long-island-nyc-inset.jpg" alt="">
+                                    <div class="TextData" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding-left: 15px;">
+                                        <h3 style="font-size: 20px; font-weight: 600; margin: 0; color: #000;">Susan Mirallegro</h3>
+                                        <p style="margin: 0; font-size: 13px; color: #6a6a6a;">Sub Text . 1hr ago
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <p class="CommentData" style="margin-top: 15px; margin-bottom: 15px; font-size: 16px; color: #000; line-height: 25px;">
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                </p>
+
+                                <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start; width: 50%; ">
+                                        <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start;">
+                                            <span><i style="color: #fb6920; font-size: 18px;" class="fa fa-heart" aria-hidden="true"></i></span>
+                                            <p style="margin: 0; margin-left: 10px; font-size: 16px; font-weight: 500; color: #fb6920;">10 Like</p>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start; margin-left: 20px;">
+                                            <span><i style="color: #fb6920; font-size: 20px;" class="fa fa-comment" aria-hidden="true"></i></span>
+                                            <p style="margin: 0; margin-left: 10px; font-size: 16px; font-weight: 500; color: #fb6920;">1 Comments</p>
+                                        </div>
+                                    </div>
+                                    <ul style="margin: 0; display: flex; align-items: center; justify-content: flex-end; flex-direction: row; width: 50%;">
+                                        <li style="margin: 0 20px 0 0 !important; font-weight: 600; font-size: 15px; color: #000 !important;">
+                                            <a style="color: #000 !important;" href="">
+                                                <i style="color: #000;" class="fa fa-heart-o" aria-hidden="true"></i> Like
+                                            </a>
+                                        </li>
+                                        <li style="margin: 0 !important; font-weight: 600; font-size: 15px; color: #000 !important;">
+                                            <a style="color: #000 !important;" href=""> <i style="color: #000;" class="fa fa-share" aria-hidden="true"></i> Share</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Comment Btn -->
+                                <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; width: 100%;">
+                                    <textarea style="background: transparent !important; font-size: 14px; margin-bottom: 0 !important; float: unset !important; padding: 10px 10px !important; border-bottom: 2px solid #b1b1b1; border-radius: 10px !important; box-shadow: 0 0 10px #e1e1e1; min-height: 100px !important; margin-top: 10px; width: 85%;" type="text" class="form-control f1" placeholder="Enter your comments" required="" name="comment" id="comment"></textarea>
+                                    <a href="" style="margin-top: 10px; background: linear-gradient(180deg, rgba(249, 80, 30, 1) 0%, rgba(252, 119, 33, 1) 100%); border: 0; border-radius: 100px; width: 10%; height: 45px; cursor: pointer; display:flex; align-items: center; justify-content: center; ">
+                                        <span style="font-size: 15px; font-weight: 600; letter-spacing: 0; color: #fff;">Comment</span>
+                                    </a>
+                                </div>
+
+                                <!-- Comment Data -->
+                                <div class="Comment_Block" style="background: #ffede3; padding: 15px; border-radius: 15px; display: flex; flex-direction: column; margin: 20px 0;">
+                                    <div style="flex-direction: row; align-items: flex-start; justify-content: flex-start; display: flex; width: 100%;">
+                                        <div class="Comment_Img" style="width: 8%;">
+                                            <img style="width: 60px; height: 60px; border-radius: 100%; object-fit: cover;" src="https://plus.unsplash.com/premium_photo-1675626492183-865d6d8e2e8a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="User Profile">
+                                        </div>
+                                        <div class="User_Comment_Data" style="width: 92%; display: flex; flex-direction: column;">
+                                            <p style="margin: 0; font-weight: 600; color: #000 !important; font-size: 16px;">
+                                                Demo Profesional .
+                                                <span style="font-size: 13px; color: #6a6a6a; font-weight: 400;">about 3 days ago</span> .
+                                                <span style="color: #fb6920; font-size: 13px;"><i class="fa fa-heart" aria-hidden="true"></i> 1 Like</span>
+                                            </p>
+                                            <p style="margin-bottom: 0;">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                                            <ul style="margin: 0; display: flex; align-items: center; justify-content: flex-start; margin-top: 10px;">
+                                                <li style="margin: 0 25px 0 0 !important; font-size: 13px; color: #000 !important; font-weight: 600;">
+                                                    <a style="color: #000 !important;" href="https://techg.igiapp.com/handymanservices/login">Like</a>
+                                                </li>
+                                                <li style="margin: 0 !important; font-size: 13px; color: #000 !important; font-weight: 600;">
+                                                    <a style="color: #000 !important;" href="javascript:void(0)">Reply</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <!-- Comment Reply Section -->
+                                    <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; margin-top: 20px; padding-left: 8%;">
+                                        <textarea style="background: white !important; font-size: 14px; margin-bottom: 0 !important; float: unset !important; padding: 10px 10px !important; border-bottom: 2px solid #b1b1b1; border-radius: 10px !important; min-height: 50px !important; width: 85%;" required="" name="comment" id="comment" placeholder="Comment"></textarea>
+                                        <a href="" style="margin-top: 10px; background: linear-gradient(180deg, rgba(249, 80, 30, 1) 0%, rgba(252, 119, 33, 1) 100%); border: 0; border-radius: 100px; width: 10%; height: 45px; cursor: pointer; display:flex; align-items: center; justify-content: center; ">
+                                            <span style="font-size: 15px; font-weight: 600; letter-spacing: 0; color: #fff;">Comment</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -156,6 +264,7 @@
         </div>
     </div>
 </section>
+
 <section>
     <div class="block Worker-Block">
         <div data-velocity="-.1" style="background: #F9FAFC" class="parallax scrolly-invisible no-parallax"></div>
@@ -177,18 +286,15 @@
                                         $shortbio = $user->short_bio;
                                     }
                                     if (!empty($user->firstname) && !empty($user->lastname) && !empty($user->email) && !empty($user->gender) && !empty($user->address) && !empty($user->short_bio)) {
-                                        ?>
+                            ?>
                                         <div class="col-lg-3 col-md-6 col-sm-12">
                                             <div class="my-blog">
                                                 <div class="blog-thumbak">
-                                                    <a href="<?= base_url('professionals_detail/' . base64_encode(@$user->userId)) ?>"
-                                                        title="">
+                                                    <a href="<?= base_url('professionals_detail/' . base64_encode(@$user->userId)) ?>" title="">
                                                         <?php if (!empty($user->profilePic) && file_exists('uploads/users/' . $user->profilePic)) { ?>
-                                                            <img src="<?= base_url('uploads/users/' . $user->profilePic); ?>" alt=""
-                                                                style="height: 300px;" />
+                                                            <img src="<?= base_url('uploads/users/' . $user->profilePic); ?>" alt="" style="height: 300px;" />
                                                         <?php } else { ?>
-                                                            <img src="<?= base_url('uploads/no_image.png'); ?>" alt=""
-                                                                style="height: 300px;" />
+                                                            <img src="<?= base_url('uploads/no_image.png'); ?>" alt="" style="height: 300px;" />
                                                         <?php } ?>
                                                     </a>
                                                 </div>
@@ -210,7 +316,7 @@
                                                         <?php
                                                         if ($user_rating[0]->rate > 0) {
                                                             for ($i = 0; $i < $user_rating[0]->rate; $i++) {
-                                                                ?>
+                                                        ?>
                                                                 <span class="fa fa-star checked"></span>
                                                             <?php }
                                                         } else { ?>
@@ -219,9 +325,7 @@
                                                     </div>
                                                     <?php if (!empty($_SESSION['afrebay']['userId'])) { ?>
                                                         <h3 class="nkash">
-                                                            <a type="button" class="btn"
-                                                                href="<?= base_url('professionals_detail/' . base64_encode(@$user->userId)) ?>"
-                                                                title="">
+                                                            <a type="button" class="btn" href="<?= base_url('professionals_detail/' . base64_encode(@$user->userId)) ?>" title="">
                                                                 <?php if (!empty($user->firstname)) {
                                                                     echo $user->firstname . ' ' . $user->lastname;
                                                                 } else {
@@ -231,8 +335,7 @@
                                                         </h3>
                                                     <?php } else { ?>
                                                         <h3 class="nkash">
-                                                            <a type="button" class="btn" href="javascript:void(0)" title=""
-                                                                onclick="viewProfile()">
+                                                            <a type="button" class="btn" href="javascript:void(0)" title="" onclick="viewProfile()">
                                                                 <?php if (!empty($user->firstname)) {
                                                                     echo $user->firstname . ' ' . $user->lastname;
                                                                 } else {
@@ -244,7 +347,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <?php }
+                            <?php }
                                 }
                             } ?>
                         </div>
@@ -283,12 +386,11 @@
                                     } else {
                                         $description = $item['description'];
                                     }
-                                    ?>
+                            ?>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="p-category">
                                             <a href="<?php echo base_url('contact-us') ?>" title="">
-                                                <img src="<?php echo base_url() ?>uploads/services/<?php echo $item['icon'] ?>"
-                                                    style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px;">
+                                                <img src="<?php echo base_url() ?>uploads/services/<?php echo $item['icon'] ?>" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px;">
                                                 <?php if (!empty($item['category_name'])) { ?>
                                                     <span><?= ucfirst($item['category_name']) ?></span>
                                                 <?php } else { ?>
@@ -302,7 +404,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                <?php }
+                            <?php }
                             } ?>
                         </div>
                     </div>
@@ -315,13 +417,10 @@
     <div class="block double-gap-top double-gap-bottom">
         <?php if (!empty($get_banner_middle->image) && file_exists('uploads/banner/' . $get_banner_middle->image)) {
             $image = base_url('uploads/banner/' . $get_banner_middle->image);
-            ?>
-            <div data-velocity="-.1" style="background: url('<?php echo $image ?>') repeat scroll 50% 422.28px transparent;"
-                class="parallax scrolly-invisible layer color"></div>
+        ?>
+            <div data-velocity="-.1" style="background: url('<?php echo $image ?>') repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible layer color"></div>
         <?php } else { ?>
-            <div data-velocity="-.1"
-                style="background: url('<?= base_url(); ?>assets/images/resource/parallax1.jpg') repeat scroll 50% 422.28px transparent;"
-                class="parallax scrolly-invisible layer color"></div>
+            <div data-velocity="-.1" style="background: url('<?= base_url(); ?>assets/images/resource/parallax1.jpg') repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible layer color"></div>
         <?php } ?>
         <div class="container">
             <div class="row">
@@ -359,7 +458,7 @@
                                         <?php } ?>
                                     </a>
                                 </div>
-                            <?php }
+                        <?php }
                         } ?>
                     </div>
                 </div>
@@ -386,7 +485,7 @@
                                     } else {
                                         $desc = $career->description;
                                     }
-                                    ?>
+                            ?>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="my-blog">
                                             <div class="blog-thumb">
@@ -398,21 +497,19 @@
                                                     <?php } ?>
                                                 </a>
                                                 <div class="blog-metas">
-                                                    <a href="javascript:void(0)"
-                                                        title=""><?= date('M d,Y', strtotime($career->tipsdate)) ?></a>
+                                                    <a href="javascript:void(0)" title=""><?= date('M d,Y', strtotime($career->tipsdate)) ?></a>
                                                     <a href="javascript:void(0)" title="">0 Comments</a>
                                                 </div>
                                             </div>
                                             <div class="blog-details">
-                                                <h3><a href="<?= base_url('career-tips/' . $career->slug) ?>"
-                                                        title=""><?= ucfirst($career->title) ?></a></h3>
+                                                <h3><a href="<?= base_url('career-tips/' . $career->slug) ?>" title=""><?= ucfirst($career->title) ?></a></h3>
                                                 <div><?= ucfirst($desc) ?></div>
                                                 <a href="<?= base_url('career-tips/' . $career->slug) ?>" title=""><span>Read
                                                         More</span></a>
                                             </div>
                                         </div>
                                     </div>
-                                <?php }
+                            <?php }
                             } ?>
                         </div>
                     </div>
@@ -429,210 +526,308 @@
     </div>
 </section>
 <style>
-    .chosen_country { color: #888888; height: 60px; border-radius: 50px; padding: 17px !important; } #state { display: block; color: #888888; height: 60px; border-radius: 50px; padding: 17px !important; } #city { display: block; color: #888888; height: 60px; border-radius: 50px; padding: 17px !important; } .jconfirm-content-pane { text-align: center; font-size: 18px; } .jconfirm-buttons { margin-right: 140px; display: inline-block; } #country-list { float: left; list-style: none; margin-top: 60px; padding: 0; width: 98%; position: absolute; z-index: 1; } #country-list li { padding: 10px 30px; background: #ffffff; margin: 0px !important; border-radius: 10px; border-bottom: 1px solid #eee; } #country-list li:hover { background: #ece3d2; cursor: pointer; } /* #search-box {padding: 10px; border: #a8d4b1 1px solid; border-radius: 4px;} */ ::-webkit-scrollbar { width: 10px; background-color: transparent; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: #888; border-radius: 5px; } ::-webkit-scrollbar-thumb:hover { background: #555; } .pf-map iframe { height: 525px !important;} #map{position: relative !important;  height: 500px !important; max-width: 100% !important;}
+    .chosen_country {
+        color: #888888;
+        height: 60px;
+        border-radius: 50px;
+        padding: 17px !important;
+    }
+
+    #state {
+        display: block;
+        color: #888888;
+        height: 60px;
+        border-radius: 50px;
+        padding: 17px !important;
+    }
+
+    #city {
+        display: block;
+        color: #888888;
+        height: 60px;
+        border-radius: 50px;
+        padding: 17px !important;
+    }
+
+    .jconfirm-content-pane {
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .jconfirm-buttons {
+        margin-right: 140px;
+        display: inline-block;
+    }
+
+    #country-list {
+        float: left;
+        list-style: none;
+        margin-top: 60px;
+        padding: 0;
+        width: 98%;
+        position: absolute;
+        z-index: 1;
+    }
+
+    #country-list li {
+        padding: 10px 30px;
+        background: #ffffff;
+        margin: 0px !important;
+        border-radius: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    #country-list li:hover {
+        background: #ece3d2;
+        cursor: pointer;
+    }
+
+    /* #search-box {padding: 10px; border: #a8d4b1 1px solid; border-radius: 4px;} */
+    ::-webkit-scrollbar {
+        width: 10px;
+        background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    .pf-map iframe {
+        height: 525px !important;
+    }
+
+    #map {
+        position: relative !important;
+        height: 500px !important;
+        max-width: 100% !important;
+    }
 </style>
 <script>
-$(document).ready(function () {
-    var base_url = $("#base_url").val();
-    var id = 'United States';
-    $.ajax({
-        type: "post",
-        cache: false,
-        url: base_url + "Welcome/states_by_country",
-        data: { country_name: id },
-        beforeSend: function () { },
-        success: function (returndata) {
-            $('.state_field').show();
-            $('#state').html(returndata);
-            $('#city').html('<option value="">Select State First</option>');
-        }
-    });
-
-    $("#search-box").keyup(function () {
-        var text = $("#search-box").val();
+    $(document).ready(function() {
         var base_url = $("#base_url").val();
+        var id = 'United States';
         $.ajax({
-            type: "POST",
-            url: base_url + "Welcome/get_category_list",
-            data: { category_name: text },
-            beforeSend: function () {
-                $("#search-box").css("background", "#FFF url(<?php base_url() ?>uploads/LoaderIcon.gif) no-repeat 165px");
+            type: "post",
+            cache: false,
+            url: base_url + "Welcome/states_by_country",
+            data: {
+                country_name: id
             },
-            success: function (data) {
-                //console.log(data);
-                $("#suggesstion-box").show();
-                $("#suggesstion-box").html(data);
-                $("#search-box").css("background", "#FFF");
+            beforeSend: function() {},
+            success: function(returndata) {
+                $('.state_field').show();
+                $('#state').html(returndata);
+                $('#city').html('<option value="">Select State First</option>');
             }
         });
-    });
-})
-function getState(val) {
-    var base_url = $("#base_url").val();
-    var id = val;
-    $.ajax({
-        type: "post",
-        cache: false,
-        url: base_url + "Welcome/states_by_country",
-        data: {
-            country_name: id
-        },
-        beforeSend: function () { },
-        success: function (returndata) {
-            $('.state_field').show();
-            $('#state').html(returndata);
-            $('#city').html('<option value="">Select State First</option>');
-        }
-    });
-}
-function getCity(val) {
-    var base_url = $("#base_url").val();
-    var id = val;
-    $.ajax({
-        type: "post",
-        cache: false,
-        url: base_url + "Welcome/cities_by_state",
-        data: {
-            state_name: id
-        },
-        beforeSend: function () { },
-        success: function (returndata) {
-            $('.city_field').show();
-            $('#city').html(returndata);
-        }
-    });
-}
-function viewProfile() {
-    $.alert({
-        title: '',
-        content: "Please login to view professional's profile",
-    });
-}
-function selectcategory(val) {
-    $("#search-box").val(val);
-    $("#suggesstion-box").hide();
-}
+        $("#search-box").keyup(function() {
+            var text = $("#search-box").val();
+            var base_url = $("#base_url").val();
+            $.ajax({
+                type: "POST",
+                url: base_url + "Welcome/get_category_list",
+                data: {
+                    category_name: text
+                },
+                beforeSend: function() {
+                    $("#search-box").css("background", "#FFF url(<?php base_url() ?>uploads/LoaderIcon.gif) no-repeat 165px");
+                },
+                success: function(data) {
+                    //console.log(data);
+                    $("#suggesstion-box").show();
+                    $("#suggesstion-box").html(data);
+                    $("#search-box").css("background", "#FFF");
+                }
+            });
+        });
+    })
+
+    function getState(val) {
+        var base_url = $("#base_url").val();
+        var id = val;
+        $.ajax({
+            type: "post",
+            cache: false,
+            url: base_url + "Welcome/states_by_country",
+            data: {
+                country_name: id
+            },
+            beforeSend: function() {},
+            success: function(returndata) {
+                $('.state_field').show();
+                $('#state').html(returndata);
+                $('#city').html('<option value="">Select State First</option>');
+            }
+        });
+    }
+
+    function getCity(val) {
+        var base_url = $("#base_url").val();
+        var id = val;
+        $.ajax({
+            type: "post",
+            cache: false,
+            url: base_url + "Welcome/cities_by_state",
+            data: {
+                state_name: id
+            },
+            beforeSend: function() {},
+            success: function(returndata) {
+                $('.city_field').show();
+                $('#city').html(returndata);
+            }
+        });
+    }
+
+    function viewProfile() {
+        $.alert({
+            title: '',
+            content: "Please login to view professional's profile",
+        });
+    }
+
+    function selectcategory(val) {
+        $("#search-box").val(val);
+        $("#suggesstion-box").hide();
+    }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtg6oeRPEkRL9_CE-us3QdvXjupbgG14A&libraries=places&callback=initMap"></script>
 <script type="text/javascript">
-$(document).ready(function () {
-    var location = {
-        latitude: '',
-        longitude: ''
-    };
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    }
-    else {
-        //latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";
-        //
-    }
-    function showPosition(position) {
-        location.latitude = position.coords.latitude;
-        location.longitude = position.coords.longitude;
-        //latitudeAndLongitude.innerHTML="Latitude: " + position.coords.latitude +
-        "<br>Longitude: " + position.coords.longitude;
-        var geocoder = new google.maps.Geocoder();
-        var latLng = new google.maps.LatLng(location.latitude, location.longitude);
-        $('#search_lat').val(location.latitude);
-        $('#search_lon').val(location.longitude);
-        if (geocoder) {
-            geocoder.geocode({ 'latLng': latLng }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    console.log(results);
-                    $('#location').val(results[0].formatted_address);
-                }
-                else {
-                    $('#location').html('Geocoding failed: ' + status);
-                    console.log("Geocoding failed: " + status);
-                }
-            }); //geocoder.geocode()
-        }
-    } //showPosition
-});
-function removeAdd() {
-    $('#location').val('');
-    $('#search_lon').val('');
-    $('#search_lat').val('');
-}
-function viewInMap() {
-    var location=$('#location').val();
-    $('#map').html('<iframe src="https://maps.google.it/maps?q='+location+'&output=embed"></iframe>');
-    initialize();
-}
-function initialize() {
-    var lat = $('#search_lat').val();
-    var lon = $('#search_lon').val();
-    var myLatlng = new google.maps.LatLng(lat,lon);
-    var myOptions = {
-      zoom: 20,
-      center: myLatlng,
-      mapTypeId: google.maps.MapTypeId.HYBRID
-    }
-    var map = new google.maps.Map(document.getElementById("map"), myOptions);
-
-    addMarker(myLatlng, 'Default Marker', map);
-
-    map.addListener('click',function(event) {
-        addMarker(event.latLng, 'Click Generated Marker', map);
-    });
-}
-
-function handleEvent(event) {
-    //console.log('lat:' + event.latLng.lat());
-    document.getElementById('search_lat').value = event.latLng.lat();
-    document.getElementById('search_lon').value = event.latLng.lng();
-    setTimeout(function() {
-        //initialize();
-        const latlng = {
-            lat: parseFloat(event.latLng.lat()),
-            lng: parseFloat(event.latLng.lng()),
+    $(document).ready(function() {
+        var location = {
+            latitude: '',
+            longitude: ''
         };
-        const geocoder = new google.maps.Geocoder();
-        const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 20,
-            center: { lat: event.latLng.lat(), lng: event.latLng.lng() },
-            mapTypeId: google.maps.MapTypeId.HYBRID
-        });
-        geocoder.geocode({ location: latlng }).then((response) => {
-            if (response.results[0]) {
-                map.setZoom(20);
-                const marker = new google.maps.Marker({
-                    position: latlng,
-                    map: map,
-                    center: { lat: event.latLng.lat(), lng: event.latLng.lng() },
-                    mapTypeId: google.maps.MapTypeId.HYBRID
-                });
-                console.log(response.results[0].formatted_address);
-                addMarker(latlng, 'Default Marker', map);
-                map.addListener('click',function(event) {
-                    addMarker(event.latLng, 'Click Generated Marker', map);
-                });
-                $("#location").val(response.results[0].formatted_address);
-                setTimeout(function() {
-                    $('#exampleModal').removeClass('show');
-                    $('#exampleModal').css('display', 'none');
-                    $('body').removeClass('modal-open');
-                    $('body').css('padding','0');
-                    $('.modal-backdrop').remove();
-                }, 3000);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            //latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";
+            //
+        }
 
-            } else {
-                window.alert("No results found");
+        function showPosition(position) {
+            location.latitude = position.coords.latitude;
+            location.longitude = position.coords.longitude;
+            //latitudeAndLongitude.innerHTML="Latitude: " + position.coords.latitude +
+            "<br>Longitude: " + position.coords.longitude;
+            var geocoder = new google.maps.Geocoder();
+            var latLng = new google.maps.LatLng(location.latitude, location.longitude);
+            $('#search_lat').val(location.latitude);
+            $('#search_lon').val(location.longitude);
+            if (geocoder) {
+                geocoder.geocode({
+                    'latLng': latLng
+                }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        console.log(results);
+                        $('#location').val(results[0].formatted_address);
+                    } else {
+                        $('#location').html('Geocoding failed: ' + status);
+                        console.log("Geocoding failed: " + status);
+                    }
+                }); //geocoder.geocode()
             }
-        })
-    }, 3000);
-}
-
-function addMarker(latlng,title,map) {
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: map,
-        title: title,
-        draggable:true
+        } //showPosition
     });
 
-    marker.addListener('drag', handleEvent);
-    marker.addListener('dragend', handleEvent);
-}
+    function removeAdd() {
+        $('#location').val('');
+        $('#search_lon').val('');
+        $('#search_lat').val('');
+    }
+
+    function viewInMap() {
+        var location = $('#location').val();
+        $('#map').html('<iframe src="https://maps.google.it/maps?q=' + location + '&output=embed"></iframe>');
+        initialize();
+    }
+
+    function initialize() {
+        var lat = $('#search_lat').val();
+        var lon = $('#search_lon').val();
+        var myLatlng = new google.maps.LatLng(lat, lon);
+        var myOptions = {
+            zoom: 20,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        }
+        var map = new google.maps.Map(document.getElementById("map"), myOptions);
+        addMarker(myLatlng, 'Default Marker', map);
+        map.addListener('click', function(event) {
+            addMarker(event.latLng, 'Click Generated Marker', map);
+        });
+    }
+
+    function handleEvent(event) {
+        //console.log('lat:' + event.latLng.lat());
+        document.getElementById('search_lat').value = event.latLng.lat();
+        document.getElementById('search_lon').value = event.latLng.lng();
+        setTimeout(function() {
+            //initialize();
+            const latlng = {
+                lat: parseFloat(event.latLng.lat()),
+                lng: parseFloat(event.latLng.lng()),
+            };
+            const geocoder = new google.maps.Geocoder();
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 20,
+                center: {
+                    lat: event.latLng.lat(),
+                    lng: event.latLng.lng()
+                },
+                mapTypeId: google.maps.MapTypeId.HYBRID
+            });
+            geocoder.geocode({
+                location: latlng
+            }).then((response) => {
+                if (response.results[0]) {
+                    map.setZoom(20);
+                    const marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map,
+                        center: {
+                            lat: event.latLng.lat(),
+                            lng: event.latLng.lng()
+                        },
+                        mapTypeId: google.maps.MapTypeId.HYBRID
+                    });
+                    console.log(response.results[0].formatted_address);
+                    addMarker(latlng, 'Default Marker', map);
+                    map.addListener('click', function(event) {
+                        addMarker(event.latLng, 'Click Generated Marker', map);
+                    });
+                    $("#location").val(response.results[0].formatted_address);
+                    setTimeout(function() {
+                        $('#exampleModal').removeClass('show');
+                        $('#exampleModal').css('display', 'none');
+                        $('body').removeClass('modal-open');
+                        $('body').css('padding', '0');
+                        $('.modal-backdrop').remove();
+                    }, 3000);
+                } else {
+                    window.alert("No results found");
+                }
+            })
+        }, 3000);
+    }
+
+    function addMarker(latlng, title, map) {
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+            title: title,
+            draggable: true
+        });
+        marker.addListener('drag', handleEvent);
+        marker.addListener('dragend', handleEvent);
+    }
 </script>
