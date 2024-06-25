@@ -998,6 +998,30 @@ class Dashboard extends CI_Controller {
             echo "Error while posting comment.";
         }
     }
+	public function postUserReply() {
+        if (!empty($_POST['comment_id'])) {
+            $commentData = array(
+                'user_id' => $_POST['user_id'],
+                'postjob_id' => $_POST['postjob_id'],
+                'comment_id' => $_POST['comment_id'],
+                'comment' => $_POST['comment']
+            );
+            $this->Crud_model->SaveData('postjob_comment_rply', $commentData);
+        } else {
+            $commentData = array(
+                'user_id' => $_POST['user_id'],
+                'postjob_id' => $_POST['postjob_id'],
+                'comment' => $_POST['comment']
+            );
+            $this->Crud_model->SaveData('postjob_comment', $commentData);
+        }
+        $insert_id = $this->db->insert_id();
+        if ($insert_id > 0) {
+            echo "Replied";
+        } else {
+            echo "Error while replying";
+        }
+    }
 	public function likepostjob() {
         $likeData = array(
             'user_id' => $_POST['user_id'],

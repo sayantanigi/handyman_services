@@ -229,6 +229,33 @@ class Welcome extends CI_Controller {
 		echo $html;
 	}
 	public function save_postjob() {
+		$string = $this->input->post('post_title');
+		preg_match_all('/#([a-z0-9-_]+)/', $string, $matches);
+		//echo "<pre>"; print_r($matches[1]); die();
+		if(count($matches[1]) > 0) {
+			for ($i=0; $i < count(@$matches[1]); $i++) {
+				$get_specialist = $this->db->query("SELECT * FROM specialist WHERE specialist_name LIKE '%".@$matches[1][$i]."%'")->result();
+				if(empty($get_specialist)) {
+					$insrt = array(
+						'specialist_name'=>ucfirst($matches[1][$i]),
+						'created_date'=>date('Y-m-d H:i:s'),
+					);
+					$this->db->insert('specialist',$insrt);
+				}
+			}
+
+			for ($i=0; $i < count(@$matches[1]); $i++) {
+				$get_category = $this->db->query("SELECT * FROM category WHERE category_name LIKE '%".@$matches[1][$i]."%'")->result();
+				if(empty($get_category)) {
+					$insrt = array(
+						'category_name'=>ucfirst($matches[1][$i]),
+						'status'=> 1,
+						'created_date'=>date('Y-m-d H:i:s'),
+					);
+					$this->db->insert('category',$insrt);
+				}
+			}
+		}
 		if(!empty(@$this->input->post('key_skills'))) {
 			@$key_skills = @$this->input->post('key_skills');
 			for ($i=0; $i < count(@$key_skills); $i++) {
@@ -245,6 +272,7 @@ class Welcome extends CI_Controller {
 		} else {
 			$keySkills = "";
 		}
+
 		$data=array(
 			'user_id'=>$_SESSION['afrebay']['userId'],
 			'required_key_skills'=> $keySkills,
