@@ -50,6 +50,9 @@
 			<li <?php if ($seg2 =='career') {?>class="active"<?php }?>>
 				<a href="<?=admin_url(); ?>career"><i class="fa fa-graduation-cap"></i> <span>Career Tips</span></a>
 			</li>
+			<li <?php if ($seg2 =='adsence') {?>class="active"<?php }?>>
+				<a href="<?=admin_url(); ?>adsence"><i class="fa fa-graduation-cap"></i> <span>AdSence</span></a>
+			</li>
 			<li <?php if ($seg2 =='setting') {?>class="active"<?php }?>>
 				<a href="<?= admin_url('setting')?>"><i class="fas fa-cog"></i> <span>Site Settings</span></a>
 			</li>

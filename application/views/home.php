@@ -21,7 +21,7 @@ function get_time_ago($time) {
     }
 }
 ?>
-<section style="position: fixed; width: 100%; z-index: 1000;" class="d-none">
+<section style="position: fixed; width: 100%; z-index: 1000;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">

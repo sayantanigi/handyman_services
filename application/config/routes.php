@@ -112,6 +112,7 @@ $route['paystackCheckout/(:any)/(:any)/(:any)'] = "Home/paystackCheckout/$1/$2/$
 $route['admin'] = 'admin/login/index';
 $route['admin/logout'] = 'admin/login/logout';
 $route['admin/dashboard'] = 'admin/login/dashboard';
+$route['admin/adsence'] = 'admin/Adsense';
 $route['admin/profile'] = 'admin/login/profile';
 $route['admin/jobsbid'] = 'admin/jobsbidding/index';
 $route['admin/company-logo'] = 'admin/manage_home/Company_logo/index';
