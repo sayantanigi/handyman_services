@@ -25,14 +25,16 @@ function get_time_ago($time) {
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <a href="https://www.nike.com/in/w/sale-3yaep" target="_blank" style="height: 170px; object-fit: cover; position: absolute; top: calc(100vh - 170px); right: 0; padding: 15px; display: flex; align-items: flex-start; justify-content: flex-end; width: 25%;">
-                    <img style="height: 100%; width: 100%; object-fit: cover;" src="https://d2sw2hhlzkf9db.cloudfront.net/uploads/2024/05/FI-End-Of-Season-Sale-2-1024x683.jpg" alt="">
+                <?php
+                $adlist = $this->db->query("SELECT * FROM adsense ORDER BY id DESC limit 1")->row();
+                ?>
+                <a href="<?= $adlist->link?>" target="_blank" style="height: 170px; object-fit: cover; position: absolute; top: calc(100vh - 170px); right: 0; padding: 15px; display: flex; align-items: flex-start; justify-content: flex-end; width: 25%;">
+                    <img style="height: 100%; width: 100%; object-fit: cover;" src="<?= base_url()?>uploads/adsense/<?= $adlist->image?>" alt="">
                 </a>
             </div>
         </div>
     </div>
 </section>
-
 <section class="topak">
     <div class="block no-padding">
         <div class="container fluid">
@@ -107,7 +109,6 @@ function get_time_ago($time) {
         </div>
     </div>
 </div>
-
 <section>
     <div class="block Opp_Block">
         <div class="container">
@@ -325,7 +326,6 @@ function get_time_ago($time) {
         </div>
     </div>
 </section>
-
 <section>
     <div class="block Worker-Block">
         <div data-velocity="-.1" style="background: #F9FAFC" class="parallax scrolly-invisible no-parallax"></div>

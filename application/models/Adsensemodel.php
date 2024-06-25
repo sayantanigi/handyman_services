@@ -1,14 +1,14 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Adsensemodel extends My_Model {
-var $column_order = array('adsence.id','adsence.title','adsence.created_date'); //set column field database for datatable orderable
-    var $order = array('adsence.id' => 'DESC');
+var $column_order = array('adsense.id','adsense.title','adsense.created_date'); //set column field database for datatable orderable
+    var $order = array('adsense.id' => 'DESC');
     function __construct() {
         parent::__construct();
     }
 	private function _get_datatables_query($cond) {
-		$this->db->select('adsence.*');
-        $this->db->from('adsence');
+		$this->db->select('adsense.*');
+        $this->db->from('adsense');
        $this->db->where($cond);
 		$i = 0;
         $new_str = preg_replace("/[^a-zA-Z0-9]/", "", $_POST['search']['value']);
@@ -17,9 +17,9 @@ var $column_order = array('adsence.id','adsence.title','adsence.created_date'); 
             foreach ($explode_string as $show_string) {
                 // echo $show_string;
                 $cond  = " ";
-                $cond.=" (  adsence.title LIKE '%".trim($show_string)."%' ";
-                $cond.=" OR  adsence.status LIKE '%".trim($show_string)."%' ";
-                $cond.=" OR  adsence.created_date LIKE '%".trim(date('Y-m-d',strtotime($show_string)))."%') ";
+                $cond.=" (  adsense.title LIKE '%".trim($show_string)."%' ";
+                $cond.=" OR  adsense.status LIKE '%".trim($show_string)."%' ";
+                $cond.=" OR  adsense.created_date LIKE '%".trim(date('Y-m-d',strtotime($show_string)))."%') ";
                 $this->db->where($cond);
                 // echo $this->db->last_query();die;
             }

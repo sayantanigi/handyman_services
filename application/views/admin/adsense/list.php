@@ -17,7 +17,7 @@
         </div>
         <div class="card filter-card" id="filter_inputs" style="display: block">
             <div class="card-body pb-0">
-                <form id="adsenceSearch" action="#" method="post">
+                <form id="adsenseSearch" action="#" method="post">
                     <div class="row filter-row">
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
@@ -25,8 +25,8 @@
                                 <select class="form-control select filter_search_data6" name="">
                                     <option value="">Select AdSense</option>
                                     <?php
-                                    if(!empty($get_adsence)){
-                                        foreach($get_adsence as $item){ ?>
+                                    if(!empty($get_adsense)){
+                                        foreach($get_adsense as $item){ ?>
                                             <option value="<?= $item->id?>"><?= ucfirst($item->title)?></option>
                                         <?php } } ?>
                                     </select>
@@ -51,7 +51,7 @@
                             </div> -->
                             <div class="col-sm-6 col-md-4">
                                 <div class="form-group">
-                                    <!-- <a class="btn btn-primary btn-block" href="<?= admin_url('AdSence')?>" style="line-height: 35px;">Refresh</a> -->
+                                    <!-- <a class="btn btn-primary btn-block" href="<?= admin_url('adsense')?>" style="line-height: 35px;">Refresh</a> -->
                                     <a class="btn btn-primary btn-block" id="refreshForm" href="javascript:void(0)" style="line-height: 35px;">Refresh</a>
                                 </div>
                             </div>
@@ -69,6 +69,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Title</th>
+                                            <th style="max-width: 100px !important;">Link</th>
                                             <th>Created Date</th>
                                             <th>Manage</th>
                                         </tr>
@@ -97,15 +98,19 @@
                     <div class="card-body">
                         <form action="#" method="post" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label>AdSence Name <span style="color:red;">*</span> <span id="title_err"></span></label>
+                                <label>AdSense Name <span style="color:red;">*</span> <span id="title_err"></span></label>
                                 <input class="form-control" type="text" name="title" id="title">
                             </div>
                             <div class="form-group">
-                                <label>AdSence Image</label>
+                                <label>AdSense Link <span style="color:red;">*</span> <span id="link_err"></span></label>
+                                <textarea class="form-control" type="text" name="link" id="link"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>AdSense Image</label>
                                 <input class="form-control" type="file" name="image" id="image">
                             </div>
                             <div class="mt-4">
-                                <button class="btn btn-primary" type="button" onclick="return create_adsence();">Add AdSence</button>
+                                <button class="btn btn-primary" type="button" onclick="return create_adsense();">Add AdSense</button>
                                 <a href="#" class="btn btn-link" data-dismiss="modal">Cancel</a>
                             </div>
                         </form>
@@ -121,7 +126,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit AdSence</h4>
+                <h4 class="modal-title">Edit AdSense</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -129,18 +134,22 @@
                     <div class="card-body">
                         <form action="#" method="post" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label>AdSence Name <span style="color:red;">*</span> <span id="edit_title_err"></span></label>
+                                <label>AdSense Name <span style="color:red;">*</span> <span id="edit_title_err"></span></label>
                                 <input class="form-control" type="text" name="title" id="edit_title">
                             </div>
                             <div class="form-group">
-                                <label>AdSence Image</label>
+                                <label>AdSense Link <span style="color:red;">*</span> <span id="edit_link_err"></span></label>
+                                <textarea class="form-control" type="text" name="link" id="edit_link"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>AdSense Image</label>
                                 <input class="form-control" type="file" name="image" id="edit_image">
                             </div>
                             <div id="show_img"> </div>
                             <input type="hidden" name="old_image" id="old_image">
                             <input type="hidden" name="id" id="id">
                             <div class="mt-4">
-                                <button class="btn btn-primary" type="button" onclick="return update_adsence();">Save Changes</button>
+                                <button class="btn btn-primary" type="button" onclick="return update_adsense();">Save Changes</button>
                                 <a href="#" class="btn btn-link" data-dismiss="modal">Cancel</a>
                             </div>
                         </form>
@@ -155,7 +164,7 @@
 var url = '<?= admin_url('adsense/ajax_manage_page')?>';
 var actioncolumn=3;
 </script>
-<script type="text/javascript" src="<?= base_url('dist/assets/custom_js/adsence.js')?>"></script>
+<script type="text/javascript" src="<?= base_url('dist/assets/custom_js/adsense.js')?>"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
 $(window).scroll(function(){
@@ -175,7 +184,7 @@ $(window).scroll(function(){
 });
 
 $('#refreshForm').click(function(){
-    $('#adsenceSearch').trigger("reset");
+    $('#adsenseSearch').trigger("reset");
     $('.filter_search_data6').val('').trigger('change');
 })
 </script>
