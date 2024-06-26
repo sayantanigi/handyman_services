@@ -291,12 +291,12 @@ class Welcome extends CI_Controller {
 			'state'=>$this->input->post('state-dropdown',TRUE),
 			'city'=>$this->input->post('city-dropdown',TRUE),
 			'appli_deadeline'=>$this->input->post('appli_deadeline',TRUE),
-			'created_date'=>date('Y-m-d H:i:s'),
+			//'created_date'=>date('Y-m-d H:i:s'),
 		);
 		$this->Crud_model->SaveData('postjob',$data);
 		$insert_jid = $this->db->insert_id();
 		if(!empty($insert_jid)) {
-			//print_r($_FILES['postjobPic']['name']); die();
+			//echo "<pre>"; print_r($_FILES['postjobPic']['name']);
 			if (!empty($_FILES['postjobPic']['name'])) {
 				$cpt = count($_FILES['postjobPic']['name']);
 				for($i=0; $i<$cpt; $i++) {

@@ -144,7 +144,7 @@ class Post_job_model extends My_Model {
                 $output .= '
                 <div class="emply-resume-list col-6">
                     <div class="DataContainer">
-                        <div class="emply-resume-info" style="min-height: 130px; max-height: 130px;"><h3><a  style="width: 100% !important" href="#" title="">'.$row["post_title"].'</a></h3><span>'.$row['category_name'].'</span><span>'.$row['sub_category_name'].' </span><p><i class="la la-map-marker"></i>'. $row['location'].'</p><p>'.$desc.'</p></div><div class="shortlists" style="width:50px;">
+                        <div class="emply-resume-info" style="min-height: 150px; max-height: 150px;"><h3><a  style="width: 100% !important" href="#" title="">'.$row["post_title"].'</a></h3><span>'.$row['category_name'].'</span><span>'.$row['sub_category_name'].' </span><p><i class="la la-map-marker"></i>'. $row['location'].'</p><p>'.$desc.'</p></div><div class="shortlists" style="width:50px;">
                         <a href="'.base_url('workdetail/'.base64_encode($row['id'])).'" title="">Bid Now <i class="la la-plus"></i></a>
                         </div>
                     </div>
@@ -262,10 +262,10 @@ class Post_job_model extends My_Model {
         if($data->num_rows() > 0) {
             foreach($data->result_array() as $row) {
                 $get_users=$this->Crud_model->get_single('users',"userId='".$row['user_id']."'");
-                if($get_users->userType == 1){
-                    $name = $get_users->firstname.' '.$get_users->lastname;
-                } else {
+                if(!empty($get_users->companyname)){
                     $name = $get_users->companyname;
+                } else {
+                    $name = $get_users->firstname.' '.$get_users->lastname;
                 }
 
                 $getjobimage = $this->db->query("SELECT * FROM postjob_image WHERE job_id = '".$row['id']."'")->row();

@@ -77,12 +77,12 @@ class Login extends CI_Controller {
 					$mail->Username = "sayantan@goigi.in1";
 					$mail->Password = "NWpyxa3UK2HDPSbs1";
 					if(!$mail->send()) {
-						$data = array('result' => 'success', 'data' => "You account has been created. Please can now login with your credential.");
+						$data = array('result' => 'success', 'data' => "You account has been created. You can now login with your credential.");
 					} else {
 						$data = array('result' => 'success', 'data' => "We have sent an activation link to your account to continue with the registration process.");
 					}
 				} catch (Exception $e) {
-					$data = array('result' => 'success', 'data' => "You account has been created. Please can now login with your credential.");
+					$data = array('result' => 'success', 'data' => "You account has been created. You can now login with your credential.");
 				}
 			} else {
 				$data = array('result' => 'error', 'data' => "Oops, something went wrong. Please try again later.");
