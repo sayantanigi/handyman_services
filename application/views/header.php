@@ -68,6 +68,15 @@ $get_category=$this->Crud_model->GetData('category','',"status='Active'");
     #completeSub:hover #completeSubtext {visibility: visible;}
     .User_Dashboard_Menu .Profile_dashboard_btn{width: 235px !important;}
     #frame #sidepanel #profile .wrap p {font-size: 14px !important;}
+    @media screen and (max-width: 425px) {
+        .btn-extars {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+        }
+        .btn-extars .account-btns li:nth-child(2) {
+            margin-left: 20px !important;
+        }
+    }
 </style>
 <script>
 function completeSub() {
@@ -91,7 +100,7 @@ $(function () {
         <div class="responsive-header" style="background: #ffffff;">
             <div class="responsive-menubar" style="display: flex; align-items: center; justify-content: space-between;">
                 <div class="res-logo">
-                    <a href="<?=base_url(); ?>" title=""><img src="<?=base_url(); ?>uploads/logo/<?= $get_setting->logo?>" alt="" /></a>
+                    <a href="<?=base_url(); ?>" title=""><img src="<?=base_url(); ?>uploads/logo/<?= $get_setting->flogo?>" alt="" /></a>
                 </div>
                 <div class="menu-resaction">
                     <div class="res-openmenu" style="color: #000;">Menu</div>

@@ -46,8 +46,7 @@
                                                             echo $get_user->firstname . ' ' . $get_user->lastname;
                                                         } else {
                                                             echo $get_user->companyname;
-                                                        } ?>
-                                                        </p>
+                                                        } ?></p>
                                                         <div id="status-options">
                                                             <ul>
                                                                 <li id="status-online" class="active">
@@ -75,36 +74,59 @@
                                                 </div>
                                                 <div id="contacts">
                                                     <ul>
-                                                    <?php
-                                                    if(@$_SESSION['afrebay']['userType'] == '1') {
-                                                        $userList = $this->db->query("SELECT * FROM users WHERE userType = '2' AND status = '1' AND email_verified = '1'")->result();
-                                                    } else {
-                                                        $userList = $this->db->query("SELECT * FROM users WHERE userType = '1' AND status = '1' AND email_verified = '1'")->result();
-                                                    }
-                                                    //echo "<pre>"; print_r($userList); die();
-                                                    if (!empty($userList)) {
-                                                        foreach ($userList as $user) { ?>
-                                                        <li class="contact" onclick="return getuser('<?= $user->userId ?>');">
+                                                    <?php if (!empty($get_jobbid)) {
+                                                    foreach ($get_jobbid as $user) {
+                                                        if ($user->postjob_id == $user->post_id && $user->user_id == $_SESSION['afrebay']['userId'] && ($user->bidding_status == 'Selected' || $user->bidding_status == 'Short Listed')) {
+                                                            $get_user = $this->Crud_model->get_single('users', "userId='" . $user->userid . "'");
+                                                            $get_msg = $this->Crud_model->GetData('chat', '', "userto_id='".$user->userid."' and userfrom_id='".$user->user_id."' and postjob_id = '".$user->post_id."'", '', 'id desc', '', '1');
+                                                        ?>
+                                                        <li class="contact" onclick="return getuser('<?= $user->userid ?>','<?= $user->post_id ?>');">
                                                             <div class="wrap">
                                                                 <span class="contact-status online"></span>
                                                                 <?php if (@$user->profilePic && file_exists('uploads/users/' . @$user->profilePic)) { ?>
-                                                                    <img src="<?= base_url('uploads/users/' . @$user->profilePic) ?>" alt="" />
+                                                                <img src="<?= base_url('uploads/users/' . @$user->profilePic) ?>" alt="" />
                                                                 <?php } else { ?>
-                                                                    <img src="<?= base_url('uploads/no_pimage.png') ?>"
-                                                                        alt="" />
+                                                                <img src="<?= base_url('uploads/users/user.png') ?>" alt="" />
                                                                 <?php } ?>
                                                                 <div class="meta">
                                                                     <p class="name">
-                                                                        <?php if (empty($user->companyname)) {
-                                                                            echo ucfirst($user->firstname . ' ' . $user->lastname);
-                                                                        } else {
-                                                                            echo ucfirst($user->companyname);
-                                                                        } ?>
+                                                                    <?php if (!empty($get_user->firstname)) {
+                                                                        echo ucfirst($get_user->firstname . ' ' . $get_user->lastname);
+                                                                    } else {
+                                                                        echo ucfirst($get_user->companyname);
+                                                                    } ?>
                                                                     </p>
+                                                                    <p class="preview" title="<?= $user->post_title; ?>">Job ID : <?= "Job_".sprintf("%03d",$user->post_id); ?></p>
+                                                                    <input type="hidden" name="postjob_id" id="postjob_id" value="<?= $user->post_id; ?>">
                                                                 </div>
                                                             </div>
                                                         </li>
-                                                    <?php } } ?>
+                                                        <?php } else if ($user->postjob_id == $user->post_id && $user->userid == $_SESSION['afrebay']['userId'] && ($user->bidding_status == 'Selected' || $user->bidding_status == 'Short Listed')) {
+                                                            $get_user = $this->Crud_model->get_single('users', "userId='" . $user->user_id . "'");
+                                                            $get_msg1 = $this->Crud_model->GetData('chat', '', "userfrom_id='".$user->user_id."' and userto_id='".$user->userid."' and postjob_id = '".$user->post_id."'", '', 'id desc', '', '1');
+                                                        ?>
+                                                        <li class="contact" onclick="return getuser('<?= $get_user->userId ?>','<?= $user->post_id ?>');">
+                                                            <div class="wrap">
+                                                                <span class="contact-status online"></span>
+                                                                <?php if (@$get_user->profilePic && file_exists('uploads/users/'. @$get_user->profilePic)) { ?>
+                                                                <img src="<?= base_url('uploads/users/' . @$get_user->profilePic) ?>" alt="" />
+                                                                <?php } else { ?>
+                                                                <img src="<?= base_url('uploads/users/user.png') ?>" alt="" />
+                                                                <?php } ?>
+                                                                <div class="meta">
+                                                                    <p class="name">
+                                                                    <?php if (!empty($get_user->firstname)) {
+                                                                        echo ucfirst($get_user->firstname . ' ' . $get_user->lastname);
+                                                                    } else {
+                                                                        echo ucfirst($get_user->companyname);
+                                                                    } ?>
+                                                                    </p>
+                                                                    <p class="preview" title="<?= $user->post_title; ?>">Job ID : <?= "Job_".sprintf("%03d",$user->post_id); ?></p>
+                                                                    <input type="hidden" name="postjob_id" id="postjob_id" value="<?= $user->post_id; ?>">
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    <?php } } } ?>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -167,28 +189,6 @@
     #frame #sidepanel #profile .wrap p {
         font-size: 11px !important;
     }
-	@media screen and (max-width: 425px) {
-    .User_Sidemenu .hidden-xs.display-table-cell .navi ul li a {
-        border-radius: 10px !important;
-        margin-bottom: 10px !important;
-    }
-    .navi ul li:nth-child(3) a span {
-        font-size: 11px !important;
-    }
-    .cover {
-        display: none !important;
-    }
-	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active a {
-		border-radius: 10px !important;
-	}
-	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active {
-		box-shadow: none !important;
-	}
-    .navi ul li:nth-child(3) a span,
-    .navi ul li:nth-child(4) a span {
-        font-size: 10px !important;
-    }
-}
 </style>
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="https://use.typekit.net/hoy3lrg.js"></script>

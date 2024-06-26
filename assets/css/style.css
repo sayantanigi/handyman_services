@@ -18537,3 +18537,9 @@ section.topak
 .MyJobContainer .MyJobBlock .IconContainer a i {
   color: #fff;
 }
+
+@media screen and (max-width: 425px) {
+  .Employees_Search_List .Employees_Search_Result .emply-resume-list .shortlists a:nth-last-child(1) {
+      position: absolute !important;
+  }
+}

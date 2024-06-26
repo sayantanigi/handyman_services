@@ -102,7 +102,7 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                 if (!empty($get_post)) {
                                                     foreach ($get_post as $key) {
                                                 ?>
-                                                <div class="job-listing wtabs noimg col-6">
+                                                <div class="job-listing wtabs noimg col-lg-6 col-md-6 col-sm-12">
                                                     <div class="CustomBlockDesign">
                                                         <?php
                                                         $getJobImage = $this->db->query("SELECT * FROM postjob_image WHERE job_id = '".$key->id."'")->row();

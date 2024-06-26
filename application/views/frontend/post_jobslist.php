@@ -14,6 +14,19 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
             padding: 5px !important;
         }
     }
+    @media screen and (max-width: 425px) {
+        .Employees_Search_List .Employees_Search_Panel {
+            position: static !important;
+        }
+        .emply-resume-info {
+            max-height: auto !important;
+            min-height: auto !important;
+            height: max-content !important;
+        }
+        .Employees_Search_List .Employees_Search_Result .emply-resume-list .shortlists a:nth-last-child(1) {
+            position: absolute !important;
+        }
+    }
 </style>
 <section class="overlape">
     <div class="block no-padding">

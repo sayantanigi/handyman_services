@@ -91,6 +91,29 @@
     </div>
 </div>
 </section>
+<style>
+	@media screen and (max-width: 425px) {
+    .User_Sidemenu .hidden-xs.display-table-cell .navi ul li a {
+        border-radius: 10px !important;
+        margin-bottom: 10px !important;
+    }
+    .navi ul li:nth-child(3) a span {
+        font-size: 11px !important;
+    }
+    .cover {
+        display: none !important;
+    }
+	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active a {
+		border-radius: 10px !important;
+	}
+	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active {
+		box-shadow: none !important;
+	}
+    .heading {
+        font-size: 16px !important;
+    }
+}
+</style>
 <script>
 function deleteWorkExperience(id) {
 	var w_id = id;

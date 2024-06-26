@@ -153,6 +153,41 @@
     </div>
 </div>
 </section>
+<style>
+	@media screen and (max-width: 425px) {
+    .User_Sidemenu .hidden-xs.display-table-cell .navi ul li a {
+        border-radius: 10px !important;
+        margin-bottom: 10px !important;
+    }
+    .navi ul li:nth-child(3) a span {
+        font-size: 11px !important;
+    }
+    .cover {
+        display: none !important;
+    }
+	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active a {
+		border-radius: 10px !important;
+	}
+	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active {
+		box-shadow: none !important;
+	}
+    .heading {
+        font-size: 16px !important;
+    }
+    .custom-table tbody tr:nth-child(1) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    .custom-table tbody tr:nth-child(1) td.btn-option {
+        text-align: left !important;
+    }
+    .my-jobs-mobile .bid_contact-profile a {
+        left: 0 !important;
+    }
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
     <?php if(!empty($get_postjob)) {

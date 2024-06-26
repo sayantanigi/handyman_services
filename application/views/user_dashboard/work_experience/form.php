@@ -104,6 +104,24 @@
 #errFromdate {display: none; color: red;}
 #errTodate {display: none; color: red;}
 #errGFromdate {display: none; color: red;}
+@media screen and (max-width: 425px) {
+    .User_Sidemenu .hidden-xs.display-table-cell .navi ul li a {
+        border-radius: 10px !important;
+        margin-bottom: 10px !important;
+    }
+    .navi ul li:nth-child(3) a span {
+        font-size: 11px !important;
+    }
+    .cover {
+        display: none !important;
+    }
+	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active a {
+		border-radius: 10px !important;
+	}
+	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active {
+		box-shadow: none !important;
+	}
+}
 </style>
 <script>
 //CKEDITOR.replace('description');

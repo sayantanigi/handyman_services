@@ -141,8 +141,25 @@ if($data_request=='user') {
                                                 </select>
                                                 <div id="vld_gender" style="color:red; margin-top: 10px;">Please Select Gender.</div>
                                             </div>
-                                            <?php } ?>
-                                            <?php if(@$userinfo->userType=='1') { ?>
+                                            <div class="col-lg-6">
+                                                <label for="last_name">
+                                                    <h4>Resume upload <span style="font-weight: 500; font-size: 13px !important;">(Please upload '.doc, .docx, .pdf' only)</span></h4>
+                                                </label>
+                                                <input type="file" class="form-control" name="resume" id="resume" />
+                                                <br>
+                                                <?php
+                                                if(!empty($userinfo->resume)){
+                                                    if(!file_exists('uploads/users/resume/'.$userinfo->resume)){
+                                                ?>
+                                                <?php } else{?>
+                                                <a href="<?php echo base_url('uploads/users/resume/'.$userinfo->resume); ?>" />
+                                                    <i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:40px; color:red;"></i>
+                                                    <span><?php echo $userinfo->resume; ?></span>
+                                                </a>
+                                                <input type="hidden" name="old_resume" value="<?= $userinfo->resume ?>">
+                                                <?php } } else { ?>
+                                                <?php } ?>
+                                            </div>
                                             <div class="col-lg-12 key-skill">
                                                 <span class="pf-title1">Specializations</span>
                                                 <div class="pf-field">
@@ -164,33 +181,6 @@ if($data_request=='user') {
                                                 </div>
                                             </div>
                                             <?php } ?>
-                                            <?php if(@$userinfo->userType=='1') { ?>
-                                            <div class="col-lg-6">
-                                                <label for="last_name">
-                                                    <h4>Zip Code</h4>
-                                                </label>
-                                                <input type="text" class="form-control" name="zip" id="zip" placeholder="Zip Code" value="<?php echo @$userinfo->zip;?>" onkeypress="only_number(event)" maxlength="6" />
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label for="last_name">
-                                                    <h4>Resume upload <span style="font-weight: 500; font-size: 13px !important;">(Please upload '.doc, .docx, .pdf' only)</span></h4>
-                                                </label>
-                                                <input type="file" class="form-control" name="resume" id="resume" />
-                                                <br>
-                                                <?php
-                                                if(!empty($userinfo->resume)){
-                                                    if(!file_exists('uploads/users/resume/'.$userinfo->resume)){
-                                                ?>
-                                                <?php } else{?>
-                                                <a href="<?php echo base_url('uploads/users/resume/'.$userinfo->resume); ?>" />
-                                                    <i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:40px; color:red;"></i>
-                                                    <span><?php echo $userinfo->resume; ?></span>
-                                                </a>
-                                                <input type="hidden" name="old_resume" value="<?= $userinfo->resume ?>">
-                                                <?php } } else { ?>
-                                                <?php } ?>
-                                            </div>
-                                            <?php } ?>
                                             <?php if(@$userinfo->userType=='2') { ?>
                                             <div class="col-lg-6 <?php if(@$userinfo->userType=='1') { echo "d-none"; }?>" >
                                                 <label for="first_name">
@@ -208,7 +198,11 @@ if($data_request=='user') {
                                                 <div id="vld_teamsize" style="color:red; margin-top: 10px;">Please enter TAX ID.</div>
                                             </div>
                                             <?php } ?>
+                                            <?php  if(@$userinfo->userType=='1') { ?>
+                                            <div class="col-lg-6 location">
+                                            <?php } else { ?>
                                             <div class="col-lg-12 location">
+                                            <?php } ?>
                                                 <label for="last_name">
                                                     <h4>Legal Address <span style="color:red;">*</span></h4>
                                                 </label>
@@ -217,6 +211,14 @@ if($data_request=='user') {
                                                 <input type="hidden" name="latitude" id="search_lat" value="<?= $userinfo->latitude ?>">
                                                 <input type="hidden" name="longitude" id="search_lon" value="<?= $userinfo->longitude ?> ">
                                             </div>
+                                            <?php  if(@$userinfo->userType=='1') { ?>
+                                            <div class="col-lg-6">
+                                                <label for="last_name">
+                                                    <h4>Zip Code</h4>
+                                                </label>
+                                                <input type="text" class="form-control" name="zip" id="zip" placeholder="Zip Code" value="<?php echo @$userinfo->zip;?>" onkeypress="only_number(event)" maxlength="6" />
+                                            </div>
+                                            <?php } ?>
                                             <div class="col-lg-12">
                                                 <label for="last_name">
                                                     <h4>Short Bio <span style="color:red;">*</span></h4>
@@ -264,6 +266,14 @@ if($data_request=='user') {
 @media (min-width: 1250px) {
     .container.Header_Menu_Nav {
         width: 1250px !important;
+    }
+}
+@media screen and (max-width: 425px) {
+    .new-pro {
+        flex-direction: column !important;
+    }
+    .new-pro .profile-ak {
+        margin-left: 0 !important;
     }
 }
 </style>

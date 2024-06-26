@@ -66,13 +66,13 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-12 Custom_Mobile">
                                                 <label for="first_name">
                                                     <h4>Product Name <span style="color: red">*</span></h4>
                                                 </label>
                                                 <input type="text" class="form-control" name="prod_name" placeholder="Product Name"  value="<?= @$product; ?>" required/>
                                             </div>
-                                            <div class="col-lg-12"><br>
+                                            <div class="col-lg-12 Custom_Mobile"><br>
                                                 <label for="first_name"><h4>Product Description </h4></label>
                                                 <textarea type="text" class="form-control" name="prod_description" id="prod_description" value="<?= $description;?>" ><?= @$description; ?></textarea>
                                             </div>
@@ -96,6 +96,32 @@
 </div>
 </div>
 </section>
+<style>
+    @media screen and (max-width: 425px) {
+    .User_Sidemenu .hidden-xs.display-table-cell .navi ul li a {
+        border-radius: 10px !important;
+        margin-bottom: 10px !important;
+    }
+    .navi ul li:nth-child(3) a span {
+        font-size: 11px !important;
+    }
+    .cover {
+        display: none !important;
+    }
+	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active a {
+		border-radius: 10px !important;
+	}
+	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active {
+		box-shadow: none !important;
+	}
+    .profile-ak {
+        margin-left: 0 !important;
+    }
+    .Custom_Mobile {
+        padding: 0 !important;
+    }
+}
+</style>
 <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 <script>
 CKEDITOR.replace('prod_description');

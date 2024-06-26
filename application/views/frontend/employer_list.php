@@ -93,6 +93,11 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
         padding: 5px !important;
     }
 }
+@media screen and (max-width: 425px) {
+    .Employees_Search_List .Employees_Search_Panel {
+        position: static !important;
+    }
+}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
 <script>

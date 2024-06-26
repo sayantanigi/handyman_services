@@ -273,7 +273,7 @@ class Users_model extends My_Model
                 } else {
                     $background_pic = '<img src="'.base_url('uploads/no_bimage.png').'" alt="" />';
                 }
-                $output .= '<div class="emply-resume-list col-6"><div class="DataContainer">'.$profile_pic.'<div class="emply-resume-thumb">'.$background_pic.'</div> <div class="emply-resume-info"> <h3><a href="javascript:void(0)" title="">'.$name.'</a></h3><p><i class="la la-map-marker"></i>'.$row['address'].'</p> <p>'.$desc.'</p> <p>Job Posts : '.count($get_post).'</p> </div> <div class="shortlists" style="width:50px;"> <a href="'.base_url('customer_detail/'.base64_encode($row['userId'])).'" title="">View Profile<i class="la la-plus"></i></a> </div>
+                $output .= '<div class="emply-resume-list col-lg-6 col-md-6 col-sm-12"><div class="DataContainer">'.$profile_pic.'<div class="emply-resume-thumb">'.$background_pic.'</div> <div class="emply-resume-info"> <h3><a href="javascript:void(0)" title="">'.$name.'</a></h3><p><i class="la la-map-marker"></i>'.$row['address'].'</p> <p>'.$desc.'</p> <p>Job Posts : '.count($get_post).'</p> </div> <div class="shortlists" style="width:50px;"> <a href="'.base_url('customer_detail/'.base64_encode($row['userId'])).'" title="">View Profile<i class="la la-plus"></i></a> </div>
                     </div>
                 </div>';
             }
@@ -324,7 +324,7 @@ class Users_model extends My_Model
                     $_SESSION['url'] = base_url('professionals_detail/' . base64_encode($row['userId']));
                     $viewProfileLink = '<div class="shortlists" style="width:50px;"><input type="hidden" value="' . $_SESSION['url'] . '"><a href="javascript:void(0)" title="" onclick="viewProfile()">View Profile<i class="la la-plus"></i></a></div>';
                 }
-                $output .= '<div class="emply-resume-list col-6"><div class="DataContainer">'.$profile_pic.'<div class="emply-resume-thumb">'.$background_pic.'</div><div class="emply-resume-info"><h3><a href="javascript:void(0)" title="">'.$name.'</a></h3><p><i class="la la-map-marker"></i>'.$row['address'].'</p><p>'.$desc.'</p><p>Job Bids : '.count($get_post).'</p></div>'.$viewProfileLink.'</div></div>';
+                $output .= '<div class="emply-resume-list col-lg-6 col-md-6 col-sm-12"><div class="DataContainer">'.$profile_pic.'<div class="emply-resume-thumb">'.$background_pic.'</div><div class="emply-resume-info"><h3><a href="javascript:void(0)" title="">'.$name.'</a></h3><p><i class="la la-map-marker"></i>'.$row['address'].'</p><p>'.$desc.'</p><p>Job Bids : '.count($get_post).'</p></div>'.$viewProfileLink.'</div></div>';
             }
         } else {
             $output .= '<div class="emply-resume-list"><div class="emply-resume-thumb"><h2>No Data Found</h2></div></div>';

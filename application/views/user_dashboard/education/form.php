@@ -96,6 +96,26 @@
 </div>
 </div>
 </section>
+<style>
+	@media screen and (max-width: 425px) {
+    .User_Sidemenu .hidden-xs.display-table-cell .navi ul li a {
+        border-radius: 10px !important;
+        margin-bottom: 10px !important;
+    }
+    .navi ul li:nth-child(3) a span {
+        font-size: 11px !important;
+    }
+    .cover {
+        display: none !important;
+    }
+	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active a {
+		border-radius: 10px !important;
+	}
+	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active {
+		box-shadow: none !important;
+	}
+}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 <script>

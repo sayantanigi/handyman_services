@@ -3,6 +3,18 @@
 .dashboard h4 {padding: 10px;}
 .dashboard h3 {padding: 5px;}
 .list_profile li {list-style: none; padding: 10px; display: block; font-size: 18px; margin-left: 20px;}
+@media screen and (max-width: 425px) {
+    .User_Sidemenu .hidden-xs.display-table-cell .navi ul li a {
+        border-radius: 10px !important;
+        margin-bottom: 10px !important;
+    }
+    .navi ul li:nth-child(3) a span {
+        font-size: 11px !important;
+    }
+    .cover {
+        display: none !important;
+    }
+}
 </style>
 <section class="overlape">
     <div class="block no-padding">
