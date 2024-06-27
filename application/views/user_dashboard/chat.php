@@ -70,42 +70,105 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div id="search">
-                                                   <input type="text" placeholder="Search by Contacts and Job ID" />
-                                                </div>
+                                                <?php
+                                                if(@$_SESSION['afrebay']['userType'] == '1') {
+                                                    $tab_heading = "All Customers";
+                                                    $placeholder = "Search by Customer";
+                                                } else {
+                                                    $tab_heading = "All Professionals";
+                                                    $placeholder = "Search by Professional";
+                                                } ?>
                                                 <div id="contacts">
-                                                    <ul>
-                                                    <?php
-                                                    if(@$_SESSION['afrebay']['userType'] == '1') {
-                                                        $userList = $this->db->query("SELECT * FROM users WHERE userType = '2' AND status = '1' AND email_verified = '1'")->result();
-                                                    } else {
-                                                        $userList = $this->db->query("SELECT * FROM users WHERE userType = '1' AND status = '1' AND email_verified = '1'")->result();
-                                                    }
-                                                    //echo "<pre>"; print_r($userList); die();
-                                                    if (!empty($userList)) {
-                                                        foreach ($userList as $user) { ?>
-                                                        <li class="contact" onclick="return getuser('<?= $user->userId ?>');">
-                                                            <div class="wrap">
-                                                                <span class="contact-status online"></span>
-                                                                <?php if (@$user->profilePic && file_exists('uploads/users/' . @$user->profilePic)) { ?>
-                                                                    <img src="<?= base_url('uploads/users/' . @$user->profilePic) ?>" alt="" />
-                                                                <?php } else { ?>
-                                                                    <img src="<?= base_url('uploads/no_pimage.png') ?>"
-                                                                        alt="" />
-                                                                <?php } ?>
-                                                                <div class="meta">
-                                                                    <p class="name">
-                                                                        <?php if (empty($user->companyname)) {
-                                                                            echo ucfirst($user->firstname . ' ' . $user->lastname);
-                                                                        } else {
-                                                                            echo ucfirst($user->companyname);
-                                                                        } ?>
-                                                                    </p>
-                                                                </div>
+                                                    <div id="tabs">
+                                                        <ul>
+                                                            <li><a href="#tab-1"><?= $tab_heading ?></a></li>
+                                                            <li><a href="#tab-2">Recent</a></li>
+                                                        </ul>
+                                                        <div id="tab-1">
+                                                            <div id="search">
+                                                                <input type="text" id="search_professional_all" placeholder="<?= $placeholder ?>" />
                                                             </div>
-                                                        </li>
-                                                    <?php } } ?>
-                                                    </ul>
+                                                            <ul style="display: inline-block; width: 100%;">
+                                                            <?php
+                                                            if(@$_SESSION['afrebay']['userType'] == '1') {
+                                                                $userList = $this->db->query("SELECT * FROM users WHERE userType = '2' AND status = '1' AND email_verified = '1'")->result();
+                                                            } else {
+                                                                $userList = $this->db->query("SELECT * FROM users WHERE userType = '1' AND status = '1' AND email_verified = '1'")->result();
+                                                            }
+                                                            //echo "<pre>"; print_r($userList); die();
+                                                            if (!empty($userList)) {
+                                                                foreach ($userList as $user) { ?>
+                                                                <li class="contact contactList_all" onclick="return getuser('<?= $user->userId ?>');">
+                                                                    <div class="wrap">
+                                                                        <span class="contact-status online"></span>
+                                                                        <?php if (@$user->profilePic && file_exists('uploads/users/' . @$user->profilePic)) { ?>
+                                                                            <img src="<?= base_url('uploads/users/' . @$user->profilePic) ?>" alt="" />
+                                                                        <?php } else { ?>
+                                                                            <img src="<?= base_url('uploads/no_pimage.png') ?>"
+                                                                                alt="" />
+                                                                        <?php } ?>
+                                                                        <div class="meta">
+                                                                            <p class="name">
+                                                                                <?php if (empty($user->companyname)) {
+                                                                                    echo ucfirst($user->firstname . ' ' . $user->lastname);
+                                                                                } else {
+                                                                                    echo ucfirst($user->companyname);
+                                                                                } ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            <?php } } ?>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="tab-2">
+                                                            <div id="search">
+                                                                <input type="text" id="search_professional_recent" placeholder="<?= $placeholder ?>" />
+                                                            </div>
+                                                            <ul style="display: inline-block; width: 100%;">
+                                                            <?php
+                                                            $usrid = @$_SESSION['afrebay']['userId'];
+                                                            $recentList = $this->db->query("SELECT group_concat( distinct(chat_between)) as chat_between FROM chat WHERE INSTR(CONCAT(',', chat_between, ','), ',$usrid,') AND is_delete = 0")->row();
+                                                            $string = $recentList->chat_between;
+                                                            $array = explode(',', $string);
+                                                            $array = array_filter($array, function($value) use ($usrid) {
+                                                                return $value != $usrid;
+                                                            });
+                                                            $array = array_unique($array);
+                                                            $result = implode(',', $array);
+                                                            //echo "<pre>"; print_r($result); die();
+                                                            if($result != "") {
+                                                                $userList = $this->db->query("SELECT * FROM users WHERE userId IN (".$result.")")->result();
+                                                            } else {
+                                                                $userList = "";
+                                                            }
+
+                                                            if (!empty($userList)) {
+                                                                foreach ($userList as $user) { ?>
+                                                                <li class="contact contactList_recent" onclick="return getuser('<?= $user->userId ?>');">
+                                                                    <div class="wrap">
+                                                                        <span class="contact-status online"></span>
+                                                                        <?php if (@$user->profilePic && file_exists('uploads/users/' . @$user->profilePic)) { ?>
+                                                                            <img src="<?= base_url('uploads/users/' . @$user->profilePic) ?>" alt="" />
+                                                                        <?php } else { ?>
+                                                                            <img src="<?= base_url('uploads/no_pimage.png') ?>"
+                                                                                alt="" />
+                                                                        <?php } ?>
+                                                                        <div class="meta">
+                                                                            <p class="name">
+                                                                                <?php if (empty($user->companyname)) {
+                                                                                    echo ucfirst($user->firstname . ' ' . $user->lastname);
+                                                                                } else {
+                                                                                    echo ucfirst($user->companyname);
+                                                                                } ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            <?php } } ?>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="content">
@@ -151,23 +214,23 @@
 </div>
 
 <style>
-    .message-input{display: none;}
-    .chatList {display: block !important; text-align: center !important;}
-    .showBidListContent {display: block !important; opacity: 1 !important; top: 58% !important; left: 8% !important;}
-    .modal-dialog {max-width: 60% !important; margin: 0 !important; display: contents !important;}
-    .modal-content {max-width: 80% !important;}
-    .modal-content p {margin: 0px !important; padding: 4px 20px 0 20px !important;}
-    .social-media {display: none;}
-    .notificationv {left: 270px !important; top: 6px; font-size: 15px !important; width: 20px !important; height: 20px !important;}
-    .notificationf {left: 270px !important; top: 6px; font-size: 15px !important; width: 20px !important; height: 20px !important;}
-    .notificationv1 {left: 270px !important; top: 6px; font-size: 15px !important; width: 20px !important; height: 20px !important;}
-    .notificationf1 {left: 270px !important; top: 6px; font-size: 15px !important; width: 20px !important; height: 20px !important;}
-    .EachvChat{display: none;}
-    .EachfChat{display: none;}
-    #frame #sidepanel #profile .wrap p {
-        font-size: 11px !important;
-    }
-	@media screen and (max-width: 425px) {
+.message-input{display: none;}
+.chatList {display: block !important; text-align: center !important;}
+.showBidListContent {display: block !important; opacity: 1 !important; top: 58% !important; left: 8% !important;}
+.modal-dialog {max-width: 60% !important; margin: 0 !important; display: contents !important;}
+.modal-content {max-width: 80% !important;}
+.modal-content p {margin: 0px !important; padding: 4px 20px 0 20px !important;}
+.social-media {display: none;}
+.notificationv {left: 270px !important; top: 6px; font-size: 15px !important; width: 20px !important; height: 20px !important;}
+.notificationf {left: 270px !important; top: 6px; font-size: 15px !important; width: 20px !important; height: 20px !important;}
+.notificationv1 {left: 270px !important; top: 6px; font-size: 15px !important; width: 20px !important; height: 20px !important;}
+.notificationf1 {left: 270px !important; top: 6px; font-size: 15px !important; width: 20px !important; height: 20px !important;}
+.EachvChat{display: none;}
+.EachfChat{display: none;}
+#frame #sidepanel #profile .wrap p {
+    font-size: 11px !important;
+}
+@media screen and (max-width: 425px) {
     .User_Sidemenu .hidden-xs.display-table-cell .navi ul li a {
         border-radius: 10px !important;
         margin-bottom: 10px !important;
@@ -178,17 +241,25 @@
     .cover {
         display: none !important;
     }
-	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active a {
-		border-radius: 10px !important;
-	}
-	.User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active {
-		box-shadow: none !important;
-	}
+    .User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active a {
+        border-radius: 10px !important;
+    }
+    .User_Sidemenu .hidden-xs.display-table-cell .navi ul li.active {
+        box-shadow: none !important;
+    }
     .navi ul li:nth-child(3) a span,
     .navi ul li:nth-child(4) a span {
         font-size: 10px !important;
     }
 }
+.ui-widget.ui-widget-content, .ui-tabs .ui-tabs-nav {border: none !important; margin: 0 !important; padding: 0 !important; background: none !important;}
+.ui-tabs .ui-tabs-nav li {width: 46% !important; background: linear-gradient(180deg, rgba(249, 80, 30, 1) 0%, rgba(252, 119, 33, 1) 100%) !important; border: none !important; margin: 0 0 0 10px !important; border-radius: 10px !important;}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active{width: 46% !important; background: linear-gradient(180deg, rgb(255 187 167) 0%, rgb(219 98 19) 100%) !important; border: none !important; color: #fff !important; border-radius: 10px !important;}
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor{color: #fff !important; width: 100% !important; text-align: center !important;}
+#frame #sidepanel #contacts ul li.contact{ height: 65px !important; border-radius: 10px !important;}
+.ui-tabs .ui-tabs-panel {padding: 10px !important;}
+.Chat_User #frame #sidepanel #contacts ul li.contact:hover {background: #00000060 !important;}
+.Chat_User #frame #sidepanel #search input{border-radius: 10px !important;}
 </style>
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="https://use.typekit.net/hoy3lrg.js"></script>
@@ -198,6 +269,15 @@ try {
         async: true
     });
 } catch (e) {}
+</script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    var jq = jQuery.noConflict();
+    jq(document).ready(function() {
+        jq("#tabs").tabs();
+    });
 </script>
 <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
@@ -275,6 +355,26 @@ $("#message").mouseover(function(){
 $(document).ready(function(){
     $('.EachvChat').hide();
     $('.EachfChat').hide();
+    $('#search_professional_all').on('input',function(e){
+       let lists = document.querySelectorAll('.contactList_all')
+       lists.forEach((list) => {
+           if(!list.innerHTML.toLowerCase().includes(e.target.value.toLowerCase())) {
+               list.classList.add('d-none')
+           } else {
+               list.classList.remove('d-none')
+           }
+       })
+    })
+    $('#search_professional_recent').on('input',function(e){
+       let lists = document.querySelectorAll('.contactList_recent')
+       lists.forEach((list) => {
+           if(!list.innerHTML.toLowerCase().includes(e.target.value.toLowerCase())) {
+               list.classList.add('d-none')
+           } else {
+               list.classList.remove('d-none')
+           }
+       })
+    })
 });
 function getMessage(){
     var userfromid = $('#userfromid').val();

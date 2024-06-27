@@ -48,6 +48,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                             <?php } else { ?>
                                 <form method="post" action="<?php echo base_url('Welcome/save_postjob')?>" enctype="multipart/form-data"  style="padding: 0 !important;">
                             <?php } ?>
+                                <!-- <input type="hidden" name="timeZone" id="timeZone" value=""> -->
                                 <div class="row">
                                     <div class="bootstrap snippet col-xl-6 col-lg-6 col-md-6">
                                         <div class="new-pro">
@@ -327,6 +328,9 @@ function show_location() {
     $('#complete_address').val(location);
 }
 $(document).ready(function() {
+    var userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    $("#timeZone").val(userTimezone);
+    alert(userTimezone);
     $("#advanceFieldheading").click(function(){
         $("#advanceFieldcontent").toggleClass('active');
     })
@@ -443,5 +447,22 @@ function deleteJobImg(pi_id) {
         success:function(data) {}
     })
 }
-
 </script>
+<!-- <script>
+// Get the user's timezone
+var userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+// Send the timezone to the server using a hidden form
+document.addEventListener('DOMContentLoaded', (event) => {
+    var timezoneForm = document.createElement('form');
+    timezoneForm.method = 'POST';
+    var timezoneInput = document.createElement('input');
+    timezoneInput.type = 'hidden';
+    timezoneInput.name = 'timezone';
+    timezoneInput.value = userTimezone;
+    timezoneForm.appendChild(timezoneInput);
+    document.body.appendChild(timezoneForm);
+
+    timezoneForm.submit();
+});
+</script> -->

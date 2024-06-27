@@ -483,6 +483,7 @@ class Dashboard extends CI_Controller {
 				'userfrom_id' => $userfromid,
 				'userto_id' => $usertoid,
 				'postjob_id' => $this->input->post('postid'),
+                'chat_between' => $userfromid.','.$usertoid,
 				'message' => $this->input->post('message'),
 				'created_date' => date('Y-m-d H:i:s'),
 			);
@@ -978,14 +979,16 @@ class Dashboard extends CI_Controller {
                 'user_id' => $_POST['user_id'],
                 'postjob_id' => $_POST['postjob_id'],
                 'comment_id' => $_POST['comment_id'],
-                'comment' => $_POST['comment']
+                'comment' => $_POST['comment'],
+                'created_date'=>date('Y-m-d H:i:s'),
             );
             $this->Crud_model->SaveData('postjob_comment_rply', $commentData);
         } else {
             $commentData = array(
                 'user_id' => $_POST['user_id'],
                 'postjob_id' => $_POST['postjob_id'],
-                'comment' => $_POST['comment']
+                'comment' => $_POST['comment'],
+                'created_date'=>date('Y-m-d H:i:s'),
             );
             $this->Crud_model->SaveData('postjob_comment', $commentData);
         }
@@ -1002,14 +1005,16 @@ class Dashboard extends CI_Controller {
                 'user_id' => $_POST['user_id'],
                 'postjob_id' => $_POST['postjob_id'],
                 'comment_id' => $_POST['comment_id'],
-                'comment' => $_POST['comment']
+                'comment' => $_POST['comment'],
+                'created_date'=>date('Y-m-d H:i:s'),
             );
             $this->Crud_model->SaveData('postjob_comment_rply', $commentData);
         } else {
             $commentData = array(
                 'user_id' => $_POST['user_id'],
                 'postjob_id' => $_POST['postjob_id'],
-                'comment' => $_POST['comment']
+                'comment' => $_POST['comment'],
+                'created_date'=>date('Y-m-d H:i:s'),
             );
             $this->Crud_model->SaveData('postjob_comment', $commentData);
         }

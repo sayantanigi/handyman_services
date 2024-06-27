@@ -229,6 +229,8 @@ class Welcome extends CI_Controller {
 		echo $html;
 	}
 	public function save_postjob() {
+        //$user_timezone = $_POST['timezone'];
+        //date_default_timezone_set($user_timezone);
 		$string = $this->input->post('post_title');
 		preg_match_all('/#([a-z0-9-_]+)/', $string, $matches);
 		//echo "<pre>"; print_r($matches[1]); die();
@@ -291,7 +293,7 @@ class Welcome extends CI_Controller {
 			'state'=>$this->input->post('state-dropdown',TRUE),
 			'city'=>$this->input->post('city-dropdown',TRUE),
 			'appli_deadeline'=>$this->input->post('appli_deadeline',TRUE),
-			//'created_date'=>date('Y-m-d H:i:s'),
+			'created_date'=>date('Y-m-d H:i:s', time()),
 		);
 		$this->Crud_model->SaveData('postjob',$data);
 		$insert_jid = $this->db->insert_id();

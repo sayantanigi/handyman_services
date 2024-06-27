@@ -1,25 +1,31 @@
 <?php
-function get_time_ago($time)
-{
-    $time_difference = time() - $time;
-    if ($time_difference < 1) {
-        return 'Few seconds ago';
+function get_time_ago($time) {
+    $time_ago = time() - $time;
+    if ($time_ago < 60) {
+        return $time_ago . ' second ago';
     }
-    $condition = array(
-        12 * 30 * 24 * 60 * 60 =>  'year',
-        30 * 24 * 60 * 60 =>  'month',
-        24 * 60 * 60 =>  'day',
-        60 * 60 =>  'hour',
-        60 =>  'minute',
-        1 =>  'second'
-    );
-    foreach ($condition as $secs => $str) {
-        $d = $time_difference / $secs;
-        if ($d >= 1) {
-            $t = round($d);
-            return 'about ' . $t . ' ' . $str . ($t > 1 ? 's' : '') . ' ago';
-        }
+    $minutes = floor($time_ago / 60);
+    if ($minutes < 60) {
+        return $minutes . ' minutes ago';
     }
+    $hours = floor($time_ago / 3600);
+    if ($hours < 24) {
+        return $hours . ' hours ago';
+    }
+    $days = floor($time_ago / 86400);
+    if ($days < 7) {
+        return $days . ' days ago';
+    }
+    $weeks = floor($time_ago / 604800);
+    if ($weeks < 4) {
+        return $weeks . ' weeks ago';
+    }
+    $months = floor($time_ago / 2628000); // Approximate value
+    if ($months < 12) {
+        return $months . ' months ago';
+    }
+    $years = floor($time_ago / 31536000); // Approximate value
+    return $years . ' years ago';
 }
 ?>
 <section style="position: fixed; width: 100%; z-index: 1000;">
