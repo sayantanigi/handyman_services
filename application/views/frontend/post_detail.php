@@ -289,102 +289,103 @@ function get_time_ago($time) {
                                                                 </a>
                                                             <?php } ?>
                                                         </li>
-                                                        <li style="margin: 0 !important; font-weight: 600; font-size: 15px; color: #000 !important;">
-                                                            <a style="color: #000 !important;" href=""> <i style="color: #000;" class="fa fa-share" aria-hidden="true"></i> Share</a>
+                                                        <li style="margin: 0 !important; font-weight: 600; font-size: 15px; color: #000 !important;" id="shareBtn">
+                                                            <a style="color: #000 !important;" href="javacript:void(0)"> <i style="color: #000;" class="fa fa-share" aria-hidden="true"></i> Share</a>
                                                         </li>
+                                                        <div id="shareMenu" class="hidden">
+                                                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-facebook"></a>
+                                                            <a href="https://twitter.com/intent/tweet?text=<?php echo $post_data->post_title; ?>&url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-twitter"></a>
+                                                            <a href="mailto:?subject=<?php echo $post_data->post_title; ?>&body=<?= 'I found this interesting: '.base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-gmail"></a>
+                                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-linkedin"></a>
+                                                            <a href="https://www.instagram.com/?url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-instagram"></a>
+                                                            <a href="https://api.whatsapp.com/send?text=<?php echo $post_data->post_title; ?> <?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-whatsapp"></a>
+                                                            <a href="https://telegram.me/share/url?url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>&text=<?php echo $post_data->post_title; ?>" target="_blank" class="fa fa-telegram"></a>
+                                                        </div>
                                                     </ul>
                                                 </div>
                                                 <div class="col-12">
-                                                    <?php
-                                                    $getpostComment = $this->db->query("SELECT * FROM postjob_comment WHERE postjob_id = '" . @$post_data->id . "'")->result_array();
-                                                    if (!empty($getpostComment)) {
-                                                        $i = 1;
-                                                        foreach ($getpostComment as $each) {
-                                                            $rplycount = $this->db->query("SELECT COUNT(id) as count FROM postjob_comment_like  WHERE postjob_id = '" . @$post_data->id . "' AND comment_id = '" . $each['id'] . "' AND is_liked = 1")->row();
-                                                    ?>
-                                                            <div class="Comment_Block" style="background: #ffede3; padding: 15px;border-radius: 15px;">
-                                                                <div class="Comment_Img">
-                                                                    <?php
-                                                                    $userData = $this->db->query("SELECT * FROM users WHERE userId = '" . $each['user_id'] . "'")->row();
-                                                                    if (!empty($userData->profilePic) && file_exists('uploads/users/' . $userData->profilePic)) { ?>
-                                                                        <img src="<?= base_url() ?>uploads/users/<?= $userData->profilePic ?>" alt="User Profile">
-                                                                    <?php } else { ?>
-                                                                        <img src="<?= base_url() ?>uploads/no_pimage.png" alt="User Profile">
-                                                                    <?php } ?>
-                                                                </div>
-                                                                <div class="Comment_Data">
-                                                                    <p>
-                                                                        <?php
-                                                                        if (!empty($userData->companyname)) {
-                                                                            echo $userData->companyname;
-                                                                        } else {
-                                                                            echo $userData->firstname . " " . $userData->lastname;
-                                                                        }
-                                                                        ?> .
-                                                                        <span style="font-size: 13px; color: #6a6a6a; font-weight: 400;"><?php echo get_time_ago(strtotime($each['created_at'])) ?></span> .
-                                                                        <span style="color: #fb6920; font-size: 13px;"><i class="fa fa-heart" aria-hidden="true"></i> <?= $rplycount->count; ?> Like</span>
-                                                                    </p>
-                                                                    <p><?= $each['comment']; ?></p>
-                                                                    <ul>
-                                                                        <li style="margin: 0 25px 0 0 !important; font-size: 13px; color: #000 !important; font-weight: 600;">
-                                                                            <?php if (!empty(@$_SESSION['afrebay']['userType'])) {
-                                                                                $checkrplycount = $this->db->query("SELECT * FROM postjob_comment_like WHERE user_id = '" . @$_SESSION['afrebay']['userId'] . "' AND postjob_id = '" . @$post_data->id . "' AND comment_id = '" . $each['id'] . "' AND is_liked = 1")->row();
-                                                                                if ($checkrplycount > 0) { ?>
-                                                                                    <a style="color: #000 !important;" href="javascript:void(0)" onclick="dislikeuserrply(<?= $each['id'] ?>)">Liked</a>
-                                                                                <?php } else { ?>
-                                                                                    <a style="color: #000 !important;" href="javascript:void(0)" onclick="likeuserrply(<?= $each['id'] ?>)">Like</a>
-                                                                                <?php }
-                                                                            } else { ?>
-                                                                                <a style="color: #000 !important;" href="<?= base_url() ?>login">Like</a>
-                                                                            <?php } ?>
-                                                                        </li>
-                                                                        <?php if (!empty(@$_SESSION['afrebay']['userType'])) { ?>
-                                                                            <li style="margin: 0 !important; font-size: 13px; color: #000 !important; font-weight: 600;">
-                                                                                <a style="color: #000 !important;" href="javascript:void(0)" onclick="replylink(<?= $i; ?>)">Reply</a>
-                                                                            </li>
-                                                                        <?php } else { ?>
-                                                                            <li style="margin: 0 !important; font-size: 13px; color: #000 !important; font-weight: 600;">
-                                                                                <a style="color: #000 !important;" href="<?= base_url() ?>login">Reply</a>
-                                                                            </li>
-                                                                        <?php } ?>
-                                                                    </ul>
-                                                                    <?php
-                                                                    $commentRply = $this->db->query("SELECT * FROM postjob_comment_rply WHERE comment_id = '" . $each['id'] . "'")->result_array();
-                                                                    if (!empty($commentRply)) {
-                                                                        foreach ($commentRply as $rply) {
-                                                                            $userDataRply = $this->db->query("SELECT * FROM users WHERE userId = '" . $rply['user_id'] . "'")->row(); ?>
-                                                                            <div class="Comment_Data" style="margin-left: 30px;background: #ededed;padding: 0px 0px 15px 15px;margin-top: 10px;border-radius: 15px;">
-                                                                                <p>
-                                                                                    <?php
-                                                                                    if (!empty($userDataRply->companyname)) {
-                                                                                        echo $userDataRply->companyname;
-                                                                                    } else {
-                                                                                        echo $userDataRply->firstname . " " . $userDataRply->lastname;
-                                                                                    }
-                                                                                    ?> .
-                                                                                    <span style="font-size: 13px; color: #6a6a6a; font-weight: 400;"><?php echo get_time_ago(strtotime($rply['created_at'])) ?></span>
-                                                                                </p>
-                                                                                <p><?= $rply['comment']; ?></p>
-                                                                            </div>
-                                                                    <?php }
-                                                                    } ?>
-                                                                    <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; margin-top: 10px;" class="hidereplyBox" id="replyBox_<?= $i; ?>">
-                                                                        <textarea style="background: white !important; font-size: 14px; margin-bottom: 0 !important; float: unset !important; padding: 10px 10px !important; border-bottom: 2px solid #b1b1b1; border-radius: 10px !important; min-height: 50px !important; width: 80%;" required="" name="users_rply_<?= $i; ?>" id="users_rply_<?= $i; ?>" placeholder="Reply"></textarea>
-                                                                        <a href="javascript:void(0)" onclick="postUserComment(<?= $each['id']; ?>, <?= $i; ?>)" style="margin-top: 10px; background: linear-gradient(180deg, rgba(249, 80, 30, 1) 0%, rgba(252, 119, 33, 1) 100%); border: 0; border-radius: 100px; width: 15%; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                                                                            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0; color: #fff;">Reply</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        <?php $i++;
-                                                        }
-                                                    } else { ?>
-                                                        <div class="Comment_Block" style="display: block; text-align: center;">
-                                                            <img src="<?= base_url('uploads/nocomment.png') ?>" alt="No Comment">
-                                                            <p style="width: 100%;margin: 0px;color: #dddddd;">No Comments Yet</p>
-                                                            <p style="width: 100%;margin: 0px;color: #dddddd;">Be the first to comment</p>
+                                                <?php
+                                                $getpostComment = $this->db->query("SELECT * FROM postjob_comment WHERE postjob_id = '" . @$post_data->id . "'")->result_array();
+                                                if (!empty($getpostComment)) {
+                                                    $i = 1;
+                                                    foreach ($getpostComment as $each) {
+                                                        $rplycount = $this->db->query("SELECT COUNT(id) as count FROM postjob_comment_like  WHERE postjob_id = '" . @$post_data->id . "' AND comment_id = '" . $each['id'] . "' AND is_liked = 1")->row();
+                                                ?>
+                                                    <div class="Comment_Block" style="background: #ffede3; padding: 15px;border-radius: 15px;">
+                                                        <div class="Comment_Img">
+                                                            <?php
+                                                            $userData = $this->db->query("SELECT * FROM users WHERE userId = '" . $each['user_id'] . "'")->row();
+                                                            if (!empty($userData->profilePic) && file_exists('uploads/users/' . $userData->profilePic)) { ?>
+                                                                <img src="<?= base_url() ?>uploads/users/<?= $userData->profilePic ?>" alt="User Profile">
+                                                            <?php } else { ?>
+                                                                <img src="<?= base_url() ?>uploads/no_pimage.png" alt="User Profile">
+                                                            <?php } ?>
                                                         </div>
-                                                    <?php } ?>
+                                                        <div class="Comment_Data">
+                                                            <p>
+                                                                <?php
+                                                                if (!empty($userData->companyname)) {
+                                                                    echo $userData->companyname;
+                                                                } else {
+                                                                    echo $userData->firstname . " " . $userData->lastname;
+                                                                }
+                                                                ?> .
+                                                                <span style="font-size: 13px; color: #6a6a6a; font-weight: 400;"><?php echo get_time_ago(strtotime($each['created_at'])) ?></span> .
+                                                                <span style="color: #fb6920; font-size: 13px;"><i class="fa fa-heart" aria-hidden="true"></i> <?= $rplycount->count; ?> Like</span>
+                                                            </p>
+                                                            <p><?= $each['comment']; ?></p>
+                                                            <ul>
+                                                                <li style="margin: 0 25px 0 0 !important; font-size: 13px; color: #000 !important; font-weight: 600;">
+                                                                    <?php if (!empty(@$_SESSION['afrebay']['userType'])) {
+                                                                        $checkrplycount = $this->db->query("SELECT * FROM postjob_comment_like WHERE user_id = '" . @$_SESSION['afrebay']['userId'] . "' AND postjob_id = '" . @$post_data->id . "' AND comment_id = '" . $each['id'] . "' AND is_liked = 1")->row();
+                                                                        if ($checkrplycount > 0) { ?>
+                                                                            <a style="color: #000 !important;" href="javascript:void(0)" onclick="dislikeuserrply(<?= $each['id'] ?>)">Liked</a>
+                                                                        <?php } else { ?>
+                                                                            <a style="color: #000 !important;" href="javascript:void(0)" onclick="likeuserrply(<?= $each['id'] ?>)">Like</a>
+                                                                        <?php }
+                                                                    } else { ?>
+                                                                        <a style="color: #000 !important;" href="<?= base_url() ?>login">Like</a>
+                                                                    <?php } ?>
+                                                                </li>
+                                                                <?php if (!empty(@$_SESSION['afrebay']['userType'])) { ?>
+                                                                    <li style="margin: 0 !important; font-size: 13px; color: #000 !important; font-weight: 600;">
+                                                                        <a style="color: #000 !important;" href="javascript:void(0)" onclick="replylink(<?= $i; ?>)">Reply</a>
+                                                                    </li>
+                                                                <?php } else { ?>
+                                                                    <li style="margin: 0 !important; font-size: 13px; color: #000 !important; font-weight: 600;">
+                                                                        <a style="color: #000 !important;" href="<?= base_url() ?>login">Reply</a>
+                                                                    </li>
+                                                                <?php } ?>
+                                                            </ul>
+                                                            <?php
+                                                            $commentRply = $this->db->query("SELECT * FROM postjob_comment_rply WHERE comment_id = '" . $each['id'] . "'")->result_array();
+                                                            if (!empty($commentRply)) {
+                                                                foreach ($commentRply as $rply) {
+                                                                    $userDataRply = $this->db->query("SELECT * FROM users WHERE userId = '" . $rply['user_id'] . "'")->row(); ?>
+                                                                    <div class="Comment_Data" style="margin-left: 30px;background: #ededed;padding: 0px 0px 15px 15px;margin-top: 10px;border-radius: 15px;">
+                                                                        <p>
+                                                                            <?php
+                                                                            if (!empty($userDataRply->companyname)) {
+                                                                                echo $userDataRply->companyname;
+                                                                            } else {
+                                                                                echo $userDataRply->firstname . " " . $userDataRply->lastname;
+                                                                            }
+                                                                            ?> .
+                                                                            <span style="font-size: 13px; color: #6a6a6a; font-weight: 400;"><?php echo get_time_ago(strtotime($rply['created_at'])) ?></span>
+                                                                        </p>
+                                                                        <p><?= $rply['comment']; ?></p>
+                                                                    </div>
+                                                            <?php }
+                                                            } ?>
+                                                            <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; margin-top: 10px;" class="hidereplyBox" id="replyBox_<?= $i; ?>">
+                                                                <textarea style="background: white !important; font-size: 14px; margin-bottom: 0 !important; float: unset !important; padding: 10px 10px !important; border-bottom: 2px solid #b1b1b1; border-radius: 10px !important; min-height: 50px !important; width: 80%;" required="" name="users_rply_<?= $i; ?>" id="users_rply_<?= $i; ?>" placeholder="Reply"></textarea>
+                                                                <a href="javascript:void(0)" onclick="postUserComment(<?= $each['id']; ?>, <?= $i; ?>)" style="margin-top: 10px; background: linear-gradient(180deg, rgba(249, 80, 30, 1) 0%, rgba(252, 119, 33, 1) 100%); border: 0; border-radius: 100px; width: 15%; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                                                                    <span style="font-size: 12px; font-weight: 600; letter-spacing: 0; color: #fff;">Reply</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php $i++; } } ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -492,9 +493,7 @@ function get_time_ago($time) {
                                                     <label for="" class="form-label">Details</label>
                                                     <textarea class="form-control" name="description" placeholder="Description"></textarea>
                                                 </div>
-                                                <input type="hidden" name="postjob_id" value="<?php if (!empty($post_data->id)) {
-                                                                                                    echo $post_data->id;
-                                                                                                } ?>">
+                                                <input type="hidden" name="postjob_id" value="<?php if (!empty($post_data->id)) { echo $post_data->id; } ?>">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <div class="bid-btn">
                                                         <?php if (!empty(@$_SESSION['afrebay']['userType'])) {
@@ -519,189 +518,207 @@ function get_time_ago($time) {
             </div>
         </div>
 </section>
+<style>
+.hidden {
+    display: none;
+}
+#shareMenu {
+    border: 1px solid #ccc;
+    padding: 10px;
+    position: absolute;
+    background-color: white;
+    margin-top: 70px;
+}
+</style>
 <script>
-    $(document).ready(function() {
-        $("#bid_amount").on("keypress keyup blur", function(event) {
-            var patt = new RegExp(/(?<=\.\d\d).+/i);
-            $(this).val($(this).val().replace(patt, ''));
-            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-                event.preventDefault();
-            }
-        });
-        $(".owl-carousel").owlCarousel({
-            items: 1,
-            loop: true,
-            autoplay: true,
-            autoplayTimeout: 5000,
-            smartSpeed: 2000,
-            autoplayHoverPause: false
-        });
-        $(".owl-carousel").mousedown(() => {
-            gsap.fromTo(
-                cursorVerticalGrab, {
-                    css: {
-                        transform: "scale(0, 0)"
-                    }
-                }, {
-                    duration: 0.6,
-                    ease: "back.out(1.7)",
-                    css: {
-                        transform: "scale(1, 1)"
-                    }
+$(document).ready(function() {
+    const shareBtn = $('#shareBtn');
+    const shareMenu = $('#shareMenu');
+    shareBtn.click(function() {
+        shareMenu.toggle();
+    });
+    $("#bid_amount").on("keypress keyup blur", function(event) {
+        var patt = new RegExp(/(?<=\.\d\d).+/i);
+        $(this).val($(this).val().replace(patt, ''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+    $(".owl-carousel").owlCarousel({
+        items: 1,
+        loop: true,
+        autoplay: true,
+        autoplayTimeout: 5000,
+        smartSpeed: 2000,
+        autoplayHoverPause: false
+    });
+    $(".owl-carousel").mousedown(() => {
+        gsap.fromTo(
+            cursorVerticalGrab, {
+                css: {
+                    transform: "scale(0, 0)"
                 }
-            );
-        });
+            }, {
+                duration: 0.6,
+                ease: "back.out(1.7)",
+                css: {
+                    transform: "scale(1, 1)"
+                }
+            }
+        );
+    });
+})
+// for posting Comment
+function postComment() {
+    if ($('#comment').val() == "") {
+        $('#err_comment').fadeIn().html('Please enter your comment first').css('color', 'red');
+        setTimeout(function() {
+            $("#err_comment").html("");
+        }, 3000);
+        $("#comment").css('border-color', 'red');
+        setTimeout(function() {
+            $("#comment").css('border-color', '#80bdff');
+        }, 3000);
+        return false;
+    } else {
+        var user_id = $('#userID').val();
+        var postjob_id = $('#postjobID').val();
+        var comment_id = $('#comment_id').val();
+        var comment = $('#comment').val();
+        $.ajax({
+            url: "<?= base_url() ?>user/dashboard/postComment",
+            type: "POST",
+            data: {
+                user_id: user_id,
+                postjob_id: postjob_id,
+                comment_id: comment_id,
+                comment: comment
+            },
+            success: function(data) {
+                //console.log(data);
+                $('.success_msg').text(data);
+                $('#comment').val('');
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            }
+        })
+    }
+}
+//show/hide reply box
+function replylink(commentid) {
+    $('#replyBox_' + commentid).toggleClass('showreplyBox');
+    //$('#replyBox_' + commentid).removeClass('hidereplyBox');
+}
+//for user comment's reply
+function postUserComment(commentid, id) {
+    if ($('#users_rply_' + id).val() == "") {
+        $("#users_rply_" + id).css('border-color', 'red');
+        $('#users_rply_' + id).attr("placeholder", "Please type your reply here");
+        setTimeout(function() {
+            $("#users_rply_" + id).css('border-color', '#80bdff');
+        }, 3000);
+        return false;
+    } else {
+        var user_id = $('#userID').val();
+        var postjob_id = $('#postjobID').val();
+        var comment_id = commentid;
+        var comment = $('#users_rply_' + id).val();
+        $.ajax({
+            url: "<?= base_url() ?>user/dashboard/postUserReply",
+            type: "POST",
+            data: {
+                user_id: user_id,
+                postjob_id: postjob_id,
+                comment_id: comment_id,
+                comment: comment
+            },
+            success: function(data) {
+                //console.log(data);
+                $('.success_msg').text(data);
+                $('#comment').val('');
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            }
+        })
+    }
+}
+// for liking Comment
+function likepostjob() {
+    var user_id = $('#userID').val();
+    var postjob_id = $('#postjobID').val();
+    $('.fa-heart-o').css('color', '#000 !important');
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/likepostjob",
+        type: "POST",
+        data: {
+            user_id: user_id,
+            postjob_id: postjob_id
+        },
+        success: function(data) {
+            location.reload();
+        }
     })
-</script>
-<script>
-    // for posting Comment
-    function postComment() {
-        if ($('#comment').val() == "") {
-            $('#err_comment').fadeIn().html('Please enter your comment first').css('color', 'red');
-            setTimeout(function() {
-                $("#err_comment").html("");
-            }, 3000);
-            $("#comment").css('border-color', 'red');
-            setTimeout(function() {
-                $("#comment").css('border-color', '#80bdff');
-            }, 3000);
-            return false;
-        } else {
-            var user_id = $('#userID').val();
-            var postjob_id = $('#postjobID').val();
-            var comment_id = $('#comment_id').val();
-            var comment = $('#comment').val();
-            $.ajax({
-                url: "<?= base_url() ?>user/dashboard/postComment",
-                type: "POST",
-                data: {
-                    user_id: user_id,
-                    postjob_id: postjob_id,
-                    comment_id: comment_id,
-                    comment: comment
-                },
-                success: function(data) {
-                    //console.log(data);
-                    $('.success_msg').text(data);
-                    $('#comment').val('');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 3000);
-                }
-            })
+}
+// for liking user each Comment
+function likeuserrply(id) {
+    var user_id = $('#userID').val();
+    var postjob_id = $('#postjobID').val();
+    var comment_id = id;
+    //$('.fa-heart-o').css('color','#000 !important');
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/likeuserrply",
+        type: "POST",
+        data: {
+            user_id: user_id,
+            postjob_id: postjob_id,
+            comment_id: comment_id
+        },
+        success: function(data) {
+            location.reload();
         }
-    }
-    //show/hide reply box
-    function replylink(commentid) {
-        $('#replyBox_' + commentid).toggleClass('showreplyBox');
-        //$('#replyBox_' + commentid).removeClass('hidereplyBox');
-    }
-    //for user comment's reply
-    function postUserComment(commentid, id) {
-        if ($('#users_rply_' + id).val() == "") {
-            $("#users_rply_" + id).css('border-color', 'red');
-            $('#users_rply_' + id).attr("placeholder", "Please type your reply here");
-            setTimeout(function() {
-                $("#users_rply_" + id).css('border-color', '#80bdff');
-            }, 3000);
-            return false;
-        } else {
-            var user_id = $('#userID').val();
-            var postjob_id = $('#postjobID').val();
-            var comment_id = commentid;
-            var comment = $('#users_rply_' + id).val();
-            $.ajax({
-                url: "<?= base_url() ?>user/dashboard/postUserReply",
-                type: "POST",
-                data: {
-                    user_id: user_id,
-                    postjob_id: postjob_id,
-                    comment_id: comment_id,
-                    comment: comment
-                },
-                success: function(data) {
-                    //console.log(data);
-                    $('.success_msg').text(data);
-                    $('#comment').val('');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 3000);
-                }
-            })
+    })
+}
+// for disliking Comment
+function dislikepostjob() {
+    var user_id = $('#userID').val();
+    var postjob_id = $('#postjobID').val();
+    $('.fa-heart').addClass('fa-heart-o');
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/dislikepostjob",
+        type: "POST",
+        data: {
+            user_id: user_id,
+            postjob_id: postjob_id
+        },
+        success: function(data) {
+            console.log(data);
+            location.reload();
         }
-    }
-    // for liking Comment
-    function likepostjob() {
-        var user_id = $('#userID').val();
-        var postjob_id = $('#postjobID').val();
-        $('.fa-heart-o').css('color', '#000 !important');
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/likepostjob",
-            type: "POST",
-            data: {
-                user_id: user_id,
-                postjob_id: postjob_id
-            },
-            success: function(data) {
-                location.reload();
-            }
-        })
-    }
-    // for liking user each Comment
-    function likeuserrply(id) {
-        var user_id = $('#userID').val();
-        var postjob_id = $('#postjobID').val();
-        var comment_id = id;
-        //$('.fa-heart-o').css('color','#000 !important');
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/likeuserrply",
-            type: "POST",
-            data: {
-                user_id: user_id,
-                postjob_id: postjob_id,
-                comment_id: comment_id
-            },
-            success: function(data) {
-                location.reload();
-            }
-        })
-    }
-    // for disliking Comment
-    function dislikepostjob() {
-        var user_id = $('#userID').val();
-        var postjob_id = $('#postjobID').val();
-        $('.fa-heart').addClass('fa-heart-o');
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/dislikepostjob",
-            type: "POST",
-            data: {
-                user_id: user_id,
-                postjob_id: postjob_id
-            },
-            success: function(data) {
-                console.log(data);
-                location.reload();
-            }
-        })
-    }
-    // for disliking Comment
-    function dislikeuserrply(id) {
-        var user_id = $('#userID').val();
-        var postjob_id = $('#postjobID').val();
-        var comment_id = id;
-        //$('.fa-heart').addClass('fa-heart-o');
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/dislikeuserrply",
-            type: "POST",
-            data: {
-                user_id: user_id,
-                postjob_id: postjob_id,
-                comment_id: comment_id
-            },
-            success: function(data) {
-                console.log(data);
-                location.reload();
-            }
-        })
-    }
+    })
+}
+// for disliking Comment
+function dislikeuserrply(id) {
+    var user_id = $('#userID').val();
+    var postjob_id = $('#postjobID').val();
+    var comment_id = id;
+    //$('.fa-heart').addClass('fa-heart-o');
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/dislikeuserrply",
+        type: "POST",
+        data: {
+            user_id: user_id,
+            postjob_id: postjob_id,
+            comment_id: comment_id
+        },
+        success: function(data) {
+            console.log(data);
+            location.reload();
+        }
+    })
+}
+function showShare() {
+    $('.share').show();
+}
 </script>

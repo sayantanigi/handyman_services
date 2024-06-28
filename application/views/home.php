@@ -128,19 +128,19 @@ function get_time_ago($time) {
                                 <li style="margin: 0; height: 40px; padding: 0 15px; display: flex; align-items: center; justify-content: center; background: #ffede3; border-radius: 100px; font-size: 15px; font-weight: 500; color: #fc7021;">Nearby</li>
                             </ul>
                             <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
-                                if (@$_SESSION['afrebay']['userType'] == '2') { ?>
-                                    <a href="<?= base_url() ?>postwork" class="PostBtn" style="width: 10%; display: flex; align-items: center; justify-content: center; height: 60px;">
-                                        <span style="width: 100%; height: 40px; background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border-radius: 100px; display: flex; flex-direction: row; align-items: center; justify-content: center; color: #fff;">
-                                            <i class="fa fa-plus" aria-hidden="true" style="margin-right: 10px;"></i> Post
-                                        </span>
-                                    </a>
-                                <?php }
-                            } else { ?>
-                                <a href="<?= base_url() ?>login" class="PostBtn" style="width: 10%; display: flex; align-items: center; justify-content: center; height: 60px;">
+                            if (@$_SESSION['afrebay']['userType'] == '2') { ?>
+                                <a href="<?= base_url() ?>postwork" class="PostBtn" style="width: 10%; display: flex; align-items: center; justify-content: center; height: 60px;">
                                     <span style="width: 100%; height: 40px; background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border-radius: 100px; display: flex; flex-direction: row; align-items: center; justify-content: center; color: #fff;">
                                         <i class="fa fa-plus" aria-hidden="true" style="margin-right: 10px;"></i> Post
                                     </span>
                                 </a>
+                            <?php }
+                            } else { ?>
+                            <a href="<?= base_url() ?>login" class="PostBtn" style="width: 10%; display: flex; align-items: center; justify-content: center; height: 60px;">
+                                <span style="width: 100%; height: 40px; background: linear-gradient(180deg, rgba(252, 119, 33, 1) 0%, rgba(249, 80, 30, 1) 100%) !important; border-radius: 100px; display: flex; flex-direction: row; align-items: center; justify-content: center; color: #fff;">
+                                    <i class="fa fa-plus" aria-hidden="true" style="margin-right: 10px;"></i> Post
+                                </span>
+                            </a>
                             <?php } ?>
                         </div>
 
@@ -316,13 +316,7 @@ function get_time_ago($time) {
                                                 </div>
                                             <?php $i++;
                                             }
-                                        } else { ?>
-                                            <div class="Comment_Block" style="display: block;text-align: center;margin-top: 30px;">
-                                                <img src="<?= base_url('uploads/nocomment.png') ?>" alt="No Comment">
-                                                <p style="width: 100%;margin: 0px;color: #dddddd;">No Comments Yet</p>
-                                                <p style="width: 100%;margin: 0px;color: #dddddd;">Be the first to comment</p>
-                                            </div>
-                                        <?php } ?>
+                                        } ?>
                                     </div>
                             <?php }
                             } ?>

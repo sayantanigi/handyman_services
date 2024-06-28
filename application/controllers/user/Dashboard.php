@@ -980,7 +980,7 @@ class Dashboard extends CI_Controller {
                 'postjob_id' => $_POST['postjob_id'],
                 'comment_id' => $_POST['comment_id'],
                 'comment' => $_POST['comment'],
-                'created_date'=>date('Y-m-d H:i:s'),
+                'created_at'=>date('Y-m-d H:i:s'),
             );
             $this->Crud_model->SaveData('postjob_comment_rply', $commentData);
         } else {
@@ -988,7 +988,7 @@ class Dashboard extends CI_Controller {
                 'user_id' => $_POST['user_id'],
                 'postjob_id' => $_POST['postjob_id'],
                 'comment' => $_POST['comment'],
-                'created_date'=>date('Y-m-d H:i:s'),
+                'created_at'=>date('Y-m-d H:i:s'),
             );
             $this->Crud_model->SaveData('postjob_comment', $commentData);
         }
@@ -1006,7 +1006,7 @@ class Dashboard extends CI_Controller {
                 'postjob_id' => $_POST['postjob_id'],
                 'comment_id' => $_POST['comment_id'],
                 'comment' => $_POST['comment'],
-                'created_date'=>date('Y-m-d H:i:s'),
+                'created_at'=>date('Y-m-d H:i:s'),
             );
             $this->Crud_model->SaveData('postjob_comment_rply', $commentData);
         } else {
@@ -1014,7 +1014,7 @@ class Dashboard extends CI_Controller {
                 'user_id' => $_POST['user_id'],
                 'postjob_id' => $_POST['postjob_id'],
                 'comment' => $_POST['comment'],
-                'created_date'=>date('Y-m-d H:i:s'),
+                'created_at'=>date('Y-m-d H:i:s'),
             );
             $this->Crud_model->SaveData('postjob_comment', $commentData);
         }

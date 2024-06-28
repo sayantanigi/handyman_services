@@ -23,10 +23,15 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                     <div class="job-single-head3 emplye">
                                         <div class="job-thumb">
                                             <?php if (@$userdata->profilePic && file_exists('uploads/users/' . @$userdata->profilePic)) { ?>
-                                                <img id="profile-img" src="<?= base_url('uploads/users/'.@$userdata->profilePic)?>" class="online" alt="" />
+                                            <img id="profile-img" src="<?= base_url('uploads/users/'.@$userdata->profilePic)?>" class="online" alt="" />
                                             <?php } else { ?>
-                                                <img id="profile-img" src="<?= base_url('uploads/no_pimage.png')?>" class="online" alt="" />
+                                            <img id="profile-img" src="<?= base_url('uploads/no_pimage.png')?>" class="online" alt="" />
                                             <?php } ?>
+                                        </div>
+                                        <div id="status-options">
+                                            <a href="javascript:void(0)" style=" background: #fa8558; padding: 10px; border-radius: 5px; color: #fff; "><i class="la la-volume-mute"></i> Mute</a>
+                                            <a href="javascript:void(0)" style=" background: #fa8558; padding: 10px; border-radius: 5px; color: #fff; "><i class="la la-flag"></i> Report</a>
+                                            <a href="javascript:void(0)" style=" background: #fa8558; padding: 10px; border-radius: 5px; color: #fff; "><i class="la la-share"></i> Forward </a>
                                         </div>
                                         <div class="job-single-info3">
                                             <h3>
@@ -35,11 +40,11 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                 if (!empty($companyname)) {
                                                     echo ucwords($companyname);
                                                 } else {
-                                                    echo $userdata->username;
+                                                    echo ucwords($userdata->firstname." ".$userdata->lastname);
                                                 } ?>
                                             </h3>
-                                            <span><i class="la la-map-marker"></i><?= @$userdata->address; ?></span>
-                                            <!--<span class="job-is ft">Full time</span>-->
+                                            <!--<span><i class="la la-map-marker"></i><?= @$userdata->address; ?></span>
+                                            <span class="job-is ft">Full time</span>-->
                                             <ul class="tags-jobs">
                                                 <li><i class="la la-file-text"></i> Applications <?= count($get_post); ?></li>
                                                 <!-- <li><i class="la la-calendar-o"></i>
@@ -58,14 +63,14 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                     <!-- <div class="share-bar">
                                         <div class="sharethis-inline-share-buttons"></div>
                                     </div> -->
-                                    <div class="emply-btns">
+                                    <!-- <div class="emply-btns">
                                         <a class="seemap" id="ShowMap"><i class="la la-map-marker"></i> See On Map</a>
                                         <?php if (!empty(@$userdata->address)) { ?>
                                             <p style="display:none;" id="show_maping">
                                                 <iframe width="260" height="100px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.it/maps?q=<?= @$userdata->address ?>&output=embed"></iframe>
                                             </p>
                                         <?php } ?>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -74,33 +79,33 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                 <div class="col-lg-8 col-md-12 col-sm-12 column">
                                     <div class="job-details">
                                         <h3>About
-                                            <?php
-                                            $companyname = $userdata->companyname;
-                                            if (!empty($companyname)) {
-                                                echo ucwords($companyname);
-                                            } else {
-                                                echo $userdata->username;
-                                            } ?>
+                                        <?php
+                                        $companyname = $userdata->companyname;
+                                        if (!empty($companyname)) {
+                                            echo ucwords($companyname);
+                                        } else {
+                                            echo ucwords($userdata->firstname." ".$userdata->lastname);
+                                        } ?>
                                         </h3>
                                         <p><?= @$userdata->short_bio; ?></p>
                                     </div>
+                                    <?php if (!empty($get_post)) { ?>
                                     <div class="recent-jobs">
                                         <h3>Jobs from
-                                            <?php
-                                            $companyname = $userdata->companyname;
-                                            if (!empty($companyname)) {
-                                                echo ucwords($companyname);
-                                            } else {
-                                                echo $userdata->username;
-                                            } ?>
+                                        <?php
+                                        $companyname = $userdata->companyname;
+                                        if (!empty($companyname)) {
+                                            echo ucwords($companyname);
+                                        } else {
+                                            echo ucwords($userdata->firstname." ".$userdata->lastname);
+                                        } ?>
                                         </h3>
                                         <div class="job-list-modern">
                                             <div class="job-listings-sec no-border">
                                                 <?php
                                                 //echo "<pre>"; print_r($get_post);
                                                 $total_post = count($get_post);
-                                                if (!empty($get_post)) {
-                                                    foreach ($get_post as $key) {
+                                                foreach ($get_post as $key) {
                                                 ?>
                                                 <div class="job-listing wtabs noimg col-lg-6 col-md-6 col-sm-12">
                                                     <div class="CustomBlockDesign">
@@ -132,10 +137,11 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <?php } } ?>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>
+                                    <?php } ?>
                                 </div>
                                 <div class="col-lg-4 col-md-12 col-sm-12 column">
                                     <div class="job-overview">
@@ -268,47 +274,44 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
     </div>
 </div>
 <script>
-    function show_map() {
-        $('#show_maping').show();
-    }
+function show_map() {
+    $('#show_maping').show();
+}
+$(".job-thumb").click(function() {
+    $("#status-options").toggle();
+});
+$("#status-options ul li").click(function() {
+    $("#profile-img").removeClass();
+    $("#status-online").removeClass("active");
+    $("#status-away").removeClass("active");
+    $("#status-busy").removeClass("active");
+    $("#status-offline").removeClass("active");
+    $(this).addClass("active");
+    if ($("#status-online").hasClass("active")) {
+        $("#profile-img").addClass("online");
+    } else if ($("#status-away").hasClass("active")) {
+        $("#profile-img").addClass("away");
+    } else if ($("#status-busy").hasClass("active")) {
+        $("#profile-img").addClass("busy");
+    } else if ($("#status-offline").hasClass("active")) {
+        $("#profile-img").addClass("offline");
+    } else {
+        $("#profile-img").removeClass();
+    };
+    //$("#status-options").toggle();
+});
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" async="" src="<?php echo base_url(); ?>assets/js/Map_Modal.js"></script>
 <style>
-    .CustomBlockDesign {
-        position: relative;
-        height: 300px;
-    }
-
-    .CustomBlockDesign img {
-        width: 100%;
-        height: 100%;
-        border-radius: 15px;
-        object-fit: cover;
-    }
-
-    .CustomBlockDesign .CustomContainer {
-        padding: 10px 15px !important;
-        position: absolute;
-        bottom: 0;
-        background: rgb(0 0 0 / 20%);
-        backdrop-filter: blur(5px);
-        width: 100%;
-        border-radius: 0 0 15px 15px;
-    }
-
-    .CustomBlockDesign .CustomContainer .job-title-sec h3,
-    .CustomBlockDesign .CustomContainer .job-title-sec span {
-        color: #fff !important;
-    }
-
-    .CustomBlockDesign .CustomContainer .job-title-sec .job-lctn,
-    .CustomBlockDesign .CustomContainer .job-title-sec .job-lctn i {
-        color: #fff !important;
-    }
-
-    .job-style-bx i,
-    .job-style-bx .fav-job i {
-        color: #fff !important;
-    }
+.CustomBlockDesign {position: relative; height: 300px;}
+.CustomBlockDesign img {width: 100%; height: 100%; border-radius: 15px; object-fit: cover;}
+.CustomBlockDesign .CustomContainer {padding: 10px 15px !important; position: absolute; bottom: 0; background: rgb(0 0 0 / 20%); backdrop-filter: blur(5px); width: 100%; border-radius: 0 0 15px 15px;}
+.CustomBlockDesign .CustomContainer .job-title-sec h3,
+.CustomBlockDesign .CustomContainer .job-title-sec span {color: #fff !important;}
+.CustomBlockDesign .CustomContainer .job-title-sec .job-lctn,
+.CustomBlockDesign .CustomContainer .job-title-sec .job-lctn i {color: #fff !important;}
+.job-style-bx i, .job-style-bx .fav-job i {color: #fff !important;}
+#status-options {width: 180px; border-radius: 6px; z-index: 99; line-height: initial; background: #435f7a; transition: 0.3s all ease; position: absolute; bottom: 0px; left: 15px; bottom: 0px; left: 15px; border: 1px solid #eee; padding: 10px; text-align: center;}
+.job-thumb .active {opacity: 1; visibility: visible; margin: 75px 0 0 0;}
 </style>
