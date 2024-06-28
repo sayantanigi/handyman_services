@@ -193,7 +193,7 @@ function get_time_ago($time) {
                                                 <?php if (!empty($post_data->required_key_skills)) { ?>
                                                     <li><span>Required key skills: </span><?php echo ucfirst($post_data->required_key_skills); ?></li>
                                                 <?php } ?>
-                                                <?php if (empty($post_data->appli_deadeline) || $post_data->$appli_deadeline == '0000-00-00') { ?>
+                                                <?php if (!empty($post_data->appli_deadeline) || $post_data->$appli_deadeline == '0000-00-00') { ?>
                                                     <li><span>Application Deadline Date: </span><?php echo $post_data->appli_deadeline; ?></li>
                                                 <?php } ?>
                                             </div>
