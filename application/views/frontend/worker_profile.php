@@ -36,6 +36,20 @@ if (!empty($user_detail->backgroundPic) && file_exists('uploads/users/background
                                     <p>Member Since, <?= date('Y',strtotime(@$user_detail->created))?></p>
                                     <!-- <p><i class="la la-map-marker"></i><?= @$user_detail->address?></p> -->
                                 </div>
+                                <div id="status-options">
+                                    <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-volume-mute"></i> Mute</a>
+                                    <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
+                                    <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" id="shareBtn"><i class="la la-share"></i> Forward </a>
+                                </div>
+                                <div id="shareMenu" class="hidden">
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-facebook"></a>
+                                    <a href="https://twitter.com/intent/tweet?text=<?php echo $post_data->post_title; ?>&url=<?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-twitter"></a>
+                                    <a href="mailto:?subject=<?php echo $post_data->post_title; ?>&body=<?= 'I found this interesting: '.base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-gmail"></a>
+                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-linkedin"></a>
+                                    <a href="https://www.instagram.com/?url=<?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-instagram"></a>
+                                    <a href="https://api.whatsapp.com/send?text=<?php echo $post_data->post_title; ?> <?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-whatsapp"></a>
+                                    <a href="https://telegram.me/share/url?url=<?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>&text=<?php echo $post_data->post_title; ?>" target="_blank" class="fa fa-telegram"></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -158,3 +172,18 @@ if (!empty($user_detail->backgroundPic) && file_exists('uploads/users/background
         </div>
     </div>
 </section>
+<style>
+#status-options {width: 210px; border-radius: 6px; z-index: 99; line-height: initial; background: #fff; transition: 0.3s all ease; position: absolute; bottom: 15px; left: 15px; border: 1px solid #eee; padding: 5px; text-align: center; }
+.job-thumb .active {opacity: 1; visibility: visible; margin: 75px 0 0 0;}
+.hidden {display: none;}
+#shareMenu {border: 1px solid #ccc; padding: 10px; position: absolute; background-color: white; bottom: -25px; left: 145px; z-index: 111;}
+</style>
+<script>
+$(document).ready(function() {
+    const shareBtn = $('#shareBtn');
+    const shareMenu = $('#shareMenu');
+    shareBtn.click(function() {
+        shareMenu.toggle();
+    });
+});
+</script>

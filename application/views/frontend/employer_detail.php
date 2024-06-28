@@ -28,11 +28,6 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                             <img id="profile-img" src="<?= base_url('uploads/no_pimage.png')?>" class="online" alt="" />
                                             <?php } ?>
                                         </div>
-                                        <div id="status-options" style="display: none;">
-                                            <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-volume-mute"></i> Mute</a>
-                                            <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
-                                            <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-share"></i> Forward </a>
-                                        </div>
                                         <div class="job-single-info3">
                                             <h3>
                                                 <?php
@@ -55,6 +50,24 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                 </li> -->
                                                 <li><i class="la la-eye"></i> Views <?= @$userdata->view_count ?></li>
                                             </ul>
+                                            <div id="status-options">
+                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-volume-mute"></i> Mute</a>
+                                                <?php if(!empty(@$_SESSION['afrebay']['userId'])) { ?>
+                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="reportUser(<?= $userdata->userId ?>)"><i class="la la-flag"></i> Report</a>
+                                                <?php } else { ?>
+                                                <a href="<?php base_url()?>login" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
+                                                <?php } ?>
+                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" id="shareBtn"><i class="la la-share"></i> Forward </a>
+                                            </div>
+                                            <div id="shareMenu" class="hidden">
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-facebook"></a>
+                                                <a href="https://twitter.com/intent/tweet?text=<?php echo $post_data->post_title; ?>&url=<?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-twitter"></a>
+                                                <a href="mailto:?subject=<?php echo $post_data->post_title; ?>&body=<?= 'I found this interesting: '.base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-gmail"></a>
+                                                <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-linkedin"></a>
+                                                <a href="https://www.instagram.com/?url=<?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-instagram"></a>
+                                                <a href="https://api.whatsapp.com/send?text=<?php echo $post_data->post_title; ?> <?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-whatsapp"></a>
+                                                <a href="https://telegram.me/share/url?url=<?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>&text=<?php echo $post_data->post_title; ?>" target="_blank" class="fa fa-telegram"></a>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Job Head -->
@@ -274,11 +287,18 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
     </div>
 </div>
 <script>
+$(document).ready(function() {
+    const shareBtn = $('#shareBtn');
+    const shareMenu = $('#shareMenu');
+    shareBtn.click(function() {
+        shareMenu.toggle();
+    });
+});
 function show_map() {
     $('#show_maping').show();
 }
 $(".job-thumb").click(function() {
-    $("#status-options").toggle();
+    //$("#status-options").toggle();
 });
 $("#status-options ul li").click(function() {
     $("#profile-img").removeClass();
@@ -300,6 +320,54 @@ $("#status-options ul li").click(function() {
     };
     //$("#status-options").toggle();
 });
+function reportUser(userid) {
+    var toUser = userid;
+    var fromUser = <?php echo @$_SESSION['afrebay']['userId']?>;
+    $.ajax({
+        url: "<?= base_url('user/dashboard/reportUser') ?>",
+        type: "POST",
+        data: {toUser: toUser, fromUser: fromUser},
+        success: function(response) {
+            if (response == "1") {
+                location.reload();
+            } else {
+                $('#error').text(response);
+            }
+        }
+    })
+}
+function blockUser(userid) {
+    var toUser = userid;
+    var fromUser = <?php echo @$_SESSION['afrebay']['userId']?>;
+    $.ajax({
+        url: "<?= base_url('user/dashboard/blockUser') ?>",
+        type: "POST",
+        data: {toUser: toUser, fromUser: fromUser},
+        success: function(response) {
+            if (response == "1") {
+                location.reload();
+            } else {
+                $('#error').text(response);
+            }
+        }
+    })
+}
+function unblockUser(userid) {
+    var toUser = userid;
+    var fromUser = <?php echo @$_SESSION['afrebay']['userId']?>;
+    $.ajax({
+        url: "<?= base_url('user/dashboard/unblockUser') ?>",
+        type: "POST",
+        data: {toUser: toUser, fromUser: fromUser},
+        success: function(response) {
+            if (response == "1") {
+                location.reload();
+            } else {
+                $('#error').text(response);
+            }
+        }
+    })
+}
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" async="" src="<?php echo base_url(); ?>assets/js/Map_Modal.js"></script>
@@ -312,6 +380,8 @@ $("#status-options ul li").click(function() {
 .CustomBlockDesign .CustomContainer .job-title-sec .job-lctn,
 .CustomBlockDesign .CustomContainer .job-title-sec .job-lctn i {color: #fff !important;}
 .job-style-bx i, .job-style-bx .fav-job i {color: #fff !important;}
-#status-options {width: 210px; border-radius: 6px; z-index: 99; line-height: initial; background: #fff; transition: 0.3s all ease; position: absolute; bottom: -10px; left: 15px; left: 15px; border: 1px solid #eee; padding: 5px; text-align: center;}
+#status-options {width: 210px; border-radius: 6px; z-index: 99; line-height: initial; background: #fff; transition: 0.3s all ease; position: absolute; bottom: 30px; left: 242px; border: 1px solid #eee; padding: 5px; text-align: center; }
 .job-thumb .active {opacity: 1; visibility: visible; margin: 75px 0 0 0;}
+.hidden {display: none;}
+#shareMenu {border: 1px solid #ccc; padding: 10px; position: absolute; background-color: white; margin-top: 120px; margin-left: 128px; z-index: 111;}
 </style>

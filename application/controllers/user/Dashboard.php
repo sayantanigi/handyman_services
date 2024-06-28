@@ -1084,4 +1084,19 @@ class Dashboard extends CI_Controller {
 	public function dislikeuserrply() {
         $this->db->query("UPDATE postjob_comment_like SET is_liked = '0' WHERE user_id = '".$_POST['user_id']."' AND postjob_id = '".$_POST['postjob_id']."' AND comment_id = '".$_POST['comment_id']."'");
     }
+    public function reportUser() {
+        $toUser = $_POST['toUser'];
+        $fromUser = $_POST['fromUser'];
+        $data = array(
+            'to_user_id' => $toUser,
+            'from_user_id' => $fromUser,
+        );
+        $this->Crud_model->SaveData('report_user', $data);
+        $insertid = $this->db->insert_id();
+        if(!empty($insertid)) {
+            echo "1";
+        } else {
+            echo "Something went wrong. Please try again.";
+        }
+    }
 }
