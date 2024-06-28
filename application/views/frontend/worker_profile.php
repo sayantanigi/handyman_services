@@ -34,7 +34,7 @@ if (!empty($user_detail->backgroundPic) && file_exists('uploads/users/background
                                 <div class="Worker_Head_Text_Data">
                                     <h3><?php if(!empty($user_detail->firstname)){ echo $user_detail->firstname.' '.$user_detail->lastname;} else { echo $user_detail->username; }?></h3>
                                     <p>Member Since, <?= date('Y',strtotime(@$user_detail->created))?></p>
-                                    <p><i class="la la-map-marker"></i><?= @$user_detail->address?></p>
+                                    <!-- <p><i class="la la-map-marker"></i><?= @$user_detail->address?></p> -->
                                 </div>
                             </div>
                         </div>

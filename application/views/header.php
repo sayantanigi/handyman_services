@@ -6,19 +6,14 @@ $get_category=$this->Crud_model->GetData('category','',"status='Active'");
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <?php if($this->uri->segment(1) == 'workdetail') { ?>
-    <title><?php echo @$post_data->post_title?> - <?php echo @$get_setting->website_name?></title>
-    <?php } else if ($this->uri->segment(1) == 'career-tips') { ?>
-    <title><?php if(!empty(@$get_career->title)) { echo @$get_career->title; } else { echo @$title; }?> - <?php echo @$get_setting->website_name?></title>
-    <?php } else if ($this->uri->segment(1) == 'customer_detail') { ?>
-    <title><?php echo @$userdata->companyname?> - <?php echo @$get_setting->website_name?></title>
-    <?php } else if ($this->uri->segment(1) == 'professionals_detail') { ?>
-    <title><?php echo @$user_detail->firstname.' '.$user_detail->lastname?> - <?php echo @$get_setting->website_name?></title>
-    <?php } else if ($this->uri->segment(1) == 'productdetail') { ?>
-    <title><?php echo @$prod_details[0]['prod_name']; ?> - <?php echo @$get_setting->website_name?></title>
-    <?php } else { ?>
-    <title><?php echo @$title?> - <?php echo @$get_setting->website_name?></title>
-    <?php } ?>
+    <title>
+        <?php
+        if(!empty(@$title)) {
+            echo $title." - ".@$get_setting->website_name;
+        } else {
+            echo @$get_setting->website_name;
+        }?>
+    </title>
     <?php if($this->uri->segment(1) == 'customer_detail') { ?>
     <meta name="description" content="<?php echo @$userdata->short_bio?>">
     <?php } else if($this->uri->segment(1) == 'professionals_detail') { ?>

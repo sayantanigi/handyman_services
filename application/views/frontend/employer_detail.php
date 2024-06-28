@@ -28,10 +28,10 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                             <img id="profile-img" src="<?= base_url('uploads/no_pimage.png')?>" class="online" alt="" />
                                             <?php } ?>
                                         </div>
-                                        <div id="status-options">
-                                            <a href="javascript:void(0)" style=" background: #fa8558; padding: 10px; border-radius: 5px; color: #fff; "><i class="la la-volume-mute"></i> Mute</a>
-                                            <a href="javascript:void(0)" style=" background: #fa8558; padding: 10px; border-radius: 5px; color: #fff; "><i class="la la-flag"></i> Report</a>
-                                            <a href="javascript:void(0)" style=" background: #fa8558; padding: 10px; border-radius: 5px; color: #fff; "><i class="la la-share"></i> Forward </a>
+                                        <div id="status-options" style="display: none;">
+                                            <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-volume-mute"></i> Mute</a>
+                                            <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
+                                            <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-share"></i> Forward </a>
                                         </div>
                                         <div class="job-single-info3">
                                             <h3>
@@ -118,7 +118,7 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                             <div class="job-title-sec">
                                                                 <h3 style="text-transform: uppercase;"><a href="<?php echo base_url() ?>workdetail/<?php echo base64_encode($key->id) ?>" title=""><?= $key->post_title; ?></a></h3>
                                                                 <span><?php echo $key->required_key_skills; ?></span>
-                                                                <div class="job-lctn"><i class="la la-map-marker"></i><?= ucwords($key->location); ?></div>
+                                                                <!-- <div class="job-lctn"><i class="la la-map-marker"></i><?= ucwords($key->location); ?></div> -->
                                                             </div>
                                                             <div class="job-style-bx">
                                                                 <span class="fav-job"><i class="la la-heart-o"></i></span>
@@ -157,7 +157,7 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                 <h3>Posted Jobs</h3>
                                                 <span><?= @$total_post; ?></span>
                                             </li>
-                                            <li>
+                                            <!-- <li>
                                                 <i class="la la-map"></i>
                                                 <h3>Location</h3>
                                                 <span>
@@ -173,7 +173,7 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                     }
                                                     ?>
                                                 </span>
-                                            </li>
+                                            </li> -->
 
                                             <?php
                                             //$skills = $this->db->query("SELECT group_concat(required_key_skills) as skill FROM postjob WHERE user_id = '".$userdata->userId."'")->result_array();
@@ -312,6 +312,6 @@ $("#status-options ul li").click(function() {
 .CustomBlockDesign .CustomContainer .job-title-sec .job-lctn,
 .CustomBlockDesign .CustomContainer .job-title-sec .job-lctn i {color: #fff !important;}
 .job-style-bx i, .job-style-bx .fav-job i {color: #fff !important;}
-#status-options {width: 180px; border-radius: 6px; z-index: 99; line-height: initial; background: #435f7a; transition: 0.3s all ease; position: absolute; bottom: 0px; left: 15px; bottom: 0px; left: 15px; border: 1px solid #eee; padding: 10px; text-align: center;}
+#status-options {width: 210px; border-radius: 6px; z-index: 99; line-height: initial; background: #fff; transition: 0.3s all ease; position: absolute; bottom: -10px; left: 15px; left: 15px; border: 1px solid #eee; padding: 5px; text-align: center;}
 .job-thumb .active {opacity: 1; visibility: visible; margin: 75px 0 0 0;}
 </style>
