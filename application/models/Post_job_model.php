@@ -294,7 +294,7 @@ class Post_job_model extends My_Model {
                     $bidBtn = '<div class="shortlists"><a href="'.base_url('workdetail/'.base64_encode($row['id'])).'" title="">Bid Now <i class="la la-plus"></i></a></div>';
                 }
 
-                $output .= '<div class="emply-resume-list col-lg-6 col-md-6 col-sm-12"><div class="DataContainer">'.$profile_pic.'<div class="emply-resume-thumb">'.$jobimage.'</div><div class="emply-resume-info" style="min-height: 130px;"><h3><a style="width: 100% !important" href="'.base_url('workdetail/'.base64_encode($row['id'])).'" title="">'.$row['post_title'].'</a></h3><span>'.$get_category->category_name.'</span><span>'.$get_subcategory->sub_category_name.' </span><p><i class="la la-map-marker"></i>'.$row["location"].'</p></div>'.$bidBtn.'</div></div> ';
+                $output .= '<div class="emply-resume-list col-lg-6 col-md-6 col-sm-12"><div class="DataContainer">'.$profile_pic.'<div class="emply-resume-thumb">'.$jobimage.'</div><div class="emply-resume-info" style="min-height: 70px;"><h3><a style="width: 100% !important" href="'.base_url('workdetail/'.base64_encode($row['id'])).'" title="">'.$row['post_title'].'</a></h3><span>'.$get_category->category_name.'</span><span>'.$get_subcategory->sub_category_name.' </span><!--<p><i class="la la-map-marker"></i>'.$row["location"].'</p>--></div>'.$bidBtn.'</div></div> ';
             }
         } else {
             $output .= '<div class="emply-resume-list"><div class="emply-resume-thumb"><h2>No Data Found</h2></div></div>';

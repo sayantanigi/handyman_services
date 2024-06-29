@@ -68,7 +68,7 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                 if(!empty($checkreportUser)) { ?>
                                                 <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Reported</a>
                                                 <?php } else { ?>
-                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="reportUser(<?= $userdata->userId ?>)"><i class="la la-flag"></i> Report</a>
+                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="report(<?= $userdata->userId ?>)"><i class="la la-flag"></i> Report</a>
                                                 <?php } } else { ?>
                                                 <a href="<?php echo base_url()?>login" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
                                                 <?php } ?>
@@ -303,6 +303,26 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
         </div>
     </div>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 550px !important; position: relative; top: 80px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Report Reason</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="reason" name="reason"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="reportUser()">Save changes</button>
+                <input type="hidden" id="toUser" name="toUser" value="">
+                <input type="hidden" id="fromUser" name="fromUser" value="<?= $_SESSION['afrebay']['userId']?>">
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 $(document).ready(function() {
     const shareBtn = $('#shareBtn');
@@ -337,23 +357,31 @@ $("#status-options ul li").click(function() {
     };
     //$("#status-options").toggle();
 });
-function reportUser(userid) {
+function report(userid) {
     var toUser = userid;
     var fromUser = <?php if(!empty(@$_SESSION['afrebay']['userId'])) { echo $_SESSION['afrebay']['userId']; } else { echo "NULL"; } ?>;
     if(fromUser != "NULL") {
-        $.ajax({
-            url: "<?= base_url('user/dashboard/reportUser') ?>",
-            type: "POST",
-            data: {toUser: toUser, fromUser: fromUser},
-            success: function(response) {
-                if (response == "1") {
-                    location.reload();
-                } else {
-                    $('#error').text(response);
-                }
-            }
-        })
+        $('#exampleModal').addClass('show');
+        $('#exampleModal').modal('show');
+        $('#toUser').val(toUser);
     }
+}
+function reportUser() {
+    var toUser = $('#toUser').val();
+    var fromUser = $('#fromUser').val();
+    var reason = $('#reason').val();
+    $.ajax({
+        url: "<?= base_url('user/dashboard/reportUser') ?>",
+        type: "POST",
+        data: {toUser: toUser, fromUser: fromUser, reason: reason},
+        success: function(response) {
+            if (response == "1") {
+                location.reload();
+            } else {
+                $('#error').text(response);
+            }
+        }
+    })
 }
 function muteUser(userid) {
     var toUser = userid;

@@ -457,7 +457,7 @@ function get_time_ago($time) {
                                                     echo $userData->firstname . ' ' . $userData->lastname;
                                                 } ?>
                                             </h3>
-                                            <span style="font-weight: 500; color: #fff !important; font-size: 13px;"><i class="la la-map-marker"></i> <?= $userData->address ?></span>
+                                            <!-- <span style="font-weight: 500; color: #fff !important; font-size: 13px;"><i class="la la-map-marker"></i> <?= $userData->address ?></span> -->
                                             <span style="font-weight: 500; color: #fff !important; font-size: 13px;"><i class="la la-eye"></i> Views <?= $userData->view_count ?> </span>
                                         </div>
                                     </a>

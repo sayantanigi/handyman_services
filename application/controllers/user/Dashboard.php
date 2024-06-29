@@ -1087,9 +1087,11 @@ class Dashboard extends CI_Controller {
     public function reportUser() {
         $toUser = $_POST['toUser'];
         $fromUser = $_POST['fromUser'];
+        $reason = $_POST['reason'];
         $data = array(
             'to_user_id' => $toUser,
             'from_user_id' => $fromUser,
+            'reason' => $reason,
         );
         $this->Crud_model->SaveData('report_user', $data);
         $insertid = $this->db->insert_id();
