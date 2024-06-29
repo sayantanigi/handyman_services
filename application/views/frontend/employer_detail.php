@@ -50,6 +50,7 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                 </li> -->
                                                 <li><i class="la la-eye"></i> Views <?= @$userdata->view_count ?></li>
                                             </ul>
+                                            <?php if(@$_SESSION['afrebay']['userId'] != $userdata->userId) { ?>
                                             <div id="status-options">
                                                 <?php if(!empty(@$_SESSION['afrebay']['userId'])) {
                                                 $checkMuteUser = $this->db->query("SELECT * FROM mute_user WHERE to_user_id = '".$userdata->userId."' AND from_user_id = '".$_SESSION['afrebay']['userId']."'")->row();
@@ -83,6 +84,7 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                 <a href="https://api.whatsapp.com/send?text=<?php echo $post_data->post_title; ?> <?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-whatsapp"></a>
                                                 <a href="https://telegram.me/share/url?url=<?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>&text=<?php echo $post_data->post_title; ?>" target="_blank" class="fa fa-telegram"></a>
                                             </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                     <!-- Job Head -->

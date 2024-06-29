@@ -36,6 +36,7 @@ if (!empty($user_detail->backgroundPic) && file_exists('uploads/users/background
                                     <p>Member Since, <?= date('Y',strtotime(@$user_detail->created))?></p>
                                     <!-- <p><i class="la la-map-marker"></i><?= @$user_detail->address?></p> -->
                                 </div>
+                                <?php if(@$_SESSION['afrebay']['userId'] != $user_detail->userId) { ?>
                                 <div id="status-options">
                                     <?php if(!empty(@$_SESSION['afrebay']['userId'])) {
                                     $checkMuteUser = $this->db->query("SELECT * FROM mute_user WHERE to_user_id = '".$user_detail->userId."' AND from_user_id = '".$_SESSION['afrebay']['userId']."'")->row();
@@ -69,6 +70,7 @@ if (!empty($user_detail->backgroundPic) && file_exists('uploads/users/background
                                     <a href="https://api.whatsapp.com/send?text=<?php echo $post_data->post_title; ?> <?= base_url('professionals_detail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-whatsapp"></a>
                                     <a href="https://telegram.me/share/url?url=<?= base_url('professionals_detail/' . base64_encode(@$user_detail->userId)) ?>&text=<?php echo $post_data->post_title; ?>" target="_blank" class="fa fa-telegram"></a>
                                 </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
