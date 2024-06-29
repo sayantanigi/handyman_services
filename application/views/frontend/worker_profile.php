@@ -32,23 +32,42 @@ if (!empty($user_detail->backgroundPic) && file_exists('uploads/users/background
                             </div>
                             <div class="col-lg-6 col-md-4 col-sm-12 Worker_Head_Text">
                                 <div class="Worker_Head_Text_Data">
-                                    <h3><?php if(!empty($user_detail->firstname)){ echo $user_detail->firstname.' '.$user_detail->lastname;} else { echo $user_detail->username; }?></h3>
+                                    <h3><?php if(!empty($user_detail->firstname)){ echo $name = $user_detail->firstname.' '.$user_detail->lastname;} else { echo $name = $user_detail->username; }?></h3>
                                     <p>Member Since, <?= date('Y',strtotime(@$user_detail->created))?></p>
                                     <!-- <p><i class="la la-map-marker"></i><?= @$user_detail->address?></p> -->
                                 </div>
                                 <div id="status-options">
-                                    <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-volume-mute"></i> Mute</a>
-                                    <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
+                                    <?php if(!empty(@$_SESSION['afrebay']['userId'])) {
+                                    $checkMuteUser = $this->db->query("SELECT * FROM mute_user WHERE to_user_id = '".$user_detail->userId."' AND from_user_id = '".$_SESSION['afrebay']['userId']."'")->row();
+                                    //print_r($checkMuteUser);
+                                    if(@$checkMuteUser->status == "1") { ?>
+                                    <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="unmuteUser(<?= $user_detail->userId ?>)"><i class="las la-volume-up"></i> Unmute</a>
+                                    <?php } else { ?>
+                                    <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="muteUser(<?= $user_detail->userId ?>)"><i class="las la-volume-off"></i> Mute</a>
+                                    <?php } } else { ?>
+                                    <a href="<?php echo base_url()?>login" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="las la-volume-off"></i> Mute</a>
+                                    <?php } ?>
+                                    <?php if(!empty(@$_SESSION['afrebay']['userId'])) {
+                                    $checkreportUser = $this->db->query("SELECT * FROM report_user WHERE to_user_id = '".$user_detail->userId."' AND from_user_id = '".$_SESSION['afrebay']['userId']."'")->row();
+                                    //print_r($checkreportUser);
+                                    if(!empty($checkreportUser)) { ?>
+                                    <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Reported</a>
+                                    <?php } else { ?>
+                                    <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="reportUser(<?= $user_detail->userId ?>)"><i class="la la-flag"></i> Report</a>
+                                    <?php } } else { ?>
+                                    <a href="<?php echo base_url()?>login" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
+                                    <?php } ?>
+
                                     <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" id="shareBtn"><i class="la la-share"></i> Forward </a>
                                 </div>
                                 <div id="shareMenu" class="hidden">
-                                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-facebook"></a>
-                                    <a href="https://twitter.com/intent/tweet?text=<?php echo $post_data->post_title; ?>&url=<?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-twitter"></a>
-                                    <a href="mailto:?subject=<?php echo $post_data->post_title; ?>&body=<?= 'I found this interesting: '.base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-gmail"></a>
-                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-linkedin"></a>
-                                    <a href="https://www.instagram.com/?url=<?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-instagram"></a>
-                                    <a href="https://api.whatsapp.com/send?text=<?php echo $post_data->post_title; ?> <?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-whatsapp"></a>
-                                    <a href="https://telegram.me/share/url?url=<?= base_url('workdetail/' . base64_encode(@$user_detail->userId)) ?>&text=<?php echo $post_data->post_title; ?>" target="_blank" class="fa fa-telegram"></a>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('professionals_detail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-facebook"></a>
+                                    <a href="https://twitter.com/intent/tweet?text=<?php echo $post_data->post_title; ?>&url=<?= base_url('professionals_detail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-twitter"></a>
+                                    <a href="mailto:?subject=<?php echo $name; ?>&body=<?= 'I found this interesting: '.base_url('professionals_detail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-google"></a>
+                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= base_url('professionals_detail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-linkedin"></a>
+                                    <a href="https://www.instagram.com/?url=<?= base_url('professionals_detail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-instagram"></a>
+                                    <a href="https://api.whatsapp.com/send?text=<?php echo $post_data->post_title; ?> <?= base_url('professionals_detail/' . base64_encode(@$user_detail->userId)) ?>" target="_blank" class="fa fa-whatsapp"></a>
+                                    <a href="https://telegram.me/share/url?url=<?= base_url('professionals_detail/' . base64_encode(@$user_detail->userId)) ?>&text=<?php echo $post_data->post_title; ?>" target="_blank" class="fa fa-telegram"></a>
                                 </div>
                             </div>
                         </div>
@@ -186,4 +205,58 @@ $(document).ready(function() {
         shareMenu.toggle();
     });
 });
+function reportUser(userid) {
+    var toUser = userid;
+    var fromUser = <?php if(!empty(@$_SESSION['afrebay']['userId'])) { echo $_SESSION['afrebay']['userId']; } else { echo "NULL"; } ?>;
+    if(fromUser != "NULL") {
+        $.ajax({
+            url: "<?= base_url('user/dashboard/reportUser') ?>",
+            type: "POST",
+            data: {toUser: toUser, fromUser: fromUser},
+            success: function(response) {
+                if (response == "1") {
+                    location.reload();
+                } else {
+                    $('#error').text(response);
+                }
+            }
+        })
+    }
+}
+function muteUser(userid) {
+    var toUser = userid;
+    var fromUser = <?php if(!empty(@$_SESSION['afrebay']['userId'])) { echo $_SESSION['afrebay']['userId']; } else { echo "NULL"; } ?>;
+    if(fromUser != "NULL") {
+        $.ajax({
+            url: "<?= base_url('user/dashboard/muteUser') ?>",
+            type: "POST",
+            data: {toUser: toUser, fromUser: fromUser},
+            success: function(response) {
+                if (response == "1") {
+                    location.reload();
+                } else {
+                    $('#error').text(response);
+                }
+            }
+        })
+    }
+}
+function unmuteUser(userid) {
+    var toUser = userid;
+    var fromUser = <?php if(!empty(@$_SESSION['afrebay']['userId'])) { echo $_SESSION['afrebay']['userId']; } else { echo "NULL"; } ?>;
+    if(fromUser != "NULL") {
+        $.ajax({
+            url: "<?= base_url('user/dashboard/unmuteUser') ?>",
+            type: "POST",
+            data: {toUser: toUser, fromUser: fromUser},
+            success: function(response) {
+                if (response == "1") {
+                    location.reload();
+                } else {
+                    $('#error').text(response);
+                }
+            }
+        })
+    }
+}
 </script>

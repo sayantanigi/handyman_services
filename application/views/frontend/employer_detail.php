@@ -33,9 +33,9 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                 <?php
                                                 $companyname = $userdata->companyname;
                                                 if (!empty($companyname)) {
-                                                    echo ucwords($companyname);
+                                                    echo $name = ucwords($companyname);
                                                 } else {
-                                                    echo ucwords($userdata->firstname." ".$userdata->lastname);
+                                                    echo $name = ucwords($userdata->firstname." ".$userdata->lastname);
                                                 } ?>
                                             </h3>
                                             <!--<span><i class="la la-map-marker"></i><?= @$userdata->address; ?></span>
@@ -51,18 +51,33 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                 <li><i class="la la-eye"></i> Views <?= @$userdata->view_count ?></li>
                                             </ul>
                                             <div id="status-options">
-                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-volume-mute"></i> Mute</a>
-                                                <?php if(!empty(@$_SESSION['afrebay']['userId'])) { ?>
-                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="reportUser(<?= $userdata->userId ?>)"><i class="la la-flag"></i> Report</a>
+                                                <?php if(!empty(@$_SESSION['afrebay']['userId'])) {
+                                                $checkMuteUser = $this->db->query("SELECT * FROM mute_user WHERE to_user_id = '".$userdata->userId."' AND from_user_id = '".$_SESSION['afrebay']['userId']."'")->row();
+                                                //print_r($checkMuteUser);
+                                                if(@$checkMuteUser->status == "1") { ?>
+                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="unmuteUser(<?= $userdata->userId ?>)"><i class="las la-volume-up"></i> Unmute</a>
                                                 <?php } else { ?>
-                                                <a href="<?php base_url()?>login" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
+                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="muteUser(<?= $userdata->userId ?>)"><i class="las la-volume-off"></i> Mute</a>
+                                                <?php } } else { ?>
+                                                <a href="<?php echo base_url()?>login" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="las la-volume-off"></i> Mute</a>
                                                 <?php } ?>
+                                                <?php if(!empty(@$_SESSION['afrebay']['userId'])) {
+                                                $checkreportUser = $this->db->query("SELECT * FROM report_user WHERE to_user_id = '".$userdata->userId."' AND from_user_id = '".$_SESSION['afrebay']['userId']."'")->row();
+                                                //print_r($checkreportUser);
+                                                if(!empty($checkreportUser)) { ?>
+                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Reported</a>
+                                                <?php } else { ?>
+                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="reportUser(<?= $userdata->userId ?>)"><i class="la la-flag"></i> Report</a>
+                                                <?php } } else { ?>
+                                                <a href="<?php echo base_url()?>login" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
+                                                <?php } ?>
+
                                                 <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" id="shareBtn"><i class="la la-share"></i> Forward </a>
                                             </div>
                                             <div id="shareMenu" class="hidden">
                                                 <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-facebook"></a>
                                                 <a href="https://twitter.com/intent/tweet?text=<?php echo $post_data->post_title; ?>&url=<?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-twitter"></a>
-                                                <a href="mailto:?subject=<?php echo $post_data->post_title; ?>&body=<?= 'I found this interesting: '.base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-gmail"></a>
+                                                <a href="mailto:?subject=<?php echo $name; ?>&body=<?= 'I found this interesting: '.base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-google"></a>
                                                 <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-linkedin"></a>
                                                 <a href="https://www.instagram.com/?url=<?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-instagram"></a>
                                                 <a href="https://api.whatsapp.com/send?text=<?php echo $post_data->post_title; ?> <?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-whatsapp"></a>
@@ -322,51 +337,57 @@ $("#status-options ul li").click(function() {
 });
 function reportUser(userid) {
     var toUser = userid;
-    var fromUser = <?php echo @$_SESSION['afrebay']['userId']?>;
-    $.ajax({
-        url: "<?= base_url('user/dashboard/reportUser') ?>",
-        type: "POST",
-        data: {toUser: toUser, fromUser: fromUser},
-        success: function(response) {
-            if (response == "1") {
-                location.reload();
-            } else {
-                $('#error').text(response);
+    var fromUser = <?php if(!empty(@$_SESSION['afrebay']['userId'])) { echo $_SESSION['afrebay']['userId']; } else { echo "NULL"; } ?>;
+    if(fromUser != "NULL") {
+        $.ajax({
+            url: "<?= base_url('user/dashboard/reportUser') ?>",
+            type: "POST",
+            data: {toUser: toUser, fromUser: fromUser},
+            success: function(response) {
+                if (response == "1") {
+                    location.reload();
+                } else {
+                    $('#error').text(response);
+                }
             }
-        }
-    })
+        })
+    }
 }
-function blockUser(userid) {
+function muteUser(userid) {
     var toUser = userid;
-    var fromUser = <?php echo @$_SESSION['afrebay']['userId']?>;
-    $.ajax({
-        url: "<?= base_url('user/dashboard/blockUser') ?>",
-        type: "POST",
-        data: {toUser: toUser, fromUser: fromUser},
-        success: function(response) {
-            if (response == "1") {
-                location.reload();
-            } else {
-                $('#error').text(response);
+    var fromUser = <?php if(!empty(@$_SESSION['afrebay']['userId'])) { echo $_SESSION['afrebay']['userId']; } else { echo "NULL"; } ?>;
+    if(fromUser != "NULL") {
+        $.ajax({
+            url: "<?= base_url('user/dashboard/muteUser') ?>",
+            type: "POST",
+            data: {toUser: toUser, fromUser: fromUser},
+            success: function(response) {
+                if (response == "1") {
+                    location.reload();
+                } else {
+                    $('#error').text(response);
+                }
             }
-        }
-    })
+        })
+    }
 }
-function unblockUser(userid) {
+function unmuteUser(userid) {
     var toUser = userid;
-    var fromUser = <?php echo @$_SESSION['afrebay']['userId']?>;
-    $.ajax({
-        url: "<?= base_url('user/dashboard/unblockUser') ?>",
-        type: "POST",
-        data: {toUser: toUser, fromUser: fromUser},
-        success: function(response) {
-            if (response == "1") {
-                location.reload();
-            } else {
-                $('#error').text(response);
+    var fromUser = <?php if(!empty(@$_SESSION['afrebay']['userId'])) { echo $_SESSION['afrebay']['userId']; } else { echo "NULL"; } ?>;
+    if(fromUser != "NULL") {
+        $.ajax({
+            url: "<?= base_url('user/dashboard/unmuteUser') ?>",
+            type: "POST",
+            data: {toUser: toUser, fromUser: fromUser},
+            success: function(response) {
+                if (response == "1") {
+                    location.reload();
+                } else {
+                    $('#error').text(response);
+                }
             }
-        }
-    })
+        })
+    }
 }
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>

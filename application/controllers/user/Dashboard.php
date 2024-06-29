@@ -1099,4 +1099,31 @@ class Dashboard extends CI_Controller {
             echo "Something went wrong. Please try again.";
         }
     }
+    public function muteUser() {
+        $toUser = $_POST['toUser'];
+        $fromUser = $_POST['fromUser'];
+        $data = array(
+            'to_user_id' => $toUser,
+            'from_user_id' => $fromUser,
+            'status' => '1'
+        );
+        $checkMuteUser = $this->db->query("SELECT * FROM mute_user WHERE to_user_id = '".$toUser."' AND from_user_id = '".$fromUser."'")->row();
+        if(!empty($checkMuteUser)) {
+            $this->db->query("UPDATE mute_user SET status = '1' WHERE to_user_id = '".$toUser."' AND from_user_id = '".$fromUser."'");
+        } else {
+            $this->Crud_model->SaveData('mute_user', $data);
+        }
+        echo "1";
+    }
+    public function unmuteUser() {
+        $toUser = $_POST['toUser'];
+        $fromUser = $_POST['fromUser'];
+        $data = array(
+            'to_user_id' => $toUser,
+            'from_user_id' => $fromUser,
+            'status' => '0'
+        );
+        $this->db->query("UPDATE mute_user SET status = '0' WHERE to_user_id = '".$toUser."' AND from_user_id = '".$fromUser."'");
+        echo "1";
+    }
 }
