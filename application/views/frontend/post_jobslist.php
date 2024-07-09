@@ -45,10 +45,10 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
     </div>
 </section>
 
-<section class="max_height">
+<section class="max_height innerheight">
     <div class="block no-padding Employees_Search_List">
         <div class="container">
-            <div class="row no-gape">
+            <div class="row">
                 <aside class="col-lg-3 column border-right Employees_Search_Panel">
                     <div class="Employees_Search_Panel_Data">
                         <form method="post" id="filter_form">
@@ -177,7 +177,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                 <div class="col-lg-9 column Employees_Search_Result">
                     <div class="padding-left">
                         <div class="emply-resume-sec">
-                            <div id="post_list">
+                            <div id="post_list" class="row">
                             </div>
                             <div align="center" id="pagination_link"></div>
                         </div>

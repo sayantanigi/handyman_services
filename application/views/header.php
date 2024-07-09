@@ -36,8 +36,7 @@ $get_category=$this->Crud_model->GetData('category','',"status='Active'");
     <link rel="stylesheet" type="text/css" href="<?=base_url(); ?>assets/css/bootstrap-grid.css" />
     <link rel="stylesheet" href="<?=base_url(); ?>assets/css/icons.css" />
     <link rel="stylesheet" href="<?=base_url(); ?>assets/css/animate.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?=base_url(); ?>assets/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="<?=base_url(); ?>assets/css/responsive.css" />
+
     <link rel="stylesheet" type="text/css" href="<?=base_url(); ?>assets/css/chosen.css" />
     <link rel="stylesheet" type="text/css" href="<?=base_url(); ?>assets/css/colors/colors.css" />
     <link rel="stylesheet" type="text/css" href="<?=base_url(); ?>assets/css/bootstrap.css" />
@@ -48,6 +47,9 @@ $get_category=$this->Crud_model->GetData('category','',"status='Active'");
     <link rel="stylesheet" type="text/css" href="<?=base_url(); ?>assets/rating_css.css" />
     <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css'>
+    <link rel="stylesheet" type="text/css" href="<?=base_url(); ?>assets/css/font-awesome-pro.css" />
+     <link rel="stylesheet" type="text/css" href="<?=base_url(); ?>assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="<?=base_url(); ?>assets/css/responsive.css" />
     <?php if(empty($this->uri->segment(1))) { ?>
     <meta property="og:title" content="><?php echo @$title?>" />
     <meta property="og:url" content="<?php echo base_url();?>" />
@@ -61,7 +63,7 @@ $get_category=$this->Crud_model->GetData('category','',"status='Active'");
     #completeSub {position: relative;display: inline-block;text-decoration: none;}
     #completeSub #completeSubtext {visibility: hidden;width: max-content;background-color: white;color: #000;text-align: center;border-radius: 6px;padding: 5px 10px;position: absolute;z-index: 1;top: 50px;font-size: 13px;right: 0;}
     #completeSub:hover #completeSubtext {visibility: visible;}
-    .User_Dashboard_Menu .Profile_dashboard_btn{width: 235px !important;}
+
     #frame #sidepanel #profile .wrap p {font-size: 14px !important;}
     @media screen and (max-width: 425px) {
         .btn-extars {
@@ -149,6 +151,7 @@ $(function () {
                         <?php } ?>
                     </ul>
                 </div>
+
                 <div class="responsivemenu" style="padding-left: 30px; padding-right: 30px;">
                     <ul>
                         <li class="account-btns">
@@ -164,29 +167,83 @@ $(function () {
                 </div>
             </div>
         </div>
-        <header class="stick-top forsticky ">
+        <header class="stick-top forsticky bg-white">
             <div class="menu-sec">
-                <div class="container Header_Menu_Nav">
-                    <div class="logo">
-                        <a href="<?=base_url(); ?>" title="">
-                            <img class="hidesticky" src="<?=base_url(); ?>uploads/logo/<?= $get_setting->logo?>" alt="" />
-                            <img class="showsticky" src="<?=base_url(); ?>uploads/logo/<?= $get_setting->logo?>" alt="" />
-                            <input type="hidden" class="hidden-logo" value="<?=base_url(); ?>uploads/logo/<?= $get_setting->logo?>">
-                        </a>
+                <div class="container-fluid Header_Menu_Nav">
+                    <div class="d-flex align-items-center">
+                        <div class="logo mr-5">
+                            <a href="<?=base_url(); ?>" title="">
+                                <img class="hidesticky" src="<?=base_url(); ?>uploads/logo/<?= $get_setting->logo?>" alt="" />
+                                <img class="showsticky" src="<?=base_url(); ?>uploads/logo/<?= $get_setting->logo?>" alt="" />
+                                <input type="hidden" class="hidden-logo" value="<?=base_url(); ?>uploads/logo/<?= $get_setting->logo?>">
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <form method="post" action="<?= base_url('search-work') ?>">
+                                <div style="align-items: center !important; flex-direction: column;">
+                                    <div class="d-flex position-relative">
+                                        <div class="flex-fill w-100">
+                                            <div class="job-field frmSearch">
+                                                <input type="text" name="category_id" id="search-box" placeholder="Search " value="" />
+                                            </div>
+                                            <div id="suggesstion-box"></div>
+                                        </div>
+                                        <div class="topsrchBtn">
+                                            <button type="submit"><i class="la la-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <nav>
+                                <ul>
+                                    <?php
+                                    $uri = "$_SERVER[REQUEST_URI]";
+                                    $uri = explode('/', $uri);
+                                    $uri = $uri[2];
+                                    ?>
+                                    <li class="">
+                                        <a href="<?= base_url('/')?>" title="" class="<?php if($uri == '') { echo "active"; } else {echo "";}?>"><i class="fa-solid fa-envelope-open"></i><?php if($uri == '') { echo " Home"; } else {echo "";}?></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="<?= base_url('findwork')?>" title="" class="<?php if($uri == 'findwork') { echo "active"; } else {echo "";}?>"><i class="fa-solid fa-briefcase"></i><?php if($uri == 'findwork') { echo " Find Work"; } else {echo "";}?></a>
+                                    </li>
+                                    <li class="">
+                                        <a href="<?= base_url('professionals')?>" title="" class="<?php if($uri == 'professionals') { echo "active"; } else {echo "";}?>"><i class="fa-solid fa-user-group"></i><?php if($uri == 'professionals') { echo " Professionals"; } else {echo "";}?></a>
+                                    </li>
+                                    <li class="">
+                                    <?php
+                                    if($_SESSION['afrebay']['userType'] == '2') {
+                                        if($get_setting->required_subscription == '1') {
+                                            $get_sub_data = $this->db->query("SELECT * FROM employer_subscription WHERE employer_id='".$_SESSION['afrebay']['userId']."' AND (status = '1' OR status = '2')")->result_array();
+                                            if(empty($get_sub_data)) { ?>
+                                            <a href="javascript:void(0)" title="" id="completeSub"><i class="fa-solid fa-comment-dots"></i><span id="completeSubtext">Please activate a subscription package and complete your profile to proceed with the post job activities.</span></a>
+                                            <?php } else if(!empty($get_sub_data)) {
+                                                $profile_check = $this->db->query("SELECT `profilePic`, `firstname`, `lastname`, `email`, `address`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
+                                                if(empty($profile_check[0]['firstname']) || empty($profile_check[0]['lastname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address'])  || empty($profile_check[0]['short_bio'])) { ?>
+                                                    <a href="javascript:void(0)" title="" id="completeSub"><i class="fa-solid fa-comment-dots"></i><span id="completeSubtext">Please complete your profile to proceed with the post job activities.</span></a>
+                                                    <?php } else { ?>
+                                                    <a href="<?= base_url('postwork')?>" title=""><i class="fa-solid fa-comment-dots"></i></a>
+                                                <?php } } else { ?>
+                                                <a href="<?= base_url('login')?>" title=""><i class="fa-solid fa-comment-dots"></i></a>
+                                            <?php
+                                            } } else {
+                                            $profile_check = $this->db->query("SELECT `profilePic`, `firstname`, `lastname`, `email`, `address`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
+                                            if(empty($profile_check[0]['firstname']) || empty($profile_check[0]['lastname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address'])  || empty($profile_check[0]['short_bio'])) { ?>
+                                                <a href="javascript:void(0)" title=""><i class="fa-solid fa-comment-dots"></i><span id="completeSubtext">Please complete your profile to proceed with the post job activities.</span></a>
+                                            <?php
+                                            } else { ?>
+                                                <a href="<?= base_url('postwork')?>" title=""><i class="fa-solid fa-comment-dots"></i></a>
+                                            <?php }
+                                        }
+                                    } else if($_SESSION['afrebay']['userType'] == ''){ ?>
+                                    <a href="<?= base_url('login')?>" title=""><i class="fa-solid fa-comment-dots"></i></a>
+                                    <?php } ?>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
-                    <nav>
-                        <ul>
-                            <li class="">
-                                <a href="<?= base_url('customer')?>" title="">Customer</a>
-                            </li>
-                            <li class="">
-                                <a href="<?= base_url('professionals')?>" title="">Professionals</a>
-                            </li>
-                            <li class="">
-                                <a href="<?= base_url('findwork')?>" title="">Find Work</a>
-                            </li>
-                        </ul>
-                    </nav>
+
                     <div class="btn-extars">
                         <?php
                         if(!empty($_SESSION['afrebay']['userId'])) {
@@ -219,7 +276,10 @@ $(function () {
                         <ul class="account-btns">
                             <?php if(!empty($_SESSION['afrebay']['userId'])) { ?>
                                 <li class="menu-item-has-children User_Dashboard_Menu">
-                                    <a class="Profile_dashboard_btn" href="javascript:void(0)" title="">Hi,
+                                    <a class="Profile_dashboard_btn" href="javascript:void(0)" title="">
+
+                                        <img src="https://techg.igiapp.com/handymanservices/uploads/users/2875_dafc3addfd37737b93fa9ecce064f73d.jpg" class="headprofileimg">
+
                                         <?php if(!empty($_SESSION['afrebay']['firstname'])) {
                                             $fullname = $_SESSION['afrebay']['firstname']." ".$_SESSION['afrebay']['lastname'];
                                         } else {
@@ -300,6 +360,9 @@ $(function () {
                                     <a href="<?=base_url(); ?>login"><i class="la la-external-link-square"></i> Login</a>
                                 </li>
                             <?php } ?>
+                            <li><a href="#" class="text-primary">
+                                <span class="switchuser"></span> Switch</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ if(!empty($_SESSION['afrebay']['userId'])) {
     $get_video=$this->Crud_model->GetData('friends_video','',"subscription_id='".$userid."' and status='0'",'','(video_id)desc','','1');
 }
 ?>
-<footer>
+<!-- <footer>
     <div class="blocknwe">
         <div class="container">
             <div class="row">
@@ -80,8 +80,7 @@ if(!empty($_SESSION['afrebay']['userId'])) {
                         <a href="<?php echo $get_setting->fb_link; ?>" title="" target="_blank"><i class="fa fa-facebook"></i></a>
                         <a href="<?php echo $get_setting->tw_link; ?>" title="" target="_blank"><i class="fa fa-twitter"></i></a>
                         <a href="<?php echo $get_setting->lnkd_link; ?>" title="" target="_blank"><i class="fa fa-linkedin"></i></a>
-                        <!-- <a href="<?php echo $get_setting->ptrs_link?>" title="" target="_blank"><i class="fa fa-pinterest"></i></a>
-                        <a href="<?php echo $get_setting->baha_link?>" title="" target="_blank"><i class="fa fa-behance"></i></a> -->
+                        
                     </div>
                 </div>
             </div>
@@ -92,7 +91,7 @@ if(!empty($_SESSION['afrebay']['userId'])) {
         <span>Copyright © <?php echo date('Y')?> Handyman Services. All rights reserved.</span>
         <a href="#scrollup" class="scrollup" title=""><i class="la la-arrow-up"></i></a>
     </div>
-</footer>
+</footer> -->
 <input type="hidden" name="base_url" id="base_url" value="<?= base_url()?>">
 <style>
 <?php $seg2 = $this->uri->segment(1);
@@ -130,14 +129,15 @@ if(!empty($_SESSION['afrebay']['userId'])){
 <!--  end modal -->
 <script src="<?= base_url('assets/js/jquery.min.js')?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/modernizr.js')?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/js/script.js')?>" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="<?= base_url('assets/js/bootstrap.min.js')?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/js/script.js')?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/wow.min.js')?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/slick.min.js')?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/parallax.js')?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/select-chosen.js')?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/maps2.js')?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/js/bootstrap-datepicker.js')?>" type="text/javascript"></script>
+ <script src="<?= base_url('assets/js/bootstrap-datepicker.js')?>" type="text/javascript"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtg6oeRPEkRL9_CE-us3QdvXjupbgG14A&libraries=places&callback=initMap" async defer></script>
 <script type="text/javascript" src="<?= base_url('assets/custom_js/validation.js')?>"></script>
 <script src="<?= base_url();?>dist/assets/notify/notify.min.js"></script>
@@ -222,6 +222,6 @@ function loginAlert() {
 	    content: "Already Logged In. Please logout for new registration",
 	});
 }
-</script>
+</script> 
 </body>
 </html>

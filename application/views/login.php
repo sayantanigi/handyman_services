@@ -12,34 +12,20 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
 #forgotpass_message {text-align: center; margin-top: 10px;}
 .bottom-line .scrollup {display: none;}
 </style>
-<section class="overlape">
-    <div class="block no-padding">
-        <div data-velocity="-.1" style="background: url('<?= $banner_img ?>') repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible no-parallax"></div>
-        <!-- PARALLAX BACKGROUND IMAGE -->
-        <div class="container fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="inner-header">
-                        <h3>Login</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 <section class="max_height">
     <div class="block remove-bottom Sign_In">
         <div class="container">
             <div class="row justify-content-md-center">
-                <div class="col-lg-10">
-                    <div class="account-popup-area signin-popup-box static">
-                        <div class="account-popup">
+                <div class="col-lg-5">
+                    <div>
+                        <div class="logForm">
                             <div class="row m-0">
-                                <div class="col-lg-4 col-md-12 col-sm-12 SignIn_Left">
-                                    <h3>Login</h3>
-                                    <span>Get started by signing in using your existing accounts.</span>
+                                <div class="col-lg-12 col-md-12 col-sm-12 text-center mb-3">
+                                    <h3 class="h3 font-weight-bold text-dark">Welcome Back</h3>
+                                    <span>Enter your email address / username and password</span>
                                 </div>
-                                <div class="col-lg-8 col-md-12 col-sm-12 SignIn_Right">
+                                <div class="col-lg-12 col-md-12 col-sm-12 SignIn_Right">
                                     <div id="register-messages" class="text-invalid f-20">
                                         <span class="text-invalid f-15" style="text-align: center;">
                                             <?php if($this->session->flashdata('message')) {
@@ -57,42 +43,49 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                     </div>
                                     <?php } ?>
                                     <form action="<?=base_url(); ?>validate" method="post">
-                                        <div class="row m-0">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
                                                 <div class="cfield">
-                                                    <label for="" class="form-label">Email Address</label>
                                                     <div class="cfield_Input">
-                                                        <input type="text" placeholder="Email Address" name="email" />
-                                                        <i class="la la-user"></i>
+                                                        <input type="text" placeholder="Email address or username" name="email" class="form-control" />
+                                                        <span class="iconkey">
+                                                            <i class="la la-user"></i>
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div class="error text-left"><?php echo form_error('email'); ?></div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
                                                 <div class="cfield">
-                                                    <label for="" class="form-label">Password</label>
                                                     <div class="cfield_Input">
-                                                        <input type="password" placeholder="********" name="password" id="login_pass"/>
-                                                        <i class="la la-key" onclick="checkPass()"></i>
+                                                        <input type="password" placeholder="Password" name="password" id="login_pass" class="form-control"/>
+                                                        <span class="iconkey">
+                                                            <i class="la la-key" onclick="checkPass()"></i>
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div class="error text-left"><?php echo form_error('password'); ?></div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 SignIn_Remember">
-                                                <p class="remember-label"><input type="checkbox" name="cb" id="cb1" /><label for="cb1">Remember me</label></p>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 rememberme">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <p class="remember-label m-0"><input type="checkbox" name="cb" id="cb1" /><label for="cb1">Remember me</label></p>
+                                                    <div>
+                                                        <a href="<?= base_url('forgot-password')?>" title="" class="text-primary font-weight-bold">Forgot Password?</a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 SignIn_Remember">
-                                                <a href="<?= base_url('forgot-password')?>" title="">Forgot Password?</a>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 mb-3 SignIn_Remember text-center">
+                                                
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 SignIn_Btn">
-                                                <button type="submit" class="btn btn-info">LOG IN</button>
+                                                <button type="submit" class="btn logbtn w-100">Log In</button>
                                             </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12 d-none">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
                                                 <div class="extra-login">
                                                     <span>OR</span>
-                                                    <div class="login-social">
-                                                        <a class="fb-login" href="<?= base_url('Facebook_login')?>" title=""><i class="fa fa-facebook"></i></a>
-                                                        <a class="tw-login" href="#" title=""><i class="fa fa-google"></i></a>
+                                                    <div class="mt-3">
+                                                        <a class="socialBtn" href="#" title=""><img src="<?php base_url(); ?>assets/images/google-icon.png"> Continue with Google</a>
+                                                        <a class="socialBtn" href="#" title=""><img src="<?php base_url(); ?>assets/images/apple-icon.png"> Continue with Apple</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -100,6 +93,9 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                     </form>
                                 </div>
                             </div>
+                        </div>
+                        <div class="logForm text-center mt-3">
+                            <h6 class="mb-0 font-weight-bold text-dark">New here? <a href="<?= base_url('signup')?>" class="text-primary">Join 411web3</a></h6>
                         </div>
                     </div>
                 </div>

@@ -9,38 +9,33 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
 #register-messages-notemail {text-align: center; margin-top: 25px; display: none;}
 #err-messages {text-align: center; margin-top: 10px; display: none;}
 </style>
-<section class="overlape">
-    <div class="block no-padding">
-        <div data-velocity="-.1" style="background: url('<?= $banner_img ?>') repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible no-parallax"></div>
-        <div class="container fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="inner-header">
-                        <h3>Register</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<section>
+     <video autoplay muted loop class="background-video">
+        <source src="<?php base_url(); ?>assets/video/backg-video.mp4" type="video/mp4">
+    </video>
 </section>
 <section class="max_height">
     <div class="block remove-bottom Sign_Up">
         <div class="container">
-            <div class="row justify-content-md-center">
-                <div class="col-lg-10">
-                    <div class="account-popup-area signup-popup-box static">
-                        <div class="account-popup">
-                            <div class="row m-0">
-                                <div class="col-lg-4 col-md-12 col-sm-12 SignUp_Left">
-                                    <h3>Sign Up</h3>
-                                    <span>Let's create your account! Choose to sign up as either a Professional or a Customer.</span>
-                                    <div class="select-user">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-lg-6 regcontent">
+                    <h1 class="mb-3 text-dark">Craft Your Success <br> Join <span class="text-primary"> 411web3 </span> Network</h1>
+                    <p class="text-dark">Transform Your Handyman Career: Post Your Work, Discover Job
+Opportunities, and Connect with Skilled Professionals</p>
+                </div>
+                <div class="col-lg-5">
+                    <div class="logForm">
+                        <div >
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h3 class="h3 font-weight-bold text-dark text-center">Start Your <br> Handyman Journey</h3>
+                                    <!-- div class="select-user mb-3">
                                         <span class="user-tab active" user_type="1" onclick="get_value(1)">Professional</span>
                                         <span class="user-tab" user_type="2" onclick="get_value(2)">Customer</span>
                                     </div>
-                                    <div class="error" id="err_usertype"></div>
+                                    <div class="error" id="err_usertype"></div> -->
                                 </div>
-                                <div class="col-lg-8 col-md-12 col-sm-12 SignUp_Right">
+                                <div class="col-lg-12">
                                     <div id="register-messages" class="text-success-msg f-20">
                                         <h4>Successful Registration</h4>
                                         <p style="color: #28a745;"></p>
@@ -50,90 +45,110 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                                         <p style="color: red;"></p>
                                     </div>
                                     <form id="signUp_form" action="#" method="post">
+
                                         <div class="row m-0">
-                                            <div class="col-lg-6 col-md-6 col-sm-6 first_name">
+                                            <!-- <div class="col-lg-6 col-md-6 col-sm-6 first_name">
                                                 <div class="cfield cfield_top">
-                                                    <label for="" class="form-label">First Name <span style="color:red">*</span></label>
                                                     <div class="cfield_Input">
-                                                        <input type="text" placeholder="First Name" name="first_name" id="first_name" onkeypress="only_alphabets(event)"/>
-                                                        <i class="la la-user"></i>
+                                                        <input type="text" placeholder="First Name" name="first_name" id="first_name" onkeypress="only_alphabets(event)" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="error text-left" id="err_firstname"></div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6 last_name">
                                                 <div class="cfield cfield_top">
-                                                    <label for="" class="form-label">Last Name <span style="color:red">*</span></label>
                                                     <div class="cfield_Input">
-                                                        <input type="text" placeholder="Last Name" name="last_name" id="last_name" onkeypress="only_alphabets(event)"/>
-                                                        <i class="la la-user"></i>
+                                                        <input type="text" placeholder="Last Name" name="last_name" id="last_name" onkeypress="only_alphabets(event)" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="error text-left" id="err_lastname"></div>
                                             </div>
-                                            <div class="col-lg-12 col-md-6 col-sm-6 company_name">
+                                            <div class="col-lg-12 company_name">
                                                 <div class="cfield cfield_top">
-                                                    <label for="" class="form-label">Company Name</label>
                                                     <div class="cfield_Input">
-                                                        <input type="text" placeholder="Company Name" name="company_name" id="company_name"/>
-                                                        <i class="la la-home"></i>
+                                                        <input type="text" placeholder="Company Name" name="company_name" id="company_name" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="error text-left" id="err_companyname"></div>
+                                            </div> -->
+                                            <div class="col-lg-12">
+                                                <div class="extra-login reg mb-3">
+                                                    
+                                                    <div class="mb-3">
+                                                        <a class="socialBtn" href="#" title=""><img src="<?php base_url(); ?>assets/images/google-icon.png"> Continue with Google</a>
+                                                        <a class="socialBtn" href="#" title=""><img src="<?php base_url(); ?>assets/images/apple-icon.png"> Continue with Apple</a>
+                                                    </div>
+                                                    <span>OR</span>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 email">
+                                            <div class="col-lg-12 email">
                                                 <div class="cfield cfield_top">
-                                                    <label for="" class="form-label">Email Address <span style="color:red">*</span></label>
                                                     <div class="cfield_Input">
-                                                        <input type="text" placeholder="Email Address" name="email" id="email" />
-                                                        <i class="la la-envelope-o"></i>
+                                                        <input type="text" placeholder="Email Address" name="email" id="email" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="error text-left" id="err_email"></div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 addrss">
+                                            <!-- div class="col-lg-12 addrss">
                                                 <div class="cfield cfield_top">
-                                                    <label for="" class="form-label">Legal Address <span style="color:red;">*</span></label>
                                                     <div class="cfield_Input">
-                                                        <input type="text" class="form-control" name="address" id="location" placeholder="Legal Address" autocomplete="off" required/>
+                                                        <input type="text" class="form-control" name="address" id="location" placeholder="Legal Address" autocomplete="off" required class="form-control" />
                                                         <input type="hidden" name="latitude" id="search_lat" value="">
                                                         <input type="hidden" name="longitude" id="search_lon" value="">
-                                                        <i class="la la-address-card"></i>
                                                     </div>
                                                 </div>
                                                 <div class="error text-left" id="err_address"></div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 pass">
+                                            </div> -->
+                                            <div class="col-lg-12 col-md-12 col-sm-12 pass">
                                                 <div class="cfield cfield_top">
-                                                    <label for="" class="form-label">Password <span style="color:red">*</span></label>
                                                     <div class="cfield_Input">
-                                                        <input type="password" placeholder="********" name="password" id="password" />
-                                                        <i class="la la-key" onclick="checkPass()"></i>
+                                                        <input type="password" placeholder="Password" name="password" id="password" class="form-control" />
+                                                        <span class="iconkey"><i class="la la-key" onclick="checkPass()"></i></span>
                                                     </div>
                                                 </div>
                                                 <div class="error text-left" id="err_password"></div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 c_pass">
+                                            <div class="col-lg-12 email mb-3">
                                                 <div class="cfield cfield_top">
-                                                    <label for="" class="form-label">Confirm Password <span style="color:red">*</span></label>
                                                     <div class="cfield_Input">
-                                                        <input type="password" placeholder="********" name="conf_password" id="conf_password" />
-                                                        <i class="la la-key" onclick="checkConfPass()"></i>
+                                                        <select class="form-control form-select">
+                                                            <option>Choose account type</option>
+                                                            <option>Customer</option>
+                                                            <option>Business Provider</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="error text-left" id="err_email"></div>
+                                            </div>
+                                            <!-- <div class="col-lg-6 col-md-6 col-sm-6 c_pass">
+                                                <div class="cfield cfield_top">
+                                                    <div class="cfield_Input">
+                                                        <input type="password" placeholder="Confirm Password" name="conf_password" id="conf_password" class="form-control" />
+                                                       <span class="iconkey"> <i class="la la-key" onclick="checkConfPass()"></i></span>
                                                     </div>
                                                 </div>
                                                 <div class="error text-left" id="err_confpassword"></div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-lg-12 col-md-6 col-sm-6" id="err_check_pass" style="tex-align:center;"></div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 SignUp_Btn">
                                                 <input type="hidden" name="user_type" id="user_type">
-                                                <button type="button" class="btn btn-info" id="rSignUp" onclick="return btn_register();">Sign up</button>
+                                                <button type="button" class="btn logbtn w-100" id="rSignUp" onclick="return btn_register();">Continue</button>
                                             </div>
+                                            <div class="col-lg-12 text-center mt-3">
+                                                <a href="#" class="text-primary font-weight-bold">Register as a Guest</a>
+                                            </div>
+                                            <div class="col-lg-12 text-center mt-3">
+                                                <small>By signing up, you agree to our <a href="#" class="text-primary">Privacy Policy</a>, <a href="#" class="text-primary">Cookie Policy</a> and <a href="#" class="text-primary">Member Agreement</a>.</small>
+                                            </div>
+                                            
                                         </div>
+
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
