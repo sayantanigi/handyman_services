@@ -163,7 +163,7 @@ class Users_model extends My_Model
                 } else {
                     $desc = $row['short_bio'];
                 }
-                $output .= '<div class="emply-resume-list col-12"> <div class="emply-resume-info"> <h3><a href="javascript:void(0)" title="">' . $name . '</a></h3> <span>' . $row['category_name'] . '</span> <p><i class="la la-map-marker"></i>' . $row['address'] . '</p> <p>' . strip_tags($desc) . '</p> </div> <div class="shortlists" style="width:50px;"> <a href="' . base_url('professionals_detail/' . base64_encode($row['userId'])) . '" title="">View Profile<i class="la la-plus"></i></a> </div> </div>';
+                $output .= '<div class="emply-resume-list col-12"> <div class="emply-resume-info"> <h3><a href="javascript:void(0)" title="">' . $name . '</a></h3> <span>' . $row['category_name'] . '</span> <p><i class="la la-map-marker"></i>' . $row['address'] . '</p> <p>' . strip_tags($desc) . '</p> </div> <div class="shortlists mt-3 w-100 text-center"> <a href="' . base_url('professionals_detail/' . base64_encode($row['userId'])) . '" title="">View Profile<i class="la la-plus"></i></a> </div> </div>';
             }
         } else {
             $output .= ' <div class="emply-resume-list">
@@ -281,7 +281,7 @@ class Users_model extends My_Model
                         <p style="line-height: 18px; margin-bottom: 10px;">'.$desc.'</p>
                         <p>Job Posts : '.count($get_post).'</p>
                     </div>
-                    <div class="shortlists" style="width:50px;">
+                    <div class="shortlists mt-3 w-100 text-center" >
                         <a href="'.base_url('customer_detail/'.base64_encode($row['userId'])).'" title="">View Profile<i class="la la-plus"></i></a>
                     </div>
                     </div>
@@ -329,15 +329,15 @@ class Users_model extends My_Model
                     $background_pic = '<img src="'.base_url('uploads/no_bimage.png').'" alt="" />';
                 }
                 if (!empty($_SESSION["afrebay"]["userId"])) {
-                    $viewProfileLink = '<div class="shortlists" style="width:50px;"><a href="' . base_url('professionals_detail/' . base64_encode($row['userId'])) . '" title="">View Profile<i class="la la-plus"></i></a></div>';
+                    $viewProfileLink = '<div class="shortlists mt-3 w-100 text-center"><a href="' . base_url('professionals_detail/' . base64_encode($row['userId'])) . '" title="">View Profile<i class="la la-plus"></i></a></div>';
                 } else {
                     $_SESSION['url'] = base_url('professionals_detail/' . base64_encode($row['userId']));
-                    $viewProfileLink = '<div class="shortlists" style="width:50px;"><input type="hidden" value="' . $_SESSION['url'] . '"><a href="javascript:void(0)" title="" onclick="viewProfile()">View Profile<i class="la la-plus"></i></a></div>';
+                    $viewProfileLink = '<div class="shortlists mt-3 w-100 text-center"><input type="hidden" value="' . $_SESSION['url'] . '"><a href="javascript:void(0)" title="" onclick="viewProfile()">View Profile<i class="la la-plus"></i></a></div>';
                 }
                 $output .= '
                 <div class="emply-resume-list col-lg-6 col-md-6 col-sm-12">
                     <div class="DataContainer">'.$profile_pic.'<div class="emply-resume-thumb">'.$background_pic.'</div>
-                    <div class="emply-resume-info">
+                    <div class="emply-resume-info text-center">
                         <h3><a href="javascript:void(0)" title="" style="margin-bottom: 10px;">'.$name.'</a></h3>
                         <!-- <p><i class="la la-map-marker"></i>'.$row['address'].'</p>-->
                         <p style=" line-height: 18px; margin-bottom: 10px; ">'.$desc.'</p>

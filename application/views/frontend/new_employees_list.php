@@ -149,7 +149,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                 <div class="col-lg-9 column Employees_Search_Result">
                     <div class="padding-left">
                         <div class="emply-resume-sec">
-                            <div id="post_list"></div>
+                            <div id="post_list" class="row px-3"></div>
                         </div>
                         <div id="pagination_link" style="float:right;">
                         </div>

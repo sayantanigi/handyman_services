@@ -65,8 +65,10 @@
                                     </div>
                                     <div class="form-group"><span id="matchPass1"></span></div>
                                     <div class="form-group">
-                                        <div class="col-xs-12 aksek">
-                                            <button class="post-job-btn" type="button" onclick="return change_password()"><i class="glyphicon glyphicon-ok-sign"></i>Submit</button>
+                                        <div class="row">
+                                            <div class="col-lg-12 ">
+                                                <button class="post-job-btn" type="button" onclick="return change_password()"><i class="glyphicon glyphicon-ok-sign"></i>Submit</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

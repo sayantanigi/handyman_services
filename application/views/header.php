@@ -100,11 +100,11 @@ $(function () {
                     <a href="<?=base_url(); ?>" title=""><img src="<?=base_url(); ?>uploads/logo/<?= $get_setting->flogo?>" alt="" /></a>
                 </div>
                 <div class="menu-resaction">
-                    <div class="res-openmenu" style="color: #000;">Menu</div>
-                    <div class="res-closemenu" style="color: #000;">Close</div>
+                    <div class="res-openmenu" style="color: #000;"><i class="fa-sharp fa-light fa-bars"></i></div>
+                    <div class="res-closemenu" style="color: #000;"><i class="fa-sharp fa-regular fa-xmark"></i></div>
                 </div>
             </div>
-            <div class="responsive-opensec" style="background: #f67a49; padding: 0;">
+            <div class="responsive-opensec" style="background: #00458c; padding: 0;">
                 <div class="btn-extars" style="display: flex; align-items: center; justify-content: space-between; border-color: #fff; padding: 20px 30px;">
                 <?php
                 if(!empty($_SESSION['afrebay']['userId'])) {

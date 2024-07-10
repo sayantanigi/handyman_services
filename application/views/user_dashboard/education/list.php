@@ -52,11 +52,11 @@
 						 		<table class="custom-table">
 								  	<tr>
 								  		<td class="heading">
-											<?= ucfirst($row->education); ?> 
+											<i class="fa-regular fa-user-graduate mr-2"></i> <?= ucfirst($row->education); ?> 
 											<?php if(!empty($row->department)) { ?>
 											<div>in</div> <?= $row->department; ?></td>
 											<?php } ?>
-								  		<td class="heading"><?= $row->college_name; ?></td>
+								  		<td class="heading"><i class="fa-regular fa-building-columns mr-2"></i> <?= $row->college_name; ?></td>
 									  	<td class="btn-option">
 									   		<a href="<?= base_url('update-education/'.base64_encode($row->id));?>"><i class="fa fa-edit" aria-hidden="true"></i></a>
 									   		<!-- <a href="<?= base_url('user/Dashboard/delete_education/'.$row->id);?>" onclick="if(confirm('Are you sure you want to Delete?')) commentDelete(1); return false"><i class="fa fa-trash-o" aria-hidden="true"></i></a> -->
@@ -64,7 +64,7 @@
 								  		</td>
 								  	</tr>
 								  	<tr>
-								  		<td colspan="2" class="year"><?= $row->passing_of_year; ?></td>
+								  		<td colspan="2" class="year"><i class="fa-regular fa-calendar-days mr-2"></i> <?= $row->passing_of_year; ?></td>
 								  	</tr>
 									<tr>
 										<td colspan="2" class="desc"><?= strip_tags($row->description); ?></td>

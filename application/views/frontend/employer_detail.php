@@ -4,7 +4,7 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
 } else {
     $banner_img=base_url("assets/images/resource/mslider1.jpg");
 } ?>
-<section style="width: 100%; height: 400px;">
+<section style="width: 100%; height: 200px;">
     <div style="width: 100%; height: 100%; position: relative;">
         <div style="background: #c34e102b; position: absolute; z-index: 1; width: 100%; height: 100%;"></div>
         <img style="width: 100%; height: 100%; object-fit: cover;" src="<?= $banner_img ?>" />
@@ -56,24 +56,24 @@ if (!empty($userdata->backgroundPic) && file_exists('uploads/users/background/' 
                                                 $checkMuteUser = $this->db->query("SELECT * FROM mute_user WHERE to_user_id = '".$userdata->userId."' AND from_user_id = '".$_SESSION['afrebay']['userId']."'")->row();
                                                 //print_r($checkMuteUser);
                                                 if(@$checkMuteUser->status == "1") { ?>
-                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="unmuteUser(<?= $userdata->userId ?>)"><i class="las la-volume-up"></i> Unmute</a>
+                                                <a href="javascript:void(0)" style="background: #2892ff; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="unmuteUser(<?= $userdata->userId ?>)"><i class="las la-volume-up"></i> Unmute</a>
                                                 <?php } else { ?>
-                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="muteUser(<?= $userdata->userId ?>)"><i class="las la-volume-off"></i> Mute</a>
+                                                <a href="javascript:void(0)" style="background: #2892ff; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="muteUser(<?= $userdata->userId ?>)"><i class="las la-volume-off"></i> Mute</a>
                                                 <?php } } else { ?>
-                                                <a href="<?php echo base_url()?>login" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="las la-volume-off"></i> Mute</a>
+                                                <a href="<?php echo base_url()?>login" style="background: #2892ff; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="las la-volume-off"></i> Mute</a>
                                                 <?php } ?>
                                                 <?php if(!empty(@$_SESSION['afrebay']['userId'])) {
                                                 $checkreportUser = $this->db->query("SELECT * FROM report_user WHERE to_user_id = '".$userdata->userId."' AND from_user_id = '".$_SESSION['afrebay']['userId']."'")->row();
                                                 //print_r($checkreportUser);
                                                 if(!empty($checkreportUser)) { ?>
-                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Reported</a>
+                                                <a href="javascript:void(0)" style="background: #2892ff; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Reported</a>
                                                 <?php } else { ?>
-                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="report(<?= $userdata->userId ?>)"><i class="la la-flag"></i> Report</a>
+                                                <a href="javascript:void(0)" style="background: #2892ff; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" onclick="report(<?= $userdata->userId ?>)"><i class="la la-flag"></i> Report</a>
                                                 <?php } } else { ?>
-                                                <a href="<?php echo base_url()?>login" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
+                                                <a href="<?php echo base_url()?>login" style="background: #2892ff; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
                                                 <?php } ?>
 
-                                                <a href="javascript:void(0)" style="background: #fa8558; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" id="shareBtn"><i class="la la-share"></i> Forward </a>
+                                                <a href="javascript:void(0)" style="background: #2892ff; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" id="shareBtn"><i class="la la-share"></i> Forward </a>
                                             </div>
                                             <div id="shareMenu" class="hidden">
                                                 <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('customer_detail/' . base64_encode(@$userdata->userId)) ?>" target="_blank" class="fa fa-facebook"></a>
@@ -431,7 +431,7 @@ function unmuteUser(userid) {
 .CustomBlockDesign .CustomContainer .job-title-sec .job-lctn,
 .CustomBlockDesign .CustomContainer .job-title-sec .job-lctn i {color: #fff !important;}
 .job-style-bx i, .job-style-bx .fav-job i {color: #fff !important;}
-#status-options {width: 210px; border-radius: 6px; z-index: 99; line-height: initial; background: #fff; transition: 0.3s all ease; position: absolute; bottom: 30px; left: 242px; border: 1px solid #eee; padding: 5px; text-align: center; }
+#status-options {width: auto; border-radius: 6px; z-index: 99; line-height: initial; background: #fff; transition: 0.3s all ease; position: absolute; bottom: 30px; left: 242px; border: 1px solid #eee; padding: 5px; text-align: center; }
 .job-thumb .active {opacity: 1; visibility: visible; margin: 75px 0 0 0;}
 .hidden {display: none;}
 #shareMenu {border: 1px solid #ccc; padding: 10px; position: absolute; background-color: white; margin-top: 120px; margin-left: 128px; z-index: 111;}

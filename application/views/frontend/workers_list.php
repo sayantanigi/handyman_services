@@ -57,10 +57,10 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                         </form>
                     </div>
                 </aside>
-                <div class="col-lg-9 column Employees_Search_Result">
+                <div class="col-lg-9 column Employees_Search_Result px-4">
                     <div class="padding-left">
                         <div class="emply-resume-sec">
-                            <div id="worker_list"></div>
+                            <div id="worker_list" class="row"></div>
                             <div align="center" id="pagination_link"></div>
                         </div>
                     </div>

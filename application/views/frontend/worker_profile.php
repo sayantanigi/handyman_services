@@ -4,7 +4,7 @@ if (!empty($user_detail->backgroundPic) && file_exists('uploads/users/background
 } else {
     $banner_img=base_url("assets/images/resource/mslider1.jpg");
 } ?>
-<section style="width: 100%; height: 400px;">
+<section style="width: 100%; height: 200px;">
     <div style="width: 100%; height: 100%; position: relative;">
         <div style="background: #c34e102b; position: absolute; z-index: 1; width: 100%; height: 100%;"></div>
         <img style="width: 100%; height: 100%; object-fit: cover;" src="<?= $banner_img ?>" />

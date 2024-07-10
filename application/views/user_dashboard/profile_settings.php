@@ -34,13 +34,13 @@ if($data_request=='user') {
     $container='container';
 }
 ?>
-<div class="col-md-12 col-sm-12 display-table-cell v-align">
+<div class="col-md-12 col-sm-12 display-table-cell v-align profileTabcontent">
     <div class="user-dashboard Admin_Profile form-design <?php echo $container;  ?> ">
         <form class="form" action="<?php echo base_url('user/Dashboard/update_profile')?>" method="post" id="registrationForm" enctype="multipart/form-data">
         <input type="hidden" name="from_data_request" value="<?=$data_request;?>">
             <div class="row row-sm">
                 <div class="col-xl-12 col-lg-12 col-md-12">
-                    <div class="cardak profile-mobile">
+                    <div class="cardak profile-mobile p-0">
                         <span class="text-success-msg f-20" style="text-align: center;">
                         <?php if($this->session->flashdata('message')) {
                             echo $this->session->flashdata('message');
@@ -146,7 +146,7 @@ if($data_request=='user') {
                                                     <h4>Resume upload <span style="font-weight: 500; font-size: 13px !important;">(Please upload '.doc, .docx, .pdf' only)</span></h4>
                                                 </label>
                                                 <input type="file" class="form-control" name="resume" id="resume" />
-                                                <br>
+                                                
                                                 <?php
                                                 if(!empty($userinfo->resume)){
                                                     if(!file_exists('uploads/users/resume/'.$userinfo->resume)){

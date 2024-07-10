@@ -5,7 +5,12 @@ if(!empty($_SESSION['afrebay']['userId'])) {
     $get_video=$this->Crud_model->GetData('friends_video','',"subscription_id='".$userid."' and status='0'",'','(video_id)desc','','1');
 }
 ?>
-<!-- <footer>
+<?php
+$actual_link = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$actual_link1 = explode('/', $actual_link);
+$url = end($actual_link1);
+?>
+<footer class="<?php if($url == "" || $url == "signup" || $url == "login" ) { echo "d-none"; }?>">
     <div class="blocknwe">
         <div class="container">
             <div class="row">
@@ -80,18 +85,16 @@ if(!empty($_SESSION['afrebay']['userId'])) {
                         <a href="<?php echo $get_setting->fb_link; ?>" title="" target="_blank"><i class="fa fa-facebook"></i></a>
                         <a href="<?php echo $get_setting->tw_link; ?>" title="" target="_blank"><i class="fa fa-twitter"></i></a>
                         <a href="<?php echo $get_setting->lnkd_link; ?>" title="" target="_blank"><i class="fa fa-linkedin"></i></a>
-                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
     <div class="bottom-line">
         <span>Copyright © <?php echo date('Y')?> Handyman Services. All rights reserved.</span>
         <a href="#scrollup" class="scrollup" title=""><i class="la la-arrow-up"></i></a>
     </div>
-</footer> -->
+</footer>
 <input type="hidden" name="base_url" id="base_url" value="<?= base_url()?>">
 <style>
 <?php $seg2 = $this->uri->segment(1);
@@ -222,6 +225,6 @@ function loginAlert() {
 	    content: "Already Logged In. Please logout for new registration",
 	});
 }
-</script> 
+</script>
 </body>
 </html>
