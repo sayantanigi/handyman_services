@@ -108,6 +108,15 @@ Opportunities, and Connect with Skilled Professionals</p>
                                                 </div>
                                                 <div class="error text-left" id="err_password"></div>
                                             </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 c_pass">
+                                                <div class="cfield cfield_top">
+                                                    <div class="cfield_Input">
+                                                        <input type="password" placeholder="Confirm Password" name="conf_password" id="conf_password" class="form-control" />
+                                                       <span class="iconkey"> <i class="la la-key" onclick="checkConfPass()"></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="error text-left" id="err_confpassword"></div>
+                                            </div>
                                             <div class="col-lg-12 email mb-3">
                                                 <div class="cfield cfield_top">
                                                     <div class="cfield_Input">
@@ -120,15 +129,7 @@ Opportunities, and Connect with Skilled Professionals</p>
                                                 </div>
                                                 <div class="error text-left" id="err_email"></div>
                                             </div>
-                                            <!-- <div class="col-lg-6 col-md-6 col-sm-6 c_pass">
-                                                <div class="cfield cfield_top">
-                                                    <div class="cfield_Input">
-                                                        <input type="password" placeholder="Confirm Password" name="conf_password" id="conf_password" class="form-control" />
-                                                       <span class="iconkey"> <i class="la la-key" onclick="checkConfPass()"></i></span>
-                                                    </div>
-                                                </div>
-                                                <div class="error text-left" id="err_confpassword"></div>
-                                            </div> -->
+                                            
                                             <div class="col-lg-12 col-md-6 col-sm-6" id="err_check_pass" style="tex-align:center;"></div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 SignUp_Btn">
                                                 <input type="hidden" name="user_type" id="user_type">

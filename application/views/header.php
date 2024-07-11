@@ -153,7 +153,7 @@ $(function () {
                 </div>
 
                 <div class="responsivemenu" style="padding-left: 30px; padding-right: 30px;">
-                    <ul>
+                    <!-- <ul>
                         <li class="account-btns">
                             <a href="<?= base_url('findwork')?>" title="">Find Work</a>
                         </li>
@@ -163,7 +163,7 @@ $(function () {
                         <li class="account-btns">
                             <a href="<?= base_url('professionals')?>" title="">Professionals</a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </div>
@@ -204,12 +204,12 @@ $(function () {
                                     <li class="">
                                         <a href="<?= base_url('/')?>" title="" class="<?php if($uri == '') { echo "active"; } else {echo "";}?>"><i class="fa-solid fa-envelope-open"></i><?php if($uri == '') { echo " Home"; } else {echo "";}?></a>
                                     </li>
-                                    <li class="">
+                                    <!-- <li class="">
                                         <a href="<?= base_url('findwork')?>" title="" class="<?php if($uri == 'findwork') { echo "active"; } else {echo "";}?>"><i class="fa-solid fa-briefcase"></i><?php if($uri == 'findwork') { echo " Find Work"; } else {echo "";}?></a>
                                     </li>
                                     <li class="">
                                         <a href="<?= base_url('professionals')?>" title="" class="<?php if($uri == 'professionals') { echo "active"; } else {echo "";}?>"><i class="fa-solid fa-user-group"></i><?php if($uri == 'professionals') { echo " Professionals"; } else {echo "";}?></a>
-                                    </li>
+                                    </li> -->
                                     <li class="">
                                     <?php
                                     if($_SESSION['afrebay']['userType'] == '2') {

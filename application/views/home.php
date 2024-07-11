@@ -117,127 +117,49 @@ function get_time_ago($time) {
     </div>
 </div>
 <section>
-    <div class="block Opp_Block py-4">
+    <div class="block Opp_Block pb-4 pt-0">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3 mb-3">
-                    <div class="add-sidebar sticky-top">
-                        <div class="ProfileBlock mb-3">
-                            <div class="profilecover">
-                                <img src="<?= base_url('assets/images/cover.png') ?>">
-                            </div>
-                            <div class="profileImg"><img src="https://techg.igiapp.com/handymanservices/uploads/users/2875_dafc3addfd37737b93fa9ecce064f73d.jpg"></div>
-                            <h2>Toni Müller</h2>
-                            <p class="text-center memberinfo">Member since 2024 . Professional</p>
 
-                            <div class="profileInfo d-flex justify-content-between text-center">
-                                <div>
-                                    <h3>20</h3>
-                                    <h4>Posts</h4>
+                <div class="col-lg-6 order-lg-2">
+                    <div class="fixdPosthead sticky-top">
+                        <div class="createPost mb-3">
+                            <div class="d-flex">
+                                <div class="crpostUser mr-3">
+                                    <img src="https://techg.igiapp.com/handymanservices/uploads/users/2875_dafc3addfd37737b93fa9ecce064f73d.jpg">
                                 </div>
-                                <div>
-                                    <h3>43</h3>
-                                    <h4>Comments</h4>
-                                </div>
-                                <div>
-                                    <h3>25</h3>
-                                    <h4>Likss</h4>
-                                </div>
-                            </div>
-                            <a href="#" class="profileBtn">My Profile</a>
-                        </div>
-                        <div class="activityBox mb-3">
-                            <div class="d-flex justify-content-between mb-3">
-                                <h6 class="font-weight-bold">Activity</h6>
-                                <div><a href="#" class="seeall">See All</a></div>
-                            </div>
-                            <div class="d-flex mb-2 activitylist align-items-center">
-                                <div class="activityUser">
-                                    <a href="#"><img src="https://techg.igiapp.com/handymanservices/uploads/users/440_Image1.jpg"></a>
-                                </div>
-                                <div>
-                                    <h4><a href="#"><span class="font-weight-bold">Christopher</span>  liked your post.</a></h4>
-                                    <p>10 minutes ago</p>
-                                </div>
-                            </div>
-                            <div class="d-flex mb-2 activitylist align-items-center">
-                                <div class="activityUser">
-                                    <a href="#"><img src="https://techg.igiapp.com/handymanservices/uploads/users/2875_dafc3addfd37737b93fa9ecce064f73d.jpg"></a>
-                                </div>
-                                <div>
-                                    <h4><a href="#"><span class="font-weight-bold">Christopher</span>  liked your post.</a></h4>
-                                    <p>10 minutes ago</p>
-                                </div>
-                            </div>
-                            <div class="d-flex mb-2 activitylist align-items-center">
-                                <div class="activityUser">
-                                    <a href="#"><img src="https://techg.igiapp.com/handymanservices/uploads/users/2875_dafc3addfd37737b93fa9ecce064f73d.jpg"></a>
-                                </div>
-                                <div>
-                                    <h4><a href="#"><span class="font-weight-bold">Christopher</span>  liked your post.</a></h4>
-                                    <p>10 minutes ago</p>
-                                </div>
-                            </div>
-                            <div class="d-flex mb-2 activitylist align-items-center">
-                                <div class="activityUser">
-                                    <a href="#"><img src="https://techg.igiapp.com/handymanservices/uploads/users/440_Image1.jpg"></a>
-                                </div>
-                                <div>
-                                    <h4><a href="#"><span class="font-weight-bold">Christopher</span>  liked your post.</a></h4>
-                                    <p>10 minutes ago</p>
-                                </div>
-                            </div>
-                            <div class="d-flex mb-2 activitylist align-items-center">
-                                <div class="activityUser">
-                                    <a href="#"><img src="https://techg.igiapp.com/handymanservices/uploads/users/2875_dafc3addfd37737b93fa9ecce064f73d.jpg"></a>
-                                </div>
-                                <div>
-                                    <h4><a href="#"><span class="font-weight-bold">Christopher</span>  liked your post.</a></h4>
-                                    <p>10 minutes ago</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="createPost mb-3">
-                        <div class="d-flex">
-                            <div class="crpostUser mr-3">
-                                <img src="https://techg.igiapp.com/handymanservices/uploads/users/2875_dafc3addfd37737b93fa9ecce064f73d.jpg">
-                            </div>
-                            <div class="flex-fill w-100">
-                                <div class="postType">
-                                    <textarea name="" class="typePost" placeholder="Post your task"></textarea>
-                                    <button class="submitpost">Post</button>
-                                </div>
-                                <div class="uploadOptionPost ">
-                                    <div>
-                                        <label><input type="file" class="d-none"><i class="fa-regular fa-image-polaroid mr-1"></i> Image</label>
-                                        <label><input type="file" class="d-none"><i class="fa-regular fa-light fa-video-plus mr-1"></i> Video</label>
+                                <div class="flex-fill w-100">
+                                    <div class="postType">
+                                        <textarea name="" class="typePost" placeholder="Post your task"></textarea>
+                                        <button class="submitpost">Post</button>
                                     </div>
-                                    <div class="slectposttype">
-                                        <i class="fa-solid fa-earth-americas"></i>
-                                        <select>
-                                            <option>Public</option>
-                                        </select>
+                                    <div class="uploadOptionPost ">
+                                        <div>
+                                            <label><input type="file" class="d-none"><i class="fa-regular fa-image-polaroid mr-1"></i> Image</label>
+                                            <label><input type="file" class="d-none"><i class="fa-regular fa-light fa-video-plus mr-1"></i> Video</label>
+                                        </div>
+                                        <div class="slectposttype">
+                                            <i class="fa-solid fa-earth-americas"></i>
+                                            <select>
+                                                <option>Public</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="d-flex justify-content-between tabpost align-items-center mb-3">
+                            <ul class="nav nav-pills " id="pills-tab" role="tablist">
+                              <li class="nav-item mb-0" role="presentation">
+                                <button class="nav-link active" id="pills-local-tab" data-toggle="pill" data-target="#pills-local" type="button" role="tab" aria-controls="pills-local" aria-selected="true">Local</button>
+                              </li>
+                              <li class="nav-item mb-0" role="presentation">
+                                <button class="nav-link" id="pills-global-tab" data-toggle="pill" data-target="#pills-global" type="button" role="tab" aria-controls="pills-global" aria-selected="false">Global</button>
+                              </li>
+                            </ul>
+                            <div><a href="#" class="filterbtn">Filter <i class="fa-regular fa-sliders ml-1"></i></a></div>
+                        </div>
                     </div>
-                    <div class="d-flex justify-content-between tabpost align-items-center mb-3">
-                        <ul class="nav nav-pills " id="pills-tab" role="tablist">
-                          <li class="nav-item mb-0" role="presentation">
-                            <button class="nav-link active" id="pills-local-tab" data-toggle="pill" data-target="#pills-local" type="button" role="tab" aria-controls="pills-local" aria-selected="true">Local</button>
-                          </li>
-                          <li class="nav-item mb-0" role="presentation">
-                            <button class="nav-link" id="pills-global-tab" data-toggle="pill" data-target="#pills-global" type="button" role="tab" aria-controls="pills-global" aria-selected="false">Global</button>
-                          </li>
-                        </ul>
-                        <div><a href="#" class="filterbtn">Filter <i class="fa-regular fa-sliders ml-1"></i></a></div>
-                    </div>
-
                     <div class="tab-content" id="pills-tabContent">
                       <div class="tab-pane fade show active" id="pills-local" role="tabpanel" aria-labelledby="pills-local-tab">
                         <div class="PostContainer boxPost">
@@ -286,6 +208,20 @@ function get_time_ago($time) {
                                                     </div>
 
                                                 </div>
+                                            </div>
+                                            <div class="imageData">
+                                                <?php
+                                                $getImage = $this->db->query("SELECT * FROM postjob_image WHERE job_id = '".$row->id."'")->result_array();
+                                                $max_display = 4;
+                                                $total_images = count($getImage);
+                                                for ($i = 0; $i < min($total_images, $max_display); $i++) { ?>
+                                                    <div class="box-image<?php if($total_images > 4) {echo $max_display; } else { echo $total_images;} ?>">
+                                                        <img src="<?= base_url() ?>uploads/postjob/<?= $getImage[$i]['job_image'] ?>" class="postImageData" style="width: 100%;">
+                                                        <?php if ($i === $max_display - 1 && $total_images > $max_display) { ?>
+                                                            <div class="extra-images">+<?= $total_images - $max_display ?></div>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
                                             </div>
                                             <p class="CommentData" style="margin-top: 15px;margin-bottom:8px;font-size: 14px;color: #000;line-height: 25px;"><?= ucfirst(strip_tags($row->post_title)) ?></p>
                                             <p class="CommentData" style="margin-top: 8px;margin-bottom: 8px;font-size: 14px;color: #000;line-height: 18px;"><?= ucfirst(strip_tags($row->description)) ?></p>
@@ -456,7 +392,87 @@ function get_time_ago($time) {
                     <div class="tab-pane fade" id="pills-global" role="tabpanel" aria-labelledby="pills-global-tab">...</div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 mb-3 order-lg-1">
+                    <div class="add-sidebar sticky-top">
+                        <div class="ProfileBlock mb-3">
+                            <div class="profilecover">
+                                <img src="<?= base_url('assets/images/cover.png') ?>">
+                            </div>
+                            <div class="profileImg"><img src="https://techg.igiapp.com/handymanservices/uploads/users/2875_dafc3addfd37737b93fa9ecce064f73d.jpg"></div>
+                            <h2>Toni Müller</h2>
+                            <p class="text-center memberinfo">Member since 2024 . Professional</p>
+
+                            <div class="profileInfo d-flex justify-content-between text-center">
+                                <div>
+                                    <h3>20</h3>
+                                    <h4>Posts</h4>
+                                </div>
+                                <div>
+                                    <h3>43</h3>
+                                    <h4>Comments</h4>
+                                </div>
+                                <div>
+                                    <h3>25</h3>
+                                    <h4>Likss</h4>
+                                </div>
+                            </div>
+                            <a href="#" class="profileBtn">My Profile</a>
+                        </div>
+                        <div class="activityBox mb-3">
+                            <div class="d-flex justify-content-between mb-3">
+                                <h6 class="font-weight-bold">Activity</h6>
+                                <div><a href="#" class="seeall">See All</a></div>
+                            </div>
+                            <div class="d-flex mb-2 activitylist align-items-center">
+                                <div class="activityUser">
+                                    <a href="#"><img src="https://techg.igiapp.com/handymanservices/uploads/users/440_Image1.jpg"></a>
+                                </div>
+                                <div>
+                                    <h4><a href="#"><span class="font-weight-bold">Christopher</span>  liked your post.</a></h4>
+                                    <p>10 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-2 activitylist align-items-center">
+                                <div class="activityUser">
+                                    <a href="#"><img src="https://techg.igiapp.com/handymanservices/uploads/users/2875_dafc3addfd37737b93fa9ecce064f73d.jpg"></a>
+                                </div>
+                                <div>
+                                    <h4><a href="#"><span class="font-weight-bold">Christopher</span>  liked your post.</a></h4>
+                                    <p>10 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-2 activitylist align-items-center">
+                                <div class="activityUser">
+                                    <a href="#"><img src="https://techg.igiapp.com/handymanservices/uploads/users/2875_dafc3addfd37737b93fa9ecce064f73d.jpg"></a>
+                                </div>
+                                <div>
+                                    <h4><a href="#"><span class="font-weight-bold">Christopher</span>  liked your post.</a></h4>
+                                    <p>10 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-2 activitylist align-items-center">
+                                <div class="activityUser">
+                                    <a href="#"><img src="https://techg.igiapp.com/handymanservices/uploads/users/440_Image1.jpg"></a>
+                                </div>
+                                <div>
+                                    <h4><a href="#"><span class="font-weight-bold">Christopher</span>  liked your post.</a></h4>
+                                    <p>10 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-2 activitylist align-items-center">
+                                <div class="activityUser">
+                                    <a href="#"><img src="https://techg.igiapp.com/handymanservices/uploads/users/2875_dafc3addfd37737b93fa9ecce064f73d.jpg"></a>
+                                </div>
+                                <div>
+                                    <h4><a href="#"><span class="font-weight-bold">Christopher</span>  liked your post.</a></h4>
+                                    <p>10 minutes ago</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 order-lg-3">
                     <div class="add-sidebar sticky-top">
                         <a href="#" class="mb-3 d-block"><img src="<?= base_url('assets/images/add-01.png') ?>" class="rounded"></a>
                         <a href="#" class="mb-3 d-block"><img src="<?= base_url('assets/images/add-02.png') ?>" class="rounded"></a>
@@ -625,9 +641,7 @@ function get_time_ago($time) {
         .TopBar a span {
             width: 100px !important;
         }
-        .PostContainer {
-            padding: 10px !important;
-        }
+
         .PostContainer .DataContainer {
             padding: 15px !important;
         }
@@ -666,15 +680,11 @@ function get_time_ago($time) {
         .Comment_Mobile textarea {
             width: 100% !important;
         }
-        .Comment_Mobile a {
-            width: 100% !important;
-        }
+
         .PostContainer .DataContainer .Comment_Block {
             padding: 10px !important;
         }
-        .Comment_Block_Container {
-            flex-direction: column !important;
-        }
+
         .Comment_Data {
             margin-left: 0 !important;
             padding: 10px !important;
@@ -697,9 +707,7 @@ function get_time_ago($time) {
             justify-content: center !important;
             left: 0 !important;
         }
-        .User_Comment_Data {
-            width: 100% !important;
-        }
+
     }
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtg6oeRPEkRL9_CE-us3QdvXjupbgG14A&libraries=places&callback=initMap"></script>

@@ -5,7 +5,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
     $banner_img=base_url("assets/images/resource/mslider1.jpg");
 } ?>
 <style>
-.layer.color::before {background-color: #c34e106b !important;}
+.layer.color::before {background-color: #094583de !important;}
 </style>
 <section class="overlape">
     <div class="block no-padding">
@@ -62,7 +62,7 @@ if(!empty($get_banner->image) && file_exists('uploads/banner/'.$get_banner->imag
                     <div class="reviews-sec" id="reviews-carousel">
                     <?php if(!empty($get_employer)) {
                         foreach($get_employer as $user) { ?>
-                        <div class="col-lg-6">
+                        <div >
                             <a href="<?= base_url('customer_detail/'.base64_encode($user->userId))?>">
                                 <div class="reviews">
                                     <?php if(!empty($user->profilePic) && file_exists('uploads/users/'.$user->profilePic)) { ?>
