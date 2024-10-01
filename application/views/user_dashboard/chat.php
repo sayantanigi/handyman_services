@@ -39,7 +39,7 @@
                                                         <?php if (@$get_user->profilePic && file_exists('uploads/users/' . @$get_user->profilePic)) { ?>
                                                         <img id="profile-img" src="<?= base_url('uploads/users/' . @$get_user->profilePic) ?>" class="online" alt="" />
                                                         <?php } else { ?>
-                                                        <img id="profile-img" src="<?= base_url('uploads/users/user.png') ?>" class="online" alt="" />
+                                                        <img id="profile-img" src="<?= base_url('uploads/users/440_Image1.jpg') ?>" class="online" alt="" />
                                                         <?php } ?>
                                                         <p>
                                                         <?php if (!empty($get_user->firstname)) {
@@ -97,7 +97,9 @@
                                                             }
                                                             //echo "<pre>"; print_r($userList); die();
                                                             if (!empty($userList)) {
-                                                                foreach ($userList as $user) { ?>
+                                                                foreach ($userList as $user) {
+                                                                    //print_r($user);
+                                                                ?>
                                                                 <li class="contact contactList_all" onclick="return getuser('<?= $user->userId ?>');">
                                                                     <div class="wrap">
                                                                         <span class="contact-status online"></span>
@@ -432,7 +434,9 @@ $(window).on('keydown', function(e) {
         return false;
     }
 });
+
 function getuser(usert_id,post_id) {
+//alert(usert_id);
     var displayProduct = 3;
     $('#message_list').html(createSkeleton(displayProduct));
     function createSkeleton(limit) {

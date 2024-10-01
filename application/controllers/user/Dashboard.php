@@ -350,6 +350,7 @@ class Dashboard extends CI_Controller {
 		$data['get_user'] = $this->Crud_model->get_single('users', "userId ='".$_SESSION['afrebay']['userId']."'");
 		//$cond = "job_bid.bidding_status IN ('Short Listed','Selected')";
 		//$data['get_jobbid'] = $this->Users_model->get_jobbidding($cond);
+        //echo $this->db->last_query();exit;
 		$data1['title'] = 'Messages';
 		$this->load->view('header', $data1);
 		$this->load->view('user_dashboard/chat', $data);
@@ -385,11 +386,17 @@ class Dashboard extends CI_Controller {
 		$get_data = $this->Users_model->getChat();
 		$updatastatus = $this->db->query("UPDATE chat SET status = '1' WHERE (userfrom_id ='".$usert_id."' AND userto_id ='".$userdId."') OR (userto_id ='".$usert_id."' AND userfrom_id ='".$userdId."')");
 		$get_chatuser = $this->Crud_model->get_single('users', "userId='" . $_POST['usert_id'] . "'");
-		if (!empty($get_chatuser->firstname)) {
-			$name = $get_chatuser->firstname . ' ' . $get_chatuser->lastname;
-		} else {
-			$name = $get_chatuser->companyname;
-		}
+		// if (!empty($get_chatuser->firstname)) {
+		// 	$name = $get_chatuser->firstname . ' ' . $get_chatuser->lastname;
+		// } else {
+		// 	$name = $get_chatuser->companyname;
+		// }
+
+        if(@$get_chatuser->companyname){
+            $name = $get_chatuser->companyname;
+        }else{
+            $name = $get_chatuser->firstname . ' ' . $get_chatuser->lastname;
+        }
 		if (@$get_chatuser->profilePic && file_exists('uploads/users/' . @$get_chatuser->profilePic)) {
 			$userpic = '<img src="' . base_url('uploads/users/' . @$get_chatuser->profilePic) . '" alt="" />';
 		} else {
