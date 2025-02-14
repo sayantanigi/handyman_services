@@ -35,132 +35,33 @@ function get_time_ago($time) {
 }
 ?>
 <style>
-    .postdetail {
-        padding: 7px 33px;
-        border-radius: 10px;
-        background: red;
-        color: #fff;
-        margin: 10px;
-        font-size: 20px;
-    }
+.postdetail {padding: 7px 33px;border-radius: 10px;background: red;color: #fff;margin: 10px;font-size: 20px;}
+.cstm_viewbid_btn {background: linear-gradient(180deg, rgba(249, 80, 30, 1) 0%, rgba(252, 119, 33, 1) 100%) !important;border: 0;border-radius: 35px;letter-spacing: 0;font-weight: 600;width: 100%;display: block;color: #fff;padding: 10px;text-align: center;}
+.Comment_Block {display: flex;flex-direction: row;align-items: flex-start;justify-content: flex-start;margin: 30px 0;}
+.Comment_Block .Comment_Img img {width: 60px;height: 60px;object-fit: cover;border-radius: 100%;}
+.Comment_Block .Comment_Data {width: 90%;display: flex;flex-direction: column;}
+.Comment_Block .Comment_Data p:nth-child(1) {margin: 0;font-weight: 600;color: #000 !important;font-size: 13px;line-height: 1.5;margin-bottom: 3px;}
+.Comment_Block .Comment_Data p:nth-child(2) {margin: 0; color: #666 !important; font-size: 13px; line-height: normal;}
+.Comment_Block .Comment_Data ul {margin: 0; display: flex; align-items: center; justify-content: flex-start; width: 150px; margin-top: 10px;}
+.hidereplyBox {display: none !important;}
+.showreplyBox {display: flex !important;}
 
-    .cstm_viewbid_btn {
-        background: linear-gradient(180deg, rgba(249, 80, 30, 1) 0%, rgba(252, 119, 33, 1) 100%) !important;
-        border: 0;
-        border-radius: 35px;
-        letter-spacing: 0;
-        font-weight: 600;
-        width: 100%;
-        display: block;
-        color: #fff;
-        padding: 10px;
-        text-align: center;
-    }
-
-    .Comment_Block {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: flex-start;
-        margin: 20px 0;
-    }
-
-    .Comment_Block .Comment_Img {
-        width: 10%;
-    }
-
-    .Comment_Block .Comment_Img img {
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-        border-radius: 100%;
-    }
-
-    .Comment_Block .Comment_Data {
-        width: 90%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .Comment_Block .Comment_Data p:nth-child(1) {
-        margin: 0;
-        font-weight: 600;
-        color: #000 !important;
-        font-size: 13px;
-        line-height: 1.5;
-            margin-bottom: 3px;
-    }
-
-    .Comment_Block .Comment_Data p:nth-child(2) {
-        margin: 0;
-        color: #666 !important;
-        font-size: 13px;
-        line-height: normal;
-    }
-
-    .Comment_Block .Comment_Data ul {
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        width: 150px;
-        margin-top: 10px;
-    }
-
-    .hidereplyBox {
-        display: none !important;
-    }
-
-    .showreplyBox {
-        display: flex !important;
-    }
-
-    @media screen and (max-width: 425px) {
-        .Mobile_Padding {
-            padding: 0 !important;
-        }
-
-        .Mobile_Ul {
-            width: 100% !important;
-            justify-content: flex-start !important;
-        }
-
-        .Mobile_Like {
-            margin-top: 10px !important;
-            margin-bottom: 10px !important;
-            justify-content: center !important;
-        }
-        .Comment_Block {
-            flex-direction: column !important;
-        }
-        .Comment_Block .Comment_Data {
-            width: 100% !important;
-            margin-left: 0 !important;
-            padding: 10px !important;
-        }
-        .hidereplyBox {
-            flex-direction: column !important;
-        }
-        .hidereplyBox textarea {
-            width: 100% !important;
-        }
-        .hidereplyBox a {
-            width: 100% !important;
-        }
-    }
+@media screen and (max-width: 425px) {
+    .Mobile_Padding {padding: 0 !important;}
+    .Mobile_Ul {width: 100% !important; justify-content: flex-start !important;}
+    .Mobile_Like {justify-content: center !important;}
+    .hidereplyBox {flex-direction: column !important;}
+    .hidereplyBox textarea {width: 100% !important;}
+}
 </style>
 <section class="overlape">
-    <div class="block no-padding">
+    <div class="block no-padding bg-primary">
         <div data-velocity="-.1" style="background: url('<?= $banner_img ?>') repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible no-parallax"></div>
         <div class="container fluid">
-            <div class="row">
-                <div class="col-lg-12">
+            <div >
+                <div>
                     <div class="inner-header">
-                        <h3 style="text-transform: uppercase;">
-                            <?php if (!empty($post_data->post_title)) {
-                                echo $post_data->post_title;
-                            } ?>
-                        </h3>
+                        <h3></h3>
                     </div>
                 </div>
             </div>
@@ -174,8 +75,8 @@ function get_time_ago($time) {
             unset($_SESSION['message']);
         } ?>
     </div>
-    <div class="container display-table">
-        <div class="row display-table-row">
+    <div class="container ">
+        <div class="row ">
             <div class="col-md-12 col-sm-12 display-table-cell v-align">
                 <div class="user-dashboard">
                     <div class="row row-sm">
@@ -186,7 +87,7 @@ function get_time_ago($time) {
                                         <ul class="workInfoBox">
                                             <li>
                                                 <span>Job Title </span>
-                                                <p><a href="<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" style="text-transform: uppercase;"><?php echo $post_data->post_title; ?></a></p>
+                                                <p><a href="<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" class="text-dark"><?php echo $post_data->post_title; ?></a></p>
                                             </li>
                                             <li><?php if (!empty($post_data->description)) { ?>
                                                 <span>Description</span>
@@ -261,56 +162,69 @@ function get_time_ago($time) {
                                                 </div>
                                                 <div>
                                                     <?php if (!empty(@$_SESSION['afrebay']['userType'])) { ?>
-                                                        <a href="javascript:void(0)" class="postCommentbtn" onclick="postComment()">Comment</a>
+                                                        <a href="javascript:void(0)" class="postCommentbtn Gradient_Back_Color" onclick="postComment()">Comment</a>
                                                     <?php } else { ?>
-                                                        <a href="<?= base_url() ?>login" class="postCommentbtn">
+                                                        <a href="<?= base_url() ?>login" class="postCommentbtn Gradient_Back_Color">
                                                             Comment
                                                         </a>
                                                     <?php } ?>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-sm-12 Mobile_Like" style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start;">
-                                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start;">
-                                                        <span><i style="font-size: 16px;" class="fa-regular fa-heart" aria-hidden="true"></i></span>
-                                                        <?php $getLikeCount = $this->db->query("SELECT COUNT(id) as count FROM postjob_like WHERE postjob_id = '" . $post_data->id . "' AND is_liked = 1")->row(); ?>
-                                                        <p style="margin: 0; margin-left: 10px; font-size: 14px; font-weight: 500;"><?= $getLikeCount->count ?> </p>
-                                                    </div>
-                                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start; margin-left: 20px;">
-                                                        <span><i style="font-size: 16px;" class="fa-regular fa-comment-dots" aria-hidden="true"></i></span>
-                                                        <?php $getCommentCount = $this->db->query("SELECT COUNT(id) as count FROM postjob_comment WHERE postjob_id = '" . $post_data->id . "'")->row(); ?>
-                                                        <p style="margin: 0; margin-left: 10px; font-size: 14px; font-weight: 500; "><?= $getCommentCount->count; ?> </p>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                                    <ul class="Mobile_Ul" style="margin: 0; display: flex; align-items: center; justify-content: flex-end; flex-direction: row; width: 250px; float: right;">
-                                                       <!--  <li style="margin: 0 20px 0 0 !important; font-weight: 600; font-size: 15px; color: #000 !important;">
-                                                            <?php if (!empty(@$_SESSION['afrebay']['userType'])) {
+                                                <div class="col-lg-12">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="Mobile_Like" style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start;">
+                                                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start;">
+                                                                <?php if (!empty(@$_SESSION['afrebay']['userType'])) {
                                                                 $chechis_like = $this->db->query("SELECT * FROM postjob_like WHERE postjob_id = '" . $post_data->id . "' AND user_id = '" . @$_SESSION['afrebay']['userId'] . "' AND is_liked = 1")->num_rows();
                                                                 if ($chechis_like > 0) { ?>
-                                                                    <a style="color: #000 !important;" href="javascript:void(0)" onclick="dislikepostjob()"><i style="color: #000;" class="fa fa-heart" aria-hidden="true"></i> Like</a>
+                                                                <span><i style="font-size: 16px; cursor: pointer;" class="fa fa-heart" aria-hidden="true" onclick="dislikepostjob()"></i></span>
                                                                 <?php } else { ?>
-                                                                    <a style="color: #000 !important;" href="javascript:void(0)" onclick="likepostjob()"><i style="color: #000;" class="fa fa-heart-o" aria-hidden="true"></i> Like</a>
-                                                                <?php } ?>
-                                                            <?php } else { ?>
-                                                                <a style="color: #000 !important;" href="<?= base_url() ?>login">
-                                                                    <i style="color: #000;" class="fa fa-heart-o" aria-hidden="true"></i> Like
-                                                                </a>
-                                                            <?php } ?>
-                                                        </li> -->
-                                                        <li style="margin: 0 !important; font-weight: 600; font-size: 15px; color: #000 !important;" id="shareBtn">
-                                                            <a class="shareBtn text-white" href="javacript:void(0)"> <i class="fa-regular fa-share-nodes" aria-hidden="true"></i> Share</a>
-                                                        </li>
-                                                        <div id="shareMenu" class="hidden">
-                                                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-facebook"></a>
-                                                            <a href="https://twitter.com/intent/tweet?text=<?php echo $post_data->post_title; ?>&url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-twitter"></a>
-                                                            <a href="mailto:?subject=<?php echo $post_data->post_title; ?>&body=<?= 'I found this interesting: '.base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-gmail"></a>
-                                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-linkedin"></a>
-                                                            <a href="https://www.instagram.com/?url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-instagram"></a>
-                                                            <a href="https://api.whatsapp.com/send?text=<?php echo $post_data->post_title; ?> <?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank" class="fa fa-whatsapp"></a>
-                                                            <a href="https://telegram.me/share/url?url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>&text=<?php echo $post_data->post_title; ?>" target="_blank" class="fa fa-telegram"></a>
+                                                                <span><i style="font-size: 16px; cursor: pointer;" class="fa-regular fa-heart" aria-hidden="true" onclick="likepostjob()"></i></span>
+                                                                <?php }
+                                                                } else { ?>
+                                                                <a style="color: #000 !important; cursor: pointer;" href="<?= base_url() ?>login"><i style="color: #000;" class="fa fa-heart-o" aria-hidden="true"></i></a>
+                                                                <?php }
+                                                                $getLikeCount = $this->db->query("SELECT COUNT(id) as count FROM postjob_like WHERE postjob_id = '" . $post_data->id . "' AND is_liked = 1")->row(); ?>
+                                                                <p style="margin: 0; margin-left: 3px; font-size: 14px; font-weight: 500;"> <?= $getLikeCount->count ?> </p>
+                                                            </div>
+                                                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start; margin-left: 20px;">
+                                                                <span><i style="font-size: 16px;" class="fa-regular fa-comment-dots" aria-hidden="true"></i></span>
+                                                                <?php $getCommentCount = $this->db->query("SELECT COUNT(id) as count FROM postjob_comment WHERE postjob_id = '" . $post_data->id . "'")->row(); ?>
+                                                                <p style="margin: 0; margin-left: 3px; font-size: 14px; font-weight: 500; "> <?= $getCommentCount->count; ?> </p>
+                                                            </div>
                                                         </div>
-                                                    </ul>
+                                                        <div >
+                                                            <ul class="Mobile_Ul" style="margin: 0; display: flex; align-items: center; justify-content: flex-end; flex-direction: row; width: 250px; float: right;">
+                                                               <!--  <li style="margin: 0 20px 0 0 !important; font-weight: 600; font-size: 15px; color: #000 !important;">
+                                                                    <?php if (!empty(@$_SESSION['afrebay']['userType'])) {
+                                                                        $chechis_like = $this->db->query("SELECT * FROM postjob_like WHERE postjob_id = '" . $post_data->id . "' AND user_id = '" . @$_SESSION['afrebay']['userId'] . "' AND is_liked = 1")->num_rows();
+                                                                        if ($chechis_like > 0) { ?>
+                                                                            <a style="color: #000 !important;" href="javascript:void(0)" onclick="dislikepostjob()"><i style="color: #000;" class="fa fa-heart" aria-hidden="true"></i> Like</a>
+                                                                        <?php } else { ?>
+                                                                            <a style="color: #000 !important;" href="javascript:void(0)" onclick="likepostjob()"><i style="color: #000;" class="fa fa-heart-o" aria-hidden="true"></i> Like</a>
+                                                                        <?php } ?>
+                                                                    <?php } else { ?>
+                                                                        <a style="color: #000 !important;" href="<?= base_url() ?>login">
+                                                                            <i style="color: #000;" class="fa fa-heart-o" aria-hidden="true"></i> Like
+                                                                        </a>
+                                                                    <?php } ?>
+                                                                </li> -->
+                                                                <li style="margin: 0 !important; font-weight: 600; font-size: 15px; color: #000 !important;" id="shareBtn">
+                                                                    <a class="shareBtn Primary_Text_Color" style="background: none;" href="javacript:void(0)"> <i class="fa-regular fa-share-nodes" aria-hidden="true"></i> Share</a>
+                                                                </li>
+                                                                <div id="shareMenu" class="hidden">
+                                                                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                                                                    <a href="https://twitter.com/intent/tweet?text=<?php echo $post_data->post_title; ?>&url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank"><i class="fa-brands fa-square-x-twitter"></i></a>
+                                                                    <a href="mailto:?subject=<?php echo $post_data->post_title; ?>&body=<?= 'I found this interesting: '.base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank"><i class="fa-solid fa-envelope"></i></a>
+                                                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                                                                    <a href="https://www.instagram.com/?url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                                                                    <a href="https://api.whatsapp.com/send?text=<?php echo $post_data->post_title; ?> <?= base_url('workdetail/' . base64_encode($post_data->id)) ?>" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                                                                    <a href="https://telegram.me/share/url?url=<?= base_url('workdetail/' . base64_encode($post_data->id)) ?>&text=<?php echo $post_data->post_title; ?>" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+                                                                </div>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="col-12">
                                                 <?php
@@ -321,7 +235,7 @@ function get_time_ago($time) {
                                                         $rplycount = $this->db->query("SELECT COUNT(id) as count FROM postjob_comment_like  WHERE postjob_id = '" . @$post_data->id . "' AND comment_id = '" . $each['id'] . "' AND is_liked = 1")->row();
                                                 ?>
                                                     <div class="Comment_Block" >
-                                                        <div class="Comment_Img">
+                                                        <div class="Comment_Img mr-2">
                                                             <?php
                                                             $userData = $this->db->query("SELECT * FROM users WHERE userId = '" . $each['user_id'] . "'")->row();
                                                             if (!empty($userData->profilePic) && file_exists('uploads/users/' . $userData->profilePic)) { ?>
@@ -340,14 +254,23 @@ function get_time_ago($time) {
                                                                         echo $userData->firstname . " " . $userData->lastname;
                                                                     }
                                                                     ?> .
-                                                                    <span style="font-size: 13px; color: #6a6a6a; font-weight: 400;"><?php echo get_time_ago(strtotime($each['created_at'])) ?></span> 
-                                                                    
+                                                                    <span style="font-size: 13px; color: #6a6a6a; font-weight: 400;"><?php echo get_time_ago(strtotime($each['created_at'])) ?></span>
                                                                 </p>
                                                                 <p><?= $each['comment']; ?></p>
                                                             </div>
                                                             <ul>
-                                                                <li class="mb-0 mr-3"><span class="mb-0" style=" font-size: 15px; color: #000"><i class="fa-regular fa-heart" aria-hidden="true"></i> <?= $rplycount->count; ?> </span></li>
-
+                                                                <li class="mb-0 mr-3">
+                                                                    <?php if (!empty(@$_SESSION['afrebay']['userType'])) {
+                                                                    $checkrplycount = $this->db->query("SELECT * FROM postjob_comment_like WHERE user_id = '" . @$_SESSION['afrebay']['userId'] . "' AND postjob_id = '" . @$post_data->id . "' AND comment_id = '" . $each['id'] . "' AND is_liked = 1")->row();
+                                                                    if ($checkrplycount > 0) { ?>
+                                                                    <span class="mb-0" style="font-size: 15px; color: #000"><i class="fa fa-heart" aria-hidden="true" onclick="dislikeuserrply(<?= $each['id'] ?>)" style="cursor: pointer;"></i> <?= $rplycount->count; ?> </span>
+                                                                    <?php } else { ?>
+                                                                    <span class="mb-0" style="font-size: 15px; color: #000"><i class="fa-regular fa-heart" aria-hidden="true" onclick="likeuserrply(<?= $each['id'] ?>)" style="cursor: pointer;"></i> <?= $rplycount->count; ?> </span>
+                                                                    <?php }
+                                                                    } else { ?>
+                                                                    <span class="mb-0" style="font-size: 15px; color: #000"><i class="fa-regular fa-heart" aria-hidden="true" href="<?= base_url() ?>login" style="cursor: pointer;"></i> <?= $rplycount->count; ?> </span>
+                                                                    <?php } ?>
+                                                                </li>
                                                                 <!-- <li style="margin: 0 25px 0 0 !important; font-size: 13px; color: #000 !important; font-weight: 600;">
                                                                     <?php if (!empty(@$_SESSION['afrebay']['userType'])) {
                                                                         $checkrplycount = $this->db->query("SELECT * FROM postjob_comment_like WHERE user_id = '" . @$_SESSION['afrebay']['userId'] . "' AND postjob_id = '" . @$post_data->id . "' AND comment_id = '" . $each['id'] . "' AND is_liked = 1")->row();
@@ -392,7 +315,7 @@ function get_time_ago($time) {
                                                             } ?>
                                                             <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; margin-top: 10px;" class="hidereplyBox replyBox " id="replyBox_<?= $i; ?>">
                                                                 <textarea required="" name="users_rply_<?= $i; ?>" id="users_rply_<?= $i; ?>" placeholder="Reply"></textarea>
-                                                                <a href="javascript:void(0)" onclick="postUserComment(<?= $each['id']; ?>, <?= $i; ?>)" class="replySubmit">
+                                                                <a href="javascript:void(0)" onclick="postUserComment(<?= $each['id']; ?>, <?= $i; ?>)" class="replySubmit Gradient_Back_Color">
                                                                     Reply
                                                                 </a>
                                                             </div>
@@ -437,19 +360,32 @@ function get_time_ago($time) {
                         <div class="col-lg-4 col-md-4 col-sm-12">
                             <div class="col-12 JobImage Mobile_Padding">
                                 <div class="owl-carousel overflow-hidden">
-                                    <?php
-                                    $getImage = $this->db->query("SELECT * FROM postjob_image WHERE job_id = '" . $post_data->id . "'")->result_array();
-                                    if (!empty($getImage)) {
-                                        foreach ($getImage as $img) { ?>
-                                            <div class="owl-block position-relative overflow-hidden vh-100">
-                                                <img class="owl-img w-100 h-100 position-absolute object-fit-cover" src="<?php echo base_url() ?>uploads/postjob/<?php echo $img['job_image'] ?>" loading="lazy" alt="banner_img" />
-                                            </div>
-                                        <?php }
-                                    } else { ?>
+                                <?php
+                                $getImage = $this->db->query("SELECT * FROM postjob_image WHERE job_id = '" . $post_data->id . "'")->result_array();
+                                if (!empty($getImage)) {
+                                    foreach ($getImage as $img) { ?>
+                                    <div class="owl-block position-relative overflow-hidden vh-100">
+                                        <?php if(!empty($img['job_image']) && file_exists('uploads/postjob/'.$img['job_image'])) {
+                                        $extension = strtolower(pathinfo($img['job_image'], PATHINFO_EXTENSION));
+                                        if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'bmp'])) { ?>
+                                        <img class="owl-img w-100 h-100 position-absolute object-fit-cover" src="<?php echo base_url() ?>uploads/postjob/<?php echo $img['job_image'] ?>" loading="lazy" alt="banner_img" >
+                                        <?php } elseif (in_array($extension, ['mp4', 'webm', 'avi', 'mov'])) { ?>
+                                        <video width="165" height="110" controls>
+                                        <source src="<?php echo base_url() ?>uploads/postjob/<?php echo $img['job_image'] ?>" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                        </video>
+                                        <?php } } else { ?>
                                         <div class="owl-block position-relative overflow-hidden vh-100">
-                                            <img class="owl-img w-100 h-100 position-absolute object-fit-cover" src="https://techg.igiapp.com/handymanservices/uploads/postjob/8204_how-to-start-a-handyman-business-in-the-uk.jpg" loading="lazy" alt="banner_img" />
+                                            <img class="owl-img w-100 h-100 position-absolute object-fit-cover" src="<?php echo base_url()?>uploads/no_bimage.png" loading="lazy" alt="banner_img" />
                                         </div>
                                     <?php } ?>
+                                    </div>
+                                <?php }
+                                } else { ?>
+                                <div class="owl-block position-relative overflow-hidden vh-100">
+                                    <img class="owl-img w-100 h-100 position-absolute object-fit-cover" src="<?php echo base_url()?>uploads/no_bimage.png" loading="lazy" alt="banner_img" />
+                                </div>
+                                <?php } ?>
                                 </div>
                             </div>
                             <div class="col-12 Mobile_Padding" style="margin-top: 30px;">
@@ -465,9 +401,9 @@ function get_time_ago($time) {
                                         <div class="ml-2" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
                                             <h3 style="margin-bottom: 5px; font-size: 18px; color: #fff !important; letter-spacing: 0 !important; font-weight: 600;">
                                                 <?php if (!empty($userData->companyname)) {
-                                                    echo $userData->companyname;
+                                                    echo ucwords($userData->companyname);
                                                 } else {
-                                                    echo $userData->firstname . ' ' . $userData->lastname;
+                                                    echo ucwords($userData->firstname . ' ' . $userData->lastname);
                                                 } ?>
                                             </h3>
                                             <!-- <span style="font-weight: 500; color: #fff !important; font-size: 13px;"><i class="la la-map-marker"></i> <?= $userData->address ?></span> -->
@@ -477,7 +413,7 @@ function get_time_ago($time) {
                                 </div>
                             </div>
                             <?php if (@$_SESSION['afrebay']['userType'] == 1 || empty(@$_SESSION['afrebay']['userType'])) { ?>
-                                <div class="col-12 Mobile_Padding" style="margin-top: 30px; position: sticky; top: 160px; height: fit-content;">
+                                <div class="col-12 Mobile_Padding d-none" style="margin-top: 30px; position: sticky; top: 160px; height: fit-content;">
                                     <?php $userBidData = $this->db->query("SELECT * FROM `job_bid` WHERE postjob_id = '" . $post_data->id . "' and user_id = '" . @$_SESSION['afrebay']['userId'] . "'")->result_array();
                                     if (!empty($userBidData)) { ?>
                                         <div class="bd-form"><a href="<?= base_url() ?>jobbid" class="cstm_viewbid_btn"> View Bid</a></div>
@@ -525,7 +461,7 @@ function get_time_ago($time) {
                                             </div>
                                         </form>
                                 </div>
-                        <?php }
+                            <?php }
                                 } ?>
                         </div>
                     </div>
@@ -539,10 +475,10 @@ function get_time_ago($time) {
 }
 #shareMenu {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 5px;
     position: absolute;
     background-color: white;
-    margin-top: 70px;
+    margin-top: 60px;
 }
 </style>
 <script>

@@ -24,6 +24,24 @@
 															<input type="text" class="form-control" placeholder="Website Name" name="website_name" value="<?php if(!empty($row->website_name)){echo $row->website_name; }?>" required>
 														</div>
 													</div>
+                                                    <div class="col-md-12">
+														<div class="form-group">
+															<label>Registration form header <span style="font-size: 13px; font-weight: 600; color:red;">  (Click on source from the editor while changing the content)</span></label>
+															<textarea placeholder="Registration form header" name="register_form_header" id="register_form_header" class="form-control" style="resize:none;" rows="4" cols="4" required><?php if(!empty($row->register_form_header)) { echo $row->register_form_header;} ?></textarea>
+														</div>
+													</div>
+                                                    <div class="col-md-12">
+														<div class="form-group">
+															<label>Registration body header <span style="font-size: 13px; font-weight: 600; color:red;">  (Click on source from the editor while changing the content)</span></label>
+															<textarea placeholder="Registration body header" name="register_body_header" id="register_body_header" class="form-control" style="resize:none;" rows="4" cols="4" required><?php if(!empty($row->register_body_header)) { echo $row->register_body_header;} ?></textarea>
+														</div>
+													</div>
+                                                    <div class="col-md-12">
+														<div class="form-group">
+															<label>Registration body content <span style="font-size: 13px; font-weight: 600; color:red;">  (Click on source from the editor while changing the content)</span></label>
+															<textarea placeholder="Registration body content" name="register_body_content" id="register_body_content" class="form-control" style="resize:none;" rows="4" cols="4" required><?php if(!empty($row->register_body_content)) { echo $row->register_body_content;} ?></textarea>
+														</div>
+													</div>
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Phone Number</label>
@@ -44,7 +62,7 @@
 													</div>
 													<div class="col-md-12">
 														<div class="form-group">
-															<label>Address</label>
+															<label>Address <span style="font-size: 13px; font-weight: 600; color:red;">  (Click on source from the editor while changing the content)</span></label>
 															<textarea placeholder="Address" name="address" id="address" class="form-control" style="resize:none;" rows="4" cols="4" required><?php if(!empty($row->address)) { echo $row->address;} ?></textarea>
 														</div>
 													</div>
@@ -54,13 +72,44 @@
 															<textarea placeholder="Footer About" name="fabout" class="form-control" style="resize:none;" rows="4" cols="4"><?php if(!empty($row->fabout)) { echo $row->fabout;} ?></textarea>
 														</div>
 													</div>
+
 													<div class="col-md-12">
 														<div class="form-group">
 															<label>Facebook Link</label>
 															<input type="text" class="form-control" name="fb_link" placeholder="Facebook Link" value="<?php if(!empty($row->fb_link)){echo $row->fb_link; }?>">
 														</div>
 													</div>
-													<div class="col-md-12">
+                                                    <div class="col-md-12">
+														<div class="form-group">
+															<label>Gmail</label>
+															<input type="text" class="form-control" name="gmail_link" placeholder="Gmail" value="<?php if(!empty($row->gmail_link)){echo $row->gmail_link; }?>">
+														</div>
+													</div>
+                                                    <div class="col-md-12">
+														<div class="form-group">
+															<label>Tiktok Link</label>
+															<input type="text" class="form-control" name="tiktok_link" placeholder="Tiktok Link" value="<?php if(!empty($row->tiktok_link)){echo $row->tiktok_link; }?>">
+														</div>
+													</div>
+                                                    <div class="col-md-12">
+														<div class="form-group">
+															<label>Instagram Link</label>
+															<input type="text" class="form-control" name="insta_link" placeholder="Instagram Link" value="<?php if(!empty($row->insta_link)){echo $row->insta_link; }?>">
+														</div>
+													</div>
+                                                    <div class="col-md-12">
+														<div class="form-group">
+															<label>WhatsApp</label>
+															<input type="text" class="form-control" name="whatsapp" placeholder="WhatsApp" value="<?php if(!empty($row->whatsapp)){echo $row->whatsapp; }?>">
+														</div>
+													</div>
+                                                    <div class="col-md-12">
+														<div class="form-group">
+															<label>Telegram Link</label>
+															<input type="text" class="form-control" name="telegram" placeholder="Telegram Link" value="<?php if(!empty($row->telegram)){echo $row->telegram; }?>">
+														</div>
+													</div>
+                                                    <div class="col-md-12">
 														<div class="form-group">
 															<label>Twitter Link</label>
 															<input type="text" class="form-control" name="tw_link" placeholder="Twitter Link" value="<?php if(!empty($row->tw_link)){echo $row->tw_link; }?>">
@@ -72,7 +121,14 @@
 															<input type="text" class="form-control" name="lnkd_link" placeholder="LinkedIn Link" value="<?php if(!empty($row->lnkd_link)){echo $row->lnkd_link; }?>">
 														</div>
 													</div>
-													<div class="col-md-4">
+                                                    <div class="col-md-12">
+														<div class="form-group">
+															<label>Pinterest Link</label>
+															<input type="text" class="form-control" name="ptrs_link" placeholder="Pinterest Link" value="<?php if(!empty($row->ptrs_link)){echo $row->ptrs_link; }?>">
+														</div>
+													</div>
+                                                    
+                                                    <div class="col-md-4">
 														<div class="form-group">
 															<label>Header Logo</label>
 															<div class="uploader">
@@ -162,5 +218,16 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
 </style>
 <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 <script>
-	CKEDITOR.replace('address');
+	CKEDITOR.replace('address', {
+        allowedContent:true,
+    });
+    CKEDITOR.replace('register_form_header', {
+        allowedContent:true,
+    });
+    CKEDITOR.replace('register_body_header', {
+        allowedContent:true,
+    });
+    CKEDITOR.replace('register_body_content', {
+        allowedContent:true,
+    });
 </script>

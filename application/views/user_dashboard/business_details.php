@@ -1,0 +1,274 @@
+<section class="dashboard-gig User_Sidemenu">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-9 display-table-cell v-align profileTabcontent my-4">
+			     <div class="user-dashboard Admin_Profile form-design <?php echo $container;  ?> ">
+			        <h3 class="text-center h3 font-weight-bold Primary_Text_Color my-3">Update your business details</h3>
+			        <p class="text-center text-dark">You may modify your business information at any moment in your profile section</p>
+			        <form class="form" action="<?php echo base_url('user/Dashboard/update_businessDetails')?>" method="post" id="registrationForm" enctype="multipart/form-data">
+                    <?php if(empty(@$_SESSION['afrebay']['userId'])) { ?>
+			        <input type="hidden" name="from_data_request" value="admin">
+                    <?php } ?>
+			            <div class="row row-sm">
+			                <div class="col-xl-12 col-lg-12 col-md-12">
+			                    <div class="px-4 py-3">
+			                        <div class="profiletab position-relative d-flex">
+			                            <div class="tabBox d-flex w-auto">
+                                            <?php if(!empty(@$_SESSION['afrebay']['userId'])) { ?>
+                                            <a href="<?= base_url()?>profile" class="tabnav">My Profile</a>
+                                            <a href="<?= base_url()?>business_details" class="tabnav active">Business Details</a>
+                                            <?php } else { ?>
+                                            <a href="<?= base_url()?>profile/<?= $this->uri->segment(2);?>" class="tabnav">My Profile</a>
+                                            <a href="<?= base_url()?>business_details/<?= $this->uri->segment(2);?>" class="tabnav active">Business Details</a>
+                                            <?php } ?>
+			                            </div>
+			                        </div>
+			                    </div>
+			                    <div class="cardak profile-mobile pt-3">
+                                <span class="text-success-msg f-20" style="text-align: center;">
+                                    <?php if($this->session->flashdata('message')) {
+                                        echo $this->session->flashdata('message');
+                                        unset($_SESSION['message']);
+                                    } ?>
+                                    <?php if($this->session->flashdata('error')) {
+                                        echo $this->session->flashdata('error');
+                                        unset($_SESSION['error']);
+                                    } ?>
+                                    </span>
+			                    	<div class="row">
+			                    		<div class="col-lg-12 profile-dsd">
+                                            <input type="text" class="form-control" name="companyname" id="companyname" placeholder="Business name" value="<?php echo $userinfo->companyname;?>" />
+                                            <div id="vld_companyname" style="color:red; margin-top: 10px;">Please enter Business name.</div>
+			                            </div>
+                                        <div class="col-lg-12 profile-dsd">
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="Business Email" value="<?php echo $userinfo->email;?>" required/>
+			                            </div>
+			                            <div class="col-lg-12 mb-2 profile-dsd">
+                                            <select class="form-control business_category" multiple="multiple" name="business_category[]" id="business_category" style="width: 100%;">
+                                            <?php
+                                                $business_category = $this->Crud_model->GetData('category',"","status = 'Active'");
+                                                foreach($business_category as $category) {?>
+                                                    <option value="<?php echo $category->category_name; ?>"
+                                                    <?php if(!empty($userinfo->serviceType)){
+                                                        $serviceType = explode(", ", $userinfo->serviceType);
+                                                        for($i=0; $i<count($serviceType); $i++) {
+                                                            if($serviceType[$i] == $category->category_name){
+                                                                echo "selected";
+                                                            }
+                                                        }
+                                                    } ?>><?php echo $category->category_name;?></option>
+                                                <?php } ?>
+                                            </select>
+                                            <div id="vld_gender" style="color:red; margin-top: 10px;">Please Select Business Category.</div>
+			                            </div>
+			                            <div class="col-lg-6 profile-dsd">
+                                            <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Phone Number" value="<?php echo $userinfo->mobile;?>" onkeypress="only_number(event)" maxlength="10" />
+			                            </div>
+			                            <div class="col-lg-6 profile-dsd">
+                                            <input type="text" class="form-control" name="address" id="location" placeholder="Legal Address" value="<?= $userinfo->address ?>" style="height: 49px !important;" autocomplete="off" />
+                                            <div id="vld_location" style="color:red; margin-top: 10px;">Please enter Legal Address.</div>
+                                            <input type="hidden" name="latitude" id="search_lat" value="<?= $userinfo->latitude ?>">
+                                            <input type="hidden" name="longitude" id="search_lon" value="<?= $userinfo->longitude ?> ">
+			                            </div>
+			                            <div class="col-lg-6 profile-dsd">
+                                            <input type="text" class="form-control" name="hourly_rate" id="hourly_rate" placeholder="Rate per hour" value="<?php echo $userinfo->hourly_rate;?>" />
+                                            <div id="vld_companyname" style="color:red; margin-top: 10px;">Please enter Rate per hour.</div>
+			                            </div>
+			                            <div class="col-lg-6 profile-dsd">
+                                            <input type="text" class="form-control" name="reference_link" id="reference_link" placeholder="Reference links" value="<?php echo $userinfo->reference_link;?>" />
+			                            </div>
+                                        <div class="col-lg-12 mb-4">
+                                            <div class="new-pro uploadProfilephoto workupload">
+                                                <?php $getWorkSample = $this->db->query("SELECT * FROM users_work_sample WHERE user_id = '".$userinfo->userId."'")->result_array(); ?>
+                                                <div class="profileImgBox profilenoImg py-4" id="preview1" style="<?php if (!empty($getWorkSample)) {echo 'padding: 0px !important';}?>">
+                                                    <?php if(!empty($getWorkSample)) {
+                                                        foreach ($getWorkSample as $sample) { ?>
+                                                        <?php $extension = strtolower(pathinfo($sample['work_sample'], PATHINFO_EXTENSION));
+                                                        if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'bmp'])) { ?>
+                                                        <img src="<?= base_url('uploads/users/work_sample/'.$sample['work_sample']); ?>" alt="Image" style="width: 215px; height: 150px; object-fit: cover !important;">
+                                                        <i class="fa fa-trash" style="position: absolute; margin-top: 5px; margin-left: -35px; color: red; background: #eee; padding: 8px; border-radius: 20px;" onclick="deleteImage(<?= $sample['id']?>)"></i>
+                                                        <?php } elseif (in_array($extension, ['mp4', 'webm', 'avi', 'mov'])) { ?>
+                                                        <video width="215" height="150" controls>
+                                                            <source src="<?= base_url('uploads/users/work_sample/'.$sample['work_sample']); ?>" type="video/mp4">
+                                                            Your browser does not support the video tag.
+                                                        </video>
+                                                        <i class="fa fa-trash" style="position: absolute; margin-top: 5px; margin-left: -35px; color: red; background: #eee; padding: 8px; border-radius: 20px;" onclick="deleteImage(<?= $sample['id']?>)"></i>
+                                                    <?php } ?>
+                                                <?php } } else { ?>
+                                                    <img src="<?php echo base_url('uploads/addPhoto.png')?>"/>
+                                                    <h6>Upload work samples</h6>
+                                                    <p>Images must be less than 5 MB in size</p>
+                                                    <p>Videos must be less than 25 MB in size</p>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="profile-ak">
+                                                    <label>
+                                                        <h6><i class="fa-solid fa-cloud-arrow-up"></i> Upload </h6>
+                                                        <input type="file" name="work_sample[]" multiple class="d-none" accept="image/*, video/*" id="file-input1"/>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+			                        </div>
+			                        <div class="text-center px-3">
+			                        	<button class="post-job-btn float-right mw-150 Gradient_Back_Color" style="border: none !important;" type="submit">Finish</button>
+                                        <!-- <input type="hidden" name="id" value="<?=$userinfo->userId  ?>"> -->
+                                        <?php if(!empty(@$_SESSION['afrebay']['user_Id'])) { ?>
+                                        <input type="hidden" name="id" id="id" value="<?=$userinfo->userId  ?>">
+                                        <a href="<?= base_url()?>homepage" class="post-job-btn float-right mr-3 mw-150 btn-secondary Gradient_Back_Color" style="border: none !important; color: #fff !important;">Leave and complete later</a>
+                                        <?php } else { ?>
+                                        <input type="hidden" name="id" value="<?= base64_decode($this->uri->segment(2));?>">
+                                        <?php } ?>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			        </form>
+			    </div>
+			</div>
+		</div>
+	</div>
+</section>
+<style>
+#vld_gender {display: none;}
+#vld_location {display: none;}
+#vld_companyname {display: none;}
+.select2-selection--multiple {border: none !important;}
+.select2-container .select2-search--inline {width: 100% !important;}
+.select2-selection__rendered li{margin-bottom: 5px !important;}
+.select2-search__field {width: 100% !important; margin-top: 0px !important; min-height: 50px !important; font-size: 14px !important;}
+.preview-item1 {width: 215px; height: 150px; margin: 0px 5px 5px 0px; display: flex; justify-content: center; align-items: center;}
+.preview-item1 img, .preview-item1 video {width: 215px !important; height: 150px !important; object-fit: cover !important;}
+.jconfirm .jconfirm-box .jconfirm-buttons button.btn-blue {background: #9dcc90 !important; }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js'></script>
+<script type="text/javascript">
+$('#skills').tagsinput({
+    confirmKeys: [13, 44],
+    maxTags: 20,
+});
+$('.business_category').select2({
+    //tags: true,
+    tokenSeparators: [','],
+    placeholder: "Select or Type Business Category",
+});
+
+$('.key_skills').select2({
+    //tags: true,
+    tokenSeparators: [','],
+    placeholder: "Select or Type Specialization",
+});
+
+var fileInput = document.getElementById('file-input1');
+var preview = document.getElementById('preview1');
+
+fileInput.addEventListener('change', function() {
+    displayFiles(this.files);
+    $('#preview1').css({"height": "auto", "display": "flex", "flex-wrap": "wrap", "justify-content": "space-between"});
+});
+
+function displayFiles(files) {
+    //preview.innerHTML = '';
+    for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    var reader = new FileReader();
+
+    reader.onload = (function(file) {
+        return function(e) {
+        var fileType = file.type.split('/')[0];
+        var previewItem = document.createElement('div');
+        previewItem.className = 'preview-item1';
+        var previewElement;
+
+        if (fileType === 'image') {
+            previewElement = document.createElement('img');
+        } else if (fileType === 'video') {
+            previewElement = document.createElement('video');
+            previewElement.controls = true;
+        } else {
+            return; // Unsupported file type
+        }
+        previewElement.src = e.target.result;
+        previewItem.appendChild(previewElement);
+        preview.appendChild(previewItem);
+        };
+    })(file);
+
+    reader.readAsDataURL(file);
+    }
+}
+
+function deleteImage(id) {
+    $.alert({
+        title: '',
+        content: 'Are you sure you want to delete this file? Once delete it can\'t be undone',
+        animation: 'scale',
+        closeAnimation: 'scale',
+        buttons: {
+            yes: {
+                text: 'Yes',
+                btnClass: 'btn-blue-cstm',
+                keys: ['enter', 'shift'],
+                action: function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?= base_url('user/dashboard/deleteworksampleImage')?>",
+                        data: { id: id },
+                        success: function (data) {
+                            res = JSON.parse(data);
+                            if(res.status == 'success'){
+                                $.alert({
+                                    title: '',
+                                    content: res.message,
+                                    animation: 'scale',
+                                    closeAnimation: 'scale',
+                                    buttons: {
+                                        ok: {
+                                            text: 'Ok',
+                                            btnClass: 'btn-blue-cstm',
+                                            keys: ['enter', 'shift'],
+                                            action: function(){
+                                                window.location.reload();
+                                            }
+                                        }
+                                    }
+                                });
+                            } else {
+                                $.alert({
+                                    title: '',
+                                    content: res.message,
+                                    animation: 'scale',
+                                    closeAnimation: 'scale',
+                                    buttons: {
+                                        ok: {
+                                            text: 'Ok',
+                                            btnClass: 'btn-blue-cstm',
+                                            keys: ['enter', 'shift'],
+                                            action: function(){
+                                                window.location.reload();
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    })
+                }
+            },
+            no: {
+                text: 'No',
+                btnClass: 'btn-blue-cstm',
+                keys: ['enter', 'shift'],
+                action: function(){
+                }
+            }
+        }
+    });
+}
+</script>
+</script>

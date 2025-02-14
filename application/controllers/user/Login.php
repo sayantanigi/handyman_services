@@ -8,74 +8,86 @@ class Login extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Mymodel');
 	}
+    public function checkusername() {
+        $checkUserName = $this->db->query("SELECT * FROM users WHERE username LIKE '%".$_POST['username']."%'")->row();
+        if(!empty($checkUserName)) {
+            $data = array('result'=> 'error', 'data' => 'Username already exists');
+        } else {
+            $data = array('result'=> 'success', 'data' => 'Username is Available');
+        }
+        echo json_encode($data); exit;
+    }
 	public function reg() {
-		$validate=$this->Crud_model->get_single('users',"email='".$_POST['email']."'");
+        if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $email = $_POST['email'];
+            $validate = $this->db->query("SELECT * FROM users WHERE email = '".$email."'")->result();
+        } else {
+            $mobile = $_POST['email'];
+            $validate = $this->db->query("SELECT * FROM users WHERE mobile = '".$mobile."'")->result();
+        }
 		if(!empty($validate)) {
-			$data=array('result'=> 'email','data'=>'email');
+			$data = array('result'=> 'email','data'=>'email');
 		}
 		if(empty($validate)) {
 			$data=array(
-				'userType' => $_POST['user_type'],
-				'firstname' => $_POST['first_name'],
-				'lastname' => $_POST['last_name'],
-				'companyname' => $_POST['company_name'],
-				'email' => $_POST['email'],
+                'firstname' =>$_POST['first_name'],
+                'lastname' => $_POST['last_name'],
+                'username' => $_POST['username'],
+				'email' => @$email,
+                'mobile' => @$mobile,
+				'password' => base64_encode($_POST['password']),
+				// 'userType' => $_POST['user_type'],
+                'userType' => "2",
 				'address' => $_POST['location'],
 				'latitude' => $_POST['latitude'],
 				'longitude' => $_POST['longitude'],
-				'password' => base64_encode($_POST['password']),
 				'created' => date('Y-m-d H:i:s'),
-				'status' => 1,
-				'email_verified' => 1
+				'status' => 0,
+				'email_verified' => 0
 			);
+            //print_r($data); die();
 			$result = $this->Mymodel->insert('users',$data);
-			if($_POST['first_name']) {
-					$fullname = $_POST['first_name']." ".$_POST['last_name'];
-			} else {
-				$fullname = $_POST['company_name'];
-			}
 			$insert_id = $this->db->insert_id();
-			if($_POST['user_type'] == '1') {
-				$sitemap_date = array(
-					'link'=>'/'.'professionals_detail/'.base64_encode($insert_id),
-					'changefreq' => 'daily',
-					'priority' => '0.80',
-					'lastmod'=> date('c', time()),
-				);
-			} else {
-				$sitemap_date = array(
-					'link'=>'/'.'customer_detail/'.base64_encode($insert_id),
-					'changefreq' => 'daily',
-					'priority' => '0.64',
-					'lastmod'=> date('c', time()),
-				);
-			}
-			$this->Mymodel->insert('sitemap',$sitemap_date);
+			// if($_POST['user_type'] == '1') {
+			// 	$sitemap_date = array(
+			// 		'link'=>'/'.'professionals_detail/'.base64_encode($insert_id),
+			// 		'changefreq' => 'daily',
+			// 		'priority' => '0.80',
+			// 		'lastmod'=> date('c', time()),
+			// 	);
+			// } else {
+			// 	$sitemap_date = array(
+			// 		'link'=>'/'.'customer_detail/'.base64_encode($insert_id),
+			// 		'changefreq' => 'daily',
+			// 		'priority' => '0.64',
+			// 		'lastmod'=> date('c', time()),
+			// 	);
+			// }
+			// $this->Mymodel->insert('sitemap',$sitemap_date);
 			$get_setting=$this->Crud_model->get_single('setting');
 			if(!empty($insert_id)) {
 				$data=array(
 					'activationURL' => base_url() . "email-verification/" . urlencode(base64_encode($insert_id)),
 					'imagePath' => base_url().'uploads/logo/'.$get_setting->flogo,
-					'fullname' => $fullname,
 				);
-				$message = "<body><div style='width:600px;margin: 0 auto;background: #fff; border: 1px solid #e6e6e6;'><div style='padding: 30px 30px 15px 30px;box-sizing: border-box;'><img src='cid:Logo' style='width:100px;float: right;margin-top: 0 auto;'><h3 style='padding-top:40px; line-height: 30px;'>Greetings from<span style='font-weight: 900;font-size: 35px;color: #F44C0D; display: block;'>Handyman Services</span></h3><p style='font-size:24px;'>Hello $fullname,</p><p style='font-size:24px;'>Thank you for registration on Handyman Services.</p><p style='font-size:24px;'>Please click the button below to verify your email address.</p><p style='text-align: center;'><a href='".base_url() . "email-verification/" . urlencode(base64_encode($insert_id))."' style='height: 50px; width: 300px; background: rgb(253,179,2); background: linear-gradient(0deg, rgba(253,179,2,1) 0%, rgba(244,77,9,1) 100%); text-align: center; font-size: 18px; color: #fff; border-radius: 12px; display: inline-block; line-height: 50px; text-decoration: none; text-transform: uppercase; font-weight: 600;'>ACTIVATE</a></p><p style='font-size:20px;'>Thank you!</p><p style='font-size:20px;list-style: none;'>Sincerly</p><p style='list-style: none;'><b>Handyman Services</b></p><p style='list-style:none;'><b>Visit us:</b> <span>$get_setting->address</span></p><p style='list-style:none'><b>Email us:</b> <span>$get_setting->email</span></p></div><table style='width: 100%;'><tr><td style='height:30px;width:100%; background: red;padding: 10px 0px; font-size:13px; color: #fff; text-align: center;'>Copyright &copy; <?=date('Y')?> Handyman Services. All rights reserved.</td></tr></table></div></body>";
+				$message = "<body><div style='width:600px;margin: 0 auto;background: #fff; border: 1px solid #e6e6e6;'><div style='padding: 30px 30px 15px 30px;box-sizing: border-box;'><img src='cid:Logo' style='width:100px;float: right;margin-top: 0 auto;'><h3 style='padding-top:40px; line-height: 30px;'>Greetings from <span style='font-weight: 900;font-size: 35px;color: #2892ff; display: block;'>SideQuote</span></h3><p style='font-size:24px;'>Hello ".$_POST['first_name'].",</p><p style='font-size:24px;'>Thank you for registration on SideQuote.</p><p style='font-size:24px;'>Please click the button below to verify your email address.</p><p style='text-align: center;'><a href='".base_url() . "email-verification/" . urlencode(base64_encode($insert_id))."' style='height: 50px; width: 300px; background: linear-gradient(0deg, rgb(120 131 173) 0%, rgb(40 146 255) 100%); text-align: center; font-size: 18px; color: #fff; border-radius: 12px; display: inline-block; line-height: 50px; text-decoration: none; text-transform: uppercase; font-weight: 600;'>ACTIVATE</a></p><p style='font-size:20px;'>Thank you!</p><p style='font-size:20px;list-style: none;'>Sincerly</p><p style='list-style: none;'><b>SideQuote</b></p><p style='list-style:none;'><b>Visit us:</b> <span>$get_setting->address</span></p><p style='list-style:none'><b>Email us:</b> <span>$get_setting->email</span></p></div><table style='width: 100%;'><tr><td style='height:30px;width:100%; background: #2892ff;padding: 10px 0px; font-size:13px; color: #fff; text-align: center;'>Copyright &copy; <?=date('Y')?> SideQuote. All rights reserved.</td></tr></table></div></body>";
 				require 'vendor/autoload.php';
 				$mail = new PHPMailer(true);
 				try {
 					$mail->CharSet = 'UTF-8';
-					$mail->SetFrom('sayantan@goigi.in', 'Handyman Services');
+					$mail->SetFrom('support@sidequote.com', 'SideQuote');
 					$mail->AddAddress($_POST['email']);
 					$mail->IsHTML(true);
-					$mail->Subject = 'Verify Your Email Address From Handyman Services';
+					$mail->Subject = 'Verify Your Email Address From SideQuote';
 					$mail->AddEmbeddedImage('uploads/logo/'.$get_setting->flogo, 'Logo');
 					$mail->Body = $message;
 					$mail->IsSMTP();
 					$mail->SMTPAuth = true;
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-					$mail->Host = "smtp-relay.brevo.com1";
+					$mail->Host = "mail.sidequote.com";
 					$mail->Port = 587; //587 465
-					$mail->Username = "sayantan@goigi.in1";
-					$mail->Password = "NWpyxa3UK2HDPSbs1";
+					$mail->Username = "support@sidequote.com";
+					$mail->Password = "pu0kA,}h_jGQ";
 					if(!$mail->send()) {
 						$data = array('result' => 'success', 'data' => "You account has been created. You can now login with your credential.");
 					} else {
@@ -89,6 +101,12 @@ class Login extends CI_Controller {
 			}
 		}
 		echo json_encode($data); exit;
+    }
+    public function email_verification() {
+        $data['title'] = 'Authenticate your account';
+   	   	$this->load->view('header', $data);
+		$this->load->view('email_verification');
+		$this->load->view('footer');
     }
     public function emailVerification($otp=null) {
 		if(empty($otp)) {
@@ -136,11 +154,11 @@ class Login extends CI_Controller {
 							if(empty($check_sub)) {
 								redirect('subscription');
 							} else {
-								$profile_check = $this->db->query("SELECT `firstname`, `lastname`, `email`, `gender`, `address`, `zip`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
-								if(empty($profile_check[0]['firstname']) || empty($profile_check[0]['lastname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['gender']) || empty($profile_check[0]['address']) || empty($profile_check[0]['zip']) || empty($profile_check[0]['short_bio'])) {
+								$profile_check = $this->db->query("SELECT `companyname`, `firstname`, `lastname`, `mobile`, `email`, `serviceType`, hourly_rate, `address`, `zip`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
+								if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['firstname']) || empty($profile_check[0]['lastname']) || empty($profile_check[0]['mobile']) || empty($profile_check[0]['email']) || empty($profile_check[0]['serviceType']) || empty($profile_check[0]['hourly_rate']) || empty($profile_check[0]['address']) || empty($profile_check[0]['zip']) || empty($profile_check[0]['short_bio'])) {
 									redirect('profile');
 								} else {
-									redirect('jobbid');
+									redirect('homepage');
 								}
 							}
 						} else if ($_SESSION['afrebay']['userType'] == '2') {
@@ -148,8 +166,8 @@ class Login extends CI_Controller {
 							if(empty($check_sub)) {
 								redirect('subscription');
 							} else {
-								$profile_check = $this->db->query("SELECT `profilePic`, `companyname`, `email`, `mobile`,`address`, `foundedyear`, `teamsize`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
-								if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio'])) {
+								$profile_check = $this->db->query("SELECT `firstname`, `lastname`, `zip`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
+								if(empty($profile_check[0]['firstname']) || empty($profile_check[0]['lastname']) || empty($profile_check[0]['zip']) || empty($profile_check[0]['zip']) || empty($profile_check[0]['short_bio'])) {
 									redirect('profile');
 								} else {
 									redirect('dashboard');
@@ -160,18 +178,18 @@ class Login extends CI_Controller {
 						}
 					} else {
 						if($_SESSION['afrebay']['userType'] == '1') {
-							$profile_check = $this->db->query("SELECT `firstname`, `lastname`, `email`, `gender`, `address`, `zip`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
-							if(empty($profile_check[0]['firstname']) || empty($profile_check[0]['lastname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['gender']) || empty($profile_check[0]['address']) || empty($profile_check[0]['zip']) || empty($profile_check[0]['short_bio'])) {
+							$profile_check = $this->db->query("SELECT `companyname`, `firstname`, `lastname`, `mobile`, `email`, `serviceType`, hourly_rate, `address`, `zip`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
+								if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['firstname']) || empty($profile_check[0]['lastname']) || empty($profile_check[0]['mobile']) || empty($profile_check[0]['email']) || empty($profile_check[0]['serviceType']) || empty($profile_check[0]['hourly_rate']) || empty($profile_check[0]['address']) || empty($profile_check[0]['zip']) || empty($profile_check[0]['short_bio'])) {
 								redirect('profile');
 							} else {
-								redirect('jobbid');
+								redirect('homepage');
 							}
 						} else if ($_SESSION['afrebay']['userType'] == '2') {
-							$profile_check = $this->db->query("SELECT `profilePic`, `companyname`, `email`, `mobile`,`address`, `foundedyear`, `teamsize`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
-							if(empty($profile_check[0]['companyname']) || empty($profile_check[0]['email']) || empty($profile_check[0]['address']) || empty($profile_check[0]['teamsize'])  || empty($profile_check[0]['short_bio'])) {
+							$profile_check = $this->db->query("SELECT `firstname`, `lastname`, `zip`, `short_bio` FROM `users` WHERE userId = '".@$_SESSION['afrebay']['userId']."'")->result_array();
+								if(empty($profile_check[0]['firstname']) || empty($profile_check[0]['lastname']) || empty($profile_check[0]['zip']) || empty($profile_check[0]['zip']) || empty($profile_check[0]['short_bio'])) {
 								redirect('profile');
 							} else {
-								redirect('dashboard');
+								redirect('homepage');
 							}
 						} else {
 								redirect('login');
@@ -181,7 +199,7 @@ class Login extends CI_Controller {
 					redirect($_SESSION['url']);
 				}
 			} else {
-				$this->session->set_flashdata('message', 'Invalid Email Address or Password !');
+				$this->session->set_flashdata('error', 'Invalid Login Credential');
 				redirect('login');
 			}
 		}
@@ -206,31 +224,31 @@ class Login extends CI_Controller {
 					'email'=>$get_email->email
 				);
 				$get_setting=$this->Crud_model->get_single('setting');
-				$htmlContent = "<div style='width:600px; margin: 0 auto;background: #fff;border: 1px solid #e6e6e6;'><div style='padding: 30px 30px 15px 30px;box-sizing: border-box;'><img src='cid:Logo' style='width:100px;float: right;margin-top: 0 auto;'><h3 style='padding-top:40px; line-height: 30px;'>Greetings from<span style='font-weight: 900;font-size: 35px;color: #F44C0D; display: block;'>Handyman Services</span></h3><p style='font-size:24px;'>Hello User,</p><p style='font-size:24px;'>Trouble signing in? Resetting your password is easy.</p><p style='font-size:24px;'>Just press the button below and follow the instructions.</p><p style='text-align: center;'><a href='".base_url('new-password/'.base64_encode($get_email->email))."' style='height: 50px; width: 300px; background: rgb(253,179,2); background: linear-gradient(0deg, rgba(253,179,2,1) 0%, rgba(244,77,9,1) 100%); text-align: center; font-size: 18px; color: #fff; border-radius: 12px; display: inline-block; line-height: 50px; text-decoration: none; text-transform: uppercase; font-weight: 600;'>CLICK HERE TO RESET</a></p><p style='font-size:20px;'>Thank you!</p><p style='font-size:20px;list-style: none;'>Sincerly</p><p style='list-style: none;'><b>Handyman Services</b></p><p style='list-style:none;'><b>Visit us:</b> <span>$get_setting->address</span></p><p style='list-style:none'><b>Email us:</b> <span>$get_setting->email</span></p></div><table style='width: 100%;'><tr><td style='height:30px;width:100%; background: red;padding: 10px 0px; font-size:13px; color: #fff; text-align: center;'>Copyright &copy; <?=date('Y')?> Handyman Services. All rights reserved.</td></tr></table></div>";
+				$htmlContent = "<div style='width:600px; margin: 0 auto;background: #fff;border: 1px solid #e6e6e6;'><div style='padding: 30px 30px 15px 30px;box-sizing: border-box;'><img src='cid:Logo' style='width:100px;float: right;margin-top: 0 auto;'><h3 style='padding-top:40px; line-height: 30px;'>Greetings from<span style='font-weight: 900;font-size: 35px;color: #2892ff; display: block;'> SideQuote</span></h3><p style='font-size:24px;'>Hello User,</p><p style='font-size:24px;'>Trouble signing in? Resetting your password is easy.</p><p style='font-size:24px;'>Just press the button below and follow the instructions.</p><p style='text-align: center;'><a href='".base_url('new-password/'.base64_encode($get_email->email))."' style='height: 50px; width: 300px; background: linear-gradient(0deg, rgb(120 131 173) 0%, rgb(40 146 255) 100%); text-align: center; font-size: 18px; color: #fff; border-radius: 12px; display: inline-block; line-height: 50px; text-decoration: none; text-transform: uppercase; font-weight: 600;'>CLICK HERE TO RESET</a></p><p style='font-size:20px;'>Thank you!</p><p style='font-size:20px;list-style: none;'>Sincerly</p><p style='list-style: none;'><b>SideQuote</b></p><p style='list-style:none;'><b>Visit us:</b> <span>$get_setting->address</span></p><p style='list-style:none'><b>Email us:</b> <span>$get_setting->email</span></p></div><table style='width: 100%;'><tr><td style='height:30px;width:100%; background: #2892ff;padding: 10px 0px; font-size:13px; color: #fff; text-align: center;'>Copyright &copy; <?=date('Y')?> SideQuote. All rights reserved.</td></tr></table></div>";
 				require 'vendor/autoload.php';
 				$mail = new PHPMailer(true);
 				try {
 					$mail->CharSet = 'UTF-8';
-					$mail->SetFrom('igikolkata2024@gmail.com', 'Handyman Services');
+					$mail->SetFrom('support@sidequote.com', 'SideQuote');
 					$mail->AddAddress($_POST['email']);
 					$mail->IsHTML(true);
-					$mail->Subject = "Forgot Password Confirmation message from Handyman Services";
+					$mail->Subject = "Forgot Password Confirmation message from SideQuote";
 					$mail->AddEmbeddedImage('uploads/logo/'.$get_setting->flogo, 'Logo');
 					$mail->Body = $htmlContent;
 					$mail->IsSMTP();
 					$mail->SMTPAuth = true;
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-					$mail->Host = "smtp.gmail.com";
-					$mail->Port = 465; //587 465
-					$mail->Username = "igikolkata2024@gmail.com";
-					$mail->Password = "Goigi123";
+					$mail->Host = "mail.sidequote.com";
+					$mail->Port = 587; //587 465
+					$mail->Username = "support@sidequote.com";
+					$mail->Password = "pu0kA,}h_jGQ";
 					$mail->send();
 					$this->session->set_flashdata('message', 'Please check your inbox. We have sent you an email to reset your password.');
 				} catch (Exception $e) {
 					$this->session->set_flashdata('message', 'Something went wrong. Please try again later!');
 				}
          	} else {
-				$this->session->set_flashdata('error', 'invalid Email Id!');
+				$this->session->set_flashdata('error', 'Email address is not registered with us. Please register this email address.');
    			}
 			redirect(base_url('forgot-password'));
 		}
@@ -242,16 +260,15 @@ class Login extends CI_Controller {
 		$this->load->view('footer');
 	}
 	public function setnew_password() {
-		if($this->input->post('email',TRUE)){
-		 	$get_email = $this->Crud_model->GetData('users','',"email='".$_POST['email']."'",'','','','1');
-			if(!empty($get_email)) {
+        if($this->input->post('user_id',TRUE)){
+		 	$get_user = $this->Crud_model->GetData('users','',"userId='".$_POST['user_id']."'",'','','','1');
+			if(!empty($get_user)) {
 				$data = array('password' =>base64_encode($_POST['password']));
-			 	$con="userId='".$get_email->userId."'";
-			 	$this->Crud_model->SaveData('users',$data, $con);
-			 	$this->session->set_flashdata('message', 'You have reset your password successfully. Please try to login.');
-	           	echo "1";
+			 	$con = "userId='".$get_user->userId."'";
+			 	$this->Crud_model->SaveData('users', $data, $con);
+			 	echo "1";
             } else {
-            	$this->session->set_flashdata('message', 'Something went wrong. Please try again later!');
+            	echo "2";
             }
         }
 	}

@@ -51,10 +51,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
-$route['signup'] = "home/signup";
+$route['homepage'] = 'home/home';
+//$route['signup'] = "home/signup";
+$route['signup'] = "home/index";
+$route['save'] = "user/login/reg";
+$route['email_verification'] = 'user/login/email_verification';
 $route['email-verification/(:any)'] = "user/login/emailVerification/$1";
 $route['login'] = "home/login_page";
+$route['validate'] = "user/login/validate_user";
+$route['view_as_guest'] = "welcome/view_as_guest";
 $route['forgot-password'] = "user/login/forgot_password";
 $route['new-password/(:any)'] = "user/login/new_password/$1";
 $route['about-us'] = "home/about";
@@ -63,7 +68,10 @@ $route['contact-us'] = "home/contact";
 $route['customer_pricing'] = "home/vendor_pricing";
 $route['talents_pricing'] = "home/freelancer_pricing";
 $route['privacy-policy'] = "home/privacy";
+$route['cookies-policy'] = "home/cookies_policy";
+$route['member-agreement'] = "home/member_agreement";
 $route['term-and-conditions'] = "home/term_and_conditions";
+$route['ads-info'] = "home/ads_info";
 $route['employees_list/(:any)'] = "Welcome/employees_list/$1";
 $route['customer'] = "home/employer_list";
 $route['customer_detail/(:any)'] = "Welcome/employer_detail/$1";
@@ -75,9 +83,9 @@ $route['workdetail/(:any)'] = "home/post_bidding/$1";
 $route['stripe/(:any)'] = "Stripe/index/$1";
 $route['career-tips'] = "home/career_tipsList";
 $route['career-tips/(:any)'] = "home/career_tip/$1";
-$route['save'] = "user/login/reg";
-$route['validate'] = "user/login/validate_user";
 $route['logout'] = "user/login/logout";
+$route['business_details'] = "user/dashboard/business_details";
+$route['business_details/(:any)'] = "user/dashboard/business_details/$1";
 $route['profile'] = "user/dashboard/profile";
 $route['profile/(:any)'] = "user/dashboard/profile/$1";
 $route['subscription'] = "user/dashboard/subscription";
@@ -112,7 +120,7 @@ $route['paystackCheckout/(:any)/(:any)/(:any)'] = "Home/paystackCheckout/$1/$2/$
 $route['admin'] = 'admin/login/index';
 $route['admin/logout'] = 'admin/login/logout';
 $route['admin/dashboard'] = 'admin/login/dashboard';
-$route['admin/adsence'] = 'admin/Adsense';
+$route['admin/adsense'] = 'admin/Adsense';
 $route['admin/profile'] = 'admin/login/profile';
 $route['admin/jobsbid'] = 'admin/jobsbidding/index';
 $route['admin/company-logo'] = 'admin/manage_home/Company_logo/index';
@@ -124,7 +132,6 @@ $route['admin/chat_details/(:any)/(:any)'] = "admin/chat/adminShowMessage_list/$
 // $route['admin/deletepostdetail/(:any)'] = "admin/Post_job/deletepostdetail/$1";
 $route['admin/deletepostdetail'] = "admin/Post_job/deletepostdetail";
 $route['admin/update-postjob/(:any)'] = "admin/Post_job/update_post_job/$1";
-
 
 //API URLS
 $route['api/registration'] = 'api/Authentication/registration';

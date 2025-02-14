@@ -11,8 +11,17 @@ class Home extends MY_Controller {
 		$this->load->model('post_job_model');
 		$this->load->model('Users_model');
 	}
-	public function index() {
-	    $data['get_post'] = $this->Crud_model->GetData('postjob', 'id, post_title, description, user_id, created_date', "is_delete='0'", '', '(id)desc', '6');
+	public function home() {
+        if(empty($_SESSION['afrebay']['userId'])) {
+            redirect('login');
+        }
+        //$data['get_post'] = $this->db->query("SELECT *, (6367 * acos(cos(radians('".$lat."')) * cos(radians(`latitude`)) * cos(radians(`longitude`) - radians('".$lat."')) + sin(radians('".$lat."')) * sin(radians(`latitude`)))) AS distance FROM `postjob` having `distance` < 10  AND (status = 'Active' ) ORDER BY distance ASC")->result();
+        /*if(!empty($_SESSION['afrebay']['userId'])) {
+            $data['get_post'] = $this->Crud_model->GetData('postjob', 'id, post_title, description, user_id, created_date', "status = 'Active' AND visibility IN(1,2)", '', '(id)desc', '');
+        } else {
+            $data['get_post'] = $this->Crud_model->GetData('postjob', 'id, post_title, description, user_id, created_date', "status = 'Active' AND visibility = 1", '', '(id)desc', '');
+        }*/
+        $data['get_post'] = $this->Crud_model->GetData('postjob', 'id, post_title, description, user_id, category_id, created_date', "status = 'Active' AND is_delete = '0' AND visibility IN(1,2)", '', '(id)desc', '');
 		$data['countries']=$this->Crud_model->GetData('countries',"","");
 		$data['get_freelancerspost'] = $this->Crud_model->GetData('postjob', '', "is_delete='0'", '', '', '8');
 		$data['get_career'] = $this->Crud_model->GetData('career_tips', '', "status='Active'", '', '', '3');
@@ -23,8 +32,8 @@ class Home extends MY_Controller {
 		$data['get_ourservice'] = $this->db->query("SELECT our_service.*, category_name FROM our_service LEFT JOIN category ON category.id = our_service.category_id WHERE category.category_name != '' ORDER BY our_service.id DESC")->result_array();
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Home Top'");
 		$data['get_banner_middle'] = $this->Crud_model->get_single('banner', "page_name='Home Middle'");
-		$data['title'] = 'Handyman Services';
-		$data['description'] = 'Handyman Services';
+		$data['title'] = '';
+		$data['description'] = '';
 		$this->load->view('header', $data);
 		$this->load->view('home', $data);
 		$this->load->view('footer');
@@ -33,11 +42,11 @@ class Home extends MY_Controller {
 		$subscription_id = $this->input->post('subscription_id');
 		$subscription_id = $this->db->query("UPDATE users set onesignal_notification = '".@$subscription_id."' WHERE userId = '".@$_SESSION['afrebay']['userId']."'");
 	}
-	public function signup() {
+	public function index() {
 		$data['get_category'] = $this->Crud_model->GetData('category');
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Sign Up'");
 		$data['title'] = 'Registration';
-		$data['description'] = 'Unlock a world of possibilities – Register with Handyman Services today. Sign up now!';
+		$data['description'] = 'Unlock a world of possibilities – Register with SideQuote today. Sign up now!';
 		$this->load->view('header', $data);
 		$this->load->view('register', $data);
 		$this->load->view('footer');
@@ -49,6 +58,15 @@ class Home extends MY_Controller {
 		$this->load->view('login', $data);
 		$this->load->view('footer');
 	}
+
+    public function login_page_old() {
+		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Login'");
+		$data['title'] = 'Login';
+		$this->load->view('header', $data);
+		$this->load->view('login_old', $data);
+		$this->load->view('footer');
+	}
+
 	public function about() {
 		$data['get_cms'] = $this->Crud_model->get_single('manage_cms', "id='2'");
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='About Us Top'");
@@ -64,7 +82,7 @@ class Home extends MY_Controller {
 		$data['get_data'] = $this->Crud_model->get_single('setting');
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Contact Us'");
 		$data['title'] = 'Contact Us';
-		$data['description'] = 'Connect with our dedicated team at Handyman Services.';
+		$data['description'] = 'Connect with our dedicated team at SideQuote.';
 		$this->load->view('header', $data);
 		$this->load->view('frontend/contact_us', $data);
 		$this->load->view('footer');
@@ -81,13 +99,13 @@ class Home extends MY_Controller {
 		$get_setting=$this->Crud_model->get_single('setting');
 		if(!empty($insert_id)) {
 			$subject = $_POST['subject'];
-			$message = "<div style='width:600px;margin: 0 auto;background: #fff;font-family: 'Poppins', sans-serif; border: 1px solid #e6e6e6;'><div style='padding: 30px 30px 15px 30px;box-sizing: border-box;'><img src='cid:Logo' style='width:100px;float: right;margin-top: 0 auto;'><h3 style='padding-top: 40px;line-height: 20px;font-weight: 100;font-size: 15px;'>Greetings from<span style='font-weight: 900;font-size: 23px;color: #F44C0D;display: block;'>Handyman Services</span></h3><p style='font-size: 15px;'>Hello Admin,</p><p style='font-size: 15px;'>Please find the below contact form details.</p><p style='font-size: 15px; padding: 0; margin: 0;'>Name : ".$_POST['name']."</p><p style='font-size: 15px; padding: 0; margin: 0;'>Email : ".$_POST['email']."</p><p style='font-size: 15px; padding: 0; margin: 0;'>Message: ".$_POST['message']."</p><p style='font-size: 15px; padding: 0; margin: 18px 0 0 0;'>Thank you!</p><p style='font-size: 15px; padding: 0; margin: 0; list-style: none;'>Sincerly,</p><p style='font-size: 15px; list-style: none; padding: 0; margin: 0;'><b>".$_POST['name']."</b></p><p style='font-size: 15px; list-style: none; padding: 0; margin: 18px 0 0 0;'>Visit us: <span> $get_setting->address</span></p><p style='font-size: 15px; list-style: none; padding: 0; margin: 0;'>Email us: <span> $get_setting->email</span></p></div><table style='width: 100%;'><tr><td style='height:30px;width:100%; background: red;padding: 10px 0px; font-size:13px; color: #fff; text-align: center;'>Copyright &copy; <?=date('Y')?> Handyman Services. All rights reserved.</td></tr></table></div>";
+			$message = "<div style='width:600px;margin: 0 auto;background: #fff;font-family: 'Poppins', sans-serif; border: 1px solid #e6e6e6;'><div style='padding: 30px 30px 15px 30px;box-sizing: border-box;'><img src='cid:Logo' style='width:100px;float: right;margin-top: 0 auto;'><h3 style='padding-top: 40px;line-height: 20px;font-weight: 100;font-size: 15px;'>Greetings from<span style='font-weight: 900;font-size: 23px;color: #2892ff;display: block;'>SideQuote</span></h3><p style='font-size: 15px;'>Hello Admin,</p><p style='font-size: 15px;'>Please find the below contact form details.</p><p style='font-size: 15px; padding: 0; margin: 0;'>Name : ".$_POST['name']."</p><p style='font-size: 15px; padding: 0; margin: 0;'>Email : ".$_POST['email']."</p><p style='font-size: 15px; padding: 0; margin: 0;'>Message: ".$_POST['message']."</p><p style='font-size: 15px; padding: 0; margin: 18px 0 0 0;'>Thank you!</p><p style='font-size: 15px; padding: 0; margin: 0; list-style: none;'>Sincerly,</p><p style='font-size: 15px; list-style: none; padding: 0; margin: 0;'><b>".$_POST['name']."</b></p><p style='font-size: 15px; list-style: none; padding: 0; margin: 18px 0 0 0;'>Visit us: <span> $get_setting->address</span></p><p style='font-size: 15px; list-style: none; padding: 0; margin: 0;'>Email us: <span> $get_setting->email</span></p></div><table style='width: 100%;'><tr><td style='height:30px;width:100%; background: #2892ff; padding: 10px 0px; font-size:13px; color: #fff; text-align: center;'>Copyright &copy; <?=date('Y')?> SideQuote. All rights reserved.</td></tr></table></div>";
 			require 'vendor/autoload.php';
 			$mail = new PHPMailer(true);
 			try {
 				$mail->CharSet = 'UTF-8';
 				$mail->SetFrom($_POST['email']);
-				$mail->AddAddress('igikolkata2024@gmail.com', 'Handyman Services');
+				$mail->AddAddress('support@sidequote.com', 'SideQuote');
 				$mail->IsHTML(true);
 				$mail->Subject = $subject;
 				$mail->AddEmbeddedImage('uploads/logo/'.$get_setting->flogo, 'Logo');
@@ -95,10 +113,10 @@ class Home extends MY_Controller {
 				$mail->IsSMTP();
 				$mail->SMTPAuth   = true;
 				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-				$mail->Host       = "smtp.gmail.com";
-				$mail->Port       = 465; //587 465
-				$mail->Username   = "igikolkata2024@gmail.com";
-				$mail->Password   = "Goigi123";
+				$mail->Host = "mail.sidequote.com";
+                $mail->Port = 587; //587 465
+                $mail->Username = "support@sidequote.com";
+                $mail->Password = "pu0kA,}h_jGQ";
 				$mail->send();
 			} catch (Exception $e) {
 				$this->session->set_flashdata('message', "Your message could not be sent. Please, try again later.");
@@ -119,6 +137,24 @@ class Home extends MY_Controller {
 		$this->load->view('frontend/privacy_policy', $data);
 		$this->load->view('footer');
 	}
+    public function cookies_policy() {
+		$data['get_cms'] = $this->Crud_model->get_single('manage_cms', "id='4'");
+		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Cookie policy'");
+		$data['title'] = 'Cookie policy';
+		$data['description'] = '';
+		$this->load->view('header', $data);
+		$this->load->view('frontend/cookies_policy', $data);
+		$this->load->view('footer');
+	}
+    public function member_agreement() {
+		$data['get_cms'] = $this->Crud_model->get_single('manage_cms', "id='5'");
+		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Member Agreement'");
+		$data['title'] = 'Member Agreement';
+		$data['description'] = '';
+		$this->load->view('header', $data);
+		$this->load->view('frontend/member_agreement', $data);
+		$this->load->view('footer');
+	}
 	public function term_and_conditions() {
 		$data['get_cms'] = $this->Crud_model->get_single('manage_cms', "id='1'");
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Terms and Conditions'");
@@ -126,6 +162,15 @@ class Home extends MY_Controller {
 		$data['description'] = 'Discover our recruitment company\'s terms and conditions. Learn about our policies, expectations, and commitments.';
 		$this->load->view('header', $data);
 		$this->load->view('frontend/term_and_conditions', $data);
+		$this->load->view('footer');
+	}
+    public function ads_info() {
+		$data['get_cms'] = $this->Crud_model->get_single('manage_cms', "id='6'");
+		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Ads Info'");
+		$data['title'] = 'Ads Info';
+		$data['description'] = 'Discover our recruitment company\'s terms and conditions. Learn about our policies, expectations, and commitments.';
+		$this->load->view('header', $data);
+		$this->load->view('frontend/ads_info', $data);
 		$this->load->view('footer');
 	}
 	function getVisIpAddr() {
@@ -190,7 +235,7 @@ class Home extends MY_Controller {
 	function our_jobs() {
 		$data['getcategory']=$this->Crud_model->GetData('category');
 		$data['getcountry']=$this->Crud_model->GetData('countries');
-		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Our Jobs'");
+		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Find Work'");
 		$data['title'] = 'Explore Job Openings';
 		$this->load->view('header', $data);
 		$this->load->view('frontend/post_jobslist', $data);
@@ -318,8 +363,9 @@ class Home extends MY_Controller {
 	public function worker_detail($user_id) {
 		$cond = "users.userType='1' and users.userId='" . base64_decode($user_id) . "'";
 		$data['user_detail'] = $this->Users_model->users_detail($cond);
-		$data['user_education'] = $this->Crud_model->GetData('user_education', '', "user_id='" . base64_decode($user_id) . "'", '', '(id)desc');
-		$data['user_work'] = $this->Crud_model->GetData('user_workexperience', '', "user_id='" . base64_decode($user_id) . "'", '', '(id)desc');
+		//$data['user_education'] = $this->Crud_model->GetData('user_education', '', "user_id='" . base64_decode($user_id) . "'", '', '(id)desc');
+		//$data['user_work'] = $this->Crud_model->GetData('user_workexperience', '', "user_id='" . base64_decode($user_id) . "'", '', '(id)desc');
+        $data['user_work'] = $this->Crud_model->GetData('users_work_sample', '', "user_id='" . base64_decode($user_id) . "'", '', '');
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Service Provider Details'");
 		$data['title'] = 'Service Provider Details';
 		$this->load->view('header', $data);
@@ -330,7 +376,7 @@ class Home extends MY_Controller {
 		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Customer'");
 		$data['getcategory']=$this->Crud_model->GetData('category');
 		$data['title'] = 'Explore Customer';
-		$data['description'] = 'Discover the Top Customer at Handyman Services.';
+		$data['description'] = 'Discover the Top Customer at SideQuote.';
 		$this->load->view('header', $data);
 		$this->load->view('frontend/employer_list', $data);
 		$this->load->view('footer');
@@ -382,6 +428,7 @@ class Home extends MY_Controller {
 		echo json_encode($output);
 	}
 	function career_tipsList() {
+        $data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Career Tips'");
 		$data['getcareer'] = $this->Crud_model->GetData('career_tips', '', "status= 'Active'", '', '(id)desc');
 		$data['title'] = "Career Tips";
 		$this->load->view('header', $data);
@@ -408,12 +455,12 @@ class Home extends MY_Controller {
 		$get_setting=$this->Crud_model->get_single('setting');
 		if(!empty($insert_id)) {
 			$subject = 'New Product Inquiry';
-			$message = "<div style='width:600px;margin: 0 auto;background: #fff;font-family: 'Poppins', sans-serif; border: 1px solid #e6e6e6;'><div style='padding: 30px 30px 15px 30px;box-sizing: border-box;'><img src='cid:Logo' style='width:100px;float: right;margin-top: 0 auto;'><h3 style='padding-top: 40px;line-height: 20px;font-weight: 100;font-size: 15px;'>Greetings from<span style='font-weight: 900;font-size: 23px;color: #F44C0D;display: block;'>Handyman Services</span></h3><p style='font-size: 15px;'>Hello Admin,</p><p style='font-size: 15px;'>Please find the below details for product related queries.</p><p style='font-size: 15px; padding: 0; margin: 0;'>Product Name: ".$_POST['p_name']."</p><p style='font-size: 15px; padding: 0; margin: 0;'>Customer Name: ".$_POST['name']."</p><p style='font-size: 15px; padding: 0; margin: 0;'>Customer Email: ".$_POST['email']."</p><p style='font-size: 15px; padding: 0; margin: 0;'>Message: ".$_POST['details']."</p><p style='font-size: 15px; padding: 0; margin: 18px 0 0 0;'>Thank you!</p><p style='font-size: 15px; padding: 0; margin: 0; list-style: none;'>Sincerly,</p><p style='font-size: 15px; list-style: none; padding: 0; margin: 0;'><b>Handyman Services</b></p><p style='font-size: 15px; list-style: none; padding: 0; margin: 18px 0 0 0;'>Visit us: <span> $get_setting->address</span></p><p style='font-size: 15px; list-style: none; padding: 0; margin: 0;'>Email us: <span> $get_setting->email</span></p></div><table style='width: 100%;'><tr><td style='height:30px;width:100%; background: red;padding: 10px 0px; font-size:13px; color: #fff; text-align: center;'>Copyright &copy; <?=date('Y')?> Handyman Services. All rights reserved.</td></tr></table></div>";
+			$message = "<div style='width:600px;margin: 0 auto;background: #fff;font-family: 'Poppins', sans-serif; border: 1px solid #e6e6e6;'><div style='padding: 30px 30px 15px 30px;box-sizing: border-box;'><img src='cid:Logo' style='width:100px;float: right;margin-top: 0 auto;'><h3 style='padding-top: 40px;line-height: 20px;font-weight: 100;font-size: 15px;'>Greetings from<span style='font-weight: 900;font-size: 23px;color: ##2892ff; display: block;'>SideQuote</span></h3><p style='font-size: 15px;'>Hello Admin,</p><p style='font-size: 15px;'>Please find the below details for product related queries.</p><p style='font-size: 15px; padding: 0; margin: 0;'>Product Name: ".$_POST['p_name']."</p><p style='font-size: 15px; padding: 0; margin: 0;'>Customer Name: ".$_POST['name']."</p><p style='font-size: 15px; padding: 0; margin: 0;'>Customer Email: ".$_POST['email']."</p><p style='font-size: 15px; padding: 0; margin: 0;'>Message: ".$_POST['details']."</p><p style='font-size: 15px; padding: 0; margin: 18px 0 0 0;'>Thank you!</p><p style='font-size: 15px; padding: 0; margin: 0; list-style: none;'>Sincerly,</p><p style='font-size: 15px; list-style: none; padding: 0; margin: 0;'><b>SideQuote</b></p><p style='font-size: 15px; list-style: none; padding: 0; margin: 18px 0 0 0;'>Visit us: <span> $get_setting->address</span></p><p style='font-size: 15px; list-style: none; padding: 0; margin: 0;'>Email us: <span> $get_setting->email</span></p></div><table style='width: 100%;'><tr><td style='height:30px;width:100%; background: red;padding: 10px 0px; font-size:13px; color: #fff; text-align: center;'>Copyright &copy; <?=date('Y')?> SideQuote. All rights reserved.</td></tr></table></div>";
 			require 'vendor/autoload.php';
 			$mail = new PHPMailer(true);
 			try {
 				$mail->CharSet = 'UTF-8';
-				$mail->SetFrom('igikolkata2024@gmail.com', 'Handyman Services');
+				$mail->SetFrom('support@sidequote.com', 'SideQuote');
 				$mail->AddAddress($_POST['email']);
 				$mail->IsHTML(true);
 				$mail->Subject = $subject;
@@ -422,10 +469,10 @@ class Home extends MY_Controller {
 				$mail->IsSMTP();
 				$mail->SMTPAuth   = true;
 				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-				$mail->Host       = "smtp.gmail.com";
-				$mail->Port       = 465; //587 465
-				$mail->Username   = "igikolkata2024@gmail.com";
-				$mail->Password   = "Goigi123";
+				$mail->Host = "mail.sidequote.com";
+                $mail->Port = 587; //587 465
+                $mail->Username = "support@sidequote.com";
+                $mail->Password = "pu0kA,}h_jGQ";
 				$mail->send();
 			} catch (Exception $e) {
 				$this->session->set_flashdata('message', "Your message could not be sent. Please, try again later.");

@@ -1,0 +1,12 @@
+[07-Oct-2024 14:54:33 America/Chicago] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home5/goatwebt/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home5/goatwebt/public_html/wp-content/plugins/hello.php on line 69
+[13-Oct-2024 16:26:03 America/Chicago] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home5/goatwebt/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home5/goatwebt/public_html/wp-content/plugins/hello.php on line 69
+[16-Oct-2024 09:38:51 America/Chicago] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home5/goatwebt/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home5/goatwebt/public_html/wp-content/plugins/hello.php on line 69

@@ -13,7 +13,7 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 	}
 	function searchjob() {
-		$category_id = $this->input->post('category_id');
+        $category_id = $this->input->post('category_id');
 		$country = $this->input->post('country');
 		$state = $this->input->post('state');
 		$city = $this->input->post('city');
@@ -26,8 +26,8 @@ class Welcome extends CI_Controller {
 			$data['states']= '';
 			$data['cities']= '';
 		}
-		$data['getcategory']=$this->Crud_model->GetData('category');
-		$data['get_banner']=$this->Crud_model->get_single('banner',"id='2'");
+        $data['getcategory']=$this->Crud_model->GetData('category');
+		$data['get_banner'] = $this->Crud_model->get_single('banner', "page_name='Search'");
 		$data1['title'] = "Search Result";
 		$this->load->view('header', $data1);
 		$this->load->view('frontend/new_employees_list',$data);
@@ -36,7 +36,7 @@ class Welcome extends CI_Controller {
 	function fetch_data() {
 		sleep(1);
 		$category_id = $this->input->post('category_id');
-		$title = $this->input->post('title_keyword');
+		$title = $this->input->post('search_box');
 		$post_id = $this->input->post('post_id');
 		$days = $this->input->post('days');
 		$subcategory_id = $this->input->post('subcategory_id');
@@ -163,7 +163,6 @@ class Welcome extends CI_Controller {
 			'description' => $update_data->description,
 			'key_skills' => $update_data->required_key_skills,
 			'duration' => $update_data->duration,
-			'duration' => $update_data->duration,
 			'pay_type' => $update_data->pay_type,
 			'charges' => $update_data->charges,
 			'currency' => $update_data->currency,
@@ -184,31 +183,37 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 	}
 	public function edit_post_job() {
-		$key_skills = $this->input->post('key_skills');
-		for ($i=0; $i < count($key_skills); $i++) {
-			$get_specialist = $this->db->query("SELECT * FROM specialist WHERE specialist_name = '".$key_skills[$i]."'")->result();
-			if(empty($get_specialist)) {
-				$insrt = array(
-					'specialist_name'=>ucfirst($key_skills[$i]),
-					'created_date'=>date('Y-m-d H:i:s'),
-				);
-				$this->db->insert('specialist',$insrt);
-			}
-		}
+        if(!empty($this->input->post('key_skills'))){
+            $key_skills = $this->input->post('key_skills');
+            for ($i=0; $i < count($key_skills); $i++) {
+                $get_specialist = $this->db->query("SELECT * FROM specialist WHERE specialist_name = '".$key_skills[$i]."'")->result();
+                if(empty($get_specialist)) {
+                    $insrt = array(
+                        'specialist_name'=>ucfirst($key_skills[$i]),
+                        'created_date'=>date('Y-m-d H:i:s'),
+                    );
+                    $this->db->insert('specialist',$insrt);
+                }
+            }
+            $skills = implode(", ",$this->input->post('key_skills',TRUE));
+        } else {
+            $skills = NULL;
+        }
+
 		$id = $_POST['id'];
 		$data=array(
-			'required_key_skills'=>implode(", ",$this->input->post('key_skills',TRUE)),
+			'required_key_skills'=>$skills,
 			'category_id'=>$this->input->post('category_id',TRUE),
 			'subcategory_id'=>$this->input->post('subcategory_id',TRUE),
-			'post_title'=>$this->input->post('post_title',TRUE),
+			'post_title'=>nl2br($this->input->post('post_title',TRUE)),
 			'description'=>$this->input->post('description',TRUE),
 			'duration'=>$this->input->post('duration',TRUE),
 			'pay_type'=>$this->input->post('pay_type',TRUE),
 			'charges'=>$this->input->post('charges',TRUE),
 			'currency'=>$this->input->post('currency',TRUE),
 			'location'=>$this->input->post('location',TRUE),
-			'latitude'=>$this->input->post('latitude',TRUE),
-			'longitude'=>$this->input->post('longitude',TRUE),
+			'latitude'=>$this->input->post('s_lat',TRUE),
+			'longitude'=>$this->input->post('s_lon',TRUE),
 			'country'=>$this->input->post('country-dropdown',TRUE),
 			'state'=>$this->input->post('state-dropdown',TRUE),
 			'city'=>$this->input->post('city-dropdown',TRUE),
@@ -217,7 +222,8 @@ class Welcome extends CI_Controller {
 		);
 		$this->Crud_model->SaveData('postjob', $data, "id='" . $id . "'");
 		$this->session->set_flashdata('message', 'Post Job Updated Successfully !');
-		redirect(base_url('myjob'));
+		//redirect(base_url('myjob'));
+        redirect(base_url('homepage'));
 	}
 	public function get_subcategory() {
 		$id =$_POST['id'];
@@ -229,6 +235,7 @@ class Welcome extends CI_Controller {
 		echo $html;
 	}
 	public function save_postjob() {
+        //echo "<pre>"; print_r($_POST); die();
         //$user_timezone = $_POST['timezone'];
         //date_default_timezone_set($user_timezone);
 		$string = $this->input->post('post_title');
@@ -274,31 +281,44 @@ class Welcome extends CI_Controller {
 		} else {
 			$keySkills = "";
 		}
+        if(!empty($this->input->post('visibility',TRUE))) {
+            $visibility = $this->input->post('visibility',TRUE);
+        } else {
+            $visibility = '1';
+        }
+
+        if(!empty($this->input->post('cat_valmod'))) {
+            $cat_id = $this->input->post('cat_valmod');
+        } else {
+            $cat_id = $this->input->post('cat_value');
+        }
 
 		$data=array(
 			'user_id'=>$_SESSION['afrebay']['userId'],
 			'required_key_skills'=> $keySkills,
-			'category_id'=>$this->input->post('category_id',TRUE),
+			'category_id'=>$cat_id,
 			'subcategory_id'=>$this->input->post('subcategory_id',TRUE),
-			'post_title'=>$this->input->post('post_title',TRUE),
+			'post_title'=>nl2br($this->input->post('post_title',TRUE)),
 			'description'=>$this->input->post('description',TRUE),
 			'duration'=>$this->input->post('duration',TRUE),
 			'pay_type'=>$this->input->post('pay_type',TRUE),
 			'charges'=>$this->input->post('charges',TRUE),
 			'currency'=>$this->input->post('currency',TRUE),
-			'location'=>@$this->input->post('location',TRUE),
-			'latitude'=>@$this->input->post('latitude',TRUE),
-			'longitude'=>@$this->input->post('longitude',TRUE),
+			'location'=>$this->input->post('location',TRUE),
+			'latitude'=>$this->input->post('s_lat',TRUE),
+			'longitude'=>$this->input->post('s_lon',TRUE),
 			'country'=>$this->input->post('country-dropdown',TRUE),
 			'state'=>$this->input->post('state-dropdown',TRUE),
 			'city'=>$this->input->post('city-dropdown',TRUE),
 			'appli_deadeline'=>$this->input->post('appli_deadeline',TRUE),
+            'visibility'=>$visibility,
 			'created_date'=>date('Y-m-d H:i:s', time()),
 		);
+        //echo "<pre>"; print_r($data); die();
 		$this->Crud_model->SaveData('postjob',$data);
 		$insert_jid = $this->db->insert_id();
 		if(!empty($insert_jid)) {
-			//echo "<pre>"; print_r($_FILES['postjobPic']['name']);
+			//echo "<pre>"; print_r($_FILES);
 			if (!empty($_FILES['postjobPic']['name'])) {
 				$cpt = count($_FILES['postjobPic']['name']);
 				for($i=0; $i<$cpt; $i++) {
@@ -334,7 +354,8 @@ class Welcome extends CI_Controller {
 			'lastmod'=> date('c', time()),
 		);
 		$this->Crud_model->SaveData('sitemap',$sitemap_date);
-		redirect(base_url("workdetail/".base64_encode($insert_jid)));
+		//redirect(base_url("workdetail/".base64_encode($insert_jid)));
+        redirect(base_url("homepage"));
 	}
 	function post_jobinfo($id) {
 		$post_id=base64_decode($id);
@@ -425,7 +446,7 @@ class Welcome extends CI_Controller {
 		if(!empty($cat_name)) {
 			$get_catname = $this->db->query("SELECT * FROM category WHERE category_name LIKE '%".$cat_name."%'")->result_array();
 			if (!empty($get_catname)) {
-				$html = "<ul id='country-list' style='background: white;border-radius: 25px;height: 220px;overflow-y: scroll;'>";
+				$html = "<ul id='country-list' style='background: white; height: auto; overflow-y: scroll; box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);'>";
 				foreach ($get_catname as $row_data) {
 					$catName = $row_data['category_name'];
 					$catID = $row_data['id'];
@@ -438,4 +459,25 @@ class Welcome extends CI_Controller {
 		}
 		echo $html;
 	}
+
+    public function view_as_guest() {
+        //echo "<pre>"; print_r($_SESSION['afrebay']); die();
+        if (empty($_SESSION['userId'])) {
+            // Generate a unique guest identifier
+            $data['afrebay'] = array(
+                'userId' => uniqid('guest_')
+            );
+            $this->session->set_userdata($data);
+            $userdata = array(
+                'guest_id' => $data['afrebay']['userId'],
+                'address' => $this->input->post('location_guest'),
+                'latitude' => $this->input->post('s_lat_guest'),
+                'longitude' => $this->input->post('s_lon_guest')
+            );
+            $guestView = $this->db->insert('guest_session', $userdata);
+            redirect(base_url("homepage"));
+        } else {
+            redirect(base_url("homepage"));
+        }
+    }
 }

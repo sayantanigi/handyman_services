@@ -9,11 +9,12 @@ class Post_job_model extends My_Model {
     }
 
 	private function _get_datatables_query() {
-		$this->db->select('postjob.*,category.category_name,CONCAT(users.firstname,"",users.lastname) as fullname,sub_category.sub_category_name' );
+		//$this->db->select('postjob.*,category.category_name,CONCAT(users.firstname,"",users.lastname) as fullname,sub_category.sub_category_name' );
+        $this->db->select('postjob.*,CONCAT(users.firstname,"",users.lastname) as fullname' );
         $this->db->from('postjob');
-        $this->db->join('category','category.id=postjob.category_id');
-        $this->db->join('users','users.userId=postjob.user_id');
-        $this->db->join('sub_category','sub_category.id=postjob.subcategory_id');
+        //$this->db->join('category','category.id=postjob.category_id');
+        $this->db->join('users','users.userId = postjob.user_id');
+        //$this->db->join('sub_category','sub_category.id=postjob.subcategory_id');
         // $this->db->where($cond);
 		$i = 0;
         $new_str = preg_replace("/[^a-zA-Z0-9]/", "", $_POST['search']['value']);
@@ -22,9 +23,9 @@ class Post_job_model extends My_Model {
             foreach ($explode_string as $show_string) {
                 $cond  = " ";
                 $cond.=" (  postjob.post_title LIKE '%".trim($show_string)."%' ";
-                $cond.=" OR  category.category_name LIKE '%".trim($show_string)."%' ";
-                $cond.=" OR  postjob.duration LIKE '%".trim($show_string)."%' ";
-                $cond.=" OR  postjob.charges LIKE '%".trim($show_string)."%' ";
+                //$cond.=" OR  category.category_name LIKE '%".trim($show_string)."%' ";
+                //$cond.=" OR  postjob.duration LIKE '%".trim($show_string)."%' ";
+                //$cond.=" OR  postjob.charges LIKE '%".trim($show_string)."%' ";
                 $cond.=" OR  postjob.status LIKE '%".trim($show_string)."%') ";
                 $this->db->where($cond);
             }
@@ -151,7 +152,12 @@ class Post_job_model extends My_Model {
                 </div>';
             }
         } else {
-            $output .= '<div class="emply-resume-list"><div class="emply-resume-thumb"><h2>No Data Found</h2></div></div>';
+            $output .= '
+            <div class="emply-resume-list" style="width: 100% !important; display: block;">
+                <div class="emply-resume-thumb" style="box-shadow: 0 0 10px #dddddd;padding: 15px !important;border-radius: 15px !important;height: max-content;position: sticky;top: 160px;background: #fff;width: 100%;display: block;">
+                    <h2>No Data Found</h2>
+                </div>
+            </div>';
         }
         return $output;
     }
@@ -162,7 +168,6 @@ class Post_job_model extends My_Model {
             $query = "SELECT * FROM postjob WHERE is_delete = '0'";
             if(isset($title) && !empty($title)) {
                 $query .= " AND post_title like '%".$title."%'";
-
             }
 
             if(isset($location) && !empty($location)) {
@@ -217,6 +222,8 @@ class Post_job_model extends My_Model {
             }
 
             if(isset($search_title)&& !empty($search_title)) {
+                $search_title = substr($search_title, 0, -1);
+                //$query .= " AND post_title like '%".$search_title."%'";
                 $query .= " AND post_title like '%".$search_title."%'";
             }
 
@@ -257,7 +264,7 @@ class Post_job_model extends My_Model {
             $query .= ' LIMIT '.$start.', ' . $limit;
             $data = $this->db->query($query);
         }
-
+        //echo $this->db->last_query(); die();
         $output = '';
         if($data->num_rows() > 0) {
             foreach($data->result_array() as $row) {
@@ -294,10 +301,19 @@ class Post_job_model extends My_Model {
                     $bidBtn = '<div class="shortlists"><a href="'.base_url('workdetail/'.base64_encode($row['id'])).'" title="">Bid Now <i class="la la-plus"></i></a></div>';
                 }
 
-                $output .= '<div class="emply-resume-list col-lg-6 col-md-6 col-sm-12"><div class="DataContainer">'.$profile_pic.'<div class="emply-resume-thumb">'.$jobimage.'</div><div class="emply-resume-info" style="min-height: 70px;"><h3><a style="width: 100% !important" href="'.base_url('workdetail/'.base64_encode($row['id'])).'" title="">'.$row['post_title'].'</a></h3><span>'.$get_category->category_name.'</span><span>'.$get_subcategory->sub_category_name.' </span><!--<p><i class="la la-map-marker"></i>'.$row["location"].'</p>--></div>'.$bidBtn.'</div></div> ';
+                $output .=
+                '<div class="emply-resume-list col-lg-12 col-md-12 col-sm-12"><div class="DataContainer Custom_Data_Container">'
+                .$jobimage.'<div class="emply-resume-info" style="margin: 0 !important; padding: 0 15px !important;"><h3><a style="width: 100% !important" href="'.base_url('workdetail/'.base64_encode($row['id'])).'" title="">'
+                .$row['post_title'].'</a></h3><span style="color: #41ab2a !important;">'
+                .$get_category->category_name.'</span></div>'.$bidBtn.'</div></div> ';
             }
         } else {
-            $output .= '<div class="emply-resume-list"><div class="emply-resume-thumb"><h2>No Data Found</h2></div></div>';
+            $output .= '
+            <div class="emply-resume-list" style="width: 100% !important; display: block;">
+                <div class="emply-resume-thumb" style="box-shadow: 0 0 10px #dddddd;padding: 15px !important;border-radius: 15px !important;height: max-content;position: sticky;top: 160px;background: #fff;width: 100%;display: block;">
+                    <h2>No Data Found</h2>
+                </div>
+            </div>';
         }
         return $output;
     }

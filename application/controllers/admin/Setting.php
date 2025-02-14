@@ -81,11 +81,20 @@ class Setting extends MY_Controller {
           	'email' => $this->input->post('email'),
           	'copyright' => $this->input->post('copyright'),
           	'address' => $this->input->post('address'),
+            'register_form_header' => htmlspecialchars($this->input->post('register_form_header')),
+            'register_body_header' => htmlspecialchars($this->input->post('register_body_header')),
+            'register_body_content' => htmlspecialchars($this->input->post('register_body_content')),
             'fabout' => $this->input->post('fabout'),
           	'alternate_email' => $this->input->post('alternate_email'),
 			'fb_link' => $this->input->post('fb_link'),
-			'tw_link' => $this->input->post('tw_link'),
-			'lnkd_link' => $this->input->post('lnkd_link'),
+			'gmail_link' => $this->input->post('gmail_link'),
+			'tiktok_link' => $this->input->post('tiktok_link'),
+            'insta_link' => $this->input->post('insta_link'),
+            'whatsapp' => $this->input->post('whatsapp'),
+            'telegram' => $this->input->post('telegram'),
+            'tw_link' => $this->input->post('tw_link'),
+            'lnkd_link' => $this->input->post('lnkd_link'),
+            'ptrs_link' => $this->input->post('ptrs_link'),
           	'logo' => $logo,
 			'flogo' => $flogo,
           	'favicon' => $favicon,
@@ -93,7 +102,7 @@ class Setting extends MY_Controller {
       	);
         //print_r($data); die;
     	$id=$this->input->post('id');
-    	$this->Crud_model->SaveData("setting",$data,"id='".$id."'");
+    	$this->Crud_model->SaveData("setting", $data ,"id='".$id."'");
     	$this->session->set_flashdata('message', 'Settings has been updated successfully');
     	redirect(admin_url('setting'));
 	}

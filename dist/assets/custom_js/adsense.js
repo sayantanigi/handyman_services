@@ -2,17 +2,33 @@ function create_adsense() {
 	var admin_url=$('#admin_url').val();
 	var title=$('#title').val();
 	var link=$('#link').val();
+    var image = $('#image').val();
+    var position = $('#position').val();
+    var uimage = $('#image')[0].files[0];
 	if(title=="") {
 		$("#title_err").fadeIn().html("Please Enter Title").css("color","red");
 		setTimeout(function(){$("#title_err").fadeOut("&nbsp;");},2000)
 		$("#title").focus();
 		return false;
 	}
+    if(image == "") {
+    	$("#img_err").fadeIn().html("Please select an image").css("color","red");
+    	setTimeout(function(){$("#img_err").fadeOut("&nbsp;");},2000)
+    	$("#image").focus();
+    	return false;
+    }
+    if(position == "") {
+    	$("#position_err").fadeIn().html("Please select an option").css("color","red");
+    	setTimeout(function(){$("#position_err").fadeOut("&nbsp;");},2000)
+    	$("#position").focus();
+    	return false;
+    }
+
 	var form_data= new FormData();
-	var image =$('#image')[0].files[0];
-	form_data.append('image',image);
+	form_data.append('image',uimage);
 	form_data.append('title',title);
 	form_data.append('link',link);
+    form_data.append('position',position);
 	$.ajax({
 		type:"post",
 		url:admin_url+"Adsense/create_action",
@@ -47,6 +63,7 @@ function getValue(id) {
 			var obj=$.parseJSON(returndata);
 			$("#edit_title").val(obj.title);
 			$("#edit_link").val(obj.link);
+            $("#edit_position").val(obj.position);
 			$("#id").val(obj.id);
 			$("#show_img").html(obj.image);
 			$("#old_image").val(obj.old_image);
@@ -58,19 +75,21 @@ function update_adsense() {
 	var admin_url=$('#admin_url').val();
 	var title=$('#edit_title').val();
 	var link=$('#edit_link').val();
+    var position = $('#edit_position').val();
 	var old_image=$("#old_image").val();
 	var id=$("#id").val();
-	if(title=="") {
-		$("#edit_title_err").fadeIn().html("Please Enter Title").css("color","red");
-		setTimeout(function(){$("#edit_title_err").fadeOut("&nbsp;");},2000)
-		$("#edit_title").focus();
-		return false;
-	}
+	// if(title=="") {
+	// 	$("#edit_title_err").fadeIn().html("Please Enter Title").css("color","red");
+	// 	setTimeout(function(){$("#edit_title_err").fadeOut("&nbsp;");},2000)
+	// 	$("#edit_title").focus();
+	// 	return false;
+	// }
 	var form_data= new FormData();
 	var image=$('#edit_image')[0].files[0];
 	form_data.append('image',image);
 	form_data.append('title',title);
 	form_data.append('link',link);
+    form_data.append('position',position);
 	form_data.append('old_image',old_image);
 	form_data.append('id',id);
 	$.ajax({

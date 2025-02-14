@@ -10,7 +10,7 @@ $actual_link = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $actual_link1 = explode('/', $actual_link);
 $url = end($actual_link1);
 ?>
-<footer class="<?php if($url == "" || $url == "signup" || $url == "login" ) { echo "d-none"; }?>">
+<footer class="<?php if($url == "" || $url == "signup" || $url == "login"  || $url == "homepage") { echo "d-none"; }?>">
     <div class="blocknwe">
         <div class="container">
             <div class="row">
@@ -31,21 +31,15 @@ $url = end($actual_link1);
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12 column">
                     <div class="widget">
-                        <h3 class="footer-title">Quick Links</h3>
+                        <h3 class="footer-title Primary_Text_Color">Quick Links</h3>
                         <div class="link_widgets">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <a href="<?= base_url('customer')?>" title="Explore Customers">Explore Customers</a>
-                                    <a href="<?= base_url('professionals')?>" title="Explore Professionals">Explore Professionals</a>
+                                    <a href="<?= base_url('about-us')?>" title="About us">About Us</a>
+                                    <a href="<?= base_url('contact-us')?>" title="Contact us">Contact Us</a>
+                                    <!-- <a href="<?= base_url('customer')?>" title="Explore Customers">Explore Customers</a>
+                                    <a href="<?= base_url('professionals')?>" title="Explore Professionals">Explore Professionals</a> -->
                                     <a href="<?= base_url('findwork')?>" title="Explore Job Openings">Explore Job Openings</a>
-                                    <?php if($get_setting->required_subscription == '1') { ?>
-                                    <a href="<?= base_url('customer_pricing')?>" title="Customers Pricing">Customers Pricing</a>
-                                    <a href="<?= base_url('professionals_pricing')?>" title="Professionals Pricing">Professionals Pricing</a>
-                                    <?php } else {
-                                    if(empty($_SESSION['afrebay']['userId'])) { ?>
-                                    <a href="<?= base_url('signup')?>" title="Customer Sign up">Customer Sign up</a>
-                                    <a href="<?= base_url('signup')?>" title="Professionals Sign up">Professionals Sign up</a>
-                                    <?php } } ?>
                                 </div>
                             </div>
                         </div>
@@ -53,16 +47,14 @@ $url = end($actual_link1);
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12 column">
                     <div class="widget">
-                        <h3 class="footer-title">Support Link</h3>
+                        <h3 class="footer-title Primary_Text_Color">Support Link</h3>
                         <div class="link_widgets">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <a href="<?= base_url('about-us')?>" title="About us">About Us</a>
-                                    <a href="<?= base_url('contact-us')?>" title="Contact us">Contact Us</a>
-                                    <a href="<?= base_url('career-tips')?>" title="Blog">Blog</a>
+
+                                    <a href="<?= base_url('career-tips')?>" title="Career Tips">Career Tips</a>
                                     <a href="<?= base_url('privacy-policy')?>" title="Privacy Policy">Privacy Policy</a>
-                                    <a href="<?= base_url('term-and-conditions')?>" title="Term & Condition">Terms &
-                                        Conditions </a>
+                                    <a href="<?= base_url('term-and-conditions')?>" title="Term & Condition">Terms & Conditions </a>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +62,7 @@ $url = end($actual_link1);
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12 column">
                     <div class="about_widget">
-                        <h3 class="footer-title">Contact Us</h3>
+                        <h3 class="footer-title Primary_Text_Color">Contact Us</h3>
                         <div class="link_widgets">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -91,7 +83,7 @@ $url = end($actual_link1);
         </div>
     </div>
     <div class="bottom-line">
-        <span>Copyright © <?php echo date('Y')?> Handyman Services. All rights reserved.</span>
+        <span>Copyright © <?php echo date('Y')?> <?= $get_setting->website_name?>. All rights reserved.</span>
         <a href="#scrollup" class="scrollup" title=""><i class="la la-arrow-up"></i></a>
     </div>
 </footer>
@@ -139,9 +131,9 @@ if(!empty($_SESSION['afrebay']['userId'])){
 <script src="<?= base_url('assets/js/slick.min.js')?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/parallax.js')?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/js/select-chosen.js')?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/js/maps2.js')?>" type="text/javascript"></script>
- <script src="<?= base_url('assets/js/bootstrap-datepicker.js')?>" type="text/javascript"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtg6oeRPEkRL9_CE-us3QdvXjupbgG14A&libraries=places&callback=initMap" async defer></script>
+<!-- <script src="<?= base_url('assets/js/maps2.js')?>" type="text/javascript"></script> -->
+<script src="<?= base_url('assets/js/bootstrap-datepicker.js')?>" type="text/javascript"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtg6oeRPEkRL9_CE-us3QdvXjupbgG14A&libraries=places&callback"></script>
 <script type="text/javascript" src="<?= base_url('assets/custom_js/validation.js')?>"></script>
 <script src="<?= base_url();?>dist/assets/notify/notify.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url()?>assets/multi_select/css/modern/tail.select-dark-feather.min.css" />
@@ -161,10 +153,18 @@ if(!empty($_SESSION['afrebay']['userId'])){
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js'></script>
+<link href="https://rawgit.com/mervick/emojionearea/master/dist/emojionearea.css" rel="stylesheet" />
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> -->
+<script src="https://rawgit.com/mervick/emojionearea/master/dist/emojionearea.js"></script>
 <script type="text/javascript">
 var confirmTextDelete = 'Are you sure you want to delete this record?';
 var confirmationText = 'Are you sure you want to change this status?';
 $(document).ready(function () {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showLocation);
+    } else {
+        $('#location').html('Geolocation is not supported by this browser.');
+    }
     tail.select('#example',{
         startOpen: true,
         multiple: true,
@@ -197,13 +197,53 @@ $(document).ready(function () {
         var selected = $(".dropdown-optgroup :selected").map((_,e) => e.value).get();
         alert(selected);
     });
+
+    var location = {latitude: '', longitude: ''};
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        //latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";
+        //
+    }
 });
+function showLocation(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    displayLocation(latitude, longitude);
+}
+
+function displayLocation(latitude, longitude) {
+    var geocoder;
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(latitude, longitude);
+    geocoder.geocode({'latLng': latlng},
+       function (results, status) {
+           if (status == google.maps.GeocoderStatus.OK) {
+               if (results[0]) {
+                   var add = results[0].formatted_address;
+                   $('#location').val(results[0].formatted_address);
+                   $('#location_guest').val(results[0].formatted_address);
+                   $('#search_lat').val(latitude);
+                   $('#search_lat_guest').val(latitude);
+                   $('#search_lon').val(longitude);
+                   $('#search_lon_guest').val(longitude);
+                   var value = add.split(",");
+                   count = value.length;
+                   country = value[count - 1];
+                   state = value[count - 2];
+                   city = value[count - 3];
+                   $("#paymentLocation").val(city);
+               }
+           }
+       }
+    );
+}
 setInterval(function () {
     $('#video_modal').modal('show');
 }, 5000);
 var targetDiv = $('.about_widget img').attr('src');
 var targetDiv1 = $('.hidden-logo').val();
-$(window).scroll(function () {
+/*$(window).scroll(function () {
     var windowpos = $(window).scrollTop();
     if (windowpos >= 50) {
         $(".Header_Menu_Nav img").attr("src", targetDiv);
@@ -212,7 +252,7 @@ $(window).scroll(function () {
         $(".Header_Menu_Nav img").attr("src", targetDiv1);
         $(".Header_Menu_Nav img").attr("src", targetDiv1);
     }
-});
+});*/
 function receiveVideoCallWindow(fid) {
     $('#video_modal').css('display', 'none');
     var callPath = "<?php echo base_url('livevideo/video/');?>" + fid;
@@ -224,6 +264,45 @@ function loginAlert() {
 	    title: '',
 	    content: "Already Logged In. Please logout for new registration",
 	});
+}
+function forguestAlert() {
+    // $.alert({
+	//     title: '',
+	//     content: "Kindly register or login to participate in this activity.",
+	// });
+    $.alert({
+        title: '',
+        content: 'Kindly register or login to participate in this activity.',
+        animation: 'scale',
+        closeAnimation: 'scale',
+        buttons: {
+            okay: { // Customize the OK button
+                text: 'Sign In', // Text for the OK button
+                btnClass: 'btn-blue', // Custom class for styling the OK button
+                action: function () {
+                    // Action to perform when OK button is clicked
+                    // Example: redirecting to login or registration page
+                    window.location.href = '<?= base_url()?>login';
+                }
+            },
+            cancel: { // Customize the Cancel button
+                text: 'Sign Up', // Text for the Cancel button
+                btnClass: 'btn-blue', // Custom class for styling the Cancel button
+                action: function () {
+                    // Action to perform when Cancel button is clicked
+                    // Example: do nothing or close the alert
+                    window.location.href = '<?= base_url()?>';
+                }
+            },
+            cross: {
+                text: '&times;', // Use HTML entity for the cross (×) symbol
+                btnClass: 'btn-blue1 cross', // Custom class for styling
+                action: function () {
+                    // Close the alert or do nothing
+                }
+            }
+        }
+    });
 }
 </script>
 </body>

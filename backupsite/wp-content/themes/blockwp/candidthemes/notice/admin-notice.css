@@ -1,0 +1,38 @@
+.blockwp-pro-admin-notice {
+	position: relative;
+}
+
+.blockwp-pro-admin-notice p {
+	font-size: 16px;
+}
+
+.blockwp-pro-admin-notice code {
+	display: inline-block;
+}
+
+.blockwp-pro-admin-notice .links {
+	margin: 12px 0;
+}
+
+.blockwp-pro-admin-notice .links a {
+	height: auto;
+	padding: 3px 15px;
+	margin-left: 12px;
+	text-transform: uppercase;
+}
+
+.blockwp-pro-admin-notice .links a .dashicons {
+	line-height: 1.2;
+}
+
+.blockwp-pro-admin-notice .links a.button-primary {
+	margin-left: 0;
+}
+
+.blockwp-pro-admin-notice  .blockwp-pro-admin-notice-dismiss {
+	text-decoration: none;
+}
+.blockwp-pro-admin-notice code, 
+.blockwp-pro-admin-notice kbd{
+	font-weight: bold;
+}

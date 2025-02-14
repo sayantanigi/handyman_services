@@ -50,7 +50,8 @@ $(document).on('ready',function(){
         $(".forsticky").removeClass("sticky");
         $(".forsticky").addClass("");
         }
-    });  
+    }); 
+    
 
     /* Skip Loading */
     $('.page-loading > span').on('click', function(){

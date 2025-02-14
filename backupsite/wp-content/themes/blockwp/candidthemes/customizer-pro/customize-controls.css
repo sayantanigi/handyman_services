@@ -1,0 +1,20 @@
+#accordion-panel-blockwp_panel .accordion-section-title,
+#accordion-section-blockwp_about_theme_section .accordion-section-title{
+	margin-top:  -4px;
+	font-weight: 400;
+	font-size: 16px;
+	background: #e5a812;
+	color: #fff;
+}
+#customize-theme-controls #accordion-panel-blockwp_panel .accordion-section-title:after{
+	color: #fff;
+}
+#customize-theme-controls #accordion-panel-blockwp_panel .accordion-section-title:hover:after{
+	color: #0073aa;
+}
+.at-pro {
+	background: #e5a812!important;
+	color: #fff!important;
+	box-shadow: none!important;
+	border-color: #e5a812 !important;
+}
