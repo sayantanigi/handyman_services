@@ -24,8 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = 'https://sidequote.com/';
-$config['admin_url'] = 'https://sidequote.com/admin/';
+$config['base_url'] = 'http://localhost/handyman_services/';
+$config['admin_url'] = 'http://localhost/handyman_services/admin/';
 
 /*
 |--------------------------------------------------------------------------
