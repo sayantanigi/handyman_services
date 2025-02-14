@@ -1,12 +1,10 @@
 <?php
-function displayStars($rating)
-{
+function displayStars($rating) {
     // Ensure the rating is between 0 and 5
     $rating = max(0, min(5, $rating));
     $fullStars = floor($rating);
     $halfStar = ($rating - $fullStars) >= 0.5 ? 1 : 0;
     $emptyStars = 5 - $fullStars - $halfStar;
-
     $stars = str_repeat('<i class="fas fa-star" style="color: #f29a34"></i>', $fullStars) .
         str_repeat('<i class="fas fa-star-half-alt" style="color: #f29a34"></i>', $halfStar) .
         str_repeat('<i class="far fa-star" style="color: #f29a34"></i>', $emptyStars);
@@ -75,19 +73,28 @@ function displayStars($rating)
                                     <div class="job-single-head3 emplye">
                                         <div class="job-thumb" style="position: absolute; top: -120px;">
                                             <?php if (@$userdata->profilePic && file_exists('uploads/users/' . @$userdata->profilePic)) { ?>
-                                                <img id="profile-img"
-                                                    src="<?= base_url('uploads/users/' . @$userdata->profilePic) ?>"
-                                                    class="online" alt="" />
+                                                <img id="profile-img" src="<?= base_url('uploads/users/' . @$userdata->profilePic) ?>" class="online" alt="" />
                                             <?php } else { ?>
                                                 <img id="profile-img" src="<?= base_url('uploads/no_pimage.png') ?>"
                                                     class="online" alt="" />
                                             <?php } ?>
                                         </div>
-                                        <div class="job-single-info3" style="padding-left: 200px !important;">
-                                            <h3>
+                                        <div class="job-single-info3" style="padding-left: 200px !important; display: flex; flex-direction: column; align-items: flex-start;">
+                                            <h3 style="display: flex; flex-direction: row; align-items: flex-start; gap: 10px;">
                                                 <?= ucwords($userdata->firstname . " " . $userdata->lastname); ?>
+                                                <p style="margin: 0px !important;"><?= "(@" . $userdata->username.")"; ?></p>
                                             </h3>
-                                            <p style="margin: 0px !important;"><?= "@" . $userdata->username; ?></p>
+                                            <?php
+                                            $getFollowing = $this->db->query("SELECT count(id) as followng FROM users_following WHERE following_id = '".$userdata->userId."'")->row();
+                                            $getFollowers = $this->db->query("SELECT count(id) as followers FROM users_following WHERE followedBy_id = '".$userdata->userId."'")->row();
+                                            $getblocked = $this->db->query("SELECT count(id) as blocked FROM report_user WHERE from_user_id = '".$userdata->userId."' AND status = '1'")->row();
+
+                                            ?>
+                                            <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 20px; margin: 10px 0;">
+                                            <button type="button" class="btn btn-primary" style="padding: 8px 15px !important; font-size: 10px !important; background: #2892ff;" data-toggle="modal" data-target="#exampleFollowingCenter"><i class="fa-solid fa-user-plus"></i> Following (<?= $getFollowing->followng;?>)</button>
+                                            <button type="button" class="btn btn-primary" style="padding: 8px 15px !important; font-size: 10px !important; background: #2892ff;" data-toggle="modal" data-target="#exampleFollowersCenter"><i class="fa-solid fa-users"></i> Followers (<?= $getFollowers->followers;?>)</button>
+                                            <button type="button" class="btn btn-primary" style="padding: 8px 15px !important; font-size: 10px !important; background: #2892ff;" data-toggle="modal" data-target="#exampleBlockedCenter"><i class="fa-solid fa-ban"></i> Blocked (<?= $getblocked->blocked;?>)</button>
+                                            </div>
                                             <?php if ($userdata->rate_enabled == '1') { ?>
                                                 <p style="margin-bottom: 0 !important;">
                                                     <?php
@@ -120,7 +127,6 @@ function displayStars($rating)
                                                 } else { ?>
                                                 <a href="<?php echo base_url() ?>login" style="background: #2892ff; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;"><i class="la la-flag"></i> Report</a>
                                                 <?php } ?>
-
                                                 <a href="javascript:void(0)" style="background: #2892ff; padding: 6px; border-radius: 5px; color: #fff; font-size: 10px; display: inline-block;" id="shareBtn"><i class="la la-share"></i> Forward </a>
                                             </div>
                                             <div id="shareMenu" class="hidden">
@@ -375,9 +381,9 @@ function displayStars($rating)
                                                         <div class="User_Comment_Data"
                                                             style="width: 92%; display: flex; flex-direction: column;">
                                                             <div class="replyPost">
-                                                                <p style="margin: 0; font-weight: 600; color: #000 !important;">
-                                                                    <?= "@" . $userData->username; ?>
-                                                                </p>
+                                                                <a href="<?php echo base_url('customer_detail/'.base64_encode($userData->userId)); ?>">
+                                                                    <p style="margin: 0; font-weight: 600; color: #000 !important;"><?= "@" . $userData->username; ?></p>
+                                                                </a>
                                                                 <p style="margin-bottom: 0; ">Subject: <?= $data['subject']; ?>
                                                                 </p>
                                                                 <p style="margin-bottom: 0; ">Review: <?= $data['review']; ?>
@@ -429,6 +435,134 @@ function displayStars($rating)
                 <button type="button" class="btn btn-primary" onclick="reportUser()">Save changes</button>
                 <input type="hidden" id="toUser" name="toUser" value="">
                 <input type="hidden" id="fromUser" name="fromUser" value="<?= $_SESSION['afrebay']['userId'] ?>">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleFollowingCenter" tabindex="-1" role="dialog" aria-labelledby="exampleFollowingCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Following List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <?php
+                $getFollowing = $this->db->query("SELECT * FROM users_following WHERE following_id = '".$userdata->userId."'")->result();
+                if(!empty($getFollowing)) {
+                    foreach($getFollowing as $following) {
+                        $userData = $this->db->query("SELECT * FROM users WHERE userId = '".$following->followedBy_id."'")->row();
+                        if(!empty($userData)) {
+                            if(empty($userData->companyname)) {
+                                $name = $userData->firstname." ".$userData->lastname;
+                            } else {
+                                $name = $userData->companyname." ".$userData->companyname;
+                            }
+                        } ?>
+                        <div style="display: flex;width: 100%;margin-bottom: 10px;border: 1px solid #2892ff;padding: 2px;border-radius: 5px;justify-content: space-between;align-items: center;">
+                            <div style="display: flex;gap: 5px;align-items: center;flex-wrap: nowrap;flex-direction: row;">
+                                <?php if(!empty(@$userData->profilePic) && file_exists('uploads/users/'.@$userData->profilePic)) { ?>
+                                <img src="<?= base_url('uploads/users/'.@$userData->profilePic)?>" style=" width: 40px; height: 40px; border-radius: 20px; "/>
+                                <?php } else { ?>
+                                <img src="<?= base_url('uploads/no_pimage.png')?>" style=" width: 40px; height: 40px; border-radius: 15px; "/>
+                                <?php } ?>
+                                <a href="<?php echo base_url('customer_detail/'.base64_encode($userData->userId)); ?>" style="font-size: 12px;"><?= $name; ?></a>
+                            </div>
+                            <?php if(@$userdata->userId == @$_SESSION['afrebay']['userId']) { ?>
+                            <div>
+                                <button type="button" class="btn btn-primary" style="padding: 12px 15px !important; font-size: 10px !important; background: #2892ff;" onclick="unfollowUser(<?= $userData->userId?>)"> Unfollow</button>
+                            </div>
+                            <?php } ?>
+                        </div>
+                <?php } } ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleFollowersCenter" tabindex="-1" role="dialog" aria-labelledby="exampleFollowersCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Followers List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <?php
+                $getfollowers = $this->db->query("SELECT * FROM users_following WHERE followedBy_id = '".$userdata->userId."'")->result();
+                if(!empty($getfollowers)) {
+                    foreach($getfollowers as $followers) {
+                        $userData = $this->db->query("SELECT * FROM users WHERE userId = '".$followers->following_id."'")->row();
+                        if(!empty($userData)) {
+                            if(empty($userData->companyname)) {
+                                $name = $userData->firstname." ".$userData->lastname;
+                            } else {
+                                $name = $userData->companyname." ".$userData->companyname;
+                            }
+                        } ?>
+                        <div style="display: flex;width: 100%;margin-bottom: 10px;border: 1px solid #2892ff;padding: 2px;border-radius: 5px;justify-content: space-between;align-items: center;">
+                            <div style="display: flex;gap: 5px;align-items: center;flex-wrap: nowrap;flex-direction: row;">
+                                <?php if(!empty(@$userData->profilePic) && file_exists('uploads/users/'.@$userData->profilePic)) { ?>
+                                <img src="<?= base_url('uploads/users/'.@$userData->profilePic)?>" style=" width: 40px; height: 40px; border-radius: 20px; "/>
+                                <?php } else { ?>
+                                <img src="<?= base_url('uploads/no_pimage.png')?>" style=" width: 40px; height: 40px; border-radius: 15px; "/>
+                                <?php } ?>
+                                <a href="<?php echo base_url('customer_detail/'.base64_encode($userData->userId)); ?>" style="font-size: 12px;"><?= $name; ?></a>
+                            </div>
+                            <?php if(@$userdata->userId == @$_SESSION['afrebay']['userId']) { ?>
+                            <div>
+                                <button type="button" class="btn btn-primary" style="padding: 12px 15px !important; font-size: 10px !important; background: #2892ff;" > Unfollow</button>
+                            </div>
+                            <?php } ?>
+                        </div>
+                <?php } } ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleBlockedCenter" tabindex="-1" role="dialog" aria-labelledby="exampleBlockedCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Blocked List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <?php
+                $getblockeduser = $this->db->query("SELECT * FROM report_user WHERE from_user_id = '".$userdata->userId."'")->result();
+                if(!empty($getblockeduser)) {
+                    foreach($getblockeduser as $blocked) {
+                        $userData = $this->db->query("SELECT * FROM users WHERE userId = '".@$blocked->to_user_id."'")->row();
+                        if(!empty($userData)) {
+                            if(empty(@$userData->companyname)) {
+                                $name = @$userData->firstname." ".@$userData->lastname;
+                            } else {
+                                $name = @$userData->companyname." ".@$userData->companyname;
+                            }
+                        } ?>
+                        <div style="display: flex;width: 100%;margin-bottom: 10px;border: 1px solid #2892ff;padding: 2px;border-radius: 5px;justify-content: space-between;align-items: center;">
+                            <div style="display: flex;gap: 5px;align-items: center;flex-wrap: nowrap;flex-direction: row;">
+                                <?php if(!empty(@$userData->profilePic) && file_exists('uploads/users/'.@$userData->profilePic)) { ?>
+                                <img src="<?= base_url('uploads/users/'.@$userData->profilePic)?>" style=" width: 40px; height: 40px; border-radius: 20px; "/>
+                                <?php } else { ?>
+                                <img src="<?= base_url('uploads/no_pimage.png')?>" style=" width: 40px; height: 40px; border-radius: 15px; "/>
+                                <?php } ?>
+                                <a href="<?php echo base_url('customer_detail/'.base64_encode($userData->userId)); ?>" style="font-size: 12px;"><?= $name; ?></a>
+                            </div>
+                            <?php if(@$userdata->userId == @$_SESSION['afrebay']['userId']) { ?>
+                            <div>
+                                <button type="button" class="btn btn-primary" style="padding: 12px 15px !important; font-size: 10px !important; background: #2892ff;" > Unblock</button>
+                            </div>
+                            <?php } ?>
+                        </div>
+                <?php } } ?>
             </div>
         </div>
     </div>

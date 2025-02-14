@@ -65,7 +65,7 @@
                                             <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Phone Number" value="<?php echo $userinfo->mobile;?>" onkeypress="only_number(event)" maxlength="10" />
 			                            </div>
 			                            <div class="col-lg-6 profile-dsd">
-                                            <input type="text" class="form-control" name="address" id="location" placeholder="Legal Address" value="<?= $userinfo->address ?>" style="height: 49px !important;" autocomplete="off" />
+                                            <input type="text" class="form-control location_get" name="address" id="location" placeholder="Legal Address" value="<?= $userinfo->address ?>" style="height: 49px !important;" autocomplete="off" />
                                             <div id="vld_location" style="color:red; margin-top: 10px;">Please enter Legal Address.</div>
                                             <input type="hidden" name="latitude" id="search_lat" value="<?= $userinfo->latitude ?>">
                                             <input type="hidden" name="longitude" id="search_lon" value="<?= $userinfo->longitude ?> ">
@@ -148,6 +148,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js'></script>
 <script type="text/javascript">
+$(window).on('load', function(){
+    $.ajax({
+        url: '<?= base_url('user/dashboard/fetch_location')?>',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if (response.address) {
+                $('#location').val(response.address);
+                $('#search_lat').val(response.latitude);
+                $('#search_lon').val(response.longitude);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching location:', status, error);
+        }
+    });
+})
 $('#skills').tagsinput({
     confirmKeys: [13, 44],
     maxTags: 20,

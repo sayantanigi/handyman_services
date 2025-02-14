@@ -141,6 +141,7 @@ class Dashboard extends CI_Controller {
                 'lastname' => $_POST['lastname'],
                 'profilePic' => $image,
                 'email' => $_POST['email'],
+                'mobile' => $_POST['mobile'],
                 'rate_enabled' => $_POST['rate_enabled'],
                 //'backgroundPic' => $bimage,
                 'zip' => $_POST['zip'],
@@ -165,6 +166,7 @@ class Dashboard extends CI_Controller {
                     'lastname' => $_POST['lastname'],
                     'profilePic' => $image,
                     'email' => $_POST['email'],
+                    'mobile' => $_POST['mobile'],
                     'rate_enabled' => $_POST['rate_enabled'],
                     //'backgroundPic' => $bimage,
                     'zip' => $_POST['zip'],
@@ -301,7 +303,7 @@ class Dashboard extends CI_Controller {
                 'hourly_rate' => $_POST['hourly_rate'],
             );
             //print_r($data); die();
-            $this->Crud_model->SaveData('users', $data, "userId='" . $this->input->post('id') . "'");
+            $this->Crud_model->SaveData('users', $data, "userId='" . $_SESSION['afrebay']['userId'] . "'");
             if($_POST['from_data_request']=='admin'){
                 $this->session->set_flashdata('message', 'Profile Updated Successfull !');
                 redirect(base_url('admin/users'));
@@ -327,7 +329,7 @@ class Dashboard extends CI_Controller {
                     'hourly_rate' => $_POST['hourly_rate'],
                 );
                 //print_r($data); die();
-                $this->Crud_model->SaveData('users', $data, "userId='" . $this->input->post('id') . "'");
+                $this->Crud_model->SaveData('users', $data, "userId='" . $_SESSION['afrebay']['userId'] . "'");
                 if($_POST['from_data_request']=='admin'){
                     $this->session->set_flashdata('message', 'Profile Updated Successfull !');
                     redirect(base_url('admin/users'));
@@ -2116,5 +2118,10 @@ class Dashboard extends CI_Controller {
         } else {
             echo '<div class="col-12" style=" background: #fff; border-radius: 20px; "><div class="boxuppost">No post available</div></div>';
         }
+    }
+    public function fetch_location() {
+        $user_id = $_SESSION['afrebay']['userId'];
+        $getUserData = $this->db->query("SELECT * FROM users WHERE userId = '".$user_id."'")->row();
+        echo json_encode($getUserData);
     }
 }

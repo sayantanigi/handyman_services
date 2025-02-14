@@ -3,30 +3,37 @@ $settings = $this->db->query("SELECT * FROM setting WHERE id = '1'")->row();
 function get_time_ago($time) {
     $time_ago = time() - $time;
     if ($time_ago < 60) {
-        return $time_ago . ' second ago';
+        //return $time_ago . 'second ago';
+        return $time_ago .'sec';
     }
     $minutes = floor($time_ago / 60);
     if ($minutes < 60) {
-        return $minutes . ' minutes ago';
+        //return $minutes . ' minutes ago';
+        return $minutes . 'min';
     }
     $hours = floor($time_ago / 3600);
     if ($hours < 24) {
-        return $hours . ' hours ago';
+        //return $hours . 'h';
+        return $hours . 'h';
     }
     $days = floor($time_ago / 86400);
     if ($days < 7) {
-        return $days . ' days ago';
+        //return $days . ' days ago';
+        return $days . 'days';
     }
     $weeks = floor($time_ago / 604800);
     if ($weeks < 4) {
-        return $weeks . ' weeks ago';
+        //return $weeks . ' weeks ago';
+        return $weeks . 'weeks';
     }
     $months = floor($time_ago / 2628000); // Approximate value
     if ($months < 12) {
-        return $months . ' months ago';
+        //return $months . ' months ago';
+        return $months . 'months';
     }
     $years = floor($time_ago / 31536000); // Approximate value
-    return $years . ' years ago';
+        //return $years . ' years ago';
+        return $years . 'y';
 }
 
 function displayStars($rating){
@@ -143,23 +150,23 @@ function displayStars($rating){
                                                             <?php } ?>
                                                             <div class="TextData" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding-left: 15px;">
                                                                 <a href="<?php if ($get_user->userType == '1') {
-                                                                                echo base_url('professionals_detail/' . base64_encode($get_user->userId));
-                                                                            } else if ($get_user->userType == '2') {
-                                                                                echo base_url('customer_detail/' . base64_encode($get_user->userId));
-                                                                            } else {
-                                                                                echo 'onclick="forguestAlert()"';
-                                                                            } ?>">
+                                                                        echo base_url('professionals_detail/' . base64_encode($get_user->userId));
+                                                                    } else if ($get_user->userType == '2') {
+                                                                        echo base_url('customer_detail/' . base64_encode($get_user->userId));
+                                                                    } else {
+                                                                        echo 'onclick="forguestAlert()"';
+                                                                    } ?>">
                                                                     <h3 style="font-size: 20px; font-weight: 600; margin: 0;" class="Primary_Text_Color"><?php echo "@" . $get_user->username; ?></h3>
                                                                     <?php if ($get_user->rate_enabled == '1') { ?>
-                                                                        <p style="line-height: 0px;margin: 0;font-size: 10px;margin-top: 5px;margin-bottom: 10px;">
-                                                                            <?php
-                                                                            $getAverageRatingSql = $this->db->query("SELECT ROUND(AVG(rating),1) as averageRating FROM `employer_rating` where `worker_id` = '" . @$get_user->userId . "'")->row();
-                                                                            echo displayStars($getAverageRatingSql->averageRating);
-                                                                            ?>
-                                                                        </p>
+                                                                    <p style="line-height: 0px;margin: 0;font-size: 10px;margin-top: 5px;margin-bottom: 10px;">
+                                                                        <?php
+                                                                        $getAverageRatingSql = $this->db->query("SELECT ROUND(AVG(rating),1) as averageRating FROM `employer_rating` where `worker_id` = '" . @$get_user->userId . "'")->row();
+                                                                        echo displayStars($getAverageRatingSql->averageRating);
+                                                                        ?>
+                                                                    </p>
                                                                     <?php } ?>
                                                                 </a>
-                                                                <p style="margin: 0; font-size: 13px; color: #b1b1b1;">Posted <?php echo get_time_ago(strtotime($row->created_date)) ?> </p>
+                                                                <p style="margin: 0; font-size: 13px; color: #b1b1b1;"><?php echo get_time_ago(strtotime($row->created_date)) ?><?php if(!empty($get_user->address)) {echo " . <i class='fa fa-globe' aria-hidden='true'></i> ".$get_user->address; }?> </p>
                                                             </div>
                                                         </div>
                                                         <div>
@@ -169,43 +176,43 @@ function displayStars($rating){
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-lg-right">
                                                                     <?php if (@$_SESSION['afrebay']['userId'] === @$row->user_id) { ?>
-                                                                        <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="jobDelete(<?= $row->id ?>)"><img src="<?= base_url('assets/images/PostIcon7.png'); ?>">Delete Post</a>
-                                                                        <?php } else {
-                                                                        $getsavepostData = $this->db->query("SELECT * FROM users_save_post WHERE post_id = '" . $row->id . "' AND user_id = '" . $_SESSION['afrebay']['userId'] . "' AND status = '1'")->row();
-                                                                        if (!empty($getsavepostData)) { ?>
-                                                                            <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="unsavePost(<?= $row->id ?>)"><img src="<?= base_url('assets/images/bookmark.png'); ?>"> Unsave Post</a>
-                                                                        <?php } else { ?>
-                                                                            <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="savePost(<?= $row->id ?>)"><img src="<?= base_url('assets/images/PostIcon8.png'); ?>"> Save Post</a>
-                                                                        <?php } ?>
-                                                                        <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="notInterestedPost(<?= $row->id ?>)"><img src="<?= base_url('assets/images/PostIcon10.png'); ?>"> Not interested in this post</a>
+                                                                    <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="jobDelete(<?= $row->id ?>)"><img src="<?= base_url('assets/images/PostIcon7.png'); ?>">Delete Post</a>
+                                                                    <?php } else {
+                                                                    $getsavepostData = $this->db->query("SELECT * FROM users_save_post WHERE post_id = '" . $row->id . "' AND user_id = '" . $_SESSION['afrebay']['userId'] . "' AND status = '1'")->row();
+                                                                    if (!empty($getsavepostData)) { ?>
+                                                                        <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="unsavePost(<?= $row->id ?>)"><img src="<?= base_url('assets/images/bookmark.png'); ?>"> Unsave Post</a>
+                                                                    <?php } else { ?>
+                                                                        <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="savePost(<?= $row->id ?>)"><img src="<?= base_url('assets/images/PostIcon8.png'); ?>"> Save Post</a>
+                                                                    <?php } ?>
+                                                                    <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="notInterestedPost(<?= $row->id ?>)"><img src="<?= base_url('assets/images/PostIcon10.png'); ?>"> Not interested in this post</a>
+                                                                    <?php
+                                                                    $getfollowData = $this->db->query("SELECT * FROM users_following WHERE following_id = '" . $row->user_id . "' AND followedBy_id = '" . $_SESSION['afrebay']['userId'] . "'")->row();
+                                                                    if (!empty($getfollowData)) { ?>
+                                                                    <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="unfollowUsers(<?= $row->user_id ?>)"><img src="<?= base_url('assets/images/PostIcon1.png'); ?>">
+                                                                        Unfollow
                                                                         <?php
-                                                                        $getfollowData = $this->db->query("SELECT * FROM users_following WHERE following_id = '" . $row->user_id . "' AND followedBy_id = '" . $_SESSION['afrebay']['userId'] . "'")->row();
-                                                                        if (!empty($getfollowData)) { ?>
-                                                                            <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="unfollowUsers(<?= $row->user_id ?>)"><img src="<?= base_url('assets/images/PostIcon1.png'); ?>">
-                                                                                Unfollow
-                                                                                <?php
-                                                                                $getUserInfo = $this->db->query("SELECT * FROM users WHERE userId = '" . @$row->user_id . "'")->row();
-                                                                                echo "@" . $getUserInfo->username;
-                                                                                ?>
-                                                                            </a>
-                                                                        <?php } else { ?>
-                                                                            <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="followUsers(<?= $row->user_id ?>)"><img src="<?= base_url('assets/images/PostIcon4.png'); ?>">
-                                                                                Follow
-                                                                                <?php
-                                                                                $getUserInfo = $this->db->query("SELECT * FROM users WHERE userId = '" . @$row->user_id . "'")->row();
-                                                                                echo "@" . $getUserInfo->username;
-                                                                                ?>
-                                                                            </a>
-                                                                        <?php }
-                                                                        $checkMuteUser = $this->db->query("SELECT * FROM mute_user WHERE to_user_id = '" . $row->user_id . "' AND from_user_id = '" . $_SESSION['afrebay']['userId'] . "'")->row();
-                                                                        if (@$checkMuteUser->status == "1") { ?>
-                                                                            <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="unmuteUser(<?= $row->user_id ?>)"><img src="<?= base_url('assets/images/unmute.png'); ?>"> Unmute <?= "@" . $getUserInfo->username ?></a>
-                                                                        <?php } else { ?>
-                                                                            <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="muteUser(<?= $row->user_id ?>)"><img src="<?= base_url('assets/images/PostIcon3.png'); ?>"> Mute <?= "@" . $getUserInfo->username ?></a>
-                                                                        <?php } ?>
-                                                                        <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="block(<?= $row->user_id ?>)"><img src="<?= base_url('assets/images/PostIcon1.png'); ?>"> Block <?= "@" . $getUserInfo->username ?></a>
-                                                                        <!-- <a class="dropdown-item PostItem"><img src="<?= base_url('assets/images/PostIcon1.png'); ?>"> Block <?= "@" . $getUserInfo->username ?></a>
-                                                        <a class="dropdown-item PostItem"><img src="<?= base_url('assets/images/PostIcon5.png'); ?>"> Embed Post</a> -->
+                                                                        $getUserInfo = $this->db->query("SELECT * FROM users WHERE userId = '" . @$row->user_id . "'")->row();
+                                                                        echo "@" . $getUserInfo->username;
+                                                                        ?>
+                                                                    </a>
+                                                                    <?php } else { ?>
+                                                                        <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="followUsers(<?= $row->user_id ?>)"><img src="<?= base_url('assets/images/PostIcon4.png'); ?>">
+                                                                            Follow
+                                                                            <?php
+                                                                            $getUserInfo = $this->db->query("SELECT * FROM users WHERE userId = '" . @$row->user_id . "'")->row();
+                                                                            echo "@" . $getUserInfo->username;
+                                                                            ?>
+                                                                        </a>
+                                                                    <?php }
+                                                                    $checkMuteUser = $this->db->query("SELECT * FROM mute_user WHERE to_user_id = '" . $row->user_id . "' AND from_user_id = '" . $_SESSION['afrebay']['userId'] . "'")->row();
+                                                                    if (@$checkMuteUser->status == "1") { ?>
+                                                                        <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="unmuteUser(<?= $row->user_id ?>)"><img src="<?= base_url('assets/images/unmute.png'); ?>"> Unmute <?= "@" . $getUserInfo->username ?></a>
+                                                                    <?php } else { ?>
+                                                                        <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="muteUser(<?= $row->user_id ?>)"><img src="<?= base_url('assets/images/PostIcon3.png'); ?>"> Mute <?= "@" . $getUserInfo->username ?></a>
+                                                                    <?php } ?>
+                                                                    <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="block(<?= $row->user_id ?>)"><img src="<?= base_url('assets/images/PostIcon1.png'); ?>"> Block <?= "@" . $getUserInfo->username ?></a>
+                                                                    <!-- <a class="dropdown-item PostItem"><img src="<?= base_url('assets/images/PostIcon1.png'); ?>"> Block <?= "@" . $getUserInfo->username ?></a>
+                                                                    <a class="dropdown-item PostItem"><img src="<?= base_url('assets/images/PostIcon5.png'); ?>"> Embed Post</a> -->
                                                                         <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="report(<?= $row->id ?>)"><img src="<?= base_url('assets/images/PostIcon6.png'); ?>"> Report Post</a>
                                                                     <?php } ?>
                                                                 </div>
@@ -756,7 +763,8 @@ function displayStars($rating){
                         <div class="activityBox mb-3">
                             <div class="TermsContainer">
                                 <div class="TermsBlock">
-                                    <a href="<?= base_url('term-and-conditions')?>">Terms of Service</a>
+                                    <a href="<?= base_url('about-us')?>">About</a>
+                                    <a href="<?= base_url('term-and-conditions')?>">Terms & Conditions</a>
                                     <a href="<?= base_url('privacy-policy')?>">Privacy Policy</a>
                                     <a href="<?= base_url('ads-info')?>">Ads Info</a>
                                 </div>
