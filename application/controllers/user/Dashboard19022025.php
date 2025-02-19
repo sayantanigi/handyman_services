@@ -568,14 +568,6 @@ class Dashboard extends CI_Controller {
 		);
 		echo json_encode($data);
 	}
-    function showmessagecount() {
-		$user_id = $this->input->post('usertoid');
-        $countMessage = $this->db->query("SELECT COUNT(id) as msgcount FROM chat WHERE userto_id ='".$user_id."' AND status = '0'")->row();
-		$data = array(
-			'count' => $countMessage->msgcount,
-		);
-		echo json_encode($data);
-	}
 	function showmessageCountEach() {
 		$userfromid = $this->input->post('userfromid');
 		$usertoid = $this->input->post('usertoid');
@@ -1317,14 +1309,6 @@ class Dashboard extends CI_Controller {
             'from_user_id' => $fromUser,
             'reason' => $reason,
         );
-        $getfollowersList = $this->db->query("SELECT * FROM users_following WHERE following_id = '".$toUser."' AND followedBy_id = '".$fromUser."'")->row();
-        if(!empty($getfollowersList)) {
-            $this->db->query("DELETE FROM users_following WHERE following_id = '".$toUser."' AND followedBy_id = '".$fromUser."'");
-        }
-        $getfollowingList = $this->db->query("SELECT * FROM users_following WHERE following_id = '".$fromUser."' AND followedBy_id = '".$toUser."'")->row();
-        if(!empty($getfollowingList)) {
-            $this->db->query("DELETE FROM users_following WHERE following_id = '".$fromUser."' AND followedBy_id = '".$toUser."'");
-        }
         $this->Crud_model->SaveData('report_user', $data);
         $insertid = $this->db->insert_id();
         if(!empty($insertid)) {
@@ -1332,12 +1316,6 @@ class Dashboard extends CI_Controller {
         } else {
             echo "Something went wrong. Please try again.";
         }
-    }
-    public function unblockUser() {
-        $blockedUser = $_POST['blockedUser'];
-        $blockedby = $_POST['blockedby'];
-        $this->db->query("DELETE FROM report_user WHERE to_user_id = '".$blockedUser."' AND from_user_id = '".$blockedby."'");
-        echo "1";
     }
     public function reportPost() {
         $post_id = $_POST['post_id'];
@@ -1910,26 +1888,9 @@ class Dashboard extends CI_Controller {
         );
         $this->Crud_model->SaveData('users_following', $details_data);
     }
-    public function followBack() {
-        $following_id = $_POST['followers_id'];
-        $followedBy_id =  $_POST['followedBy_id'];
-        $details_data = array(
-            'following_id' => $following_id,
-            'followedBy_id' => $followedBy_id,
-            'created_at'=> date('Y-m-d H:m:s')
-        );
-        $this->Crud_model->SaveData('users_following', $details_data);
-        echo '1';
-    }
-    public function unfollowUser() {
-        $following_id = $_POST['followers_id'];
-        $followedBy_id =  $_POST['followedBy_id'];
-        echo "DELETE FROM users_following WHERE following_id = '".$following_id."' AND followedBy_id = '".$followedBy_id."'";
-        $this->db->query("DELETE FROM users_following WHERE following_id = '".$following_id."' AND followedBy_id = '".$followedBy_id."'");
-    }
     public function unfollowUsers() {
-        $following_id = $_POST['followers_id'];
-        $followedBy_id =  $_POST['followedBy_id'];
+        $following_id = $_POST['f_id'];
+        $followedBy_id =  $_SESSION['afrebay']['userId'];
         $this->db->query("DELETE FROM users_following WHERE following_id = '".$following_id."' AND followedBy_id = '".$followedBy_id."'");
     }
     public function searchPostData() {
@@ -2162,30 +2123,5 @@ class Dashboard extends CI_Controller {
         $user_id = $_SESSION['afrebay']['userId'];
         $getUserData = $this->db->query("SELECT * FROM users WHERE userId = '".$user_id."'")->row();
         echo json_encode($getUserData);
-    }
-    public function changelogstatus() {
-        $status = $this->input->post('status');
-        if($status == 'online'){
-            $val = '1';
-        } else if($status == 'away') {
-            $val = '2';
-        } else if($status == 'busy') {
-            $val = '3';
-        } else {
-            $val = '4';
-        }
-        $user_id = $_SESSION['afrebay']['userId'];
-        $this->db->query("UPDATE users SET islogin = '".$val."' WHERE userId = '".$user_id."'");
-    }
-    public function editPostjobData() {
-        $postJobId = $_POST['postjobid'];
-        $getpostjobdata = $this->db->query("SELECT * FROM postjob WHERE id = '".$postJobId."'")->row();
-        $getImageData = $this->db->query("SELECT * FROM postjob_image WHERE job_id = '".$postJobId."'")->result();
-        $getpostjobdata->image = $getImageData;
-        echo json_encode($getpostjobdata);
-    }
-    public function removePostjobImage() {
-        $id = $_POST['id'];
-        $this->db->query("DELETE FROM postjob_image WHERE id = '".$id."'");
     }
 }

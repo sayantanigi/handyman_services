@@ -470,19 +470,7 @@ function displayStars($rating) {
                                 <?php } ?>
                                 <a href="<?php echo base_url('customer_detail/'.base64_encode($userData->userId)); ?>" style="font-size: 12px;"><?= $name; ?></a>
                             </div>
-                            <?php
-                            if(@$userdata->userId == @$_SESSION['afrebay']['userId']) {
-                                $getcompleteFollow1 = $this->db->query("SELECT * FROM users_following WHERE following_id = '".$userdata->userId."' AND followedBy_id = '".$userData->userId."'")->row();
-                                $getcompleteFollow2 = $this->db->query("SELECT * FROM users_following WHERE following_id = '".$userData->userId."' AND followedBy_id = '".$userdata->userId."'")->row();
-                                if(!empty($getcompleteFollow1) && !empty($getcompleteFollow2)) { ?>
-                                <div>
-                                    <button type="button" class="btn btn-primary" style="padding:12px 15px !important;font-size:10px !important;background:#2892ff;" onclick="unfollowUser(<?= $userData->userId?>,<?= $userdata->userId?>)">Unfollow</button>
-                                </div>
-                                <?php } else { ?>
-                                <div>
-                                    <button type="button" class="btn btn-primary" style="padding:12px 15px !important;font-size:10px !important;background:#2892ff;" onclick="followBack(<?= $userdata->userId?>,<?= $userData->userId?>)">Follow Back</button>
-                                </div>
-                            <?php } } ?>
+
                         </div>
                 <?php } } else { ?>
                 <p class="mb-0 text-center">No user added</p>
@@ -523,11 +511,7 @@ function displayStars($rating) {
                                 <?php } ?>
                                 <a href="<?php echo base_url('customer_detail/'.base64_encode($userData->userId)); ?>" style="font-size: 12px;"><?= $name; ?></a>
                             </div>
-                            <?php if(@$userdata->userId == @$_SESSION['afrebay']['userId']) { ?>
-                            <div>
-                                <button type="button" class="btn btn-primary" style="padding: 12px 15px !important; font-size: 10px !important; background: #2892ff;" onclick="unfollowUsers(<?= $userData->userId?>, <?= $userdata->userId?>)"> Unfollow</button>
-                            </div>
-                            <?php } ?>
+
                         </div>
                 <?php } } else { ?>
                 <p class="mb-0 text-center">No user added</p>
@@ -568,11 +552,6 @@ function displayStars($rating) {
                                 <?php } ?>
                                 <a href="<?php echo base_url('customer_detail/'.base64_encode($userData->userId)); ?>" style="font-size: 12px;"><?= $name; ?></a>
                             </div>
-                            <?php if(@$userdata->userId == @$_SESSION['afrebay']['userId']) { ?>
-                            <div>
-                                <button type="button" class="btn btn-primary" style="padding: 12px 15px !important; font-size: 10px !important; background: #2892ff;" onclick="unblockUser(<?= $userData->userId?>,<?= $userdata->userId?>)"> Unblock</button>
-                            </div>
-                            <?php } ?>
                         </div>
                 <?php } } else { ?>
                 <p class="mb-0 text-center">No user added</p>
@@ -581,83 +560,61 @@ function displayStars($rating) {
         </div>
     </div>
 </div>
-
 <script>
-$(document).ready(function () {
-    const shareBtn = $('#shareBtn');
-    const shareMenu = $('#shareMenu');
-    shareBtn.click(function () {
-        shareMenu.toggle();
+    $(document).ready(function () {
+        const shareBtn = $('#shareBtn');
+        const shareMenu = $('#shareMenu');
+        shareBtn.click(function () {
+            shareMenu.toggle();
+        });
     });
-});
-function show_map() {
-    $('#show_maping').show();
-}
-$(".job-thumb").click(function () {
-    //$("#status-options").toggle();
-});
-$("#status-options ul li").click(function () {
-    $("#profile-img").removeClass();
-    $("#status-online").removeClass("active");
-    $("#status-away").removeClass("active");
-    $("#status-busy").removeClass("active");
-    $("#status-offline").removeClass("active");
-    $(this).addClass("active");
-    if ($("#status-online").hasClass("active")) {
-        $("#profile-img").addClass("online");
-    } else if ($("#status-away").hasClass("active")) {
-        $("#profile-img").addClass("away");
-    } else if ($("#status-busy").hasClass("active")) {
-        $("#profile-img").addClass("busy");
-    } else if ($("#status-offline").hasClass("active")) {
-        $("#profile-img").addClass("offline");
-    } else {
+    function show_map() {
+        $('#show_maping').show();
+    }
+    $(".job-thumb").click(function () {
+        //$("#status-options").toggle();
+    });
+    $("#status-options ul li").click(function () {
         $("#profile-img").removeClass();
-    };
-    //$("#status-options").toggle();
-});
-function report(userid) {
-    var toUser = userid;
-    var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
-        echo $_SESSION['afrebay']['userId'];
-    } else {
-        echo "NULL";
-    } ?>;
-    if (fromUser != "NULL") {
-        $('#exampleModal').addClass('show');
-        $('#exampleModal').modal('show');
-        $('#toUser').val(toUser);
-    }
-}
-function reportUser() {
-    var toUser = $('#toUser').val();
-    var fromUser = $('#fromUser').val();
-    var reason = $('#reason').val();
-    $.ajax({
-        url: "<?= base_url('user/dashboard/reportUser') ?>",
-        type: "POST",
-        data: { toUser: toUser, fromUser: fromUser, reason: reason },
-        success: function (response) {
-            if (response == "1") {
-                location.reload();
-            } else {
-                $('#error').text(response);
-            }
+        $("#status-online").removeClass("active");
+        $("#status-away").removeClass("active");
+        $("#status-busy").removeClass("active");
+        $("#status-offline").removeClass("active");
+        $(this).addClass("active");
+        if ($("#status-online").hasClass("active")) {
+            $("#profile-img").addClass("online");
+        } else if ($("#status-away").hasClass("active")) {
+            $("#profile-img").addClass("away");
+        } else if ($("#status-busy").hasClass("active")) {
+            $("#profile-img").addClass("busy");
+        } else if ($("#status-offline").hasClass("active")) {
+            $("#profile-img").addClass("offline");
+        } else {
+            $("#profile-img").removeClass();
+        };
+        //$("#status-options").toggle();
+    });
+    function report(userid) {
+        var toUser = userid;
+        var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
+            echo $_SESSION['afrebay']['userId'];
+        } else {
+            echo "NULL";
+        } ?>;
+        if (fromUser != "NULL") {
+            $('#exampleModal').addClass('show');
+            $('#exampleModal').modal('show');
+            $('#toUser').val(toUser);
         }
-    })
-}
-function muteUser(userid) {
-    var toUser = userid;
-    var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
-        echo $_SESSION['afrebay']['userId'];
-    } else {
-        echo "NULL";
-    } ?>;
-    if (fromUser != "NULL") {
+    }
+    function reportUser() {
+        var toUser = $('#toUser').val();
+        var fromUser = $('#fromUser').val();
+        var reason = $('#reason').val();
         $.ajax({
-            url: "<?= base_url('user/dashboard/muteUser') ?>",
+            url: "<?= base_url('user/dashboard/reportUser') ?>",
             type: "POST",
-            data: { toUser: toUser, fromUser: fromUser },
+            data: { toUser: toUser, fromUser: fromUser, reason: reason },
             success: function (response) {
                 if (response == "1") {
                     location.reload();
@@ -667,236 +624,208 @@ function muteUser(userid) {
             }
         })
     }
-}
-function unmuteUser(userid) {
-    var toUser = userid;
-    var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
-        echo $_SESSION['afrebay']['userId'];
-    } else {
-        echo "NULL";
-    } ?>;
-    if (fromUser != "NULL") {
-        $.ajax({
-            url: "<?= base_url('user/dashboard/unmuteUser') ?>",
-            type: "POST",
-            data: { toUser: toUser, fromUser: fromUser },
-            success: function (response) {
-                if (response == "1") {
-                    location.reload();
-                } else {
-                    $('#error').text(response);
+    function muteUser(userid) {
+        var toUser = userid;
+        var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
+            echo $_SESSION['afrebay']['userId'];
+        } else {
+            echo "NULL";
+        } ?>;
+        if (fromUser != "NULL") {
+            $.ajax({
+                url: "<?= base_url('user/dashboard/muteUser') ?>",
+                type: "POST",
+                data: { toUser: toUser, fromUser: fromUser },
+                success: function (response) {
+                    if (response == "1") {
+                        location.reload();
+                    } else {
+                        $('#error').text(response);
+                    }
                 }
-            }
-        })
+            })
+        }
     }
-}
+    function unmuteUser(userid) {
+        var toUser = userid;
+        var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
+            echo $_SESSION['afrebay']['userId'];
+        } else {
+            echo "NULL";
+        } ?>;
+        if (fromUser != "NULL") {
+            $.ajax({
+                url: "<?= base_url('user/dashboard/unmuteUser') ?>",
+                type: "POST",
+                data: { toUser: toUser, fromUser: fromUser },
+                success: function (response) {
+                    if (response == "1") {
+                        location.reload();
+                    } else {
+                        $('#error').text(response);
+                    }
+                }
+            })
+        }
+    }
 
-//for banner slider start
-<?php if (!empty($getbackgroundimg)) { ?>
-var slides = document.querySelectorAll(".slide");
-var dots = document.querySelectorAll(".dot");
-var index = 0;
-var slideInterval;
+    //for banner slider start
+    <?php if (!empty($getbackgroundimg)) { ?>
+    var slides = document.querySelectorAll(".slide");
+    var dots = document.querySelectorAll(".dot");
+    var index = 0;
+    var slideInterval;
 
-function prevSlide(n) {
-    index += n;
-    console.log("prevSlide is called");
+    function prevSlide(n) {
+        index += n;
+        console.log("prevSlide is called");
+        changeSlide();
+    }
+
+    function nextSlide(n) {
+        index += n;
+        changeSlide();
+    }
+
     changeSlide();
-}
+    function changeSlide() {
+        if (index > slides.length - 1)
+            index = 0;
+        if (index < 0)
+            index = slides.length - 1;
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+            dots[i].classList.remove("active");
+        }
+        slides[index].style.display = "block";
+        dots[index].classList.add("active");
+    }
 
-function nextSlide(n) {
-    index += n;
+    function startAutoSlide() {
+        slideInterval = setInterval(() => {
+            nextSlide(1);
+        }, 3000); // Change slide every 3 seconds
+    }
+
+    function stopAutoSlide() {
+        clearInterval(slideInterval);
+    }
+    startAutoSlide();
+    dots.forEach((dot, i) => {
+        dot.addEventListener("click", () => {
+            stopAutoSlide(); // Stop autoslide on manual navigation
+            index = i; // Set index to clicked dot
+            changeSlide(); // Show the corresponding slide
+            startAutoSlide(); // Restart autoslide
+        });
+    });
     changeSlide();
-}
+    <?php } ?>
+    //for banner slider start
 
-changeSlide();
-function changeSlide() {
-    if (index > slides.length - 1)
-        index = 0;
-    if (index < 0)
-        index = slides.length - 1;
-    for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-        dots[i].classList.remove("active");
+
+    //for jobpost slider start
+    <?php if (!empty($getJobImage)) { ?>
+    var slides1 = document.querySelectorAll(".slide1");
+    var dots1 = document.querySelectorAll(".dot1");
+    var index1 = 0;
+    function prevSlide1(n1) {
+        index1 += n1;
+        console.log("prevSlide is called");
+        changeSlide1();
     }
-    slides[index].style.display = "block";
-    dots[index].classList.add("active");
-}
 
-function startAutoSlide() {
-    slideInterval = setInterval(() => {
-        nextSlide(1);
-    }, 3000); // Change slide every 3 seconds
-}
-
-function stopAutoSlide() {
-    clearInterval(slideInterval);
-}
-startAutoSlide();
-dots.forEach((dot, i) => {
-    dot.addEventListener("click", () => {
-        stopAutoSlide(); // Stop autoslide on manual navigation
-        index = i; // Set index to clicked dot
-        changeSlide(); // Show the corresponding slide
-        startAutoSlide(); // Restart autoslide
-    });
-});
-changeSlide();
-<?php } ?>
-//for banner slider start
-
-//for jobpost slider start
-<?php if (!empty($getJobImage)) { ?>
-var slides1 = document.querySelectorAll(".slide1");
-var dots1 = document.querySelectorAll(".dot1");
-var index1 = 0;
-function prevSlide1(n1) {
-    index1 += n1;
-    console.log("prevSlide is called");
+    function nextSlide1(n1) {
+        index1 += n1;
+        changeSlide1();
+    }
     changeSlide1();
-}
+    function changeSlide1() {
+        if (index1 > slides1.length - 1)
+            index1 = 0;
+        if (index1 < 0)
+            index1 = slides1.length - 1;
+        for (let i = 0; i < slides1.length; i++) {
+            slides1[i].style.display = "none";
+            dots1[i].classList.remove("active");
+        }
+        slides1[index1].style.display = "block";
+        dots1[index1].classList.add("active");
+    }
 
-function nextSlide1(n1) {
-    index1 += n1;
+    function startAutoSlide1() {
+        slideInterval1 = setInterval(() => {
+            nextSlide1(1);
+        }, 3000); // Change slide every 3 seconds
+    }
+
+    function stopAutoSlide1() {
+        clearInterval1(slideInterval1);
+    }
+    startAutoSlide1();
+    dots1.forEach((dot1, i) => {
+        dot1.addEventListener("click", () => {
+            stopAutoSlide1(); // Stop autoslide on manual navigation
+            index1 = i; // Set index to clicked dot
+            changeSlide1(); // Show the corresponding slide
+            startAutoSlide1(); // Restart autoslide
+        });
+    });
     changeSlide1();
-}
-changeSlide1();
-function changeSlide1() {
-    if (index1 > slides1.length - 1)
-        index1 = 0;
-    if (index1 < 0)
-        index1 = slides1.length - 1;
-    for (let i = 0; i < slides1.length; i++) {
-        slides1[i].style.display = "none";
-        dots1[i].classList.remove("active");
+    <?php } ?>
+    //for jobpost slider end
+
+
+    //for save jobpost slider start
+    <?php if (!empty($post_detailsimg)) { ?>
+    var slides2 = document.querySelectorAll(".slide2");
+    var dots2 = document.querySelectorAll(".dot2");
+    var index2 = 0;
+    function prevSlide2(n2) {
+        index2 += n2;
+        console.log("prevSlide is called");
+        changeSlide2();
     }
-    slides1[index1].style.display = "block";
-    dots1[index1].classList.add("active");
-}
 
-function startAutoSlide1() {
-    slideInterval1 = setInterval(() => {
-        nextSlide1(1);
-    }, 3000); // Change slide every 3 seconds
-}
-
-function stopAutoSlide1() {
-    clearInterval1(slideInterval1);
-}
-startAutoSlide1();
-dots1.forEach((dot1, i) => {
-    dot1.addEventListener("click", () => {
-        stopAutoSlide1(); // Stop autoslide on manual navigation
-        index1 = i; // Set index to clicked dot
-        changeSlide1(); // Show the corresponding slide
-        startAutoSlide1(); // Restart autoslide
-    });
-});
-changeSlide1();
-<?php } ?>
-//for jobpost slider end
-
-//for save jobpost slider start
-<?php if (!empty($post_detailsimg)) { ?>
-var slides2 = document.querySelectorAll(".slide2");
-var dots2 = document.querySelectorAll(".dot2");
-var index2 = 0;
-function prevSlide2(n2) {
-    index2 += n2;
-    console.log("prevSlide is called");
-    changeSlide2();
-}
-
-function nextSlide2(n2) {
-    index2 += n2;
-    changeSlide2();
-}
-changeSlide2();
-function changeSlide2() {
-    if (index2 > slides2.length - 1)
-        index2 = 0;
-    if (index2 < 0)
-        index2 = slides2.length - 1;
-    for (let i = 0; i < slides2.length; i++) {
-        slides2[i].style.display = "none";
-        dots2[i].classList.remove("active");
+    function nextSlide2(n2) {
+        index2 += n2;
+        changeSlide2();
     }
-    slides2[index2].style.display = "block";
-    dots2[index2].classList.add("active");
-}
+    changeSlide2();
+    function changeSlide2() {
+        if (index2 > slides2.length - 1)
+            index2 = 0;
+        if (index2 < 0)
+            index2 = slides2.length - 1;
+        for (let i = 0; i < slides2.length; i++) {
+            slides2[i].style.display = "none";
+            dots2[i].classList.remove("active");
+        }
+        slides2[index2].style.display = "block";
+        dots2[index2].classList.add("active");
+    }
 
-function startAutoSlide2() {
-    slideInterval2 = setInterval(() => {
-        nextSlide2(1);
-    }, 3000); // Change slide every 3 seconds
-}
+    function startAutoSlide2() {
+        slideInterval2 = setInterval(() => {
+            nextSlide2(1);
+        }, 3000); // Change slide every 3 seconds
+    }
 
-function stopAutoSlide2() {
-    clearInterval2(slideInterval2);
-}
-startAutoSlide2();
-dots2.forEach((dot2, i) => {
-    dot2.addEventListener("click", () => {
-        stopAutoSlide2(); // Stop autoslide on manual navigation
-        index2 = i; // Set index to clicked dot
-        changeSlide2(); // Show the corresponding slide
-        startAutoSlide2(); // Restart autoslide
+    function stopAutoSlide2() {
+        clearInterval2(slideInterval2);
+    }
+    startAutoSlide2();
+    dots2.forEach((dot2, i) => {
+        dot2.addEventListener("click", () => {
+            stopAutoSlide2(); // Stop autoslide on manual navigation
+            index2 = i; // Set index to clicked dot
+            changeSlide2(); // Show the corresponding slide
+            startAutoSlide2(); // Restart autoslide
+        });
     });
-});
-changeSlide2();
-<?php } ?>
-//for save jobpost slider end
-function unfollowUser(followers_id, followedBy_id) {
-    $.ajax({
-        type: "POST",
-        url: "<?= base_url('user/dashboard/unfollowUser') ?>",
-        data: {followers_id: followers_id, followedBy_id: followedBy_id},
-        success: function(data){
-            if(data == 1){
-                location.reload();
-            }
-        }
-    })
-}
-
-function unfollowUsers(followers_id, followedBy_id) {
-    $.ajax({
-        type: "POST",
-        url: "<?= base_url('user/dashboard/unfollowUsers') ?>",
-        data: {followers_id: followers_id, followedBy_id: followedBy_id},
-        success: function(data){
-            if(data == 1){
-                location.reload();
-            }
-        }
-    })
-}
-
-function followBack(followedBy_id, followers_id) {
-    $.ajax({
-        type: "POST",
-        url: "<?= base_url('user/dashboard/followBack') ?>",
-        data: {followers_id: followers_id, followedBy_id: followedBy_id},
-        success: function(data){
-            if(data == 1){
-                location.reload();
-            }
-        }
-    })
-}
-
-function unblockUser(blockedUser, blockedby) {
-    $.ajax({
-        type: "POST",
-        url: "<?= base_url('user/dashboard/unblockUser') ?>",
-        data: {blockedUser: blockedUser, blockedby: blockedby},
-        success: function(data){
-            if(data == 1){
-                location.reload();
-            }
-        }
-    })
-}
+    changeSlide2();
+    <?php } ?>
+    //for save jobpost slider end
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" async="" src="<?php echo base_url(); ?>assets/js/Map_Modal.js"></script>

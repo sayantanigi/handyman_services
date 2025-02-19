@@ -46,6 +46,7 @@ function displayStars($rating){
     return $stars;
 }
 ?>
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 990px !important;">
         <div class="modal-content">
@@ -61,6 +62,7 @@ function displayStars($rating){
         </div>
     </div>
 </div>
+
 <section>
     <div class="block Opp_Block pb-4 pt-0">
         <div class="container-fluid">
@@ -113,8 +115,8 @@ function displayStars($rating){
                                     </div>
                                     <div class="uploadOptionPost">
                                         <div data-toggle="modal" <?php if (!empty($_SESSION['afrebay']['userType'])) { echo 'data-target="#postModal" onclick="postData()"'; } else { echo ''; } ?>>
-                                            <label id="postBoximgup"><img src="<?php base_url(); ?>assets/images/photo-icon.png"> Image</label>
-                                            <label id="postBoxvidup"><img src="<?php base_url(); ?>assets/images/video-icon.png"> Video</label>
+                                            <label id="postBoximgup"><img src="<?php base_url(); ?>assets/images/photo-icon.png"> Image / Video</label>
+                                            <!-- <label id="postBoxvidup"><img src="<?php base_url(); ?>assets/images/video-icon.png"> </label> -->
                                         </div>
                                     </div>
                                 </div>
@@ -123,11 +125,6 @@ function displayStars($rating){
                     </div>
                     <div class="tab-content posttabcontent" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-local" role="tabpanel" aria-labelledby="pills-local-tab">
-                            <div id="loader" style="position: absolute; width: 96%; z-index: 1; background: #00000054; border-radius: 20px;" class="d-none">
-                                <!-- <div style="border-radius: 20px; height: 765px; text-align: center; position: relative; top: 10pc;">
-                                    <img src="<?= base_url('assets/images/loader.gif'); ?>" style=" width: 200px; ">
-                                </div> -->
-                            </div>
                             <div class="PostContainer boxPost">
                                 <?php
                                 if (!empty($get_post)) {
@@ -176,6 +173,7 @@ function displayStars($rating){
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-lg-right">
                                                                     <?php if (@$_SESSION['afrebay']['userId'] === @$row->user_id) { ?>
+                                                                    <a class="dropdown-item PostItem" data-toggle="modal" data-target="#editPostModal" href="javascript:void(0)" onclick="postjobEdit(<?= $row->id ?>)"><img src="<?= base_url('assets/images/editing.png'); ?>">Edit Post</a>
                                                                     <a class="dropdown-item PostItem" href="javascript:void(0)" onclick="jobDelete(<?= $row->id ?>)"><img src="<?= base_url('assets/images/PostIcon7.png'); ?>">Delete Post</a>
                                                                     <?php } else {
                                                                     $getsavepostData = $this->db->query("SELECT * FROM users_save_post WHERE post_id = '" . $row->id . "' AND user_id = '" . $_SESSION['afrebay']['userId'] . "' AND status = '1'")->row();
@@ -231,17 +229,17 @@ function displayStars($rating){
                                                         $total_image = count($getImage);
                                                         //echo "<pre>"; print_r($getImage);
                                                         for ($i = 0; $i < min($total_image, $max_display); $i++) { ?>
-                                                            <div class="box-image<?php if ($total_image > 4) {
-                                                                                        echo $max_display;
-                                                                                    } else {
-                                                                                        echo $total_image;
-                                                                                    } ?>">
+                                                            <div class="box-image<?php if ($total_image > 4) { echo $max_display; } else {  $total_image; } ?>">
                                                                 <?php
                                                                 $extension = strtolower(pathinfo($getImage[$i]['job_image'], PATHINFO_EXTENSION));
                                                                 if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'avif', 'webp'])) { ?>
                                                                     <img src="<?php base_url() ?>uploads/postjob/<?= $getImage[$i]['job_image'] ?>" class="postImageData">
                                                                     <?php if ($i === $max_display - 1 && $total_image > $max_display) { ?>
-                                                                        <div class="extra-images">+<?php echo $total_image - $max_display ?></div>
+                                                                        <div class="extra-images">
+                                                                            <p class="Count">
+                                                                                +<?php echo $total_image - $max_display ?>
+                                                                            </p>
+                                                                        </div>
                                                                     <?php }
                                                                 } elseif (in_array($extension, ['mp4', 'webm', 'avi', 'mov'])) { ?>
                                                                     <video width="100%">
@@ -647,7 +645,7 @@ function displayStars($rating){
                                     } else {
                                         $link = base_url('professionals_detail/' . base64_encode($getUserDetails->userId));
                                     }
-                            ?>
+                                    ?>
                                     <div class="d-flex mb-2 activitylist align-items-center">
                                         <div class="activityUser">
                                             <a href="javascript:void(0)"><img src="<?= $profilePic; ?>"></a>
@@ -777,9 +775,7 @@ function displayStars($rating){
         </div>
     </div>
 </section>
-<!-- Button trigger modal -->
 
-<!-- Modal -->
 <div class="modal fade postMOdal" id="filterModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -908,20 +904,17 @@ function displayStars($rating){
     </div>
 </div>
 
-<div class="modal fade postMOdal" id="postModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="postModalLabel" aria-hidden="true">
+<div class="modal fade postMOdal" id="postModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title w-100 font-weight-bold text-dark text-center" id="staticBackdropLabel">Create
-                    Post</h5>
+                <h5 class="modal-title w-100 font-weight-bold text-dark text-center" id="staticBackdropLabel">Create Post</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="<?php echo base_url('Welcome/save_postjob') ?>"
-                    enctype="multipart/form-data" style="padding: 0 !important;" id="generalForm1">
+                <form method="post" action="<?php echo base_url('Welcome/save_postjob') ?>" enctype="multipart/form-data" style="padding: 0 !important;" id="generalForm1">
                     <div class="postmodalHead d-flex justify-content-between mb-2 align-items-center">
                         <div class="postmodalUser d-flex align-items-center">
                             <div class="modaluserimg">
@@ -938,39 +931,20 @@ function displayStars($rating){
                         </div>
                     </div>
                     <div>
-                        <textarea class="postModalComment post_title emoji_act" name="post_title"
-                            placeholder="Enter your post details ..."></textarea>
+                        <textarea class="postModalComment post_title emoji_act" name="post_title" placeholder="Enter your post details ..."></textarea>
                     </div>
-                    <div class="upload-container mb-2" id="imageUpload">
-                        <a href="#" class="closemediaupload"><i class="fa-sharp fa-light fa-xmark"></i></a>
-                        <label for="file-upload">
-                            <img src="<?php base_url(); ?>assets/images/addPhoto.png" alt="Upload Icon"
-                                class="uploadImgicon">
-                            <p class="text-dark font-weight-bold">Add photos</p>
-                            <p>Images must be less than 5 MB in size</p>
-                        </label>
-                        <!-- <input type="file" id="file-upload" accept="image/*" > -->
-                        <input type="file" id="file-upload" name="postjobPic[]" multiple class="text-center center-block file-upload" />
-                    </div>
-                    <div class="upload-container mb-2" id="videoUpload">
-                        <a href="#" class="closemediaupload"><i class="fa-sharp fa-light fa-xmark"></i></a>
-                        <label for="file-upload">
-                            <img src="<?php base_url(); ?>assets/images/videoIcon.png" alt="Upload Video" class="uploadImgicon">
-                            <p class="text-dark font-weight-bold">Add videos</p>
-                            <p>Videos must be less than 25 MB in size</p>
-                        </label>
-                        <!-- <input type="file" id="file-upload" accept="image/*"> -->
-                        <!-- <input type="file" id="file-upload" name="postjobVid[]" multiple class="text-center center-block file-upload" /> -->
-                    </div>
+                    <div class="preview-container" id="imagePreviewContainer"></div>
                     <div class="d-flex justify-content-between uploadmediaPnl align-items-center mb-2">
                         <div>
                             <h5 class="text-dark mb-0 h6 font-weight-bold">Add to your post</h5>
                         </div>
                         <div class="d-flex uploadinpost align-items-center">
-                            <a href="#" id="iconimgupload"><img
-                                    src="<?php base_url(); ?>assets/images/iconimageupload.png"></a>
-                            <a href="#" id="iconvideoupload"><img
-                                    src="<?php base_url(); ?>assets/images/iconvideoupload.png"></a>
+                            <a href="javascript:void(0)" id="iconimgupload" style="width: 26px;">
+                                <img src="<?php base_url(); ?>assets/images/iconimageupload.png" style="position: absolute; z-index: 100; pointer-events: none; background: #f6f6f6;">
+                                <div class="upload-container mb-2" id="imageUpload" style="border: 0; background-color: #f6f6f6 !important; width: 0 !important;">
+                                    <input type="file" id="file-upload" name="postjobPic[]" multiple class="text-center center-block file-upload" style="width: 26px; height: 26px; display: block;" />
+                                </div>
+                            </a>
                         </div>
                     </div>
                     <div style="background: #F6F6F6; border-radius: 10px; margin-bottom: 15px;">
@@ -979,8 +953,8 @@ function displayStars($rating){
                             <?php
                             $getCategory = $this->db->query("SELECT * FROM category WHERE status = 'Active'")->result_array();
                             if (!empty($getCategory)) {
-                                foreach ($getCategory as $item) { ?>
-                                    <option value="<?= $item['id'] ?>"><?= ucfirst($item['category_name']) ?></option>
+                            foreach ($getCategory as $item) { ?>
+                            <option value="<?= $item['id'] ?>"><?= ucfirst($item['category_name']) ?></option>
                             <?php }
                             } ?>
                         </select>
@@ -998,8 +972,76 @@ function displayStars($rating){
     </div>
 </div>
 
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade postMOdal" id="editPostModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title w-100 font-weight-bold text-dark text-center" id="staticBackdropLabel">Edit Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="<?php echo base_url('Welcome/update_postjob') ?>" enctype="multipart/form-data" style="padding: 0 !important;" id="generalForm1">
+                    <input type="hidden" name="postjob_id" id="postjob_id" value="">
+                    <div class="postmodalHead d-flex justify-content-between mb-2 align-items-center">
+                        <div class="postmodalUser d-flex align-items-center">
+                            <div class="modaluserimg">
+                                <img src="<?= $profilePic; ?>">
+                            </div>
+                            <h3 class="mb-0 ml-2 h6 font-weight-bold text-dark"><?= "@" . $getUser_details->username; ?></h3>
+                        </div>
+                        <div class="d-flex selectPost align-items-center Gradient_Back_Color">
+                            <div><i class="fa-solid fa-earth-americas"></i></div>
+                            <select name="edit_visibility" id="visibility">
+                                <option value="1">Public</option>
+                                <option value="2">Private</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <textarea class="postModalComment post_title emoji_act edit_post_title" name="edit_post_title" placeholder="Enter your post details ..."></textarea>
+                    </div>
+                    <div class="preview-container" id="editimagePreviewContainer"></div>
+                    <div class="d-flex justify-content-between uploadmediaPnl align-items-center mb-2">
+                        <div>
+                            <h5 class="text-dark mb-0 h6 font-weight-bold">Add to your post</h5>
+                        </div>
+                        <div class="d-flex uploadinpost align-items-center">
+                            <a href="javascript:void(0)" id="iconimgupload" style="width: 26px;">
+                                <img src="<?php base_url(); ?>assets/images/iconimageupload.png" style="position: absolute; z-index: 100; pointer-events: none; background: #f6f6f6;">
+                                <div class="upload-container mb-2" id="imageUpload" style="border: 0; background-color: #f6f6f6 !important; width: 0 !important; display: block !important;;">
+                                    <input type="file" id="file-upload-edit" name="editpostjobPic[]" multiple class="text-center center-block file-upload" style="width: 26px; height: 26px; display: block;" />
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div style="background: #F6F6F6; border-radius: 10px; margin-bottom: 15px;">
+                        <select name="edit_category" id="edit_category" class="categories_style" style="width: 100%; border-radius: 10px; padding-top: 10px; padding-bottom: 10px; height: 40px;" onchange="getcategoryval(this.value);" required>
+                            <option value="">Select Category</option>
+                            <?php
+                            $getCategory = $this->db->query("SELECT * FROM category WHERE status = 'Active'")->result_array();
+                            if (!empty($getCategory)) {
+                            foreach ($getCategory as $item) { ?>
+                            <option value="<?= $item['id'] ?>"><?= ucfirst($item['category_name']) ?></option>
+                            <?php }
+                            } ?>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="hidden" name="location" id="edit_location_guest" value="" placeholder="Set Location" />
+                        <input type="hidden" name="s_lat" id="edit_search_lat_guest" value="">
+                        <input type="hidden" name="s_lon" id="edit_search_lon_guest" value="">
+                        <input type="hidden" name="cat_valmod" id="edit_cat_valmod" value="">
+                        <button class="w-100 postbtn Gradient_Back_Color" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -1012,8 +1054,7 @@ function displayStars($rating){
                 <div class="row">
                     <div class="col-lg-9 col-md-9 col-sm-12">
                         <div class="job-field frmSearch">
-                            <input type="text" name="location" id="location" value="<?= @$loc ?>"
-                                placeholder="Set Location" />
+                            <input type="text" name="location" id="location" value="<?= @$loc ?>" placeholder="Set Location" />
                             <i class="la la-close" style="right: 0px; top: 19px !important;" onclick="removeAdd()"></i>
                             <input type="hidden" id="search_lat" name="s_lat" value="<?= @$lat ?>">
                             <input type="hidden" id="search_lon" name="s_lon" value="<?= @$lon ?>">
@@ -1021,9 +1062,7 @@ function displayStars($rating){
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12 Mobile_Btn_Container_1">
                         <!-- <button onclick="event.preventDefault(); viewInMap()" style=" width: 100% !important; padding: 18px 0px; height: auto !important; margin: 0; border-radius: 35px !important; font-size: 15px;">View In Map</button> -->
-                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModal"
-                            onclick="event.preventDefault(); viewInMap()"
-                            style=" width: 100% !important; padding: 18px 0px !important; height: auto !important; margin: 0; border-radius: 35px !important; font-size: 15px;">View
+                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModal" onclick="event.preventDefault(); viewInMap()" style=" width: 100% !important; padding: 18px 0px !important; height: auto !important; margin: 0; border-radius: 35px !important; font-size: 15px;">View
                             In Map</button>
                     </div>
                 </div>
@@ -1055,8 +1094,7 @@ function displayStars($rating){
     </div>
 </div>
 
-<div class="modal fade" id="exampleModalreportpost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModalreportpost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 550px !important; position: relative; top: 80px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -1079,654 +1117,515 @@ function displayStars($rating){
 
 <style>
     .TermsContainer{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}.TermsContainer .TermsBlock{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:15px;width:100%}.TermsContainer .TermsBlock a{font-size:11px;color:#000}.TermsContainer .CopyrightText{font-size:11px;color:#2892ff;text-decoration:underline;text-align:center}.HContainer .HBlock{display:flex;flex-direction:row;align-items:flex-start;justify-content:space-between;border-bottom:1px solid #ddd;padding-bottom:15px}.HContainer .HBlock:not(:first-child){padding-top:15px}.HContainer .HBlock:last-child{border-bottom:0}.HContainer .HBlock .HDataBlock{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px}.HContainer .HBlock .HTagText{font-size:11px;margin:0;color:#000;font-weight:600;line-height:normal}.HContainer .HBlock .HHeadingText{font-size:20px;font-weight:600;color:#2892ff;margin:0;line-height:normal}.HContainer .HBlock .HPostText{font-size:11px;margin:0;color:#adadad;line-height:normal}.HContainer .HBlock a{font-size:22px;line-height:1px}#city,#state,.chosen_country{color:#888;height:60px;border-radius:50px;padding:17px!important}#city,#state{display:block}.jconfirm-content-pane{text-align:center;font-size:18px}.jconfirm-buttons{margin-right:140px;display:inline-block}#country-list{float:left;list-style:none;margin-top:57px;padding:0;width:100%;position:absolute;z-index:1}#country-list li{padding:10px 30px;background:#fff;margin:0!important;border-radius:0;border-bottom:1px solid #eee}#country-list li:hover{background:#ece3d2;cursor:pointer}::-webkit-scrollbar{width:10px;background-color:transparent}::-webkit-scrollbar-track{background:0 0}::-webkit-scrollbar-thumb{background:#888;border-radius:5px}::-webkit-scrollbar-thumb:hover{background:#555}.pf-map iframe{height:525px!important}#map{position:relative!important;height:500px!important;max-width:100%!important}.hidereplyBox{display:none!important}.showreplyBox{display:block!important}.jconfirm .jconfirm-box{overflow:visible!important}.cross{position:relative;top:-76px;left:76px;width:26px;height:26px;padding:0!important;z-index:9;background:red!important}#slider,.slide{position:static}@media screen and (max-width:425px){.ADD_Sense,.Comment_Mobile textarea,.Rply_Comment_Block ul,.TopBar a,.TopBar ul,.hidereplyBox a,.hidereplyBox textarea{width:100%!important}.TopBar ul li,.job-field input{padding:0 20px!important}.job-field .la-search{font-size:25px!important;top:20px!important}.Mobile_Btn_Container_1{display:flex;align-items:center;justify-content:center;padding:0!important}.Comment_Data,.PostContainer .DataContainer .Comment_Block{padding:10px!important}.Mobile_Btn_Container_1 .btn-primary{margin-bottom:20px!important}.TopBar{flex-direction:column!important;height:110px!important}.TopBar ul{justify-content:space-evenly}.TopBar a span{width:100px!important}.PostContainer .DataContainer .InfoBlock{height:50px!important}.PostContainer .DataContainer .InfoBlock img{height:50px!important;width:50px!important}.PostContainer .DataContainer .InfoBlock .TextData h3{font-size:16px!important}.PostContainer .DataContainer .InfoBlock .TextData p{line-height:20px!important}.PostContainer .DataContainer .CommentData{font-size:14px!important;line-height:20px!important}.Comment_Data{margin-left:0!important}.ADD_Sense{height:120px!important;top:calc(100vh - 130px)!important;padding-left:0!important;align-items:center!important;justify-content:center!important;left:0!important}}.emojionearea,.emojionearea.form-control{border:none!important;box-shadow:none!important}.emojionearea .emojionearea-editor:empty:before{text-align:start!important}.emojionearea .emojionearea-button.active+.emojionearea-picker-position-bottom{margin-top:37px!important}.emojionearea .emojionearea-picker.emojionearea-picker-position-bottom{margin-top:10px!important;right:10px!important;top:47px!important}.emojionearea .emojionearea-editor{min-height:3em!important;max-height:0!important}.emojionearea .emojionearea-picker .emojionearea-search>input{padding:0 0 0 11px!important;border-radius:8px!important}.Comment_Mobile .emojionearea-editor{background:#f4f4f4;font-size:14px!important;margin-bottom:0!important;float:unset!important;padding:10px 105px 10px 20px!important;border-radius:45px!important;min-height:55px!important;margin-top:0!important;width:100%;border:0!important;height:auto!important;background-color:#f4f4f4!important}.Comment_Mobile .emojionearea-button{top:45px!important}.hidden{display:none}.shareMenu{border:1px solid #ccc;padding:5px;background-color:#fff;float:right}.PostItem{height:30px;display:flex;padding:0 0 0 10px;align-items:center;justify-content:flex-start}.PostItem img{height:16px;width:16px;object-fit:contain;margin-right:5px}#slider{width:100%;margin:0 auto;overflow:hidden}.slide{width:100%;display:none;animation-name:fade;animation-duration:1s}@keyframes fade{from{opacity:.5}to{opacity:1}}.controls{position:absolute;top:10%;transform:translateY(-50%);font-size:1.5em;padding:15px 10px;border-radius:5px}.controls:hover{background:#fff;transition:.3s}.controls:active{color:grey}#left-arrow{left:25px}#right-arrow{right:25px}#dots-con{text-align:center;display:none}.dot{display:inline-block;background:grey;padding:8px;border-radius:50%;margin:10px 5px}@media (max-width:576px){#slider{width:100%}.controls{font-size:1em}#dots-con{display:none}}.profileImg img{position:sticky}
+    .preview-item { position: relative; display: inline-block; margin: 10px 0 5px; } .delete-cross { position: absolute; top: 0; right: 0; background: rgba(255, 0, 0, 0.8); color: white; border: none; border-radius: 50%; cursor: pointer; padding: 2px 6px; font-size: 16px; line-height: 18px; } .preview-item img, .preview-item video { width: 100px; height: 100px; display: block; }
 </style>
 <script>
-    $(document).ready(function() {
-        var base_url = $("#base_url").val();
-        var id = 'United States';
-        $.ajax({
-            type: "post",
-            cache: false,
-            url: base_url + "Welcome/states_by_country",
-            data: {
-                country_name: id
-            },
-            beforeSend: function() {},
-            success: function(returndata) {
-                $('.state_field').show();
-                $('#state').html(returndata);
-                $('#city').html('<option value="">Select State First</option>');
-            }
-        });
-
-        $("#search-box").keyup(function() {
-            var text = $("#search-box").val();
-            $("#suggesstion-box").show();
-            $("#suggesstion-box").html('<ul id="country-list" style="background: white; height: auto; overflow-y: scroll; box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);"><li onclick="selectcategory(\'' + text + '\')">' + text + '</li></ul>');
-            $("#search-box").css("background", "#FFF");
-        });
-
-        $(".emoji_act").emojioneArea({
-            emojiPlaceholder: ":smile_cat:",
-            searchPlaceholder: "Search",
-            buttonTitle: "Use your TAB key to insert emoji faster",
-            searchPosition: "bottom",
-            pickerPosition: "bottom"
-        });
-    })
-
-    $("#generalForm").submit(function() {
-        var post_title = $('#post_title').val();
-        if (post_title == '') {
-            $(".emojionearea-editor").attr("placeholder", "Please Enter Post Title");
-            $("emojionearea-editor").prop("required", true);
-            $(".emojionearea-editor").focus();
-            return false;
+$(document).ready(function() {
+    var base_url = $("#base_url").val();
+    var id = 'United States';
+    $.ajax({
+        type: "post",
+        cache: false,
+        url: base_url + "Welcome/states_by_country",
+        data: {
+            country_name: id
+        },
+        beforeSend: function() {},
+        success: function(returndata) {
+            $('.state_field').show();
+            $('#state').html(returndata);
+            $('#city').html('<option value="">Select State First</option>');
         }
     });
 
-    $("#generalForm1").submit(function() {
-        var post_title = $('.emojionearea-editor').text();
-        if (post_title == '') {
-            $(".emojionearea-editor").attr("placeholder", "Please Enter Post Title");
-            $("emojionearea-editor").prop("required", true);
-            $(".emojionearea-editor").focus();
-            return false;
-        }
+    $("#search-box").keyup(function() {
+        var text = $("#search-box").val();
+        $("#suggesstion-box").show();
+        $("#suggesstion-box").html('<ul id="country-list" style="background: white; height: auto; overflow-y: scroll; box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);"><li onclick="selectcategory(\'' + text + '\')">' + text + '</li></ul>');
+        $("#search-box").css("background", "#FFF");
     });
 
-    function getState(val) {
-        var base_url = $("#base_url").val();
-        var id = val;
-        $.ajax({
-            type: "post",
-            cache: false,
-            url: base_url + "Welcome/states_by_country",
-            data: {
-                country_name: id
-            },
-            beforeSend: function() {},
-            success: function(returndata) {
-                $('.state_field').show();
-                $('#state').html(returndata);
-                $('#city').html('<option value="">Select State First</option>');
-            }
-        });
-    }
+    $(".emoji_act").emojioneArea({
+        emojiPlaceholder: ":smile_cat:",
+        searchPlaceholder: "Search",
+        buttonTitle: "Use your TAB key to insert emoji faster",
+        searchPosition: "bottom",
+        pickerPosition: "bottom"
+    });
 
-    function getCity(val) {
-        var base_url = $("#base_url").val();
-        var id = val;
-        $.ajax({
-            type: "post",
-            cache: false,
-            url: base_url + "Welcome/cities_by_state",
-            data: {
-                state_name: id
-            },
-            beforeSend: function() {},
-            success: function(returndata) {
-                $('.city_field').show();
-                $('#city').html(returndata);
-            }
-        });
-    }
-
-    function viewProfile() {
-        $.alert({
-            title: '',
-            content: "Please login to view professional's profile",
-        });
-    }
-
-    function selectcategory(val) {
-        $("#search-box").val(val);
-        $("#suggesstion-box").hide();
-        var search_box = $('#search-box').val();
-        var base_url = $("#base_url").val();
-        var category = $('#category').val();
-        var distance = $('#distance').val();
-        var search_lat = $('#search_lat').val();
-        var search_lon = $('#search_lon').val();;
-        $.ajax({
-            type: "post",
-            cache: false,
-            url: base_url + "user/Dashboard/searchPostData",
-            data: {
-                search_box: search_box,
-                category: category,
-                distance: distance,
-                search_lat: search_lat,
-                search_lon: search_lon
-            },
-            beforeSend: function() {
-                $("#loader").removeClass('d-none');
-            },
-            success: function(data) {
-                setTimeout(() => {
-                    $("#loader").addClass('d-none');
-                }, 3000);
-                $('.PostContainer').html(data);
-            }
-        })
-    }
-
-    function getcategorydata(val) {
-        var search_box = $('#search-box').val();
-        var base_url = $("#base_url").val();
-        var category = val;
-        var distance = $('#distance').val();
-        var search_lat = $('#search_lat').val();
-        var search_lon = $('#search_lon').val();;
-        $.ajax({
-            type: "post",
-            cache: false,
-            url: base_url + "user/Dashboard/searchPostData",
-            data: {
-                search_box: search_box,
-                category: category,
-                distance: distance,
-                search_lat: search_lat,
-                search_lon: search_lon
-            },
-            beforeSend: function() {
-                $("#loader").removeClass('d-none');
-            },
-            success: function(data) {
-                setTimeout(() => {
-                    $("#loader").addClass('d-none');
-                }, 3000);
-                $('.PostContainer').html(data);
-            }
-        })
-    }
-
-    function getdistancedata(val) {
-        var search_box = $('#search-box').val();
-        var base_url = $("#base_url").val();
-        var category = $('#category').val();
-        var distance = val;
-        var search_lat = $('#search_lat').val();
-        var search_lon = $('#search_lon').val();;
-        $.ajax({
-            type: "post",
-            cache: false,
-            url: base_url + "user/Dashboard/searchPostData",
-            data: {
-                search_box: search_box,
-                category: category,
-                distance: distance,
-                search_lat: search_lat,
-                search_lon: search_lon
-            },
-            beforeSend: function() {
-                $("#loader").removeClass('d-none');
-            },
-            success: function(data) {
-                setTimeout(() => {
-                    $("#loader").addClass('d-none');
-                }, 3000);
-                $('.PostContainer').html(data);
-            }
-        })
-    }
-
-    function removeAdd() {
-        $('#location').val('');
-        $('#search_lon').val('');
-        $('#search_lat').val('');
-    }
-
-    function postComment(postjobID) {
-        if ($('#comment_' + postjobID).val() == "") {
-            $('#err_comment_' + postjobID).fadeIn().html('Please enter your comment first').css('color', 'red');
-            setTimeout(function() {
-                $("#err_comment_" + postjobID).html("");
-            }, 3000);
-            $("#comment_" + postjobID).css('border-color', 'red');
-            setTimeout(function() {
-                $("#comment_" + postjobID).css('border-color', '#80bdff');
-            }, 3000);
-            return false;
-        } else {
-            var user_id = $('#userID').val();
-            var postjob_id = postjobID;
-            var comment_id = $('#comment_id').val();
-            var comment = $('#comment_' + postjobID).val();
-            $.ajax({
-                url: "<?= base_url() ?>user/dashboard/postComment",
-                type: "POST",
-                data: {
-                    user_id: user_id,
-                    postjob_id: postjob_id,
-                    comment_id: comment_id,
-                    comment: comment
-                },
-                success: function(data) {
-                    //console.log(data);
-                    $('.success_msg').text(data);
-                    $('#comment').val('');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 3000);
-                }
-            })
-        }
-    }
-
-    function replylink(postId, commentid) {
-        $('#replyBox_' + commentid).toggleClass('showreplyBox');
-    }
-
-    function postUserComment(postId, commentid) {
-        if ($('#users_rply_' + commentid).val() == "") {
-            $("#users_rply_" + commentid).css('border-color', 'red');
-            $('#users_rply_' + commentid).attr("placeholder", "Please type your reply here");
-            setTimeout(function() {
-                $("#users_rply_" + commentid).css('border-color', '#80bdff');
-            }, 3000);
-            return false;
-        } else {
-            var user_id = $('#userID').val();
-            var postjob_id = postId;
-            var comment_id = commentid;
-            var comment = $('#users_rply_' + commentid).val();
-            $.ajax({
-                url: "<?= base_url() ?>user/dashboard/postUserReply",
-                type: "POST",
-                data: {
-                    user_id: user_id,
-                    postjob_id: postjob_id,
-                    comment_id: comment_id,
-                    comment: comment
-                },
-                success: function(data) {
-                    //console.log(data);
-                    $('.success_msg').text(data);
-                    $('#comment').val('');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 3000);
-                }
-            })
-        }
-    }
-
-    function likepostjob(postjobID) {
-        var user_id = $('#userID').val();
-        var postjob_id = postjobID;
-        $('.fa-heart-o').css('color', '#000 !important');
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/likepostjob",
-            type: "POST",
-            data: {
-                user_id: user_id,
-                postjob_id: postjob_id
-            },
-            success: function(data) {
-                location.reload();
-            }
-        })
-    }
-
-    // for liking user each Comment
-    function likeuserrply(postId, commentid) {
-        var user_id = $('#userID').val();
-        var postjob_id = postId;
-        var comment_id = commentid;
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/likeuserrply",
-            type: "POST",
-            data: {
-                user_id: user_id,
-                postjob_id: postjob_id,
-                comment_id: comment_id
-            },
-            success: function(data) {
-                location.reload();
-            }
-        })
-    }
-
-    // for disliking Comment
-    function dislikepostjob(postjobID) {
-        var user_id = $('#userID').val();
-        var postjob_id = postjobID;
-        $('.fa-heart').addClass('fa-heart-o');
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/dislikepostjob",
-            type: "POST",
-            data: {
-                user_id: user_id,
-                postjob_id: postjob_id
-            },
-            success: function(data) {
-                console.log(data);
-                location.reload();
-            }
-        })
-    }
-
-    // for disliking Comment
-    function dislikeuserrply(postId, commentid) {
-        var user_id = $('#userID').val();
-        var postjob_id = postId;
-        var comment_id = commentid;
-        //$('.fa-heart').addClass('fa-heart-o');
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/dislikeuserrply",
-            type: "POST",
-            data: {
-                user_id: user_id,
-                postjob_id: postjob_id,
-                comment_id: comment_id
-            },
-            success: function(data) {
-                console.log(data);
-                location.reload();
-            }
-        })
-    }
-
-    function jobDelete(id) {
-        var p_id = id;
-        $.confirm({
-            title: 'Confirm!',
-            content: confirmTextDelete,
-            buttons: {
-                confirm: function() {
-                    $.ajax({
-                        url: "<?= base_url() ?>user/dashboard/delete_job",
-                        method: "POST",
-                        data: {
-                            id: p_id
-                        },
-                        beforeSend: function() {
-                            $("#loader_" + id).removeClass('d-none');
-                        },
-                        success: function(data) {
-                            console.log(data);
-                            if (data == '1') {
-                                location.reload(true);
-                            } else {
-                                location.reload(true);
-                            }
-                        }
-
-                    })
-                },
-                cancel: function() {
-                    location.reload();
-                },
-            }
-        });
-    }
-
-    function savePost(p_id, status) {
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/savePost",
-            method: "POST",
-            data: {
-                p_id: p_id
-            },
-            beforeSend: function() {
-                ///$("#loader_" + id).removeClass('d-none');
-            },
-            success: function(data) {
-                //console.log(data);
-                if (data == '1') {
-                    location.reload(true);
-                } else {
-                    location.reload(true);
-                }
-            }
-        })
-    }
-
-    function unsavePost(p_id, status) {
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/unsavePost",
-            method: "POST",
-            data: {
-                p_id: p_id
-            },
-            beforeSend: function() {
-                ///$("#loader_" + id).removeClass('d-none');
-            },
-            success: function(data) {
-                //console.log(data);
-                if (data == '1') {
-                    location.reload(true);
-                } else {
-                    location.reload(true);
-                }
-            }
-        })
-    }
-
-    function notInterestedPost(p_id, status) {
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/notInterestedPost",
-            method: "POST",
-            data: {
-                p_id: p_id
-            },
-            beforeSend: function() {
-                ///$("#loader_" + id).removeClass('d-none');
-            },
-            success: function(data) {
-                //console.log(data);
-                if (data == '1') {
-                    location.reload(true);
-                } else {
-                    location.reload(true);
-                }
-            }
-        })
-    }
-
-    function followUsers(f_id, status) {
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/followUsers",
-            method: "POST",
-            data: {
-                f_id: f_id
-            },
-            beforeSend: function() {
-                ///$("#loader_" + id).removeClass('d-none');
-            },
-            success: function(data) {
-                //console.log(data);
-                if (data == '1') {
-                    location.reload(true);
-                } else {
-                    location.reload(true);
-                }
-            }
-        })
-    }
-
-    function unfollowUsers(f_id, status) {
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/unfollowUsers",
-            method: "POST",
-            data: {
-                f_id: f_id
-            },
-            beforeSend: function() {
-                ///$("#loader_" + id).removeClass('d-none');
-            },
-            success: function(data) {
-                //console.log(data);
-                if (data == '1') {
-                    location.reload(true);
-                } else {
-                    location.reload(true);
-                }
-            }
-        })
-    }
-
-    function muteUser(userid) {
-        var toUser = userid;
-        var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
-                            echo $_SESSION['afrebay']['userId'];
-                        } else {
-                            echo "NULL";
-                        } ?>;
-        if (fromUser != "NULL") {
-            $.ajax({
-                url: "<?= base_url('user/dashboard/muteUser') ?>",
-                type: "POST",
-                data: {
-                    toUser: toUser,
-                    fromUser: fromUser
-                },
-                success: function(response) {
-                    if (response == "1") {
-                        location.reload();
-                    } else {
-                        $('#error').text(response);
+    function readURL(input, previewContainer) {
+        if (input.files && input.files[0]) {
+            for (let i = 0; i < input.files.length; i++) {
+                let file = input.files[i];
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    if (file.type.startsWith('image/')) {
+                        $(previewContainer).append('<div class="preview-item"><img src="' + e.target.result + '" alt="Image Preview"><span class="delete-cross" onclick="removePreview(this)">&times;</span></div>');
+                    } else if (file.type.startsWith('video/')) {
+                        $(previewContainer).append('<div class="preview-item"><video controls><source src="' + e.target.result + '" type="' + file.type + '"></video><span class="delete-cross" onclick="removePreview(this)">&times;</span></div>');
                     }
                 }
-            })
+                reader.readAsDataURL(file);
+            }
         }
     }
 
-    function unmuteUser(userid) {
-        var toUser = userid;
-        var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
-                            echo $_SESSION['afrebay']['userId'];
-                        } else {
-                            echo "NULL";
-                        } ?>;
-        if (fromUser != "NULL") {
-            $.ajax({
-                url: "<?= base_url('user/dashboard/unmuteUser') ?>",
-                type: "POST",
-                data: {
-                    toUser: toUser,
-                    fromUser: fromUser
-                },
-                success: function(response) {
-                    if (response == "1") {
-                        location.reload();
-                    } else {
-                        $('#error').text(response);
-                    }
-                }
-            })
-        }
-    }
+    $("#file-upload").change(function () {
+        $("#imagePreviewContainer").empty();
+        readURL(this, "#imagePreviewContainer");
+    });
 
-    function postData() {
-        //console.log($('.emojionearea-editor'));
-        if ($('.emojionearea-editor').text() != '') {
-            $('.emojionearea-editor').text($('.emojionearea-editor').text());
-        }
-    }
+    $("#file-upload-video").change(function () {
+        $("#videoPreviewContainer").empty();
+        readURL(this, "#videoPreviewContainer");
+    });
 
-    function getFeedData(id) {
-        var latitude = $('#search_lat').val();
-        var longitude = $('#search_lon').val()
-        $.ajax({
-            url: "<?= base_url() ?>user/dashboard/get_feed_data",
-            method: "POST",
-            data: {
-                id: id,
-                latitude: latitude,
-                longitude: longitude
-            },
-            beforeSend: function() {
-                $("#loader").removeClass('d-none');
-            },
-            success: function(data) {
-                //console.log(data);
+    $("#file-upload-edit").change(function () {
+        readURL(this, "#editimagePreviewContainer");
+    });
+
+    $("#file-upload-edit-video").change(function () {
+        $("#videoPreviewContainer").empty();
+        readURL(this, "#videoPreviewContainer");
+    });
+})
+
+function removePreview(element) {
+    $(element).parent().remove();
+}
+
+$("#generalForm").submit(function() {
+    var post_title = $('#post_title').val();
+    if (post_title == '') {
+        $(".emojionearea-editor").attr("placeholder", "Please Enter Post Title");
+        $("emojionearea-editor").prop("required", true);
+        $(".emojionearea-editor").focus();
+        return false;
+    }
+});
+
+$("#generalForm1").submit(function() {
+    var post_title = $('.emojionearea-editor').text();
+    if (post_title == '') {
+        $(".emojionearea-editor").attr("placeholder", "Please Enter Post Title");
+        $("emojionearea-editor").prop("required", true);
+        $(".emojionearea-editor").focus();
+        return false;
+    }
+});
+
+function getState(val) {
+    var base_url = $("#base_url").val();
+    var id = val;
+    $.ajax({
+        type: "post",
+        cache: false,
+        url: base_url + "Welcome/states_by_country",
+        data: {country_name: id},
+        beforeSend: function() {},
+        success: function(returndata) {
+            $('.state_field').show();
+            $('#state').html(returndata);
+            $('#city').html('<option value="">Select State First</option>');
+        }
+    });
+}
+
+function getCity(val) {
+    var base_url = $("#base_url").val();
+    var id = val;
+    $.ajax({
+        type: "post",
+        cache: false,
+        url: base_url + "Welcome/cities_by_state",
+        data: {state_name: id},
+        beforeSend: function() {},
+        success: function(returndata) {
+            $('.city_field').show();
+            $('#city').html(returndata);
+        }
+    });
+}
+
+function viewProfile() {
+    $.alert({
+        title: '',
+        content: "Please login to view professional's profile",
+    });
+}
+
+function selectcategory(val) {
+    $("#search-box").val(val);
+    $("#suggesstion-box").hide();
+    var search_box = $('#search-box').val();
+    var base_url = $("#base_url").val();
+    var category = $('#category').val();
+    var distance = $('#distance').val();
+    var search_lat = $('#search_lat').val();
+    var search_lon = $('#search_lon').val();;
+    $.ajax({
+        type: "post",
+        cache: false,
+        url: base_url + "user/Dashboard/searchPostData",
+        data: {search_box: search_box, category: category, distance: distance, search_lat: search_lat, search_lon: search_lon},
+        beforeSend: function() {
+            $("#loader").removeClass('d-none');
+        },
+        success: function(data) {
+            setTimeout(() => {
                 $("#loader").addClass('d-none');
-                // if (data == '1') {
-                //     location.reload(true);
-                // } else {
-                //     location.reload(true);
-                // }
-                $('.PostContainer').html(data);
-            }
-        });
-    }
-
-    function searchPost() {
-        var year = $('#year').val();
-        var postedBy = $('#postedBy').val();
-        var privacy = $('#privacy').val();
-        var category = $('#searchCategory').val();
-        var filterType = $('#filterType').val();
-        var fromDate = $('#fromDate').val();
-        var toDate = $('#toDate').val();
-        if (filterType == 'thisWeek' || filterType == 'thisMonth' || filterType == 'specificDate') {
-            if (fromDate == '') {
-                $('#fromDate').css('border', '1px solid red');
-                return false;
-            }
-            if (toDate == '') {
-                $('#toDate').css('border', '1px solid red');
-                return false;
-            }
+            }, 3000);
+            $('.PostContainer').html(data);
         }
-        var specificDate = $('#specificDate').val();
+    })
+}
+
+function getcategorydata(val) {
+    var search_box = $('#search-box').val();
+    var base_url = $("#base_url").val();
+    var category = val;
+    var distance = $('#distance').val();
+    var search_lat = $('#search_lat').val();
+    var search_lon = $('#search_lon').val();;
+    $.ajax({
+        type: "post",
+        cache: false,
+        url: base_url + "user/Dashboard/searchPostData",
+        data: {search_box: search_box, category: category, distance: distance, search_lat: search_lat, search_lon: search_lon},
+        beforeSend: function() {
+            $("#loader").removeClass('d-none');
+        },
+        success: function(data) {
+            setTimeout(() => {
+                $("#loader").addClass('d-none');
+            }, 3000);
+            $('.PostContainer').html(data);
+        }
+    })
+}
+
+function getdistancedata(val) {
+    var search_box = $('#search-box').val();
+    var base_url = $("#base_url").val();
+    var category = $('#category').val();
+    var distance = val;
+    var search_lat = $('#search_lat').val();
+    var search_lon = $('#search_lon').val();;
+    $.ajax({
+        type: "post",
+        cache: false,
+        url: base_url + "user/Dashboard/searchPostData",
+        data: {search_box: search_box, category: category, distance: distance, search_lat: search_lat, search_lon: search_lon},
+        beforeSend: function() {
+            $("#loader").removeClass('d-none');
+        },
+        success: function(data) {
+            setTimeout(() => {
+                $("#loader").addClass('d-none');
+            }, 3000);
+            $('.PostContainer').html(data);
+        }
+    })
+}
+
+function removeAdd() {
+    $('#location').val('');
+    $('#search_lon').val('');
+    $('#search_lat').val('');
+}
+
+function postComment(postjobID) {
+    if ($('#comment_' + postjobID).val() == "") {
+        $('#err_comment_' + postjobID).fadeIn().html('Please enter your comment first').css('color', 'red');
+        setTimeout(function() {
+            $("#err_comment_" + postjobID).html("");
+        }, 3000);
+        $("#comment_" + postjobID).css('border-color', 'red');
+        setTimeout(function() {
+            $("#comment_" + postjobID).css('border-color', '#80bdff');
+        }, 3000);
+        return false;
+    } else {
+        var user_id = $('#userID').val();
+        var postjob_id = postjobID;
+        var comment_id = $('#comment_id').val();
+        var comment = $('#comment_' + postjobID).val();
         $.ajax({
-            url: "<?= base_url() ?>user/dashboard/search_post",
-            method: "POST",
-            data: {
-                year: year,
-                postedBy: postedBy,
-                privacy: privacy,
-                category: category,
-                filterType: filterType,
-                specificDate: specificDate,
-                fromDate: fromDate,
-                toDate: toDate
-            },
-            beforeSend: function() {
-                $("#loader").removeClass('d-none');
-            },
+            url: "<?= base_url() ?>user/dashboard/postComment",
+            type: "POST",
+            data: {user_id: user_id, postjob_id: postjob_id, comment_id: comment_id, comment: comment},
             success: function(data) {
-                //console.log(data);
-                $('#filterModal').css('display', 'none');
-                $('#filterModal').removeClass('show');
-                $('.modal-backdrop').remove();
-                $('body').removeClass('modal-open');
+                $('.success_msg').text(data);
+                $('#comment').val('');
                 setTimeout(() => {
-                    $("#loader").addClass('d-none');
+                    location.reload();
                 }, 3000);
-                $('.PostContainer').html(data);
             }
         })
     }
+}
 
-    function block(userid) {
-        var toUser = userid;
-        var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
-                            echo $_SESSION['afrebay']['userId'];
-                        } else {
-                            echo "NULL";
-                        } ?>;
-        if (fromUser != "NULL") {
-            $('#exampleModalblockuser').addClass('show');
-            $('#exampleModalblockuser').modal('show');
-            $('#toUser').val(toUser);
-        }
-    }
+function replylink(postId, commentid) {
+    $('#replyBox_' + commentid).toggleClass('showreplyBox');
+}
 
-    function blockUser() {
-        var toUser = $('#toUser').val();
-        var fromUser = $('#fromUser').val();
-        var reason = $('#reason').val();
+function postUserComment(postId, commentid) {
+    if ($('#users_rply_' + commentid).val() == "") {
+        $("#users_rply_" + commentid).css('border-color', 'red');
+        $('#users_rply_' + commentid).attr("placeholder", "Please type your reply here");
+        setTimeout(function() {
+            $("#users_rply_" + commentid).css('border-color', '#80bdff');
+        }, 3000);
+        return false;
+    } else {
+        var user_id = $('#userID').val();
+        var postjob_id = postId;
+        var comment_id = commentid;
+        var comment = $('#users_rply_' + commentid).val();
         $.ajax({
-            url: "<?= base_url('user/dashboard/blockUser') ?>",
+            url: "<?= base_url() ?>user/dashboard/postUserReply",
+            type: "POST",
+            data: {user_id: user_id, postjob_id: postjob_id, comment_id: comment_id, comment: comment},
+            success: function(data) {
+                $('.success_msg').text(data);
+                $('#comment').val('');
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            }
+        })
+    }
+}
+
+function likepostjob(postjobID) {
+    var user_id = $('#userID').val();
+    var postjob_id = postjobID;
+    $('.fa-heart-o').css('color', '#000 !important');
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/likepostjob",
+        type: "POST",
+        data: {
+            user_id: user_id,
+            postjob_id: postjob_id
+        },
+        success: function(data) {
+            location.reload();
+        }
+    })
+}
+
+// for liking user each Comment
+function likeuserrply(postId, commentid) {
+    var user_id = $('#userID').val();
+    var postjob_id = postId;
+    var comment_id = commentid;
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/likeuserrply",
+        type: "POST",
+        data: {
+            user_id: user_id,
+            postjob_id: postjob_id,
+            comment_id: comment_id
+        },
+        success: function(data) {
+            location.reload();
+        }
+    })
+}
+
+// for disliking Comment
+function dislikepostjob(postjobID) {
+    var user_id = $('#userID').val();
+    var postjob_id = postjobID;
+    $('.fa-heart').addClass('fa-heart-o');
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/dislikepostjob",
+        type: "POST",
+        data: {
+            user_id: user_id,
+            postjob_id: postjob_id
+        },
+        success: function(data) {
+            console.log(data);
+            location.reload();
+        }
+    })
+}
+
+// for disliking Comment
+function dislikeuserrply(postId, commentid) {
+    var user_id = $('#userID').val();
+    var postjob_id = postId;
+    var comment_id = commentid;
+    //$('.fa-heart').addClass('fa-heart-o');
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/dislikeuserrply",
+        type: "POST",
+        data: {
+            user_id: user_id,
+            postjob_id: postjob_id,
+            comment_id: comment_id
+        },
+        success: function(data) {
+            console.log(data);
+            location.reload();
+        }
+    })
+}
+
+function jobDelete(id) {
+    var p_id = id;
+    $.confirm({
+        title: 'Confirm!',
+        content: confirmTextDelete,
+        buttons: {
+            confirm: function() {
+                $.ajax({
+                    url: "<?= base_url() ?>user/dashboard/delete_job",
+                    method: "POST",
+                    data: {
+                        id: p_id
+                    },
+                    beforeSend: function() {
+                        $("#loader_" + id).removeClass('d-none');
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data == '1') {
+                            location.reload(true);
+                        } else {
+                            location.reload(true);
+                        }
+                    }
+
+                })
+            },
+            cancel: function() {
+                location.reload();
+            },
+        }
+    });
+}
+
+function savePost(p_id, status) {
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/savePost",
+        method: "POST",
+        data: {
+            p_id: p_id
+        },
+        beforeSend: function() {
+            ///$("#loader_" + id).removeClass('d-none');
+        },
+        success: function(data) {
+            //console.log(data);
+            if (data == '1') {
+                location.reload(true);
+            } else {
+                location.reload(true);
+            }
+        }
+    })
+}
+
+function unsavePost(p_id, status) {
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/unsavePost",
+        method: "POST",
+        data: {
+            p_id: p_id
+        },
+        beforeSend: function() {
+            ///$("#loader_" + id).removeClass('d-none');
+        },
+        success: function(data) {
+            //console.log(data);
+            if (data == '1') {
+                location.reload(true);
+            } else {
+                location.reload(true);
+            }
+        }
+    })
+}
+
+function notInterestedPost(p_id, status) {
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/notInterestedPost",
+        method: "POST",
+        data: {
+            p_id: p_id
+        },
+        beforeSend: function() {
+            ///$("#loader_" + id).removeClass('d-none');
+        },
+        success: function(data) {
+            //console.log(data);
+            if (data == '1') {
+                location.reload(true);
+            } else {
+                location.reload(true);
+            }
+        }
+    })
+}
+
+function followUsers(f_id, status) {
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/followUsers",
+        method: "POST",
+        data: {
+            f_id: f_id
+        },
+        beforeSend: function() {
+            ///$("#loader_" + id).removeClass('d-none');
+        },
+        success: function(data) {
+            //console.log(data);
+            if (data == '1') {
+                location.reload(true);
+            } else {
+                location.reload(true);
+            }
+        }
+    })
+}
+
+function unfollowUsers(f_id, status) {
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/unfollowUsers",
+        method: "POST",
+        data: {
+            f_id: f_id
+        },
+        beforeSend: function() {
+            ///$("#loader_" + id).removeClass('d-none');
+        },
+        success: function(data) {
+            //console.log(data);
+            if (data == '1') {
+                location.reload(true);
+            } else {
+                location.reload(true);
+            }
+        }
+    })
+}
+
+function muteUser(userid) {
+    var toUser = userid;
+    var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
+                        echo $_SESSION['afrebay']['userId'];
+                    } else {
+                        echo "NULL";
+                    } ?>;
+    if (fromUser != "NULL") {
+        $.ajax({
+            url: "<?= base_url('user/dashboard/muteUser') ?>",
             type: "POST",
             data: {
                 toUser: toUser,
-                fromUser: fromUser,
-                reason: reason
+                fromUser: fromUser
             },
             success: function(response) {
                 if (response == "1") {
@@ -1737,32 +1636,22 @@ function displayStars($rating){
             }
         })
     }
+}
 
-    function report(postid) {
-        var id = postid;
-        var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
-                            echo $_SESSION['afrebay']['userId'];
-                        } else {
-                            echo "NULL";
-                        } ?>;
-        if (fromUser != "NULL") {
-            $('#exampleModalreportpost').addClass('show');
-            $('#exampleModalreportpost').modal('show');
-            $('#post_id').val(id);
-        }
-    }
-
-    function reportPost() {
-        var post_id = $('#post_id').val();
-        var fromUser = $('#fromUser').val();
-        var report_reason = $('#report_reason').val();
+function unmuteUser(userid) {
+    var toUser = userid;
+    var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
+                        echo $_SESSION['afrebay']['userId'];
+                    } else {
+                        echo "NULL";
+                    } ?>;
+    if (fromUser != "NULL") {
         $.ajax({
-            url: "<?= base_url('user/dashboard/reportPost') ?>",
+            url: "<?= base_url('user/dashboard/unmuteUser') ?>",
             type: "POST",
             data: {
-                post_id: post_id,
-                fromUser: fromUser,
-                report_reason: report_reason
+                toUser: toUser,
+                fromUser: fromUser
             },
             success: function(response) {
                 if (response == "1") {
@@ -1773,91 +1662,323 @@ function displayStars($rating){
             }
         })
     }
+}
 
-    function onclickShare(id) {
-        $('#shareMenu_' + id).toggle();
+function postData() {
+    //console.log($('.emojionearea-editor'));
+    if ($('.emojionearea-editor').text() != '') {
+        $('.emojionearea-editor').text($('.emojionearea-editor').text());
     }
+}
 
-    function getcategoryval(id) {
-        $('#cat_value').val(id);
-        $('#cat_valmod').val(id);
+function getFeedData(id) {
+    var latitude = $('#search_lat').val();
+    var longitude = $('#search_lon').val()
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/get_feed_data",
+        method: "POST",
+        data: {
+            id: id,
+            latitude: latitude,
+            longitude: longitude
+        },
+        beforeSend: function() {
+            $("#loader").removeClass('d-none');
+        },
+        success: function(data) {
+            //console.log(data);
+            $("#loader").addClass('d-none');
+            // if (data == '1') {
+            //     location.reload(true);
+            // } else {
+            //     location.reload(true);
+            // }
+            $('.PostContainer').html(data);
+        }
+    });
+}
+
+function searchPost() {
+    var year = $('#year').val();
+    var postedBy = $('#postedBy').val();
+    var privacy = $('#privacy').val();
+    var category = $('#searchCategory').val();
+    var filterType = $('#filterType').val();
+    var fromDate = $('#fromDate').val();
+    var toDate = $('#toDate').val();
+    if (filterType == 'thisWeek' || filterType == 'thisMonth' || filterType == 'specificDate') {
+        if (fromDate == '') {
+            $('#fromDate').css('border', '1px solid red');
+            return false;
+        }
+        if (toDate == '') {
+            $('#toDate').css('border', '1px solid red');
+            return false;
+        }
     }
-    $('.closemediaupload').click(function() {
-        $('.upload-container').hide();
-    });
-    $('#postBoximgup').click(function() {
-        $('#imageUpload').show();
-        $('#videoUpload').hide();
-    });
-    $('#iconimgupload').click(function() {
-        $('#imageUpload').show();
-        $('#videoUpload').hide();
-    });
-    $('#postBoxvidup').click(function() {
-        $('#videoUpload').show();
-        $('#imageUpload').hide();
-    });
-    $('#iconvideoupload').click(function() {
-        $('#videoUpload').show();
-        $('#imageUpload').hide();
-    });
-    $('.loginURL').click(function() {
-        window.location.href = '<?= base_url() ?>logout';
+    var specificDate = $('#specificDate').val();
+    $.ajax({
+        url: "<?= base_url() ?>user/dashboard/search_post",
+        method: "POST",
+        data: {
+            year: year,
+            postedBy: postedBy,
+            privacy: privacy,
+            category: category,
+            filterType: filterType,
+            specificDate: specificDate,
+            fromDate: fromDate,
+            toDate: toDate
+        },
+        beforeSend: function() {
+            $("#loader").removeClass('d-none');
+        },
+        success: function(data) {
+            //console.log(data);
+            $('#filterModal').css('display', 'none');
+            $('#filterModal').removeClass('show');
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');
+            setTimeout(() => {
+                $("#loader").addClass('d-none');
+            }, 3000);
+            $('.PostContainer').html(data);
+        }
     })
+}
 
-    var slides = document.querySelectorAll(".slide");
-    var dots = document.querySelectorAll(".dot");
-    var index = 0;
-
-    function prevSlide(n) {
-        index += n;
-        console.log("prevSlide is called");
-        changeSlide();
+function block(userid) {
+    var toUser = userid;
+    var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
+                        echo $_SESSION['afrebay']['userId'];
+                    } else {
+                        echo "NULL";
+                    } ?>;
+    if (fromUser != "NULL") {
+        $('#exampleModalblockuser').addClass('show');
+        $('#exampleModalblockuser').modal('show');
+        $('#toUser').val(toUser);
     }
+}
 
-    function nextSlide(n) {
-        index += n;
-        changeSlide();
+function blockUser() {
+    var toUser = $('#toUser').val();
+    var fromUser = $('#fromUser').val();
+    var reason = $('#reason').val();
+    $.ajax({
+        url: "<?= base_url('user/dashboard/blockUser') ?>",
+        type: "POST",
+        data: {
+            toUser: toUser,
+            fromUser: fromUser,
+            reason: reason
+        },
+        success: function(response) {
+            if (response == "1") {
+                location.reload();
+            } else {
+                $('#error').text(response);
+            }
+        }
+    })
+}
+
+function report(postid) {
+    var id = postid;
+    var fromUser = <?php if (!empty(@$_SESSION['afrebay']['userId'])) {
+                        echo $_SESSION['afrebay']['userId'];
+                    } else {
+                        echo "NULL";
+                    } ?>;
+    if (fromUser != "NULL") {
+        $('#exampleModalreportpost').addClass('show');
+        $('#exampleModalreportpost').modal('show');
+        $('#post_id').val(id);
     }
+}
+
+function reportPost() {
+    var post_id = $('#post_id').val();
+    var fromUser = $('#fromUser').val();
+    var report_reason = $('#report_reason').val();
+    $.ajax({
+        url: "<?= base_url('user/dashboard/reportPost') ?>",
+        type: "POST",
+        data: {
+            post_id: post_id,
+            fromUser: fromUser,
+            report_reason: report_reason
+        },
+        success: function(response) {
+            if (response == "1") {
+                location.reload();
+            } else {
+                $('#error').text(response);
+            }
+        }
+    })
+}
+
+function onclickShare(id) {
+    $('#shareMenu_' + id).toggle();
+}
+
+function getcategoryval(id) {
+    $('#cat_value').val(id);
+    $('#cat_valmod').val(id);
+}
+
+$('.closemediaupload').click(function() {
+    $('.upload-container').hide();
+});
+
+$('#postBoximgup').click(function() {
+    $('#imageUpload').show();
+    $('#videoUpload').hide();
+});
+
+$('#iconimgupload').click(function() {
+    $('#imageUpload').show();
+    $('#videoUpload').hide();
+});
+
+$('#postBoxvidup').click(function() {
+    $('#videoUpload').show();
+    $('#imageUpload').hide();
+});
+
+$('#iconvideoupload').click(function() {
+    $('#videoUpload').show();
+    $('#imageUpload').hide();
+});
+
+$('.loginURL').click(function() {
+    window.location.href = '<?= base_url() ?>logout';
+})
+
+var slides = document.querySelectorAll(".slide");
+var dots = document.querySelectorAll(".dot");
+var index = 0;
+
+function prevSlide(n) {
+    index += n;
+    console.log("prevSlide is called");
     changeSlide();
+}
 
-    function changeSlide() {
-        if (index > slides.length - 1)
-            index = 0;
+function nextSlide(n) {
+    index += n;
+    changeSlide();
+}
+changeSlide();
+
+function changeSlide() {
+    if (index > slides.length - 1)
+        index = 0;
         if (index < 0)
             index = slides.length - 1;
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-            dots[i].classList.remove("active");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+                dots[i].classList.remove("active");
+            }
+    slides[index].style.display = "block";
+    dots[index].classList.add("active");
+}
+
+function startAutoSlide() {
+    slideInterval = setInterval(() => {
+        nextSlide(1);
+    }, 3000);
+}
+
+function stopAutoSlide() {
+    clearInterval(slideInterval);
+}
+startAutoSlide();
+
+dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+        stopAutoSlide();
+        index = i;
+        changeSlide();
+        startAutoSlide();
+    });
+});
+changeSlide();
+
+document.getElementById('filterType').addEventListener('change', function() {
+    var filterType = this.value;
+    document.getElementById('specificDateDiv').style.display = (filterType === 'specificDate') ? 'block' : 'none';
+    document.getElementById('yearDiv').style.display = (filterType === 'byYear') ? 'block' : 'none';
+    document.getElementById('dateRangeDiv').style.display = (filterType === 'last30' || filterType === 'thisWeek' || filterType === 'thisMonth') ? 'block' : 'none';
+});
+
+function postjobEdit(id) {
+    postjobid = id;
+    $.ajax({
+        type: "POST",
+        url: "<?= base_url('user/dashboard/editPostjobData')?>",
+        data: {postjobid: postjobid},
+        success: function(data) {
+            response = JSON.parse(data);
+            console.log(response);
+            $('#postjob_id').val(response.id); // Set post ID for editing
+            $('.edit_post_title .emojionearea-editor').text(response.post_title);
+            $('#edit_visibility').val(response.visibility);
+            $('#edit_location_guest').val(response.location);
+            $('#edit_search_lat_guest').val(response.latitude);
+            $('#edit_search_lon_guest').val(response.longitude);
+            $('#edit_category').val(response.category_id);
+            let imagePreviewContainer = $('#editimagePreviewContainer');
+            imagePreviewContainer.empty(); // Clear existing images
+            if (response.image && response.image.length > 0) {
+                response.image.forEach(function(file) {
+                    let fileElement;
+                    if (file.job_image.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+                        fileElement = $('<img>').attr('src', '<?= base_url(); ?>uploads/postjob/' + file.job_image).css({
+                            'width': '100px',
+                            'height': '100px',
+                            'margin': '5px'
+                        });
+                    } else if (file.job_image.match(/\.(mp4|avi)$/i)) {
+                        fileElement = $('<video controls>').css({
+                            'width': '100px',
+                            'height': '100px',
+                            'margin': '5px'
+                        }).append($('<source>').attr('src', '<?= base_url(); ?>uploads/postjob/' + file.job_image));
+                    }
+
+                    let removeIcon = $('<span>').addClass('remove-icon-'+file.id).html('&times;').css({
+                        'position': 'absolute',
+                        'top': '5px',
+                        'right': '5px',
+                        'cursor': 'pointer',
+                        'background-color': 'rgba(255, 0, 0, 0.8)',
+                        'border-radius': '50%',
+                        'padding': '2px 5px',
+                        'color': 'white'
+                    }).click(function() {
+                        $(this).parent().remove();
+                        let id = $(this).attr('class').replace('remove-icon-', '');
+                        $.ajax({
+                            type: "POST",
+                            url: "<?= base_url('user/dashboard/removePostjobImage')?>",
+                            data: {id: id},
+                            success: function(data) {
+                                //$(this).parent().remove();
+                            }
+                        })
+                    });
+
+                    let fileWrapper = $('<div id="remove-icon">').css({
+                        'position': 'relative',
+                        'display': 'inline-block'
+                    }).append(fileElement).append(removeIcon);
+                    imagePreviewContainer.append(fileWrapper);
+                });
+            }
+            $('#editPostModal').modal('show');
         }
-        slides[index].style.display = "block";
-        dots[index].classList.add("active");
-    }
-
-    function startAutoSlide() {
-        slideInterval = setInterval(() => {
-            nextSlide(1);
-        }, 3000);
-    }
-
-    function stopAutoSlide() {
-        clearInterval(slideInterval);
-    }
-    startAutoSlide();
-    dots.forEach((dot, i) => {
-        dot.addEventListener("click", () => {
-            stopAutoSlide();
-            index = i;
-            changeSlide();
-            startAutoSlide();
-        });
-    });
-    changeSlide();
-
-    document.getElementById('filterType').addEventListener('change', function() {
-        var filterType = this.value;
-        document.getElementById('specificDateDiv').style.display = (filterType === 'specificDate') ? 'block' : 'none';
-        document.getElementById('yearDiv').style.display = (filterType === 'byYear') ? 'block' : 'none';
-        document.getElementById('dateRangeDiv').style.display = (filterType === 'last30' || filterType === 'thisWeek' || filterType === 'thisMonth') ? 'block' : 'none';
-    });
+    })
+}
 </script>

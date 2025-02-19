@@ -67,7 +67,6 @@ $description = explode('.', $get_career->description) ?>
 .categories_style {font-size: 14px; padding: 0; font-weight: 500; color: #000; letter-spacing: .2px; margin-right: 15px; height: 30px; border-radius: 100px; padding-left: 10px; padding-right: 10px; border: 1px solid #efefef; }
 .Header_Menu_Nav .active hr {margin-bottom: -20px !important; height: 2px !important; background: #2892ff !important;}
 /* .Header_Menu_Nav hr {margin: 0 !important;} */
-.EachvChathome{display: inline-block;font-size: 10px;background: red;border-radius: 20px;width: 18px;height: 18px;position: absolute;color: #fff;padding: 3px;}
 </style>
 <script>
 function completeSub() {
@@ -77,26 +76,10 @@ function completeSub() {
     }, 4000);
 }
 $(function () {
-    setInterval(function () {
-        getMessageCountH();
-    }, 5000);
     $('#completeSub').mouseover(function () {
         $("#completeSub").css("background-color", "yellow");
     });
 })
-function getMessageCountH() {
-    var usertoid = "<?= $_SESSION['afrebay']['userId']?>";
-    $.ajax({
-        url: '<?= base_url('user/dashboard/showmessagecount') ?>',
-        type: 'POST',
-        data: {usertoid: usertoid},
-        dataType: 'json',
-        success: function (result) {
-            console.log(result);
-            $('.EachvChathome').text(result.count);
-        }
-    });
-}
 </script>
 </head>
 
@@ -193,10 +176,8 @@ function getMessageCountH() {
                                 <?php
                                 if (!empty(@$_SESSION['afrebay']['userId'])) {
                                     if (is_numeric(@$_SESSION['afrebay']['userId'])) { ?>
-                                    <a href="<?= base_url('chat') ?>" title="Messages" id="EachvChathome" class="<?php if ($uri == 'chat') { echo "active"; } else { echo ""; } ?>" style="background: none;">
-                                        <i class="fa-solid fa-comment-dots"></i>
-                                        <div class="EachvChathome"></div>
-                                        <?php if ($uri == 'chat') { echo ""; } else { echo ""; } ?>
+                                    <a href="<?= base_url('chat') ?>" title="Messages" class="<?php if ($uri == 'chat') { echo "active"; } else { echo ""; } ?>" style="background: none;">
+                                        <i class="fa-solid fa-comment-dots"></i><?php if ($uri == 'chat') { echo ""; } else { echo ""; } ?>
                                         <?php if ($uri == 'chat') { echo "<hr>"; } else { echo ""; } ?>
                                     </a>
                                     <?php } else { ?>

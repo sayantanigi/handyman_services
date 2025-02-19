@@ -44,50 +44,38 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                                                 <div id="sidepanel">
                                                     <div id="profile">
                                                         <div class="wrap">
-                                                            <?php
-                                                            $logstat = '';
-                                                            if(@$get_user->islogin == '1') {
-                                                                $logstat = 'online';
-                                                            } else if(@$get_user->islogin == '2') {
-                                                                $logstat = 'away';
-                                                            } else if(@$get_user->islogin == '3') {
-                                                                $logstat = 'busy';
-                                                            } else {
-                                                                $logstat = 'offline';
-                                                            }
-                                                            ?>
                                                             <?php if (@$get_user->profilePic && file_exists('uploads/users/' . @$get_user->profilePic)) { ?>
-                                                            <img id="profile-img" src="<?= base_url('uploads/users/' . @$get_user->profilePic) ?>" class="<?= @$logstat?>" alt="" title="<?= ucwords($logstat); ?>"/>
+                                                                <img id="profile-img"
+                                                                    src="<?= base_url('uploads/users/' . @$get_user->profilePic) ?>"
+                                                                    class="online" alt="" />
                                                             <?php } else { ?>
-                                                            <img id="profile-img" src="<?= base_url('uploads/no_pimage.png') ?>" class="<?= @$logstat?>" alt="" title="<?= ucwords($logstat); ?>"/>
+                                                                <img id="profile-img"
+                                                                    src="<?= base_url('uploads/no_pimage.png') ?>"
+                                                                    class="online" alt="" />
                                                             <?php } ?>
                                                             <p>
-                                                            <?php if (!empty($get_user->firstname)) {
-                                                                echo $get_user->firstname . ' ' . $get_user->lastname;
-                                                            } else {
-                                                                echo $get_user->companyname;
-                                                            } ?>
+                                                                <?php if (!empty($get_user->firstname)) {
+                                                                    echo $get_user->firstname . ' ' . $get_user->lastname;
+                                                                } else {
+                                                                    echo $get_user->companyname;
+                                                                } ?>
                                                             </p>
                                                             <div id="status-options">
                                                                 <ul>
-                                                                    <li id="status-online" class="<?= $logstat == 'online' ? 'active' : ''; ?>">
+                                                                    <li id="status-online" class="active">
                                                                         <span class="status-circle"></span>
-                                                                        <input type="hidden" name="online" id="online" value="1">
                                                                         <p>Online</p>
                                                                     </li>
-                                                                    <li id="status-away" class="<?= $logstat == 'away' ? 'active' : ''; ?>">
+                                                                    <li id="status-away">
                                                                         <span class="status-circle"></span>
-                                                                        <input type="hidden" name="away" id="away" value="2">
                                                                         <p>Away</p>
                                                                     </li>
-                                                                    <li id="status-busy" class="<?= $logstat == 'busy' ? 'active' : ''; ?>">
+                                                                    <li id="status-busy">
                                                                         <span class="status-circle"></span>
-                                                                        <input type="hidden" name="busy" id="busy" value="3">
                                                                         <p>Busy</p>
                                                                     </li>
-                                                                    <li id="status-offline" class="<?= $logstat == 'offline' ? 'active' : ''; ?>">
+                                                                    <li id="status-offline">
                                                                         <span class="status-circle"></span>
-                                                                        <input type="hidden" name="offline" id="offline" value="4">
                                                                         <p>Offline</p>
                                                                     </li>
                                                                 </ul>
@@ -110,7 +98,8 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                                                             </ul>
                                                             <div id="tab-1">
                                                                 <div id="search">
-                                                                    <input type="text" id="search_professional_all" placeholder="<?= $placeholder ?>" />
+                                                                    <input type="text" id="search_professional_all"
+                                                                        placeholder="<?= $placeholder ?>" />
                                                                 </div>
                                                                 <ul style="display: inline-block; width: 100%;">
                                                                     <?php
@@ -122,24 +111,16 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                                                                     //echo "<pre>"; print_r($userList); die();
                                                                     if (!empty($userList)) {
                                                                         foreach ($userList as $user) { ?>
-                                                                        <?php
-                                                                        if(@$user->islogin == '1') {
-                                                                            $logstat1 = 'online';
-                                                                        } else if(@$user->islogin == '2'){
-                                                                            $logstat1 = 'away';
-                                                                        } else if($user->islogin == '3') {
-                                                                            $logstat1 = 'busy';
-                                                                        } else {
-                                                                            $logstat1 = 'offline';
-                                                                        }
-                                                                        ?>
-                                                                            <li class="contact contactList_all" onclick="return getuser('<?= $user->userId ?>');">
+                                                                            <li class="contact contactList_all"
+                                                                                onclick="return getuser('<?= $user->userId ?>');">
                                                                                 <div class="wrap">
-                                                                                    <span class="contact-status <?= $logstat1; ?>" title="<?= ucwords($logstat1); ?>"></span>
+                                                                                    <span class="contact-status online"></span>
                                                                                     <?php if (@$user->profilePic && file_exists('uploads/users/' . @$user->profilePic)) { ?>
-                                                                                    <img src="<?= base_url('uploads/users/' . @$user->profilePic) ?>" alt="" />
+                                                                                        <img src="<?= base_url('uploads/users/' . @$user->profilePic) ?>"
+                                                                                            alt="" />
                                                                                     <?php } else { ?>
-                                                                                    <img src="<?= base_url('uploads/no_pimage.png') ?>" alt="" />
+                                                                                        <img src="<?= base_url('uploads/no_pimage.png') ?>"
+                                                                                            alt="" />
                                                                                     <?php } ?>
                                                                                     <div class="meta">
                                                                                         <p class="name">
@@ -149,11 +130,8 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                                                                                                 echo ucfirst($user->companyname);
                                                                                             } ?>
                                                                                         </p>
-                                                                                        <?php $getCOunt = $this->db->query("SELECT COUNT(id) as countmsg FROM chat WHERE userfrom_id = '".$user->userId."' AND status = '0'")->row(); ?>
-                                                                                        <p style="display: inline-block; color: #fff; background: #2892ff; border-radius: 15px; font-size: 12px; width: 25px; height: 25px; padding: 0px 0 0 5px;"><?= $getCOunt->countmsg?></p>
                                                                                     </div>
                                                                                 </div>
-
                                                                             </li>
                                                                         <?php }
                                                                     } ?>
@@ -161,7 +139,8 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
                                                             </div>
                                                             <div id="tab-2">
                                                                 <div id="search">
-                                                                    <input type="text" id="search_professional_recent" placeholder="<?= $placeholder ?>" />
+                                                                    <input type="text" id="search_professional_recent"
+                                                                        placeholder="<?= $placeholder ?>" />
                                                                 </div>
                                                                 <ul style="display: inline-block; width: 100%;">
                                                                     <?php
@@ -523,262 +502,247 @@ if (!empty($get_banner->image) && file_exists('uploads/banner/' . $get_banner->i
     .ui-state-active a:visited {
         color: #fff !important;
     }
-    #frame #sidepanel #contacts ul li.contact .wrap .meta .name {display: inline-block; float: left; width: 155px;}
 </style>
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="https://use.typekit.net/hoy3lrg.js"></script>
 <script>
-try {
-    Typekit.load({
-        async: true
-    });
-} catch (e) { }
+    try {
+        Typekit.load({
+            async: true
+        });
+    } catch (e) { }
 </script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script>
-var jq = jQuery.noConflict();
-jq(document).ready(function () {
-    jq("#tabs").tabs();
-});
+    var jq = jQuery.noConflict();
+    jq(document).ready(function () {
+        jq("#tabs").tabs();
+    });
 </script>
-<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
+<script
+    src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script>
-$(".messages").animate({
-    scrollTop: $(document).height()
-}, "fast");
-$("#profile-img").click(function () {
-    $("#status-options").toggleClass("active");
-});
-$(".expand-button").click(function () {
-    $("#profile").toggleClass("expanded");
-    $("#contacts").toggleClass("expanded");
-});
-$("#status-options ul li").click(function () {
-    let status = $(this).attr('id').replace('status-', '');
-    $("#profile-img").removeClass();
-    $("#status-online").removeClass("active");
-    $("#status-away").removeClass("active");
-    $("#status-busy").removeClass("active");
-    $("#status-offline").removeClass("active");
-    $(this).addClass("active");
-
-    if ($("#status-online").hasClass("active")) {
-        $("#profile-img").addClass("online");
-    } else if ($("#status-away").hasClass("active")) {
-        $("#profile-img").addClass("away");
-    } else if ($("#status-busy").hasClass("active")) {
-        $("#profile-img").addClass("busy");
-    } else if ($("#status-offline").hasClass("active")) {
-        $("#profile-img").addClass("offline");
-    } else {
+    $(".messages").animate({
+        scrollTop: $(document).height()
+    }, "fast");
+    $("#profile-img").click(function () {
+        $("#status-options").toggleClass("active");
+    });
+    $(".expand-button").click(function () {
+        $("#profile").toggleClass("expanded");
+        $("#contacts").toggleClass("expanded");
+    });
+    $("#status-options ul li").click(function () {
         $("#profile-img").removeClass();
-    };
-    $("#status-options").removeClass("active");
-    $.ajax({
-        type: "POST",
-        url: "<?= base_url('user/dashboard/changelogstatus') ?>",
-        data: {status: status},
-        success: function (response) {
-            console.log(response);
+        $("#status-online").removeClass("active");
+        $("#status-away").removeClass("active");
+        $("#status-busy").removeClass("active");
+        $("#status-offline").removeClass("active");
+        $(this).addClass("active");
+        if ($("#status-online").hasClass("active")) {
+            $("#profile-img").addClass("online");
+        } else if ($("#status-away").hasClass("active")) {
+            $("#profile-img").addClass("away");
+        } else if ($("#status-busy").hasClass("active")) {
+            $("#profile-img").addClass("busy");
+        } else if ($("#status-offline").hasClass("active")) {
+            $("#profile-img").addClass("offline");
+        } else {
+            $("#profile-img").removeClass();
+        };
+        $("#status-options").removeClass("active");
+    });
+
+    function newMessage() {
+        var userfromid = $('#userfromid').val();
+        var usertoid = $('#usertoid').val();
+        var postid = $('#postid').val();
+        var message = $('#message').val();
+
+        if ($.trim(message) == '') {
+            return false;
         }
-    })
-});
-
-function newMessage() {
-    var userfromid = $('#userfromid').val();
-    var usertoid = $('#usertoid').val();
-    var postid = $('#postid').val();
-    var message = $('#message').val();
-
-    if ($.trim(message) == '') {
-        return false;
+        $.ajax({
+            url: '<?= base_url('user/dashboard/sent_message') ?>',
+            type: 'POST',
+            data: {
+                userfromid: userfromid,
+                usertoid: usertoid,
+                postid: postid,
+                message: message
+            },
+            dataType: 'json',
+            success: function (returndata) {
+                setInterval(function () {
+                    getMessageCount();
+                }, 5000);
+                if (returndata.result == 1) {
+                    $('<li class="sent">' + returndata.userpic + '<p>' + message + '</p></li>').appendTo($('.messages ul'));
+                    $('#message').val(null);
+                    $('.contact.active .preview').html('<span>You: </span>' + message);
+                    $(".messages").scrollTop($(document).height());
+                }
+            }
+        });
     }
-    $.ajax({
-        url: '<?= base_url('user/dashboard/sent_message') ?>',
-        type: 'POST',
-        data: {
-            userfromid: userfromid,
-            usertoid: usertoid,
-            postid: postid,
-            message: message
-        },
-        dataType: 'json',
-        success: function (returndata) {
-            setInterval(function () {
-                getMessageCount();
-            }, 5000);
-            if (returndata.result == 1) {
-                $('<li class="sent">' + returndata.userpic + '<p>' + message + '</p></li>').appendTo($('.messages ul'));
-                $('#message').val(null);
-                $('.contact.active .preview').html('<span>You: </span>' + message);
-                $(".messages").scrollTop($(document).height());
-            }
-        }
+    $("#message").mouseover(function () {
+        $('.EachvChat').hide();
+        $('.EachfChat').hide();
+        setInterval(function () {
+            getMessage();
+            getMessageCount();
+        }, 5000);
     });
-}
-
-$("#message").mouseover(function () {
-    $('.EachvChat').hide();
-    $('.EachfChat').hide();
-    setInterval(function () {
-        getMessage();
-        getMessageCount();
-    }, 5000);
-});
-
-$(document).ready(function () {
-    $('.EachvChat').hide();
-    $('.EachfChat').hide();
-    $('#search_professional_all').on('input', function (e) {
-        let lists = document.querySelectorAll('.contactList_all')
-        lists.forEach((list) => {
-            if (!list.innerHTML.toLowerCase().includes(e.target.value.toLowerCase())) {
-                list.classList.add('d-none')
-            } else {
-                list.classList.remove('d-none')
-            }
-        })
-    })
-    $('#search_professional_recent').on('input', function (e) {
-        let lists = document.querySelectorAll('.contactList_recent')
-        lists.forEach((list) => {
-            if (!list.innerHTML.toLowerCase().includes(e.target.value.toLowerCase())) {
-                list.classList.add('d-none')
-            } else {
-                list.classList.remove('d-none')
-            }
-        })
-    })
-});
-
-function getMessage() {
-    var userfromid = $('#userfromid').val();
-    var usertoid = $('#usertoid').val();
-    var postid = $('#postid').val();
-    $.ajax({
-        url: '<?= base_url('user/dashboard/showmessage_listS') ?>',
-        type: 'POST',
-        data: {
-            userfromid: userfromid,
-            usertoid: usertoid,
-            postid: postid
-        },
-        dataType: 'json',
-        success: function (result) {
-            $('#message_list').html(result);
-            $(".messages").scrollTop(10000000);
-        }
-    });
-}
-
-function getMessageCount() {
-    var userfromid = $('#userfromid').val();
-    var usertoid = $('#usertoid').val();
-    var postid = $('#postid').val();
-    $.ajax({
-        url: '<?= base_url('user/dashboard/showmessageCountEach') ?>',
-        type: 'POST',
-        data: {
-            userfromid: userfromid,
-            usertoid: usertoid,
-            postid: postid
-        },
-        dataType: 'json',
-        success: function (result) {
-            <?php if (@$_SESSION['afrebay']['userType'] == '2') { ?>
-                if (result.count > 0) {
-                    $('.EachChatv').hide();
-                    $('.EachvChat').show();
-                    $('.EachvChat').text(result.count);
+    $(document).ready(function () {
+        $('.EachvChat').hide();
+        $('.EachfChat').hide();
+        $('#search_professional_all').on('input', function (e) {
+            let lists = document.querySelectorAll('.contactList_all')
+            lists.forEach((list) => {
+                if (!list.innerHTML.toLowerCase().includes(e.target.value.toLowerCase())) {
+                    list.classList.add('d-none')
                 } else {
-                    $('.EachvChat').hide();
-                    $('.EachChatv').hide();
+                    list.classList.remove('d-none')
                 }
-            <?php } else { ?>
-                if (result.count > 0) {
-                    $('.EachChatf').hide();
-                    $('.EachfChat').show();
-                    $('.EachfChat').text(result.count);
+            })
+        })
+        $('#search_professional_recent').on('input', function (e) {
+            let lists = document.querySelectorAll('.contactList_recent')
+            lists.forEach((list) => {
+                if (!list.innerHTML.toLowerCase().includes(e.target.value.toLowerCase())) {
+                    list.classList.add('d-none')
                 } else {
-                    $('.EachChatf').hide();
-                    $('.EachfChat').hide();
+                    list.classList.remove('d-none')
                 }
-            <?php } ?>
-        }
+            })
+        })
     });
-}
 
-$('.submit').click(function () {
-    newMessage();
-});
+    function getMessage() {
+        var userfromid = $('#userfromid').val();
+        var usertoid = $('#usertoid').val();
+        var postid = $('#postid').val();
+        $.ajax({
+            url: '<?= base_url('user/dashboard/showmessage_listS') ?>',
+            type: 'POST',
+            data: {
+                userfromid: userfromid,
+                usertoid: usertoid,
+                postid: postid
+            },
+            dataType: 'json',
+            success: function (result) {
+                $('#message_list').html(result);
+                $(".messages").scrollTop(10000000);
+            }
+        });
+    }
 
-$(window).on('keydown', function (e) {
-    if (e.which == 13) {
+    function getMessageCount() {
+        var userfromid = $('#userfromid').val();
+        var usertoid = $('#usertoid').val();
+        var postid = $('#postid').val();
+        $.ajax({
+            url: '<?= base_url('user/dashboard/showmessageCountEach') ?>',
+            type: 'POST',
+            data: {
+                userfromid: userfromid,
+                usertoid: usertoid,
+                postid: postid
+            },
+            dataType: 'json',
+            success: function (result) {
+                <?php if (@$_SESSION['afrebay']['userType'] == '2') { ?>
+                    if (result.count > 0) {
+                        $('.EachChatv').hide();
+                        $('.EachvChat').show();
+                        $('.EachvChat').text(result.count);
+                    } else {
+                        $('.EachvChat').hide();
+                        $('.EachChatv').hide();
+                    }
+                <?php } else { ?>
+                    if (result.count > 0) {
+                        $('.EachChatf').hide();
+                        $('.EachfChat').show();
+                        $('.EachfChat').text(result.count);
+                    } else {
+                        $('.EachChatf').hide();
+                        $('.EachfChat').hide();
+                    }
+                <?php } ?>
+            }
+        });
+    }
+    $('.submit').click(function () {
         newMessage();
-        return false;
-    }
-});
-
-function getuser(usert_id, post_id) {
-    var displayProduct = 3;
-    $('#message_list').html(createSkeleton(displayProduct));
-
-    function createSkeleton(limit) {
-        var skeletonHTML = '';
-        for (var i = 0; i < limit; i++) {
-            skeletonHTML += '<div class="ph-item">';
-            skeletonHTML += '<div class="ph-col-4">';
-            skeletonHTML += '<div class="ph-picture"></div>';
-            skeletonHTML += '</div>';
-            skeletonHTML += '<div>';
-            skeletonHTML += '<div class="ph-row">';
-            skeletonHTML += '<div class="ph-col-12 big"></div>';
-            skeletonHTML += '<div class="ph-col-12"></div>';
-            skeletonHTML += '<div class="ph-col-12"></div>';
-            skeletonHTML += '<div class="ph-col-12"></div>';
-            skeletonHTML += '<div class="ph-col-12"></div>';
-            skeletonHTML += '</div>';
-            skeletonHTML += '</div>';
-            skeletonHTML += '</div>';
-        }
-        return skeletonHTML;
-    }
-    $('#usertoid').val(usert_id);
-    $('#postid').val(post_id);
-    $("#message_list").attr('class', '');
-    $('#message_list').toggleClass('messageDetails' + usert_id);
-    $.ajax({
-        url: '<?= base_url('user/dashboard/showmessage_list') ?>',
-        type: 'POST',
-        data: {
-            usert_id: usert_id,
-            post_id: post_id
-        },
-        dataType: 'json',
-        success: function (result) {
-            $('#message_list').html(result);
-            $(".messages").scrollTop(10000000);
-            $('.message-input').show();
-            $('#frame').addClass('chat_frame');
+    });
+    $(window).on('keydown', function (e) {
+        if (e.which == 13) {
+            newMessage();
+            return false;
         }
     });
-}
 
-function openVideoCallWindow(fid) {
-    var callPath = "<?php echo base_url('livevideo/video/'); ?>" + fid;
-    window.open(callPath, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=20,width=600,height=450");
-}
+    function getuser(usert_id, post_id) {
+        var displayProduct = 3;
+        $('#message_list').html(createSkeleton(displayProduct));
 
-$(function () {
-    $('#showBidList').mouseover(function () {
-        $(".modal").addClass('showBidListContent');
-    });
+        function createSkeleton(limit) {
+            var skeletonHTML = '';
+            for (var i = 0; i < limit; i++) {
+                skeletonHTML += '<div class="ph-item">';
+                skeletonHTML += '<div class="ph-col-4">';
+                skeletonHTML += '<div class="ph-picture"></div>';
+                skeletonHTML += '</div>';
+                skeletonHTML += '<div>';
+                skeletonHTML += '<div class="ph-row">';
+                skeletonHTML += '<div class="ph-col-12 big"></div>';
+                skeletonHTML += '<div class="ph-col-12"></div>';
+                skeletonHTML += '<div class="ph-col-12"></div>';
+                skeletonHTML += '<div class="ph-col-12"></div>';
+                skeletonHTML += '<div class="ph-col-12"></div>';
+                skeletonHTML += '</div>';
+                skeletonHTML += '</div>';
+                skeletonHTML += '</div>';
+            }
+            return skeletonHTML;
+        }
+        $('#usertoid').val(usert_id);
+        $('#postid').val(post_id);
+        $("#message_list").attr('class', '');
+        $('#message_list').toggleClass('messageDetails' + usert_id);
+        $.ajax({
+            url: '<?= base_url('user/dashboard/showmessage_list') ?>',
+            type: 'POST',
+            data: {
+                usert_id: usert_id,
+                post_id: post_id
+            },
+            dataType: 'json',
+            success: function (result) {
+                $('#message_list').html(result);
+                $(".messages").scrollTop(10000000);
+                $('.message-input').show();
+                $('#frame').addClass('chat_frame');
+            }
+        });
+    }
 
-    $('#showBidList').mouseout(function () {
-        $(".modal").removeClass('showBidListContent');
-    });
-})
+    function openVideoCallWindow(fid) {
+        var callPath = "<?php echo base_url('livevideo/video/'); ?>" + fid;
+        window.open(callPath, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=20,width=600,height=450");
+    }
+    $(function () {
+        $('#showBidList').mouseover(function () {
+            $(".modal").addClass('showBidListContent');
+        });
+
+        $('#showBidList').mouseout(function () {
+            $(".modal").removeClass('showBidListContent');
+        });
+    })
 </script>

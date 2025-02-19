@@ -145,7 +145,6 @@ class Login extends CI_Controller {
 			$email = $this->input->post("email");
 			$password = $this->input->post("password");
 			if($this->Mymodel->check_record($email, $password)) {
-                $this->db->update('users', array('islogin' => 1), array('userId' => $_SESSION['afrebay']['userId']));
 				$this->session->set_flashdata('message', 'Logged in successfully !');
 				if(empty($_SESSION['url'])) {
 					$get_setting=$this->Crud_model->get_single('setting');
@@ -206,7 +205,6 @@ class Login extends CI_Controller {
 		}
 	}
 	public function logout() {
-        $this->db->update('users', array('islogin' => 0), array('userId' => $_SESSION['afrebay']['userId']));
 	    unset($_SESSION['afrebay']);
 		unset($_SESSION['url']);
 		$this->session->set_flashdata('message', 'You have logged out.');
