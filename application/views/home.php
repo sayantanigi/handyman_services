@@ -223,13 +223,17 @@ function displayStars($rating){
                                                     } ?>
                                                     <p class="CommentData" style="margin-top: 8px;margin-bottom: 8px;font-size: 14px;color: #2892ff;line-height: 18px;"> <?= "#" . ucfirst(str_replace(' ', '', $get_category->category_name)) ?></p>
                                                     <div class="imageData">
-                                                        <?php
+                                                    <?php
                                                         $getImage = $this->db->query("SELECT * FROM postjob_image WHERE job_id = '" . $row->id . "'")->result_array();
                                                         $max_display = 4;
                                                         $total_image = count($getImage);
                                                         //echo "<pre>"; print_r($getImage);
                                                         for ($i = 0; $i < min($total_image, $max_display); $i++) { ?>
-                                                            <div class="box-image<?php if ($total_image > 4) { echo $max_display; } else {  $total_image; } ?>">
+                                                            <div class="box-image<?php if ($total_image > 4) {
+                                                                                        echo $max_display;
+                                                                                    } else {
+                                                                                        echo $total_image;
+                                                                                    } ?>">
                                                                 <?php
                                                                 $extension = strtolower(pathinfo($getImage[$i]['job_image'], PATHINFO_EXTENSION));
                                                                 if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'avif', 'webp'])) { ?>
