@@ -5,87 +5,79 @@
                 <div class="col">
                     <h3 class="page-title"><?= $heading;?></h3>
                 </div>
-                <div class="col-auto text-right">
-                    <!-- <a class="btn btn-white filter-btn" href="javascript:void(0);" id="filter_search">
-                    <i class="fas fa-filter"></i>
-                </a> -->
-                <!-- <a href="#" class="btn btn-primary add-button ml-3" data-toggle="modal" data-target="#createModal">
-                <i class="fas fa-plus"></i>
-            </a> -->
+                <div class="col-auto text-right"></div>
+            </div>
         </div>
-    </div>
-</div>
-<div class="card filter-card" id="filter_inputs">
-    <div class="card-body pb-0">
-        <form action="#" method="post">
-            <div class="row filter-row">
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select class="form-control select filter_search_data6" name="">
-                            <option value="">Select category</option>
-                            <?php
-                            if(!empty($get_category)){
-                                foreach($get_category as $item){ ?>
+        <div class="card filter-card" id="filter_inputs">
+            <div class="card-body pb-0">
+                <form action="#" method="post">
+                    <div class="row filter-row">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select class="form-control select filter_search_data6" name="">
+                                    <option value="">Select category</option>
+                                    <?php
+                                    if(!empty($get_category)){
+                                        foreach($get_category as $item){ ?>
                                     <option value="<?= $item->id?>"><?= ucfirst($item->category_name)?></option>
-                                <?php   } } ?>
-                            </select>
+                                    <?php } } ?>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group">
-                            <label>From Date</label>
-                            <div class="cal-icon">
-                                <!--  datetimepicker -->
-                                <input class="form-control  filter_search_data5" type="date" name="from_date" value="">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <label>From Date</label>
+                                <div class="cal-icon">
+                                    <!--  datetimepicker -->
+                                    <input class="form-control  filter_search_data5" type="date" name="from_date" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <label>To Date</label>
+                                <div class="cal-icon">
+                                    <input class="form-control  filter_search_data7" type="date" name="to_date" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <a class="btn btn-primary btn-block" href="<?= admin_url('Category')?>">Refresh</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group">
-                            <label>To Date</label>
-                            <div class="cal-icon">
-                                <input class="form-control  filter_search_data7" type="date" name="to_date" value="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group">
-                            <a class="btn btn-primary btn-block" href="<?= admin_url('Category')?>">Refresh</a>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <table id="table" class="table table-hover table-center mb-0 example_datatable" >
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Type</th>
-                                    <th>Username</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Created Date</th>
-                                    <th>Email Verified</th>
-                                    <th>Status</th>
-                                    <th>Manage</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <table id="table" class="table table-hover table-center mb-0 example_datatable" >
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Type</th>
+                                        <th>Username</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Created Date</th>
+                                        <th>Email Verified</th>
+                                        <th>Status</th>
+                                        <th>Manage</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 </div>
 <script>

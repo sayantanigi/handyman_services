@@ -18,21 +18,21 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Blocked User</th>
-                                            <th>Blocked By User</th>
+                                            <th>Post Title</th>
+                                            <th>Report By User</th>
                                             <th>Reason</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                    if(!empty($reportuserList)) {
+                                    if(!empty($reportPostList)) {
                                         $i = 1;
-                                        foreach ($reportuserList as $value) {
-                                            $touserDetails = $this->db->query("SELECT * FROM users WHERE userId = '".$value['to_user_id']."'")->row();
-                                            if(!empty($touserDetails->companyname)) {
-                                                $tousername = $touserDetails->companyname;
+                                        foreach ($reportPostList as $value) {
+                                            $postDetails = $this->db->query("SELECT * FROM postjob WHERE id = '".$value['post_id']."'")->row();
+                                            if(!empty($postDetails)) {
+                                                $postTitle = $postDetails->post_title;
                                             } else {
-                                                $tousername = $touserDetails->firstname." ".$touserDetails->lastname;
+                                                $postTitle = $postDetails->post_title;
                                             }
                                             $fromUserDetails = $this->db->query("SELECT * FROM users WHERE userId = '".$value['from_user_id']."'")->row();
                                             if(!empty($fromUserDetails->companyname)) {
@@ -43,7 +43,7 @@
                                     ?>
                                     <tr>
                                         <td><?= $i++; ?></td>
-                                        <td><?= $tousername; ?></td>
+                                        <td><?= $postTitle; ?></td>
                                         <td><?= $fromUsername; ?></td>
                                         <td><?= $value['reason']; ?></td>
                                     </tr>

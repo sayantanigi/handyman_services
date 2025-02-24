@@ -1,19 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Reportedusers extends MY_Controller {
+class Reportedposts extends MY_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Reportedusers_model');
     }
     function index() {
-        $header = array('title' => 'reportedusers');
+        $header = array('title' => 'reportedposts');
         $data = array(
-            'heading' => 'Reported Users',
-            'reportuserList' => $this->db->query("SELECT * FROM report_user")->result_array()
+            'heading' => 'Reported Posts',
+            'reportPostList' => $this->db->query("SELECT * FROM report_post")->result_array()
         );
         $this->load->view('admin/header', $header);
         $this->load->view('admin/sidebar');
-        $this->load->view('admin/reportedusers/list',$data);
+        $this->load->view('admin/reportedposts/list',$data);
         $this->load->view('admin/footer');
     }
     public function change_status() {

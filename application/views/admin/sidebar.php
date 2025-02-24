@@ -103,6 +103,19 @@ $seg2 = $this->uri->segment(2);
                         <?php } ?>
                     </span>
                 </li>
+                <li <?php if ($seg2 == 'reportedposts') { ?>class="active" <?php } ?>>
+                    <span class="adminMenu_class">
+                        <a href="<?= admin_url(); ?>reportedposts" class="adminMenu_class1">
+                            <i class="fa fa-flag"></i>
+                            <span>Reported Posts</span>
+                        </a>
+                        <?php
+                        $gettooltile = $this->db->query("SELECT * FROM manage_tooltips WHERE menu_name = 'reportedposts'")->row();
+                        if(!empty($gettooltile)) { ?>
+                            <i class="fa fa-question faicon_style" onclick="showTooltip('reportedposts')"></i>
+                        <?php } ?>
+                    </span>
+                </li>
                 <li <?php if ($seg2 == 'chat') { ?>class="active" <?php } ?>>
                     <span class="adminMenu_class">
                         <a href="<?= admin_url(); ?>chat" class="adminMenu_class1">
@@ -137,7 +150,7 @@ $seg2 = $this->uri->segment(2);
                         <?php } ?>
                     </span>
                 </li>
-                <!-- <li <?php if ($seg2 == 'reportedusers') { ?>class="active" <?php } ?>>
+                <li <?php if ($seg2 == 'reportedusers') { ?>class="active" <?php } ?>>
                     <span class="adminMenu_class">
                         <a href="<?= admin_url(); ?>reportedusers" class="adminMenu_class1">
                             <i class="fa fa-flag"></i>
@@ -150,7 +163,7 @@ $seg2 = $this->uri->segment(2);
                         <?php } ?>
                     </span>
                 </li>
-                <li <?php if ($seg2 == 'our-services') { ?>class="active" <?php } ?>>
+                <!-- <li <?php if ($seg2 == 'our-services') { ?>class="active" <?php } ?>>
                     <span class="adminMenu_class">
                         <a href="<?= admin_url(); ?>our-services" class="adminMenu_class1">
                             <i class="fas fa-bullhorn"></i>
