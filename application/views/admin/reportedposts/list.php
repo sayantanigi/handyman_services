@@ -13,32 +13,31 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div>
-                                <table id="table" class="table table-hover table-center mb-0 example_datatable" >
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Post Title</th>
-                                            <th>Report By User</th>
-                                            <th>Reason</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                            <table id="table" class="table table-hover table-center mb-0 example_datatable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Post Title</th>
+                                        <th>Report By User</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     <?php
-                                    if(!empty($reportPostList)) {
+                                    if (!empty($reportPostList)) {
                                         $i = 1;
                                         foreach ($reportPostList as $value) {
-                                            $postDetails = $this->db->query("SELECT * FROM postjob WHERE id = '".$value['post_id']."'")->row();
-                                            if(!empty($postDetails)) {
+                                            $postDetails = $this->db->query("SELECT * FROM postjob WHERE id = '" . $value['post_id'] . "'")->row();
+                                            if (!empty($postDetails)) {
                                                 $postTitle = $postDetails->post_title;
                                             } else {
-                                                $postTitle = $postDetails->post_title;
+                                                $postTitle = 'No title found';
                                             }
-                                            $fromUserDetails = $this->db->query("SELECT * FROM users WHERE userId = '".$value['from_user_id']."'")->row();
-                                            if(!empty($fromUserDetails->companyname)) {
+                                            $fromUserDetails = $this->db->query("SELECT * FROM users WHERE userId = '" . $value['from_user_id'] . "'")->row();
+                                            if (!empty($fromUserDetails->companyname)) {
                                                 $fromUsername = $fromUserDetails->companyname;
                                             } else {
-                                                $fromUsername = $fromUserDetails->firstname." ".$fromUserDetails->lastname;
+                                                $fromUsername = $fromUserDetails->firstname . " " . $fromUserDetails->lastname;
                                             }
                                     ?>
                                     <tr>
@@ -47,12 +46,14 @@
                                         <td><?= $fromUsername; ?></td>
                                         <td><?= $value['reason']; ?></td>
                                     </tr>
-                                    <?php $i++; } } else { ?>
-                                    <p>No data found</p>
+                                    <?php }
+                                    } else { ?>
+                                    <tr>
+                                        <td colspan="4">No data found</td>
+                                    </tr>
                                     <?php } ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

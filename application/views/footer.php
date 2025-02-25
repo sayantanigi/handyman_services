@@ -133,7 +133,7 @@ if(!empty($_SESSION['afrebay']['userId'])){
 <script src="<?= base_url('assets/js/select-chosen.js')?>" type="text/javascript"></script>
 <!-- <script src="<?= base_url('assets/js/maps2.js')?>" type="text/javascript"></script> -->
 <script src="<?= base_url('assets/js/bootstrap-datepicker.js')?>" type="text/javascript"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3CyjPO1XjE41XEiO1cdWIKKF0UOrYA8M&libraries=places&callback"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtg6oeRPEkRL9_CE-us3QdvXjupbgG14A&libraries=places&callback"></script>
 <script type="text/javascript" src="<?= base_url('assets/custom_js/validation.js')?>"></script>
 <script src="<?= base_url();?>dist/assets/notify/notify.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url()?>assets/multi_select/css/modern/tail.select-dark-feather.min.css" />

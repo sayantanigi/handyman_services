@@ -14,7 +14,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div>
-                                <table id="table" class="table table-hover table-center mb-0 example_datatable" >
+                                <table id="table" class="table table-hover table-center mb-0 example_datatable">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -24,32 +24,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                    if(!empty($reportuserList)) {
-                                        $i = 1;
-                                        foreach ($reportuserList as $value) {
-                                            $touserDetails = $this->db->query("SELECT * FROM users WHERE userId = '".$value['to_user_id']."'")->row();
-                                            if(!empty($touserDetails->companyname)) {
-                                                $tousername = $touserDetails->companyname;
-                                            } else {
-                                                $tousername = $touserDetails->firstname." ".$touserDetails->lastname;
-                                            }
-                                            $fromUserDetails = $this->db->query("SELECT * FROM users WHERE userId = '".$value['from_user_id']."'")->row();
-                                            if(!empty($fromUserDetails->companyname)) {
-                                                $fromUsername = $fromUserDetails->companyname;
-                                            } else {
-                                                $fromUsername = $fromUserDetails->firstname." ".$fromUserDetails->lastname;
-                                            }
-                                    ?>
-                                    <tr>
-                                        <td><?= $i++; ?></td>
-                                        <td><?= $tousername; ?></td>
-                                        <td><?= $fromUsername; ?></td>
-                                        <td><?= $value['reason']; ?></td>
-                                    </tr>
-                                    <?php $i++; } } else { ?>
-                                    <p>No data found</p>
-                                    <?php } ?>
+                                        <?php
+                                        if(!empty($reportuserList)) {
+                                            $i = 1;
+                                            foreach ($reportuserList as $value) {
+                                                $touserDetails = $this->db->query("SELECT * FROM users WHERE userId = '".$value['to_user_id']."'")->row();
+                                                if(!empty($touserDetails->companyname)) {
+                                                    $tousername = $touserDetails->companyname;
+                                                } else {
+                                                    $tousername = $touserDetails->firstname." ".$touserDetails->lastname;
+                                                }
+                                                $fromUserDetails = $this->db->query("SELECT * FROM users WHERE userId = '".$value['from_user_id']."'")->row();
+                                                if(!empty($fromUserDetails->companyname)) {
+                                                    $fromUsername = $fromUserDetails->companyname;
+                                                } else {
+                                                    $fromUsername = $fromUserDetails->firstname." ".$fromUserDetails->lastname;
+                                                }
+                                        ?>
+                                        <tr>
+                                            <td><?= $i++; ?></td>
+                                            <td><?= $tousername; ?></td>
+                                            <td><?= $fromUsername; ?></td>
+                                            <td><?= $value['reason']; ?></td>
+                                        </tr>
+                                        <?php } } else { ?>
+                                        <tr>
+                                            <td colspan="4">No data found</td>
+                                        </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>

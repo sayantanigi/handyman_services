@@ -166,7 +166,7 @@ function displayStars($rating){
                                                             </p>
                                                         <?php } ?>
                                                     </a>
-                                                    <p style="margin: 0; font-size: 13px; color: #b1b1b1;"><?php echo get_time_ago(strtotime($row->created_date)) ?><?php if(!empty($row->location)) {echo " . <i class='fa fa-globe' aria-hidden='true'></i> ".$row->location; }?> </p>
+                                                    <p style="margin: 0; font-size: 13px; color: #b1b1b1;"><?php echo get_time_ago(strtotime($row->created_date)) ?><?php if(!empty($get_user->address)) {echo " . <i class='fa fa-globe' aria-hidden='true'></i> ".$get_user->address; }?> </p>
                                                 </div>
                                             </div>
                                             <div>

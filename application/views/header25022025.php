@@ -232,7 +232,6 @@ function getMessageCountH() {
                                 <?php } }?>
                             </select>
                             <select name="distance" id="distance" class="categories_style" style=" border-radius: 10px; padding-top: 10px; padding-bottom: 10px; height: 40px;" onchange="getdistancedata(this.value);">
-                                <option value="">Select Location</option>
                                 <option value="1">Global</option>
                                 <option value="2">Local</option>
                             </select>
