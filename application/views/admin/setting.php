@@ -60,6 +60,12 @@
 															<input type="text" class="form-control" name="alternate_email" placeholder="Alternate Email" value="<?php if(!empty($row->alternate_email)){echo $row->alternate_email; }?>">
 														</div>
 													</div>
+                                                    <div class="col-md-6">
+														<div class="form-group">
+															<label>Local Search Area (Miles)</label>
+															<input type="text" class="form-control" name="local_search" placeholder="Example: 10 (only digit)" value="<?php if(!empty($row->local_search)){echo $row->local_search; }?>">
+														</div>
+													</div>
 													<div class="col-md-12">
 														<div class="form-group">
 															<label>Address <span style="font-size: 13px; font-weight: 600; color:red;">  (Click on source from the editor while changing the content)</span></label>
@@ -127,7 +133,7 @@
 															<input type="text" class="form-control" name="ptrs_link" placeholder="Pinterest Link" value="<?php if(!empty($row->ptrs_link)){echo $row->ptrs_link; }?>">
 														</div>
 													</div>
-                                                    
+
                                                     <div class="col-md-4">
 														<div class="form-group">
 															<label>Header Logo</label>

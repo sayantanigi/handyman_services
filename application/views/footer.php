@@ -233,6 +233,12 @@ function displayLocation(latitude, longitude) {
                    state = value[count - 2];
                    city = value[count - 3];
                    $("#paymentLocation").val(city);
+                   $("#search_country").val(country);
+                   $("#search_country_guest").val(country);
+                   $("#search_state").val(state);
+                   $("#search_state_guest").val(state);
+                   $("#search_city").val(city);
+                   $("#search_city_guest").val(city);
                }
            }
        }

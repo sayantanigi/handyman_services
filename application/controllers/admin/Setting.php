@@ -86,6 +86,7 @@ class Setting extends MY_Controller {
             'register_body_content' => htmlspecialchars($this->input->post('register_body_content')),
             'fabout' => $this->input->post('fabout'),
           	'alternate_email' => $this->input->post('alternate_email'),
+            'local_search' => $this->input->post('local_search'),
 			'fb_link' => $this->input->post('fb_link'),
 			'gmail_link' => $this->input->post('gmail_link'),
 			'tiktok_link' => $this->input->post('tiktok_link'),

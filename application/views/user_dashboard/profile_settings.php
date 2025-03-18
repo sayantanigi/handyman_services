@@ -109,8 +109,10 @@ if ($data_request == 'user') {
                             </div>
                             <div class="col-lg-4 profile-dsd">
                                 <div class="mb-4 float-left w-100">
-                                    <input type="text" class="form-control" name="mobile" id="mobile"
-                                        placeholder="Contact Number" value="<?php echo $userinfo->mobile; ?>" />
+                                    <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Contact Number" value="<?php echo $userinfo->mobile; ?>" style="padding-left: 100px !important;"/>
+                                    <input type="hidden" name="country_code" id="country_code" />
+                                    <input type="hidden" name="iso2" id="iso2" />
+                                    <input type="hidden" name="countryname" id="countryname" />
                                 </div>
                             </div>
                             <?php //} ?>
@@ -212,14 +214,91 @@ if ($data_request == 'user') {
 .preview-item {width: 215px; height: 150px; margin: 0px 5px 5px 0px; display: flex; justify-content: center; align-items: center;}
 .preview-item img, .preview-item video {width: 215px !important; height: 150px !important; object-fit: cover !important;}
 .jconfirm .jconfirm-box .jconfirm-buttons button.btn-blue {background: #9dcc90 !important; }
+
 </style>
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+<!-- <script src="<?= base_url(); ?>assets/js/intlInputPhone.min.js"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
 <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/css/intlTelInput.css" rel="stylesheet" media="screen">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/intlTelInput.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/utils.js"></script>
+
 <script type="text/javascript">
+$(document).ready(function(){
+    $("#mobile").on("input", function() {
+        var input = $(this).val().replace(/\D/g, '');
+        if (input.length > 3 && input.length <= 6) {
+            input = input.replace(/(\d{3})(\d{1,3})/, '$1-$2');
+        } else if (input.length > 6) {
+            input = input.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1-$2-$3');
+        }
+        $(this).val(input);
+    });
+});
+
+function formatInput(input) {
+    input = input.replace(/\D/g, '');
+    if (input.length > 3 && input.length <= 6) {
+        input = input.replace(/(\d{3})(\d{1,3})/, '$1-$2');
+    } else if (input.length > 6) {
+        input = input.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1-$2-$3');
+    }
+    return input;
+}
+
+var telInput = $("#mobile"),
+    errorMsg = $("#error-msg"),
+    validMsg = $("#valid-msg");
+
+var iso2 = "<?php echo strtoupper($userinfo->iso2); ?>";
+
+var initialVal = formatInput("<?php echo $userinfo->mobile; ?>");
+telInput.val(initialVal);
+
+telInput.on("input", function() {
+    var input = $(this).val();
+    $(this).val(formatInput(input));
+});
+
+// initialise plugin
+telInput.intlTelInput({
+    allowExtensions: true,
+    formatOnDisplay: false,
+    autoFormat: true,
+    autoHideDialCode: true,
+    autoPlaceholder: true,
+    nationalMode: false,
+    numberType: "MOBILE",
+    preferredCountries: [],
+    preventInvalidNumbers: true,
+    separateDialCode: true,
+    initialCountry: iso2,
+    geoIpLookup: function(callback) {
+        $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            var countryCode = (resp && resp.country) ? resp.country : "";
+            callback(countryCode);
+        });
+    },
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/utils.js"
+});
+
+// on form submit: set hidden input values
+$("#registrationForm").on("submit", function() {
+    console.log(telInput.intlTelInput("getSelectedCountryData"));
+    var countryCode = telInput.intlTelInput("getSelectedCountryData").dialCode;
+    var iso2 = telInput.intlTelInput("getSelectedCountryData").iso2;
+    var countryname = telInput.intlTelInput("getSelectedCountryData").name;
+
+    $("#country_code").val(countryCode);
+    $("#iso2").val(iso2);
+    $("#countryname").val(countryname);
+});
+
 $('#skills').tagsinput({
     confirmKeys: [13, 44],
     maxTags: 20,

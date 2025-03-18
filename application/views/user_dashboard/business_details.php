@@ -62,7 +62,10 @@
                                             <div id="vld_gender" style="color:red; margin-top: 10px;">Please Select Business Category.</div>
 			                            </div>
 			                            <div class="col-lg-6 profile-dsd">
-                                            <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Phone Number" value="<?php echo $userinfo->mobile;?>" onkeypress="only_number(event)" maxlength="10" />
+                                            <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Phone Number" value="<?php echo $userinfo->mobile;?>" style="padding-left: 100px !important;"/>
+                                            <input type="hidden" name="country_code" id="country_code" />
+                                            <input type="hidden" name="iso2" id="iso2" />
+                                            <input type="hidden" name="countryname" id="countryname" />
 			                            </div>
 			                            <div class="col-lg-6 profile-dsd">
                                             <input type="text" class="form-control location_get" name="address" id="location" placeholder="Legal Address" value="<?= $userinfo->address ?>" style="height: 49px !important;" autocomplete="off" />
@@ -147,7 +150,82 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js'></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/css/intlTelInput.css" rel="stylesheet" media="screen">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/intlTelInput.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/utils.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
+    $("#mobile").on("input", function() {
+        var input = $(this).val().replace(/\D/g, '');
+        if (input.length > 3 && input.length <= 6) {
+            input = input.replace(/(\d{3})(\d{1,3})/, '$1-$2');
+        } else if (input.length > 6) {
+            input = input.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1-$2-$3');
+        }
+        $(this).val(input);
+    });
+});
+
+function formatInput(input) {
+    input = input.replace(/\D/g, '');
+    if (input.length > 3 && input.length <= 6) {
+        input = input.replace(/(\d{3})(\d{1,3})/, '$1-$2');
+    } else if (input.length > 6) {
+        input = input.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1-$2-$3');
+    }
+    return input;
+}
+
+var telInput = $("#mobile"),
+    errorMsg = $("#error-msg"),
+    validMsg = $("#valid-msg");
+
+var iso2 = "<?php echo strtoupper($userinfo->iso2); ?>";
+
+var initialVal = formatInput("<?php echo $userinfo->mobile; ?>");
+telInput.val(initialVal);
+
+telInput.on("input", function() {
+    var input = $(this).val();
+    $(this).val(formatInput(input));
+});
+
+// initialise plugin
+telInput.intlTelInput({
+    allowExtensions: true,
+    formatOnDisplay: false,
+    autoFormat: true,
+    autoHideDialCode: true,
+    autoPlaceholder: true,
+    nationalMode: false,
+    numberType: "MOBILE",
+    preferredCountries: [],
+    preventInvalidNumbers: true,
+    separateDialCode: true,
+    initialCountry: iso2,
+    geoIpLookup: function(callback) {
+        $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            var countryCode = (resp && resp.country) ? resp.country : "";
+            callback(countryCode);
+        });
+    },
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.9/js/utils.js"
+});
+
+// on form submit: set hidden input values
+$("#registrationForm").on("submit", function() {
+    console.log(telInput.intlTelInput("getSelectedCountryData"));
+    var countryCode = telInput.intlTelInput("getSelectedCountryData").dialCode;
+    var iso2 = telInput.intlTelInput("getSelectedCountryData").iso2;
+    var countryname = telInput.intlTelInput("getSelectedCountryData").name;
+
+    $("#country_code").val(countryCode);
+    $("#iso2").val(iso2);
+    $("#countryname").val(countryname);
+});
 $(window).on('load', function(){
     $.ajax({
         url: '<?= base_url('user/dashboard/fetch_location')?>',

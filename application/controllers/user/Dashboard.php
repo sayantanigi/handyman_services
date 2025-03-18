@@ -53,6 +53,7 @@ class Dashboard extends CI_Controller {
 		$this->load->view('footer');
 	}
 	public function update_profile() {
+        //echo "<pre>"; print_r($_POST); die();
 		if ($_FILES['profilePic']['name'] != '') {
 			$src = $_FILES['profilePic']['tmp_name'];
 			$filEnc = time();
@@ -142,6 +143,9 @@ class Dashboard extends CI_Controller {
                 'profilePic' => $image,
                 'email' => $_POST['email'],
                 'mobile' => $_POST['mobile'],
+                'country_code' => $_POST['country_code'],
+                'iso2' => $_POST['iso2'],
+                'countryname' => $_POST['countryname'],
                 'rate_enabled' => $_POST['rate_enabled'],
                 //'backgroundPic' => $bimage,
                 'zip' => $_POST['zip'],
@@ -167,6 +171,9 @@ class Dashboard extends CI_Controller {
                     'profilePic' => $image,
                     'email' => $_POST['email'],
                     'mobile' => $_POST['mobile'],
+                    'country_code' => $_POST['country_code'],
+                    'iso2' => $_POST['iso2'],
+                    'countryname' => $_POST['countryname'],
                     'rate_enabled' => $_POST['rate_enabled'],
                     //'backgroundPic' => $bimage,
                     'zip' => $_POST['zip'],
@@ -1942,6 +1949,12 @@ class Dashboard extends CI_Controller {
         return $stars;
     }
     public function searchPostData() {
+        $getMiles = $this->db->query("SELECT * FROM setting")->row();
+        if(!empty($getMiles->local_search)) {
+            $local_search = $getMiles->local_search * 1.609344; //1 Mile = 1.609344 KM
+        } else {
+            $local_search = '0';
+        }
         $search_box = $_POST['search_box'];
         $category = $_POST['category'];
         $distance = $_POST['distance'];
@@ -1949,9 +1962,9 @@ class Dashboard extends CI_Controller {
         $lon = $_POST['search_lon'];
         if($distance == '1') {
             //$query = "SELECT * FROM postjob WHERE visibility = '1' AND status = 'Active' AND is_delete = '0'";
-            $query = "SELECT *, (6367 * acos(cos(radians('".$lat."')) * cos(radians(`latitude`)) * cos(radians(`longitude`) - radians('".$lon."')) + sin(radians('".$lat."')) * sin(radians(`latitude`)))) AS distance FROM `postjob` Having `distance` > 160 AND visibility = '1' AND status = 'Active' AND is_delete = '0'";
+            $query = "SELECT *, (6367 * acos(cos(radians('".$lat."')) * cos(radians(`latitude`)) * cos(radians(`longitude`) - radians('".$lon."')) + sin(radians('".$lat."')) * sin(radians(`latitude`)))) AS distance FROM `postjob` Having `distance` > $local_search AND visibility = '1' AND status = 'Active' AND is_delete = '0'";
         } else {
-            $query = "SELECT *, (6367 * acos(cos(radians('".$lat."')) * cos(radians(`latitude`)) * cos(radians(`longitude`) - radians('".$lon."')) + sin(radians('".$lat."')) * sin(radians(`latitude`)))) AS distance FROM `postjob` Having `distance` BETWEEN 0 AND 160 AND visibility = '1' AND status = 'Active' AND is_delete = '0'";
+            $query = "SELECT *, (6367 * acos(cos(radians('".$lat."')) * cos(radians(`latitude`)) * cos(radians(`longitude`) - radians('".$lon."')) + sin(radians('".$lat."')) * sin(radians(`latitude`)))) AS distance FROM `postjob` Having `distance` BETWEEN 0 AND $local_search AND visibility = '1' AND status = 'Active' AND is_delete = '0'";
         }
 
         if(isset($search_box) && !empty($search_box)) {
@@ -2006,7 +2019,7 @@ class Dashboard extends CI_Controller {
                                         </p>
                                     <?php } ?>
                                 </a>
-                                <p style="margin: 0; font-size: 13px; color: #b1b1b1;"><?php echo $this->get_time_ago(strtotime($row->created_date)) ?><?php if(!empty($row->location)) {echo " . <i class='fa fa-globe' aria-hidden='true'></i> ".$row->location; }?> </p>
+                                <p style="margin: 0; font-size: 13px; color: #b1b1b1;"><?php echo $this->get_time_ago(strtotime($row->created_date)) ?><?php if(!empty($row->location)) {echo " . <i class='fa fa-globe' aria-hidden='true'></i> ".$row->city.", ".trim(preg_replace('/\d+/', '', $row->state)); }?> </p>
                             </div>
                         </div>
                         <div>

@@ -100,6 +100,9 @@ function displayStars($rating){
                                             <input type="hidden" name="location" id="location" value="<?= @$loc ?>" placeholder="Set Location" />
                                             <input type="hidden" id="search_lat" name="s_lat" value="<?= @$lat ?>">
                                             <input type="hidden" id="search_lon" name="s_lon" value="<?= @$lon ?>">
+                                            <input type="hidden" name="country" id="search_country_guest" value="<?= @$lon ?>">
+                                            <input type="hidden" name="state" id="search_state_guest" value="<?= @$lon ?>">
+                                            <input type="hidden" name="city" id="search_city_guest" value="<?= @$lon ?>">
                                             <input type="hidden" id="cat_value" name="cat_value" value="">
                                             <select name="category" id="category" class="categories_style" onchange="getcategoryval(this.value);" required style="position: absolute; margin-left: 26rem;">
                                                 <option value="">Select Category</option>
@@ -166,7 +169,7 @@ function displayStars($rating){
                                                             </p>
                                                         <?php } ?>
                                                     </a>
-                                                    <p style="margin: 0; font-size: 13px; color: #b1b1b1;"><?php echo get_time_ago(strtotime($row->created_date)) ?><?php if(!empty($row->location)) {echo " . <i class='fa fa-globe' aria-hidden='true'></i> ".$row->location; }?> </p>
+                                                    <p style="margin: 0; font-size: 13px; color: #b1b1b1;"><?php echo get_time_ago(strtotime($row->created_date)) ?><?php if(!empty($row->location)) {echo " . <i class='fa fa-globe' aria-hidden='true'></i> ".$row->city.", ".trim(preg_replace('/\d+/', '', $row->state)); }?> </p>
                                                 </div>
                                             </div>
                                             <div>
@@ -946,6 +949,9 @@ function displayStars($rating){
                         <input type="hidden" name="location" id="location_guest" value="<?= @$loc ?>" placeholder="Set Location" />
                         <input type="hidden" name="s_lat" id="search_lat_guest" value="<?= @$lat ?>">
                         <input type="hidden" name="s_lon" id="search_lon_guest" value="<?= @$lon ?>">
+                        <input type="hidden" name="country" id="search_country_guest" value="<?= @$lon ?>">
+                        <input type="hidden" name="state" id="search_state_guest" value="<?= @$lon ?>">
+                        <input type="hidden" name="city" id="search_city_guest" value="<?= @$lon ?>">
                         <input type="hidden" name="cat_valmod" id="cat_valmod" value="">
                         <button class="w-100 postbtn Gradient_Back_Color" type="submit">Post</button>
                     </div>
@@ -1015,6 +1021,9 @@ function displayStars($rating){
                         <input type="hidden" name="location" id="edit_location_guest" value="" placeholder="Set Location" />
                         <input type="hidden" name="s_lat" id="edit_search_lat_guest" value="">
                         <input type="hidden" name="s_lon" id="edit_search_lon_guest" value="">
+                        <input type="hidden" name="country" id="edit_search_country_guest" value="">
+                        <input type="hidden" name="state" id="edit_search_state_guest" value="">
+                        <input type="hidden" name="city" id="edit_search_city_guest" value="">
                         <input type="hidden" name="cat_valmod" id="edit_cat_valmod" value="">
                         <button class="w-100 postbtn Gradient_Back_Color" type="submit">Update</button>
                     </div>
@@ -1041,6 +1050,9 @@ function displayStars($rating){
                             <i class="la la-close" style="right: 0px; top: 19px !important;" onclick="removeAdd()"></i>
                             <input type="hidden" id="search_lat" name="s_lat" value="<?= @$lat ?>">
                             <input type="hidden" id="search_lon" name="s_lon" value="<?= @$lon ?>">
+                            <input type="hidden" name="country" id="search_country" value="">
+                            <input type="hidden" name="state" id="search_state" value="">
+                            <input type="hidden" name="city" id="search_city" value="">
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12 Mobile_Btn_Container_1">
@@ -1055,8 +1067,7 @@ function displayStars($rating){
     </div>
 </div>
 
-<div class="modal fade" id="exampleModalblockuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModalblockuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 550px !important; position: relative; top: 80px;">
         <div class="modal-content">
             <div class="modal-header">
